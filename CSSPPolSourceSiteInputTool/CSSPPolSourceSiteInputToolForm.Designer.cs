@@ -31,7 +31,6 @@
             this.panelButtonBar = new System.Windows.Forms.Panel();
             this.lblSubsector = new System.Windows.Forms.Label();
             this.comboBoxSubsectorNames = new System.Windows.Forms.ComboBox();
-            this.butLogoff = new System.Windows.Forms.Button();
             this.panelStatusBar = new System.Windows.Forms.Panel();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusTxt = new System.Windows.Forms.Label();
@@ -52,14 +51,9 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.butShowPictures = new System.Windows.Forms.Button();
             this.lblPolSourceSiteMap = new System.Windows.Forms.Label();
-            this.panelPassword = new System.Windows.Forms.Panel();
-            this.panelPasswordCenter = new System.Windows.Forms.Panel();
-            this.panelAccessCode = new System.Windows.Forms.Panel();
-            this.lblEnterAccessCodeTxt = new System.Windows.Forms.Label();
-            this.textBoxAccessCode = new System.Windows.Forms.TextBox();
-            this.butOpenProvinceFile = new System.Windows.Forms.Button();
-            this.lblProvinceFileName = new System.Windows.Forms.Label();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
+            this.butRefresh = new System.Windows.Forms.Button();
+            this.lblSubsectorName = new System.Windows.Forms.Label();
             this.panelButtonBar.SuspendLayout();
             this.panelStatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -74,17 +68,14 @@
             this.panel2.SuspendLayout();
             this.panelMap.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panelPassword.SuspendLayout();
-            this.panelPasswordCenter.SuspendLayout();
-            this.panelAccessCode.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelButtonBar
             // 
             this.panelButtonBar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelButtonBar.Controls.Add(this.butRefresh);
             this.panelButtonBar.Controls.Add(this.lblSubsector);
             this.panelButtonBar.Controls.Add(this.comboBoxSubsectorNames);
-            this.panelButtonBar.Controls.Add(this.butLogoff);
             this.panelButtonBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelButtonBar.Location = new System.Drawing.Point(0, 0);
             this.panelButtonBar.Name = "panelButtonBar";
@@ -106,20 +97,9 @@
             this.comboBoxSubsectorNames.FormattingEnabled = true;
             this.comboBoxSubsectorNames.Location = new System.Drawing.Point(96, 6);
             this.comboBoxSubsectorNames.Name = "comboBoxSubsectorNames";
-            this.comboBoxSubsectorNames.Size = new System.Drawing.Size(341, 21);
+            this.comboBoxSubsectorNames.Size = new System.Drawing.Size(237, 21);
             this.comboBoxSubsectorNames.TabIndex = 6;
             this.comboBoxSubsectorNames.SelectedIndexChanged += new System.EventHandler(this.comboBoxSubsectorNames_SelectedIndexChanged);
-            // 
-            // butLogoff
-            // 
-            this.butLogoff.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.butLogoff.Location = new System.Drawing.Point(1047, 4);
-            this.butLogoff.Name = "butLogoff";
-            this.butLogoff.Size = new System.Drawing.Size(80, 25);
-            this.butLogoff.TabIndex = 0;
-            this.butLogoff.Text = "Logoff";
-            this.butLogoff.UseVisualStyleBackColor = true;
-            this.butLogoff.Click += new System.EventHandler(this.butLogoff_Click);
             // 
             // panelStatusBar
             // 
@@ -155,16 +135,16 @@
             // splitContainer1
             // 
             this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.splitContainer1.Location = new System.Drawing.Point(39, 248);
+            this.splitContainer1.Location = new System.Drawing.Point(30, 68);
             this.splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.panelPollutionSiteEdit);
             this.splitContainer1.Panel1.Controls.Add(this.panelPollutionSitesList);
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.panelPollutionSiteEdit);
             this.splitContainer1.Panel2.Controls.Add(this.panelPicture);
             this.splitContainer1.Panel2.Controls.Add(this.panelMap);
             this.splitContainer1.Size = new System.Drawing.Size(1054, 535);
@@ -174,7 +154,7 @@
             // panelPollutionSiteEdit
             // 
             this.panelPollutionSiteEdit.Controls.Add(this.panel3);
-            this.panelPollutionSiteEdit.Location = new System.Drawing.Point(76, 257);
+            this.panelPollutionSiteEdit.Location = new System.Drawing.Point(376, 261);
             this.panelPollutionSiteEdit.Name = "panelPollutionSiteEdit";
             this.panelPollutionSiteEdit.Size = new System.Drawing.Size(264, 353);
             this.panelPollutionSiteEdit.TabIndex = 1;
@@ -216,7 +196,7 @@
             this.panelPollutionSitesList.Controls.Add(this.panelSubsectorPollutionSitesTop);
             this.panelPollutionSitesList.Location = new System.Drawing.Point(16, 26);
             this.panelPollutionSitesList.Name = "panelPollutionSitesList";
-            this.panelPollutionSitesList.Size = new System.Drawing.Size(225, 371);
+            this.panelPollutionSitesList.Size = new System.Drawing.Size(304, 371);
             this.panelPollutionSitesList.TabIndex = 0;
             // 
             // panelPSS
@@ -225,17 +205,18 @@
             this.panelPSS.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panelPSS.Location = new System.Drawing.Point(0, 24);
             this.panelPSS.Name = "panelPSS";
-            this.panelPSS.Size = new System.Drawing.Size(225, 347);
+            this.panelPSS.Size = new System.Drawing.Size(304, 347);
             this.panelPSS.TabIndex = 4;
             // 
             // panelSubsectorPollutionSitesTop
             // 
             this.panelSubsectorPollutionSitesTop.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelSubsectorPollutionSitesTop.Controls.Add(this.lblSubsectorName);
             this.panelSubsectorPollutionSitesTop.Controls.Add(this.lblPolSourceSiteList);
             this.panelSubsectorPollutionSitesTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelSubsectorPollutionSitesTop.Location = new System.Drawing.Point(0, 0);
             this.panelSubsectorPollutionSitesTop.Name = "panelSubsectorPollutionSitesTop";
-            this.panelSubsectorPollutionSitesTop.Size = new System.Drawing.Size(225, 24);
+            this.panelSubsectorPollutionSitesTop.Size = new System.Drawing.Size(304, 24);
             this.panelSubsectorPollutionSitesTop.TabIndex = 3;
             // 
             // lblPolSourceSiteList
@@ -325,78 +306,28 @@
             this.lblPolSourceSiteMap.TabIndex = 2;
             this.lblPolSourceSiteMap.Text = "Pollution Source Site Map";
             // 
-            // panelPassword
-            // 
-            this.panelPassword.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.panelPassword.Controls.Add(this.panelPasswordCenter);
-            this.panelPassword.Location = new System.Drawing.Point(97, 84);
-            this.panelPassword.Name = "panelPassword";
-            this.panelPassword.Size = new System.Drawing.Size(669, 226);
-            this.panelPassword.TabIndex = 12;
-            // 
-            // panelPasswordCenter
-            // 
-            this.panelPasswordCenter.Controls.Add(this.panelAccessCode);
-            this.panelPasswordCenter.Controls.Add(this.butOpenProvinceFile);
-            this.panelPasswordCenter.Controls.Add(this.lblProvinceFileName);
-            this.panelPasswordCenter.Location = new System.Drawing.Point(18, 19);
-            this.panelPasswordCenter.Name = "panelPasswordCenter";
-            this.panelPasswordCenter.Size = new System.Drawing.Size(626, 200);
-            this.panelPasswordCenter.TabIndex = 2;
-            // 
-            // panelAccessCode
-            // 
-            this.panelAccessCode.Controls.Add(this.lblEnterAccessCodeTxt);
-            this.panelAccessCode.Controls.Add(this.textBoxAccessCode);
-            this.panelAccessCode.Location = new System.Drawing.Point(158, 78);
-            this.panelAccessCode.Name = "panelAccessCode";
-            this.panelAccessCode.Size = new System.Drawing.Size(362, 113);
-            this.panelAccessCode.TabIndex = 5;
-            this.panelAccessCode.Visible = false;
-            // 
-            // lblEnterAccessCodeTxt
-            // 
-            this.lblEnterAccessCodeTxt.AutoSize = true;
-            this.lblEnterAccessCodeTxt.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblEnterAccessCodeTxt.Location = new System.Drawing.Point(19, 40);
-            this.lblEnterAccessCodeTxt.Name = "lblEnterAccessCodeTxt";
-            this.lblEnterAccessCodeTxt.Size = new System.Drawing.Size(101, 13);
-            this.lblEnterAccessCodeTxt.TabIndex = 0;
-            this.lblEnterAccessCodeTxt.Text = "Enter Access Code:";
-            // 
-            // textBoxAccessCode
-            // 
-            this.textBoxAccessCode.Location = new System.Drawing.Point(126, 37);
-            this.textBoxAccessCode.Name = "textBoxAccessCode";
-            this.textBoxAccessCode.Size = new System.Drawing.Size(100, 20);
-            this.textBoxAccessCode.TabIndex = 3;
-            this.textBoxAccessCode.TextChanged += new System.EventHandler(this.textBoxAccessCode_TextChanged);
-            // 
-            // butOpenProvinceFile
-            // 
-            this.butOpenProvinceFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.butOpenProvinceFile.Location = new System.Drawing.Point(222, 21);
-            this.butOpenProvinceFile.Name = "butOpenProvinceFile";
-            this.butOpenProvinceFile.Size = new System.Drawing.Size(183, 23);
-            this.butOpenProvinceFile.TabIndex = 6;
-            this.butOpenProvinceFile.Text = "Open Province File";
-            this.butOpenProvinceFile.UseVisualStyleBackColor = true;
-            this.butOpenProvinceFile.Click += new System.EventHandler(this.butOpenProvinceFile_Click);
-            // 
-            // lblProvinceFileName
-            // 
-            this.lblProvinceFileName.AutoSize = true;
-            this.lblProvinceFileName.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblProvinceFileName.Location = new System.Drawing.Point(155, 50);
-            this.lblProvinceFileName.Name = "lblProvinceFileName";
-            this.lblProvinceFileName.Size = new System.Drawing.Size(99, 13);
-            this.lblProvinceFileName.TabIndex = 4;
-            this.lblProvinceFileName.Text = "Province File Name";
-            this.lblProvinceFileName.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
             // openFileDialogCSSP
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
+            // 
+            // butRefresh
+            // 
+            this.butRefresh.Location = new System.Drawing.Point(352, 6);
+            this.butRefresh.Name = "butRefresh";
+            this.butRefresh.Size = new System.Drawing.Size(87, 23);
+            this.butRefresh.TabIndex = 10;
+            this.butRefresh.Text = "Refresh";
+            this.butRefresh.UseVisualStyleBackColor = true;
+            this.butRefresh.Click += new System.EventHandler(this.butRefresh_Click);
+            // 
+            // lblSubsectorName
+            // 
+            this.lblSubsectorName.AutoSize = true;
+            this.lblSubsectorName.Location = new System.Drawing.Point(135, 6);
+            this.lblSubsectorName.Name = "lblSubsectorName";
+            this.lblSubsectorName.Size = new System.Drawing.Size(88, 13);
+            this.lblSubsectorName.TabIndex = 3;
+            this.lblSubsectorName.Text = "(subsector name)";
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
@@ -406,7 +337,6 @@
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.panelStatusBar);
             this.Controls.Add(this.panelButtonBar);
-            this.Controls.Add(this.panelPassword);
             this.Name = "CSSPPolSourceSiteInputToolForm";
             this.Text = "CSSP Pollution Source Site Input Tool";
             this.panelButtonBar.ResumeLayout(false);
@@ -429,11 +359,6 @@
             this.panelMap.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.panelPassword.ResumeLayout(false);
-            this.panelPasswordCenter.ResumeLayout(false);
-            this.panelPasswordCenter.PerformLayout();
-            this.panelAccessCode.ResumeLayout(false);
-            this.panelAccessCode.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -443,7 +368,6 @@
         private System.Windows.Forms.Panel panelButtonBar;
         private System.Windows.Forms.Label lblSubsector;
         private System.Windows.Forms.ComboBox comboBoxSubsectorNames;
-        private System.Windows.Forms.Button butLogoff;
         private System.Windows.Forms.Panel panelStatusBar;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label lblStatusTxt;
@@ -460,18 +384,13 @@
         private System.Windows.Forms.Label lblPolSourceSitePictures;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblPolSourceSiteMap;
-        private System.Windows.Forms.Panel panelPassword;
-        private System.Windows.Forms.Panel panelPasswordCenter;
-        private System.Windows.Forms.Panel panelAccessCode;
-        private System.Windows.Forms.Label lblEnterAccessCodeTxt;
-        private System.Windows.Forms.TextBox textBoxAccessCode;
-        private System.Windows.Forms.Button butOpenProvinceFile;
-        private System.Windows.Forms.Label lblProvinceFileName;
         private System.Windows.Forms.Button butPolSourceSiteEditCancel;
         private System.Windows.Forms.Button butShowMap;
         private System.Windows.Forms.Button butShowPictures;
         private System.Windows.Forms.OpenFileDialog openFileDialogCSSP;
         private System.Windows.Forms.Panel panelPSS;
+        private System.Windows.Forms.Button butRefresh;
+        private System.Windows.Forms.Label lblSubsectorName;
     }
 }
 

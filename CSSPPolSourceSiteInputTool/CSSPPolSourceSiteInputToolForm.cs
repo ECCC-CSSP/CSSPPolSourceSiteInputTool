@@ -17,17 +17,16 @@ namespace CSSPPolSourceSiteInputTool
     public partial class CSSPPolSourceSiteInputToolForm : Form
     {
         #region Variables
-        private string RootCurrentPath = @"C:\PollutionSourceSites\";
-        private string r = "OgW2S3EHhQ(6!Z$odV7eAGnim/#YIClk9vF&1@5xDUa)wPLu*BN.t,c8%JRMbK^yqzXpfTj4sr0:d";
-        private string PollutionSourceSiteProvinceFileName = "";
+        private string BasePath = @"C:\PollutionSourceSites\";
+        private string CurrentSubsectorName = "";
         private bool IsSaving = false;
+        private List<string> SubDirectoryList = new List<string>();
         #endregion Variables
 
         #region Properties
-        private ProvinceDoc provinceDoc { get; set; }
+        private SubsectorDoc subsectorDoc { get; set; }
         private CultureInfo currentCulture { get; set; }
         private CultureInfo currentUICulture { get; set; }
-        private Subsector CurrentSubsector { get; set; }
         private PSS CurrentPSS { get; set; }
         private Obs CurrentObs { get; set; }
         private Issue CurrentIssue { get; set; }
@@ -46,51 +45,30 @@ namespace CSSPPolSourceSiteInputTool
             currentUICulture = Thread.CurrentThread.CurrentUICulture;
 
             PSSLabelList = new List<Label>();
-            provinceDoc = new ProvinceDoc();
+            subsectorDoc = new SubsectorDoc();
 
             InitializeComponent();
-            splitContainer1.Dock = DockStyle.Fill;
-            splitContainer1.SplitterDistance = splitContainer1.Width - 2;
-            panelPollutionSiteEdit.Dock = DockStyle.Fill;
-            panelPollutionSitesList.Dock = DockStyle.Fill;
-            panelPollutionSitesList.BringToFront();
-            panelMap.Dock = DockStyle.Fill;
-            panelPicture.Dock = DockStyle.Fill;
-            panelMap.BringToFront();
-            panelPassword.Dock = DockStyle.Fill;
-            panelPassword.BringToFront();
-            panelPasswordCenter.Location = new Point(panelPassword.Width / 2 - panelPasswordCenter.Size.Width / 2, panelPassword.Height / 2 - panelPasswordCenter.Size.Height / 2);
-            panelPasswordCenter.Anchor = AnchorStyles.None;
-            lblProvinceFileName.Text = "";
+            Setup();
 
+            RefreshComboBoxSubsectorNames();
         }
+
+
         #endregion Constructors
 
         #region Events
-        private void butOpenProvinceFile_Click(object sender, EventArgs e)
-        {
-            OpenProvinceFile();
-        }
-        private void butLogoff_Click(object sender, EventArgs e)
-        {
-            while (IsSaving == true)
-            {
-                Application.DoEvents();
-            }
-
-            panelAccessCode.Visible = false;
-            panelPassword.BringToFront();
-            textBoxAccessCode.Text = "";
-            lblProvinceFileName.Text = "";
-        }
         private void comboBoxSubsectorNames_SelectedIndexChanged(object sender, EventArgs e)
         {
-            CurrentSubsector = (Subsector)comboBoxSubsectorNames.SelectedItem;
+            CurrentSubsectorName = (string)comboBoxSubsectorNames.SelectedItem;
+
+            ReadPollutionSourceSitesProvinceFile();
 
             panelPSS.Controls.Clear();
 
+            lblSubsectorName.Text = $"{subsectorDoc.Subsector.SubsectorName}";
+
             int countPSS = 0;
-            foreach (PSS pss in CurrentSubsector.PSSList)
+            foreach (PSS pss in subsectorDoc.Subsector.PSSList)
             {
                 countPSS += 1;
 
@@ -104,15 +82,11 @@ namespace CSSPPolSourceSiteInputTool
                 tempLabel.Text = $"Lat: {pss.Lat} --- Lng: {pss.Lng}";
                 panelPSS.Controls.Add(tempLabel);
             }
+
         }
-        private void textBoxAccessCode_TextChanged(object sender, EventArgs e)
+        private void butRefresh_Click(object sender, EventArgs e)
         {
-            if (textBoxAccessCode.Text == provinceDoc.AccessCode)
-            {
-                panelPassword.SendToBack();
-                splitContainer1.BringToFront();
-                FillComboBoxSubsectorNames();
-            }
+            RefreshComboBoxSubsectorNames();
         }
         #endregion Events
 
@@ -120,10 +94,8 @@ namespace CSSPPolSourceSiteInputTool
         private void FillComboBoxSubsectorNames()
         {
             comboBoxSubsectorNames.Items.Clear();
-            comboBoxSubsectorNames.ValueMember = "SubsectorTVItemID";
-            comboBoxSubsectorNames.DisplayMember = "SubsectorName";
 
-            foreach (Subsector subsector in provinceDoc.SubsectorList)
+            foreach (string subsector in SubDirectoryList)
             {
                 comboBoxSubsectorNames.Items.Add(subsector);
             }
@@ -133,47 +105,9 @@ namespace CSSPPolSourceSiteInputTool
                 comboBoxSubsectorNames.SelectedIndex = 0;
             }
         }
-        private void OpenProvinceFile()
-        {
-            DirectoryInfo di = new DirectoryInfo(RootCurrentPath);
-
-            if (!di.Exists)
-            {
-                try
-                {
-                    di.Create();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message + (ex.InnerException != null ? ex.InnerException.Message : ""), "Error while trying to create a directory [" + RootCurrentPath + @"] under C:\");
-                    return;
-                }
-            }
-
-            openFileDialogCSSP.FileName = "*.txt";
-            openFileDialogCSSP.InitialDirectory = RootCurrentPath;
-            openFileDialogCSSP.Filter = "*.txt|Pollution Source Site From ECCC CSSP File";
-            if (openFileDialogCSSP.ShowDialog() != DialogResult.OK)
-            {
-                lblStatus.Text = "Please select a pollution source site file.";
-                return;
-            }
-
-            if (openFileDialogCSSP.FileName.Length > 0)
-            {
-                PollutionSourceSiteProvinceFileName = openFileDialogCSSP.FileName;
-
-                if (ReadPollutionSourceSitesProvinceFile())
-                {
-                    panelAccessCode.Visible = true;
-                    lblProvinceFileName.Text = openFileDialogCSSP.FileName;
-                    textBoxAccessCode.Focus();
-                }
-            }
-        }
         private bool ReadPollutionSourceSitesProvinceFile()
         {
-            FileInfo fi = new FileInfo(PollutionSourceSiteProvinceFileName);
+            FileInfo fi = new FileInfo($@"{BasePath}{CurrentSubsectorName}\{CurrentSubsectorName}.txt");
 
             if (!fi.Exists)
             {
@@ -210,7 +144,7 @@ namespace CSSPPolSourceSiteInputTool
                         {
                             try
                             {
-                                provinceDoc.Version = int.Parse(LineTxt.Substring("Version\t".Length));
+                                subsectorDoc.Version = int.Parse(LineTxt.Substring("Version\t".Length));
                             }
                             catch (Exception ex)
                             {
@@ -232,7 +166,7 @@ namespace CSSPPolSourceSiteInputTool
                                 int Hour = int.Parse(TempStr.Substring(11, 2));
                                 int Minute = int.Parse(TempStr.Substring(14, 2));
                                 int Second = int.Parse(TempStr.Substring(17, 2));
-                                provinceDoc.DocDate = new DateTime(Year, Month, Day, Hour, Minute, Second);
+                                subsectorDoc.DocDate = new DateTime(Year, Month, Day, Hour, Minute, Second);
                             }
                             catch (Exception ex)
                             {
@@ -248,7 +182,7 @@ namespace CSSPPolSourceSiteInputTool
                                 Subsector subsector = new Subsector();
                                 subsector.SubsectorTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
                                 subsector.SubsectorName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
-                                provinceDoc.SubsectorList.Add(subsector);
+                                subsectorDoc.Subsector = subsector;
                             }
                             catch (Exception ex)
                             {
@@ -261,15 +195,13 @@ namespace CSSPPolSourceSiteInputTool
                         {
                             try
                             {
-                                Subsector lastSubsector = provinceDoc.SubsectorList[provinceDoc.SubsectorList.Count - 1];
-
                                 PSS pss = new PSS();
                                 pss.PSSTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
                                 pss.Lat = float.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
                                 pss.Lng = float.Parse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1));
                                 pss.IsActive = bool.Parse(LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1));
                                 pss.IsPointSource = bool.Parse(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1));
-                                lastSubsector.PSSList.Add(pss);
+                                subsectorDoc.Subsector.PSSList.Add(pss);
                             }
                             catch (Exception ex)
                             {
@@ -282,8 +214,7 @@ namespace CSSPPolSourceSiteInputTool
                         {
                             try
                             {
-                                Subsector lastSubsector = provinceDoc.SubsectorList[provinceDoc.SubsectorList.Count - 1];
-                                PSS lastPSS = lastSubsector.PSSList[lastSubsector.PSSList.Count - 1];
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Address address = new Address();
                                 address.AddressTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
@@ -306,8 +237,7 @@ namespace CSSPPolSourceSiteInputTool
                         {
                             try
                             {
-                                Subsector lastSubsector = provinceDoc.SubsectorList[provinceDoc.SubsectorList.Count - 1];
-                                PSS lastPSS = lastSubsector.PSSList[lastSubsector.PSSList.Count - 1];
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Picture picture = new Picture();
                                 picture.PictureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
@@ -325,8 +255,7 @@ namespace CSSPPolSourceSiteInputTool
                         {
                             try
                             {
-                                Subsector lastSubsector = provinceDoc.SubsectorList[provinceDoc.SubsectorList.Count - 1];
-                                PSS lastPSS = lastSubsector.PSSList[lastSubsector.PSSList.Count - 1];
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Obs obs = new Obs();
                                 obs.ObsID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
@@ -359,8 +288,7 @@ namespace CSSPPolSourceSiteInputTool
                         {
                             try
                             {
-                                Subsector lastSubsector = provinceDoc.SubsectorList[provinceDoc.SubsectorList.Count - 1];
-                                PSS lastPSS = lastSubsector.PSSList[lastSubsector.PSSList.Count - 1];
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
                                 Obs lastObs = lastPSS.PSSObsList[lastPSS.PSSObsList.Count - 1];
 
                                 lastObs.Description = LineTxt.Substring(pos + 1, pos2 - pos - 1);
@@ -376,8 +304,7 @@ namespace CSSPPolSourceSiteInputTool
                         {
                             try
                             {
-                                Subsector lastSubsector = provinceDoc.SubsectorList[provinceDoc.SubsectorList.Count - 1];
-                                PSS lastPSS = lastSubsector.PSSList[lastSubsector.PSSList.Count - 1];
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
                                 Obs lastObs = lastPSS.PSSObsList[lastPSS.PSSObsList.Count - 1];
 
                                 Issue issue = new Issue();
@@ -395,17 +322,12 @@ namespace CSSPPolSourceSiteInputTool
                                 string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 issue.PolSourceObsInfoIntList = PolSourceObsInfoEnumTxt.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c)).ToList();
                                 lastObs.IssueList.Add(issue);
-                        }
+                            }
                             catch (Exception ex)
-                        {
-                            lblStatus.Text = $"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }";
-                            return false;
-                        }
-                }
-                        break;
-                    case "APP":
-                        {
-                            provinceDoc.AccessCode = GetCodeString(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                            {
+                                lblStatus.Text = $"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }";
+                                return false;
+                            }
                         }
                         break;
                     default:
@@ -423,18 +345,44 @@ namespace CSSPPolSourceSiteInputTool
             lblStatus.Text = "Pollution Source Sites File OK.";
             return true;
         }
-        private string GetCodeString(string code)
+        private void RefreshComboBoxSubsectorNames()
         {
-            string retStr = "";
-            List<int> intList = new List<int>();
-            List<string> strList = code.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+            SubDirectoryList = new List<string>();
+            DirectoryInfo di = new DirectoryInfo(BasePath);
 
-            for (int i = 0, count = strList.Count(); i < count; i = i + 2)
+            if (!di.Exists)
             {
-                retStr = retStr + r.Substring((int.Parse(strList[i]) % int.Parse(strList[i + 1])), 1);
+                try
+                {
+                    di.Create();
+                }
+                catch (Exception ex)
+                {
+                    lblStatus.Text = ex.Message + (ex.InnerException != null ? " InnerException = " + ex.InnerException.Message : "");
+                    return;
+                }
             }
 
-            return retStr;
+            List<DirectoryInfo> dirList = di.GetDirectories().ToList();
+
+            foreach (DirectoryInfo directoryInfo in dirList.OrderBy(c => c.Name))
+            {
+                SubDirectoryList.Add(directoryInfo.Name);
+            }
+
+            FillComboBoxSubsectorNames();
+        }
+        private void Setup()
+        {
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.BringToFront();
+            splitContainer1.SplitterDistance = splitContainer1.Width - 2;
+            panelPollutionSiteEdit.Dock = DockStyle.Fill;
+            panelPollutionSitesList.Dock = DockStyle.Fill;
+            panelPollutionSitesList.BringToFront();
+            panelMap.Dock = DockStyle.Fill;
+            panelPicture.Dock = DockStyle.Fill;
+            panelMap.BringToFront();
         }
         #endregion Functions private
 
@@ -442,19 +390,17 @@ namespace CSSPPolSourceSiteInputTool
         #endregion Functions public
 
         #region Sub Classes
-        public class ProvinceDoc
+        public class SubsectorDoc
         {
-            public ProvinceDoc()
+            public SubsectorDoc()
             {
                 Version = 0;
                 DocDate = new DateTime();
-                SubsectorList = new List<Subsector>();
             }
 
             public int Version { get; set; }
             public DateTime DocDate { get; set; }
-            public List<Subsector> SubsectorList { get; set; }
-            public string AccessCode { get; set; }
+            public Subsector Subsector { get; set; }
         }
         public class Subsector
         {
