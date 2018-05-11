@@ -89,7 +89,7 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                             {
                                 subsectorDoc.Version = int.Parse(LineTxt.Substring("Version\t".Length));
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
                                 return false;
@@ -111,7 +111,7 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                                 int Second = int.Parse(TempStr.Substring(17, 2));
                                 subsectorDoc.DocDate = new DateTime(Year, Month, Day, Hour, Minute, Second);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
                                 return false;
@@ -127,7 +127,7 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                                 subsector.SubsectorName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 subsectorDoc.Subsector = subsector;
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
                                 return false;
@@ -146,7 +146,38 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                                 pss.IsPointSource = bool.Parse(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1));
                                 subsectorDoc.Subsector.PSSList.Add(pss);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "SITENUMB":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                lastPSS.SiteNumber = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                lastPSS.SiteNumberText = "00000".Substring(0, "00000".Length - lastPSS.SiteNumber.ToString().Length) + lastPSS.SiteNumber.ToString();
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "TVTEXT":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                lastPSS.TVText = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                            }
+                            catch (Exception)
                             {
                                 OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
                                 return false;
@@ -169,7 +200,7 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                                 address.PostalCode = LineTxt.Substring(pos7 + 1, pos8 - pos7 - 1);
                                 lastPSS.PSSAddress = address;
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
                                 return false;
@@ -185,9 +216,11 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                                 Picture picture = new Picture();
                                 picture.PictureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
                                 picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
+                                picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
                                 lastPSS.PSSPictureList.Add(picture);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
                                 return false;
@@ -220,7 +253,7 @@ namespace CSSPPolSourceSiteReadSubsectorFile
 
                                 lastPSS.PSSObsList.Add(obs);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
                                 return false;
@@ -236,7 +269,22 @@ namespace CSSPPolSourceSiteReadSubsectorFile
 
                                 lastObs.Description = LineTxt.Substring(pos + 1, pos2 - pos - 1);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "OLDISSUETEXT":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                lastPSS.OldIssueTextList.Add(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                            }
+                            catch (Exception)
                             {
                                 OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
                                 return false;
@@ -262,11 +310,11 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                                 int Second = int.Parse(TempStr.Substring(17, 2));
                                 issue.LastUpdated_UTC = new DateTime(Year, Month, Day, Hour, Minute, Second);
 
-                                string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
+                                string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1).Trim();
                                 issue.PolSourceObsInfoIntList = PolSourceObsInfoEnumTxt.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c)).ToList();
                                 lastObs.IssueList.Add(issue);
                             }
-                            catch (Exception ex)
+                            catch (Exception)
                             {
                                 OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
                                 return false;
@@ -321,23 +369,31 @@ namespace CSSPPolSourceSiteReadSubsectorFile
         public PSS()
         {
             PSSTVItemID = 0;
+            SiteNumber = 0;
+            SiteNumberText = "";
             Lat = 0.0f;
             Lng = 0.0f;
             IsActive = false;
             IsPointSource = false;
+            TVText = "";
             PSSAddress = null;
             PSSPictureList = new List<Picture>();
             PSSObsList = new List<Obs>();
+            OldIssueTextList = new List<string>();
         }
 
         public int PSSTVItemID { get; set; }
+        public int SiteNumber { get; set; }
+        public string SiteNumberText { get; set; }
         public float Lat { get; set; }
         public float Lng { get; set; }
         public bool IsActive { get; set; }
         public bool IsPointSource { get; set; }
+        public string TVText { get; set; }
         public Address PSSAddress { get; set; }
         public List<Picture> PSSPictureList { get; set; }
         public List<Obs> PSSObsList { get; set; }
+        public List<string> OldIssueTextList { get; set; }
     }
     public class Address
     {
@@ -365,10 +421,14 @@ namespace CSSPPolSourceSiteReadSubsectorFile
         {
             PictureTVItemID = 0;
             FileName = "";
+            Extension = "";
+            Description = "";
         }
 
         public int PictureTVItemID { get; set; }
         public string FileName { get; set; }
+        public string Extension { get; set; }
+        public string Description { get; set; }
     }
     public class Obs
     {
