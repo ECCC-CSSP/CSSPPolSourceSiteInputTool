@@ -16,12 +16,10 @@ namespace CSSPPolSourceSiteInputTool
 {
     public partial class CSSPPolSourceSiteInputToolForm : Form
     {
-        // all code has been distributed in various files
-   
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SaveDocumentSubsectorText();
-        }
-
+        private CultureInfo currentCulture { get; set; }
+        private CultureInfo currentUICulture { get; set; }
+        private List<Label> PSSLabelList { get; set; }
+        private ReadSubsectorFile readSubsectorFile { get; set; }
+        private BaseEnumService _BaseEnumService { get; set; }
     }
 }

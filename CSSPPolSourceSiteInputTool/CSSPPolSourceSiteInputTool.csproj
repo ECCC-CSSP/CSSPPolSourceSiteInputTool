@@ -57,6 +57,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Constructors.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Events.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FunctionsPrivate.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FunctionsPublic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Properties.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Variables.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <EmbeddedResource Include="CSSPPolSourceSiteInputToolForm.resx">
       <DependentUpon>CSSPPolSourceSiteInputToolForm.cs</DependentUpon>
     </EmbeddedResource>

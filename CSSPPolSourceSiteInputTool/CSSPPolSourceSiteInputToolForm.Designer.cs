@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panelButtonBar = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.textBoxEmpty = new System.Windows.Forms.TextBox();
             this.panelStatusTop = new System.Windows.Forms.Panel();
             this.checkBoxLanguage = new System.Windows.Forms.CheckBox();
             this.lblSubsectorName = new System.Windows.Forms.Label();
@@ -45,8 +47,8 @@
             this.butEdit = new System.Windows.Forms.Button();
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.textBoxEmpty = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
+            this.butRegenerateKMLFile = new System.Windows.Forms.Button();
+            this.butIssues = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panelStatusTop.SuspendLayout();
             this.panelStatusBar.SuspendLayout();
@@ -72,19 +74,37 @@
             this.panelButtonBar.Size = new System.Drawing.Size(1140, 36);
             this.panelButtonBar.TabIndex = 9;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(772, 5);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(120, 23);
+            this.button1.TabIndex = 0;
+            this.button1.Text = "Save in Change";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // textBoxEmpty
+            // 
+            this.textBoxEmpty.Location = new System.Drawing.Point(2, 6);
+            this.textBoxEmpty.Name = "textBoxEmpty";
+            this.textBoxEmpty.Size = new System.Drawing.Size(10, 20);
+            this.textBoxEmpty.TabIndex = 1;
+            // 
             // panelStatusTop
             // 
+            this.panelStatusTop.Controls.Add(this.butRegenerateKMLFile);
             this.panelStatusTop.Controls.Add(this.checkBoxLanguage);
             this.panelStatusTop.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelStatusTop.Location = new System.Drawing.Point(1048, 0);
+            this.panelStatusTop.Location = new System.Drawing.Point(902, 0);
             this.panelStatusTop.Name = "panelStatusTop";
-            this.panelStatusTop.Size = new System.Drawing.Size(90, 34);
+            this.panelStatusTop.Size = new System.Drawing.Size(236, 34);
             this.panelStatusTop.TabIndex = 10;
             // 
             // checkBoxLanguage
             // 
             this.checkBoxLanguage.AutoSize = true;
-            this.checkBoxLanguage.Location = new System.Drawing.Point(10, 10);
+            this.checkBoxLanguage.Location = new System.Drawing.Point(159, 8);
             this.checkBoxLanguage.Name = "checkBoxLanguage";
             this.checkBoxLanguage.Size = new System.Drawing.Size(66, 17);
             this.checkBoxLanguage.TabIndex = 3;
@@ -181,6 +201,7 @@
             // panelShowButons
             // 
             this.panelShowButons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelShowButons.Controls.Add(this.butIssues);
             this.panelShowButons.Controls.Add(this.butMap);
             this.panelShowButons.Controls.Add(this.butPictures);
             this.panelShowButons.Controls.Add(this.butEdit);
@@ -192,7 +213,7 @@
             // 
             // butMap
             // 
-            this.butMap.Location = new System.Drawing.Point(203, 3);
+            this.butMap.Location = new System.Drawing.Point(385, 3);
             this.butMap.Name = "butMap";
             this.butMap.Size = new System.Drawing.Size(59, 23);
             this.butMap.TabIndex = 0;
@@ -202,7 +223,7 @@
             // 
             // butPictures
             // 
-            this.butPictures.Location = new System.Drawing.Point(122, 3);
+            this.butPictures.Location = new System.Drawing.Point(252, 2);
             this.butPictures.Name = "butPictures";
             this.butPictures.Size = new System.Drawing.Size(59, 23);
             this.butPictures.TabIndex = 0;
@@ -232,22 +253,25 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
-            // textBoxEmpty
+            // butRegenerateKMLFile
             // 
-            this.textBoxEmpty.Location = new System.Drawing.Point(2, 6);
-            this.textBoxEmpty.Name = "textBoxEmpty";
-            this.textBoxEmpty.Size = new System.Drawing.Size(10, 20);
-            this.textBoxEmpty.TabIndex = 1;
+            this.butRegenerateKMLFile.Location = new System.Drawing.Point(15, 5);
+            this.butRegenerateKMLFile.Name = "butRegenerateKMLFile";
+            this.butRegenerateKMLFile.Size = new System.Drawing.Size(129, 23);
+            this.butRegenerateKMLFile.TabIndex = 14;
+            this.butRegenerateKMLFile.Text = "Regenerate KML File";
+            this.butRegenerateKMLFile.UseVisualStyleBackColor = true;
+            this.butRegenerateKMLFile.Click += new System.EventHandler(this.butRegenerateKMLFile_Click);
             // 
-            // button1
+            // butIssues
             // 
-            this.button1.Location = new System.Drawing.Point(634, 3);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Save in Change";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.butIssues.Location = new System.Drawing.Point(132, 3);
+            this.butIssues.Name = "butIssues";
+            this.butIssues.Size = new System.Drawing.Size(92, 23);
+            this.butIssues.TabIndex = 1;
+            this.butIssues.Text = "Issues";
+            this.butIssues.UseVisualStyleBackColor = true;
+            this.butIssues.Click += new System.EventHandler(this.butIssues_Click);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
@@ -295,6 +319,8 @@
         private System.Windows.Forms.CheckBox checkBoxLanguage;
         private System.Windows.Forms.TextBox textBoxEmpty;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button butRegenerateKMLFile;
+        private System.Windows.Forms.Button butIssues;
     }
 }
 

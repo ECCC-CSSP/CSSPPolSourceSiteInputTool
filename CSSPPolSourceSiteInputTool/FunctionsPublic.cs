@@ -16,12 +16,7 @@ namespace CSSPPolSourceSiteInputTool
 {
     public partial class CSSPPolSourceSiteInputToolForm : Form
     {
-        // all code has been distributed in various files
-   
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SaveDocumentSubsectorText();
-        }
-
+        #region Functions public
+        #endregion Functions public
     }
 }
