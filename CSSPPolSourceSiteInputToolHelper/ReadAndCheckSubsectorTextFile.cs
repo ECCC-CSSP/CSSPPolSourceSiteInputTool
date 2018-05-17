@@ -8,68 +8,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace CSSPPolSourceSiteReadSubsectorFile
+namespace CSSPPolSourceSiteInputToolHelper
 {
-    public partial class Helper
+    public partial class PolSourceSiteInputToolHelper
     {
-        #region Variables
-        public string CurrentSubsectorName = "";
-        public bool IsSaving = false;
-        public List<string> SubDirectoryList = new List<string>();
-        public int PolSourceSiteTVItemID = 0;
-        public bool IsEditing = false;
-        public bool IsDirty = false;
-        public bool IsReading = false;
-        //public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
-        //publicstring baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
-        public string baseURLEN = "http://localhost:11562/en-CA/PolSource/";
-        public string baseURLFR = "http://localhost:11562/fr-CA/PolSource/";
-        public string BasePath = @"C:\PollutionSourceSites\";
-        #endregion Variables
-
-        #region Properties
-        public SubsectorDoc subsectorDoc { get; set; }
-        public PSS CurrentPSS { get; set; }
-        public Obs CurrentObs { get; set; }
-        public Issue CurrentIssue { get; set; }
-        public Address CurrentAddress { get; set; }
-        public Picture CurrentPicture { get; set; }
-        public BaseEnumService _BaseEnumService { get; set; }
-        public Panel PanelViewAndEdit { get; set; }
-        public Panel PanelPolSourceSite { get; set; }
-        public LanguageEnum Language { get; set; }
-        #endregion Properties
-
-        #region Constructors
-        public Helper(Panel panelViewAndEdit, Panel panelPolSourceSite, LanguageEnum language)
-        {
-            PanelViewAndEdit = panelViewAndEdit;
-            PanelPolSourceSite = panelPolSourceSite;
-            Language = language;
-        }
-        #endregion Constructors
-
-        #region Events
-        public class StatusEventArgs : EventArgs
-        {
-            public StatusEventArgs(string Status)
-            {
-                this.Status = Status;
-            }
-            public string Status { get; set; }
-        }
-        protected virtual void OnStatus(StatusEventArgs e)
-        {
-            UpdateStatus?.Invoke(this, e);
-        }
-
-        public event EventHandler<StatusEventArgs> UpdateStatus;
-        #endregion Events
-
-        #region Functions private
-        #endregion Functions private
-
-        #region Functions public
         public bool CheckAllReadDataOK()
         {
             if (subsectorDoc.Version == null)
@@ -302,232 +244,6 @@ namespace CSSPPolSourceSiteReadSubsectorFile
             }
             return true;
         }
-        public bool GenerateKMLFileForInputTool(string CurrentSubsectorName, string baseURLEN, string baseURLFR, LanguageEnum language)
-        {
-            if (language == LanguageEnum.fr)
-            {
-                _BaseEnumService = new BaseEnumService(LanguageEnum.fr);
-            }
-            else
-            {
-                _BaseEnumService = new BaseEnumService(LanguageEnum.en);
-            }
-
-
-            DirectoryInfo di = new DirectoryInfo($@"{BasePath}\{CurrentSubsectorName}\");
-
-            if (!di.Exists)
-            {
-                try
-                {
-                    di.Create();
-                }
-                catch (Exception ex)
-                {
-                    OnStatus(new StatusEventArgs(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n"));
-                    return false;
-                }
-            }
-
-            StringBuilder sbKML = new StringBuilder();
-
-            sbKML.AppendLine($@"<?xml version=""1.0"" encoding=""UTF-8""?>");
-            sbKML.AppendLine($@"<kml xmlns=""http://www.opengis.net/kml/2.2"" xmlns:gx=""http://www.google.com/kml/ext/2.2"" xmlns:kml=""http://www.opengis.net/kml/2.2"" xmlns:atom=""http://www.w3.org/2005/Atom"">");
-            sbKML.AppendLine($@"<Document>");
-            sbKML.AppendLine($@"	<name>{CurrentSubsectorName} ({subsectorDoc.Subsector.PSSList.Count})</name>");
-            sbKML.AppendLine($@"	<Style id=""s_ylw-pushpin_hl"">");
-            sbKML.AppendLine($@"		<IconStyle>");
-            sbKML.AppendLine($@"			<scale>1.2</scale>");
-            sbKML.AppendLine($@"			<Icon>");
-            sbKML.AppendLine($@"				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square_highlight.png</href>");
-            sbKML.AppendLine($@"			</Icon>");
-            sbKML.AppendLine($@"		</IconStyle>");
-            sbKML.AppendLine($@"		<ListStyle>");
-            sbKML.AppendLine($@"		</ListStyle>");
-            sbKML.AppendLine($@"	</Style>");
-            sbKML.AppendLine($@"	<Style id=""s_ylw-pushpin"">");
-            sbKML.AppendLine($@"		<IconStyle>");
-            sbKML.AppendLine($@"			<scale>1.2</scale>");
-            sbKML.AppendLine($@"			<Icon>");
-            sbKML.AppendLine($@"				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square.png</href>");
-            sbKML.AppendLine($@"			</Icon>");
-            sbKML.AppendLine($@"		</IconStyle>");
-            sbKML.AppendLine($@"		<ListStyle>");
-            sbKML.AppendLine($@"		</ListStyle>");
-            sbKML.AppendLine($@"	</Style>");
-            sbKML.AppendLine($@"	<StyleMap id=""m_ylw-pushpin"">");
-            sbKML.AppendLine($@"		<Pair>");
-            sbKML.AppendLine($@"			<key>normal</key>");
-            sbKML.AppendLine($@"			<styleUrl>#s_ylw-pushpin</styleUrl>");
-            sbKML.AppendLine($@"		</Pair>");
-            sbKML.AppendLine($@"		<Pair>");
-            sbKML.AppendLine($@"			<key>highlight</key>");
-            sbKML.AppendLine($@"			<styleUrl>#s_ylw-pushpin_hl</styleUrl>");
-            sbKML.AppendLine($@"		</Pair>");
-            sbKML.AppendLine($@"	</StyleMap>");
-
-            foreach (PSS pss in subsectorDoc.Subsector.PSSList.OrderBy(c => c.SiteNumberText))
-            {
-                sbKML.AppendLine($@"		<Placemark>");
-                string ActiveText = pss.IsActive == true ? "Active" : "Inactive";
-                string PointSourceText = pss.IsPointSource == true ? "Point Source" : "Non Point Source";
-                sbKML.AppendLine($@"			<name>Site: {pss.SiteNumber}</name>");
-                sbKML.AppendLine($@"            <description><![CDATA[");
-                sbKML.AppendLine($@"            {pss.TVText}<br />");
-                if (language == LanguageEnum.fr)
-                {
-                    string url = baseURLFR.Replace(@"/PolSource/", $@"#!View/a|||{pss.PSSTVItemID}|||30010000003000000000000000001100");
-                    sbKML.AppendLine($@"                <h1><a href=""{url}"">{pss.TVText}</a> ({pss.PSSTVItemID})</h1>");
-                }
-                else
-                {
-                    string url = baseURLEN.Replace(@"/PolSource/", $@"#!View/a|||{pss.PSSTVItemID}|||30010000003000000000000000001100");
-                    sbKML.AppendLine($@"                <h1><a href=""{url}"">{pss.TVText}</a> ({pss.PSSTVItemID})</h1>");
-                }
-
-                if (pss.PSSAddress != null)
-                {
-                    sbKML.AppendLine($@"                <br />");
-                    sbKML.AppendLine($@"                <p>Address: {pss.PSSAddress.StreetNumber} {pss.PSSAddress.StreetName} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)pss.PSSAddress.StreetType)}, {pss.PSSAddress.Municipality}, {pss.PSSAddress.PostalCode}</p>");
-                    sbKML.AppendLine($@"                <br />");
-                }
-
-                if (pss.PSSObs.ObsID != null)
-                {
-                    sbKML.AppendLine($@"                <h3>Last Observation</h3>");
-                    sbKML.AppendLine($@"                <blockquote>");
-                    sbKML.AppendLine($@"                <p>{ActiveText} --- {PointSourceText}</p>");
-                    sbKML.AppendLine($@"                <p><b>Date:</b> {((DateTime)pss.PSSObs.ObsDate).ToString("yyyy MMMM dd")}</p>");
-                    sbKML.AppendLine($@"                <p><b>Observation Last Update (UTC):</b> {((DateTime)pss.PSSObs.LastUpdated_UTC).ToString("yyyy MMMM dd HH:mm:ss")}</p>");
-                    sbKML.AppendLine($@"                <p><b>Old Written Description:</b> {pss.PSSObs.OldWrittenDescription}</p>");
-
-                    if (pss.PSSObs.IssueList.Count > 0)
-                    {
-                        sbKML.AppendLine($@"                <blockquote>");
-                        sbKML.AppendLine($@"                <ol>");
-                        foreach (Issue issue in pss.PSSObs.IssueList)
-                        {
-                            sbKML.AppendLine($@"                <li>");
-                            sbKML.AppendLine($@"                <p><b>Issue Last Update (UTC):</b> {((DateTime)issue.LastUpdated_UTC).ToString("yyyy MMMM dd HH:mm:ss")}</p>");
-
-                            string TVText = "";
-                            for (int i = 0, count = issue.PolSourceObsInfoIntList.Count; i < count; i++)
-                            {
-                                string Temp = _BaseEnumService.GetEnumText_PolSourceObsInfoReportEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntList[i]);
-                                switch ((issue.PolSourceObsInfoIntList[i].ToString()).Substring(0, 3))
-                                {
-                                    case "101":
-                                        {
-                                            Temp = Temp.Replace("Source", "<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Source</strong>");
-                                        }
-                                        break;
-                                    //case "153":
-                                    //    {
-                                    //        Temp = Temp.Replace("Dilution Analyses", "<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Dilution Analyses</strong>");
-                                    //    }
-                                    //    break;
-                                    case "250":
-                                        {
-                                            Temp = Temp.Replace("Pathway", "<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Pathway</strong>");
-                                        }
-                                        break;
-                                    case "900":
-                                        {
-                                            Temp = Temp.Replace("Status", "<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Status</strong>");
-                                        }
-                                        break;
-                                    case "910":
-                                        {
-                                            Temp = Temp.Replace("Risk", "<strong>Risk</strong>");
-                                        }
-                                        break;
-                                    case "110":
-                                    case "120":
-                                    case "122":
-                                    case "151":
-                                    case "152":
-                                    case "153":
-                                    case "155":
-                                    case "156":
-                                    case "157":
-                                    case "163":
-                                    case "166":
-                                    case "167":
-                                    case "170":
-                                    case "171":
-                                    case "172":
-                                    case "173":
-                                    case "176":
-                                    case "178":
-                                    case "181":
-                                    case "182":
-                                    case "183":
-                                    case "185":
-                                    case "186":
-                                    case "187":
-                                    case "190":
-                                    case "191":
-                                    case "192":
-                                    case "193":
-                                    case "194":
-                                    case "196":
-                                    case "198":
-                                    case "199":
-                                    case "220":
-                                    case "930":
-                                        {
-                                            Temp = @"<span>" + Temp + "</span>";
-                                        }
-                                        break;
-                                    default:
-                                        break;
-                                }
-                                TVText = TVText + Temp;
-                            }
-                            sbKML.AppendLine($@"                <p><b>Selected:</b> {TVText}</p>");
-                            sbKML.AppendLine($@"                </li>");
-                        }
-                        sbKML.AppendLine($@"                </ol>");
-                        sbKML.AppendLine($@"                </blockquote>");
-                    }
-                    sbKML.AppendLine($@"                </blockquote>");
-
-
-                    if (pss.PSSPictureList.Count > 0)
-                    {
-                        sbKML.AppendLine($@"                <h3>Images</h3>");
-                        sbKML.AppendLine($@"                <ul>");
-                        foreach (Picture picture in pss.PSSPictureList)
-                        {
-                            string url = @"file:///C:\PollutionSourceSites\" + CurrentSubsectorName + @"\Pictures\" + pss.SiteNumberText + "_" + picture.PictureTVItemID + ".jpg";
-
-                            sbKML.AppendLine($@"                <li><img style=""max-width:600px;"" src=""{url}"" /></li>");
-                        }
-                        sbKML.AppendLine($@"                </ul>");
-                    }
-                }
-
-                sbKML.AppendLine($@"            ]]>");
-                sbKML.AppendLine($@"            </description>");
-                sbKML.AppendLine($@"			<styleUrl>#m_ylw-pushpin</styleUrl>");
-                sbKML.AppendLine($@"			<Point>");
-                sbKML.AppendLine($@"				<coordinates>{pss.Lng},{pss.Lat},0</coordinates>");
-                sbKML.AppendLine($@"			</Point>");
-                sbKML.AppendLine($@"		</Placemark>");
-
-            }
-
-            sbKML.AppendLine($@"</Document>");
-            sbKML.AppendLine($@"</kml>");
-
-            FileInfo fi = new FileInfo($@"{BasePath}\{CurrentSubsectorName}\{CurrentSubsectorName}.kml");
-
-            StreamWriter sw = fi.CreateText();
-            sw.Write(sbKML.ToString());
-            sw.Close();
-
-            return true;
-        }
         public bool ReadPollutionSourceSitesSubsectorFile()
         {
             FileInfo fi = new FileInfo($@"{BasePath}{CurrentSubsectorName}\{CurrentSubsectorName}.txt");
@@ -645,6 +361,66 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                             }
                         }
                         break;
+                    case "LATNEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                lastPSS.LatNew = float.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "LNGNEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                lastPSS.LngNew = float.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "ISACTIVENEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                lastPSS.IsActiveNew = bool.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "ISPOINTSOURCENEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                lastPSS.IsPointSourceNew = bool.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
                     case "SITENUMB":
                         {
                             try
@@ -683,14 +459,81 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Address address = new Address();
-                                address.AddressTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                int temp = 0;
+                                if (int.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out temp))
+                                {
+                                    address.AddressTVItemID = temp;
+                                }
+                                else
+                                {
+                                    address.AddressTVItemID = null;
+                                }
                                 address.Municipality = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
-                                address.AddressType = int.Parse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1));
+                                if (int.TryParse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1), out temp))
+                                {
+                                    address.AddressType = temp;
+                                }
+                                else
+                                {
+                                    address.AddressType = null;
+                                }
                                 address.StreetNumber = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
                                 address.StreetName = LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1);
-                                address.StreetType = int.Parse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1));
+                                if (int.TryParse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1), out temp))
+                                {
+                                    address.StreetType = temp;
+                                }
+                                else
+                                {
+                                    address.StreetType = null;
+                                }
                                 address.PostalCode = LineTxt.Substring(pos7 + 1, pos8 - pos7 - 1);
                                 lastPSS.PSSAddress = address;
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "ADDRESSNEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                Address address = new Address();
+                                int temp = 0;
+                                if (int.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out temp))
+                                {
+                                    address.AddressTVItemID = temp;
+                                }
+                                else
+                                {
+                                    address.AddressTVItemID = null;
+                                }
+                                address.Municipality = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                if (int.TryParse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1), out temp))
+                                {
+                                    address.AddressType = temp;
+                                }
+                                else
+                                {
+                                    address.AddressType = null;
+                                }
+                                address.StreetNumber = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
+                                address.StreetName = LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1);
+                                if (int.TryParse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1), out temp))
+                                {
+                                    address.StreetType = temp;
+                                }
+                                else
+                                {
+                                    address.StreetType = null;
+                                }
+                                address.PostalCode = LineTxt.Substring(pos7 + 1, pos8 - pos7 - 1);
+                                lastPSS.PSSAddressNew = address;
                             }
                             catch (Exception)
                             {
@@ -710,7 +553,101 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                                 picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
+                                picture.IsNew = null;
+                                picture.ToRemove = null;
                                 lastPSS.PSSPictureList.Add(picture);
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "PICTURENEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                Picture picture = new Picture();
+                                picture.PictureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
+                                picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
+                                picture.IsNew = true;
+                                picture.ToRemove = null;
+                                lastPSS.PSSPictureList.Add(picture);
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "PICTURETOREMOVE":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                Picture picture = new Picture();
+                                picture.PictureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
+                                picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
+                                picture.IsNew = null;
+                                picture.ToRemove = true;
+                                lastPSS.PSSPictureList.Add(picture);
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "PICTUREFILENAMENEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Picture lastPicture = lastPSS.PSSPictureList[lastPSS.PSSPictureList.Count - 1];
+
+                                lastPicture.FileNameNew = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "PICTUREEXTENSIONNEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Picture lastPicture = lastPSS.PSSPictureList[lastPSS.PSSPictureList.Count - 1];
+
+                                lastPicture.ExtensionNew = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "PICTUREDESCRIPTIONNEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Picture lastPicture = lastPSS.PSSPictureList[lastPSS.PSSPictureList.Count - 1];
+
+                                lastPicture.DescriptionNew = LineTxt.Substring(pos + 1, pos2 - pos - 1);
                             }
                             catch (Exception)
                             {
@@ -752,7 +689,26 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                             }
                         }
                         break;
-                    case "DESC":
+                    case "OBSDATENEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                
+                                string TempStr = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                                int Year = int.Parse(TempStr.Substring(0, 4));
+                                int Month = int.Parse(TempStr.Substring(5, 2));
+                                int Day = int.Parse(TempStr.Substring(8, 2));
+                                lastPSS.PSSObs.ObsDateNew = new DateTime(Year, Month, Day);
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "OLDWRITTENDESC":
                         {
                             try
                             {
@@ -801,7 +757,58 @@ namespace CSSPPolSourceSiteReadSubsectorFile
                                 int Second = int.Parse(TempStr.Substring(17, 2));
                                 issue.LastUpdated_UTC = new DateTime(Year, Month, Day, Hour, Minute, Second);
 
+                                issue.IsNew = false;
+                                issue.ToRemove = false;
+
                                 string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1).Trim();
+                                issue.PolSourceObsInfoIntList = PolSourceObsInfoEnumTxt.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c)).ToList();
+                                lastPSS.PSSObs.IssueList.Add(issue);
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "ISSUENEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                Issue issue = new Issue();
+                                issue.IssueID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                issue.Ordinal = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
+                                issue.LastUpdated_UTC = null;
+                                issue.IsNew = true;
+                                issue.ToRemove = false;
+
+                                string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1).Trim();
+                                issue.PolSourceObsInfoIntList = PolSourceObsInfoEnumTxt.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c)).ToList();
+                                lastPSS.PSSObs.IssueList.Add(issue);
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "ISSUETOREMOVE":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                Issue issue = new Issue();
+                                issue.IssueID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                issue.Ordinal = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
+                                issue.LastUpdated_UTC = null;
+                                issue.IsNew = false;
+                                issue.ToRemove = true;
+
+                                string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1).Trim();
                                 issue.PolSourceObsInfoIntList = PolSourceObsInfoEnumTxt.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c)).ToList();
                                 lastPSS.PSSObs.IssueList.Add(issue);
                             }
@@ -827,8 +834,5 @@ namespace CSSPPolSourceSiteReadSubsectorFile
             OnStatus(new StatusEventArgs("Pollution Source Sites File OK."));
             return true;
         }
-        #endregion Functions public
     }
-
-
 }

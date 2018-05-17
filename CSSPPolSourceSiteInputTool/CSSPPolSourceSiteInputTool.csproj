@@ -57,24 +57,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Constructors.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Events.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FunctionsPrivate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FunctionsPublic.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Properties.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Variables.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <EmbeddedResource Include="CSSPPolSourceSiteInputToolForm.resx">
       <DependentUpon>CSSPPolSourceSiteInputToolForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -101,9 +83,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSSPPolSourceSiteReadSubsectorFile\CSSPPolSourceSiteReadSubsectorFile.csproj">
-      <Project>{6baccaab-e2df-4530-8209-166aa6556802}</Project>
-      <Name>CSSPPolSourceSiteReadSubsectorFile</Name>
+    <ProjectReference Include="..\CSSPPolSourceSiteInputToolHelper\CSSPPolSourceSiteInputToolHelper.csproj">
+      <Project>{cb88516b-c109-4c5a-b47a-3e03211275ea}</Project>
+      <Name>CSSPPolSourceSiteInputToolHelper</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

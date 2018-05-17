@@ -32,6 +32,7 @@
             this.button1 = new System.Windows.Forms.Button();
             this.textBoxEmpty = new System.Windows.Forms.TextBox();
             this.panelStatusTop = new System.Windows.Forms.Panel();
+            this.butRegenerateKMLFile = new System.Windows.Forms.Button();
             this.checkBoxLanguage = new System.Windows.Forms.CheckBox();
             this.lblSubsectorName = new System.Windows.Forms.Label();
             this.lblSubsector = new System.Windows.Forms.Label();
@@ -42,13 +43,12 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panelPolSourceSite = new System.Windows.Forms.Panel();
             this.panelShowButons = new System.Windows.Forms.Panel();
+            this.butIssues = new System.Windows.Forms.Button();
             this.butMap = new System.Windows.Forms.Button();
             this.butPictures = new System.Windows.Forms.Button();
             this.butEdit = new System.Windows.Forms.Button();
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.butRegenerateKMLFile = new System.Windows.Forms.Button();
-            this.butIssues = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panelStatusTop.SuspendLayout();
             this.panelStatusBar.SuspendLayout();
@@ -100,6 +100,16 @@
             this.panelStatusTop.Name = "panelStatusTop";
             this.panelStatusTop.Size = new System.Drawing.Size(236, 34);
             this.panelStatusTop.TabIndex = 10;
+            // 
+            // butRegenerateKMLFile
+            // 
+            this.butRegenerateKMLFile.Location = new System.Drawing.Point(15, 5);
+            this.butRegenerateKMLFile.Name = "butRegenerateKMLFile";
+            this.butRegenerateKMLFile.Size = new System.Drawing.Size(129, 23);
+            this.butRegenerateKMLFile.TabIndex = 14;
+            this.butRegenerateKMLFile.Text = "Regenerate KML File";
+            this.butRegenerateKMLFile.UseVisualStyleBackColor = true;
+            this.butRegenerateKMLFile.Click += new System.EventHandler(this.butRegenerateKMLFile_Click);
             // 
             // checkBoxLanguage
             // 
@@ -211,6 +221,16 @@
             this.panelShowButons.Size = new System.Drawing.Size(695, 33);
             this.panelShowButons.TabIndex = 0;
             // 
+            // butIssues
+            // 
+            this.butIssues.Location = new System.Drawing.Point(132, 3);
+            this.butIssues.Name = "butIssues";
+            this.butIssues.Size = new System.Drawing.Size(92, 23);
+            this.butIssues.TabIndex = 1;
+            this.butIssues.Text = "Issues";
+            this.butIssues.UseVisualStyleBackColor = true;
+            this.butIssues.Click += new System.EventHandler(this.butIssues_Click);
+            // 
             // butMap
             // 
             this.butMap.Location = new System.Drawing.Point(385, 3);
@@ -252,26 +272,6 @@
             // openFileDialogCSSP
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
-            // 
-            // butRegenerateKMLFile
-            // 
-            this.butRegenerateKMLFile.Location = new System.Drawing.Point(15, 5);
-            this.butRegenerateKMLFile.Name = "butRegenerateKMLFile";
-            this.butRegenerateKMLFile.Size = new System.Drawing.Size(129, 23);
-            this.butRegenerateKMLFile.TabIndex = 14;
-            this.butRegenerateKMLFile.Text = "Regenerate KML File";
-            this.butRegenerateKMLFile.UseVisualStyleBackColor = true;
-            this.butRegenerateKMLFile.Click += new System.EventHandler(this.butRegenerateKMLFile_Click);
-            // 
-            // butIssues
-            // 
-            this.butIssues.Location = new System.Drawing.Point(132, 3);
-            this.butIssues.Name = "butIssues";
-            this.butIssues.Size = new System.Drawing.Size(92, 23);
-            this.butIssues.TabIndex = 1;
-            this.butIssues.Text = "Issues";
-            this.butIssues.UseVisualStyleBackColor = true;
-            this.butIssues.Click += new System.EventHandler(this.butIssues_Click);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
