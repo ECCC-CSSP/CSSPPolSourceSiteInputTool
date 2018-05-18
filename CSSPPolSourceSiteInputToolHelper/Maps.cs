@@ -20,9 +20,10 @@ namespace CSSPPolSourceSiteInputToolHelper
             Label tempLabel = new Label();
 
             tempLabel.AutoSize = true;
-            tempLabel.Location = new Point(10, 4);
+            tempLabel.Location = new Point(30, 30);
             tempLabel.TabIndex = 0;
-            tempLabel.Text = $"ShowMap is working " + PolSourceSiteTVItemID.ToString();
+            tempLabel.Font = new Font(new FontFamily(tempLabel.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+            tempLabel.Text = $"ShowMap is not implemented yet ";
 
             PanelViewAndEdit.Controls.Add(tempLabel);
         }

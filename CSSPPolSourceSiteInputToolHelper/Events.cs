@@ -29,6 +29,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butAddPicture_Click(object sender, EventArgs e)
         {
             AddPicture();
+            DrawPanelPSS();
         }
         private void butRemovePicture_Click(object sender, EventArgs e)
         {
@@ -38,12 +39,26 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butSaveLatLngAndObsAndAddress_Click(object sender, EventArgs e)
         {
             SavePolSourceSiteInfo();
-            IsEditing = false;
-            ShowPolSourceSite();
+            DrawPanelPSS();
+            ReDraw();
         }
         private void butSavePictureFileName_Click(object sender, EventArgs e)
         {
             SavePictureInfo();
+            DrawPanelPSS();
+            ReDraw();
+        }
+        private void ShowPolSourceSiteViaLabel(object sender, EventArgs e)
+        {
+            PolSourceSiteTVItemID = int.Parse(((Label)sender).Tag.ToString());
+            CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
+            ReDraw();
+        }
+        private void ShowPolSourceSiteViaPanel(object sender, EventArgs e)
+        {
+            PolSourceSiteTVItemID = int.Parse(((Panel)sender).Tag.ToString());
+            CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
+            ReDraw();
         }
 
     }

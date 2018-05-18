@@ -694,7 +694,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             try
                             {
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
-                                
+
                                 string TempStr = LineTxt.Substring(pos + 1, pos2 - pos - 1);
                                 int Year = int.Parse(TempStr.Substring(0, 4));
                                 int Month = int.Parse(TempStr.Substring(5, 2));

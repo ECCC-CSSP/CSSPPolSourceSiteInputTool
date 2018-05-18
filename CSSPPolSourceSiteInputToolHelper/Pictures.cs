@@ -66,7 +66,21 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             PanelViewAndEdit.Controls.Clear();
 
-            PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
+            if (CurrentPSS == null)
+            {
+                Label lblMessage = new Label();
+                lblMessage.AutoSize = true;
+                lblMessage.Location = new Point(30, 30);
+                lblMessage.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                lblMessage.Font = new Font(new FontFamily(lblMessage.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                lblMessage.Text = $"Please select a pollution source site items for {(IsEditing ? "editing" : "viewing")} {(ShowOnlyIssues ? "issues" : (ShowOnlyPictures ? "pictures" : "pollution source site"))}";
+
+                PanelViewAndEdit.Controls.Add(lblMessage);
+
+                return;
+            }
+
+            //PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
 
             int pos = 4;
 
@@ -81,14 +95,14 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             pos = lblPictures.Bottom + 10;
 
-            if (pss.PSSPictureList.Count > 0)
+            if (CurrentPSS.PSSPictureList.Count > 0)
             {
-                foreach (Picture picture in pss.PSSPictureList)
+                foreach (Picture picture in CurrentPSS.PSSPictureList)
                 {
                     PictureBox tempPictureBox = new PictureBox();
 
                     tempPictureBox.BorderStyle = BorderStyle.FixedSingle;
-                    tempPictureBox.ImageLocation = $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                    tempPictureBox.ImageLocation = $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                     tempPictureBox.Location = new Point(10, pos);
                     tempPictureBox.Size = new Size(600, 500);
                     tempPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -104,7 +118,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Label lblFileName = new Label();
                         lblFileName.AutoSize = true;
                         lblFileName.Location = new Point(20, pos);
-                        lblFileName.Tag = $"{pss.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                        lblFileName.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                         lblFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                         lblFileName.Text = $@"Server File Name: ";
 
@@ -123,7 +137,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Label lblDescription = new Label();
                         lblDescription.AutoSize = true;
                         lblDescription.Location = new Point(20, pos);
-                        lblDescription.Tag = $"{pss.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                        lblDescription.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                         lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                         lblDescription.Text = $@"Description: ";
 
@@ -183,7 +197,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Button butAddPicture = new Button();
                 butAddPicture.Location = new Point(20, pos);
                 butAddPicture.Text = "Add Picture";
-                butAddPicture.Tag = $"{pss.SiteNumberText}";
+                butAddPicture.Tag = $"{CurrentPSS.SiteNumberText}";
                 butAddPicture.Click += butAddPicture_Click;
 
                 PanelViewAndEdit.Controls.Add(butAddPicture);

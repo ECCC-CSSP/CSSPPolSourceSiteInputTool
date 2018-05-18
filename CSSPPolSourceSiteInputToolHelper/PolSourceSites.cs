@@ -13,29 +13,89 @@ namespace CSSPPolSourceSiteInputToolHelper
 {
     public partial class PolSourceSiteInputToolHelper
     {
-        public void ShowPolSourceSite()
+        public void DrawPanelPSS()
         {
-            Color ChangedColor = Color.Green;
-            Color NoChangedColor = Color.Black;
+            PanelPolSourceSite.Controls.Clear();
 
-            IsReading = true;
-
-            CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
-
-            foreach (var a in PanelPolSourceSite.Controls)
+            int countPSS = 0;
+            foreach (PSS pss in subsectorDoc.Subsector.PSSList.OrderBy(c => c.SiteNumber))
             {
-                if (a.GetType().Name == "Panel")
-                {
-                    ((Panel)a).BackColor = Color.White;
+                Panel tempPanel = new Panel();
 
-                    if (((Panel)a).Tag.ToString() == PolSourceSiteTVItemID.ToString())
-                    {
-                        ((Panel)a).BackColor = Color.LightGreen;
-                    }
-                }
+                tempPanel.BorderStyle = BorderStyle.FixedSingle;
+                tempPanel.Location = new Point(0, countPSS * 40);
+                tempPanel.Size = new Size(PanelPolSourceSite.Width, 40);
+                tempPanel.TabIndex = 0;
+                tempPanel.Tag = pss.PSSTVItemID;
+                tempPanel.Click += ShowPolSourceSiteViaPanel;
+
+                Label lblTVText = new Label();
+
+                lblTVText.AutoSize = true;
+                lblTVText.Location = new Point(10, 4);
+                lblTVText.TabIndex = 0;
+                lblTVText.Tag = pss.PSSTVItemID;
+                lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 8f, FontStyle.Bold);
+                lblTVText.Text = $"{pss.SiteNumber}    {pss.TVText}";
+                lblTVText.Click += ShowPolSourceSiteViaLabel;
+
+                tempPanel.Controls.Add(lblTVText);
+
+                Label lblPSSStatus = new Label();
+
+                lblPSSStatus.AutoSize = true;
+                lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                lblPSSStatus.TabIndex = 0;
+                lblPSSStatus.Tag = pss.PSSTVItemID;
+                lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 8f, FontStyle.Regular);
+                lblPSSStatus.Text = $"bonjour sleijf silefj sleifj sliefj ailsjf sef";
+                lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
+
+                tempPanel.Controls.Add(lblPSSStatus);
+
+                PanelPolSourceSite.Controls.Add(tempPanel);
+
+                countPSS += 1;
             }
 
+        }
+        public void RedrawPolSourceSiteList()
+        {
+            //polSourceSiteInputToolHelper.CurrentSubsectorName = (string)comboBoxSubsectorNames.SelectedItem;
+
+            IsReading = true;
+            if (!ReadPollutionSourceSitesSubsectorFile())
+            {
+                return;
+            }
+            IsReading = false;
+            if (!CheckAllReadDataOK())
+            {
+                return;
+            }
+
+            DrawPanelPSS();
+        }
+        public void ShowPolSourceSite()
+        {
             PanelViewAndEdit.Controls.Clear();
+
+            if (CurrentPSS == null)
+            {
+                Label lblMessage = new Label();
+                lblMessage.AutoSize = true;
+                lblMessage.Location = new Point(30, 30);
+                lblMessage.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                lblMessage.Font = new Font(new FontFamily(lblMessage.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                lblMessage.Text = $"Please select a pollution source site items for {(IsEditing ? "editing" : "viewing")} {(ShowOnlyIssues ? "issues" : (ShowOnlyPictures ? "pictures" : "pollution source site"))}";
+
+                PanelViewAndEdit.Controls.Add(lblMessage);
+
+                return;
+            }
+
+            Color ChangedColor = Color.Green;
+            Color NoChangedColor = Color.Black;
 
             if (Language == LanguageEnum.fr)
             {
@@ -45,8 +105,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 _BaseEnumService = new BaseEnumService(LanguageEnum.en);
             }
-
-            PanelViewAndEdit.Controls.Clear();
 
             int pos = 0;
             int CurrentRight = 0;
@@ -124,6 +182,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                     PanelViewAndEdit.Controls.Add(textBoxLng);
 
                     pos = textBoxLng.Bottom + 20;
+
+                    CurrentRight = textBoxLng.Right + 20;
                 }
                 else
                 {
@@ -137,12 +197,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     PanelViewAndEdit.Controls.Add(lblLngValue);
 
                     pos = lblLngValue.Bottom + 20;
+
+                    CurrentRight = lblLngValue.Right + 20;
                 }
 
                 if (IsEditing)
                 {
                     CheckBox checkBoxIsActive = new CheckBox();
-                    checkBoxIsActive.Location = new Point(20, pos);
+                    checkBoxIsActive.Location = new Point(CurrentRight, lblLat.Top);
                     checkBoxIsActive.Name = "checkBoxIsActive";
                     checkBoxIsActive.AutoSize = true;
                     checkBoxIsActive.Font = new Font(new FontFamily(lblLng.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
@@ -158,7 +220,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     Label lblIsActive = new Label();
                     lblIsActive.AutoSize = true;
-                    lblIsActive.Location = new Point(20, pos);
+                    lblIsActive.Location = new Point(CurrentRight, lblLat.Top);
                     lblIsActive.Font = new Font(new FontFamily(lblIsActive.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     lblIsActive.ForeColor = CurrentPSS.IsActiveNew != null ? ChangedColor : NoChangedColor;
                     lblIsActive.Text = (CurrentPSS.IsActiveNew != null ? ((bool)CurrentPSS.IsActiveNew ? "Is Active" : "Not Active") : ((bool)CurrentPSS.IsActive ? "Is Active" : "Not Active"));
@@ -171,7 +233,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 if (IsEditing)
                 {
                     CheckBox checkBoxIsPointSource = new CheckBox();
-                    checkBoxIsPointSource.Location = new Point(CurrentRight, pos);
+                    checkBoxIsPointSource.Location = new Point(CurrentRight, lblLat.Top);
                     checkBoxIsPointSource.Name = "checkBoxIsPointSource";
                     checkBoxIsPointSource.AutoSize = true;
                     checkBoxIsPointSource.Font = new Font(new FontFamily(lblLng.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
@@ -187,7 +249,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     Label lblIsPointSource = new Label();
                     lblIsPointSource.AutoSize = true;
-                    lblIsPointSource.Location = new Point(CurrentRight, pos);
+                    lblIsPointSource.Location = new Point(CurrentRight, lblLat.Top);
                     lblIsPointSource.Font = new Font(new FontFamily(lblIsPointSource.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     lblIsPointSource.ForeColor = CurrentPSS.IsPointSourceNew != null ? ChangedColor : NoChangedColor;
                     lblIsPointSource.Text = (CurrentPSS.IsPointSourceNew != null ? ((bool)CurrentPSS.IsPointSourceNew ? "Is Point Source" : "Not Point Source") : ((bool)CurrentPSS.IsPointSource ? "Is Point Source" : "Not Point Source"));
@@ -722,11 +784,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblLastObsOld.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ChangedColor : NoChangedColor;
                     if (CurrentPSS.PSSObs.ObsDateNew != null)
                     {
-                        lblLastObsOld.Text = $" ({CurrentPSS.PSSObs.ObsDate})";
+                        lblLastObsOld.Text = $" ({((DateTime)CurrentPSS.PSSObs.ObsDate).ToString("yyyy MMMM dd")})";
                     }
                     else
                     {
-                        lblLastObsOld.Text = $" {CurrentPSS.PSSObs.ObsDate}";
+                        lblLastObsOld.Text = $" {((DateTime)CurrentPSS.PSSObs.ObsDate).ToString("yyyy MMMM dd")}";
                     }
 
                     PanelViewAndEdit.Controls.Add(lblLastObsOld);
@@ -741,7 +803,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblLastObsNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                         lblLastObsNew.Font = new Font(new FontFamily(lblLastObsNew.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                         lblLastObsNew.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ChangedColor : NoChangedColor;
-                        lblLastObsNew.Text = $" {CurrentPSS.PSSObs.ObsDateNew}";
+                        lblLastObsNew.Text = $" {((DateTime)CurrentPSS.PSSObs.ObsDateNew).ToString("yyyy MMMM dd")}";
 
                         PanelViewAndEdit.Controls.Add(lblLastObsNew);
                     }
@@ -764,6 +826,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                     butSaveLatLngObsAndAddress.Click += butSaveLatLngAndObsAndAddress_Click;
 
                     PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
+                }
+
+                if (!IsEditing)
+                {
+                    ShowIssues();
+                    ShowPictures();
                 }
             }
             IsReading = false;
@@ -1053,6 +1121,22 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             SaveSubsectorTextFile();
+        }
+        private void UpdatePolSourceSitePanelColor()
+        {
+            foreach (var a in PanelPolSourceSite.Controls)
+            {
+                if (a.GetType().Name == "Panel")
+                {
+                    ((Panel)a).BackColor = Color.White;
+
+                    if (((Panel)a).Tag.ToString() == PolSourceSiteTVItemID.ToString())
+                    {
+                        ((Panel)a).BackColor = Color.LightGreen;
+                    }
+                }
+            }
+
         }
     }
 }

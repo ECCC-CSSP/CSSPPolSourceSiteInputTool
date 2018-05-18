@@ -19,10 +19,15 @@ namespace CSSPPolSourceSiteInputToolHelper
         public bool IsEditing = false;
         public bool IsDirty = false;
         public bool IsReading = false;
-        //public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
-        //publicstring baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
-        public string baseURLEN = "http://localhost:11562/en-CA/PolSource/";
-        public string baseURLFR = "http://localhost:11562/fr-CA/PolSource/";
+        public bool IsAdmin = false;
+        public bool ShowPolSourceSiteDetails = true;
+        public bool ShowOnlyPictures = false;
+        public bool ShowOnlyIssues = false;
+        public bool ShowOnlyMap = false;
+        public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
+        public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
+        //public string baseURLEN = "http://localhost:11562/en-CA/PolSource/";
+        //public string baseURLFR = "http://localhost:11562/fr-CA/PolSource/";
         public string BasePath = @"C:\PollutionSourceSites\";
         #endregion Variables
 
@@ -45,6 +50,27 @@ namespace CSSPPolSourceSiteInputToolHelper
             PanelViewAndEdit = panelViewAndEdit;
             PanelPolSourceSite = panelPolSourceSite;
             Language = language;
+            subsectorDoc = new SubsectorDoc();
+        }
+        public void ReDraw()
+        {
+            if (ShowOnlyPictures)
+            {
+                ShowPictures();
+            }
+            else if (ShowOnlyIssues)
+            {
+                ShowIssues();
+            }
+            else if (ShowOnlyMap)
+            {
+                ShowMap();
+            }
+            else
+            {
+                ShowPolSourceSite();
+            }
+            UpdatePolSourceSitePanelColor();
         }
         #endregion Constructors
     }

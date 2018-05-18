@@ -29,10 +29,9 @@
         private void InitializeComponent()
         {
             this.panelButtonBar = new System.Windows.Forms.Panel();
-            this.button1 = new System.Windows.Forms.Button();
             this.textBoxEmpty = new System.Windows.Forms.TextBox();
             this.panelStatusTop = new System.Windows.Forms.Panel();
-            this.butRegenerateKMLFile = new System.Windows.Forms.Button();
+            this.butRegenerateAndOpenKMLFile = new System.Windows.Forms.Button();
             this.checkBoxLanguage = new System.Windows.Forms.CheckBox();
             this.lblSubsectorName = new System.Windows.Forms.Label();
             this.lblSubsector = new System.Windows.Forms.Label();
@@ -42,13 +41,15 @@
             this.lblStatusTxt = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panelPolSourceSite = new System.Windows.Forms.Panel();
-            this.panelShowButons = new System.Windows.Forms.Panel();
-            this.butIssues = new System.Windows.Forms.Button();
-            this.butMap = new System.Windows.Forms.Button();
-            this.butPictures = new System.Windows.Forms.Button();
-            this.butEdit = new System.Windows.Forms.Button();
+            this.panelShowButtons = new System.Windows.Forms.Panel();
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
+            this.checkBoxEditing = new System.Windows.Forms.CheckBox();
+            this.radioButtonDetails = new System.Windows.Forms.RadioButton();
+            this.radioButtonOnlyIssues = new System.Windows.Forms.RadioButton();
+            this.radioButtonOnlyPictures = new System.Windows.Forms.RadioButton();
+            this.radioButtonShowMap = new System.Windows.Forms.RadioButton();
+            this.butViewKMLFile = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panelStatusTop.SuspendLayout();
             this.panelStatusBar.SuspendLayout();
@@ -56,13 +57,12 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.panelShowButons.SuspendLayout();
+            this.panelShowButtons.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelButtonBar
             // 
             this.panelButtonBar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelButtonBar.Controls.Add(this.button1);
             this.panelButtonBar.Controls.Add(this.textBoxEmpty);
             this.panelButtonBar.Controls.Add(this.panelStatusTop);
             this.panelButtonBar.Controls.Add(this.lblSubsectorName);
@@ -74,16 +74,6 @@
             this.panelButtonBar.Size = new System.Drawing.Size(1140, 36);
             this.panelButtonBar.TabIndex = 9;
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(772, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(120, 23);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Save in Change";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // textBoxEmpty
             // 
             this.textBoxEmpty.Location = new System.Drawing.Point(2, 6);
@@ -93,33 +83,35 @@
             // 
             // panelStatusTop
             // 
-            this.panelStatusTop.Controls.Add(this.butRegenerateKMLFile);
+            this.panelStatusTop.Controls.Add(this.butViewKMLFile);
+            this.panelStatusTop.Controls.Add(this.butRegenerateAndOpenKMLFile);
             this.panelStatusTop.Controls.Add(this.checkBoxLanguage);
             this.panelStatusTop.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelStatusTop.Location = new System.Drawing.Point(902, 0);
+            this.panelStatusTop.Location = new System.Drawing.Point(678, 0);
             this.panelStatusTop.Name = "panelStatusTop";
-            this.panelStatusTop.Size = new System.Drawing.Size(236, 34);
+            this.panelStatusTop.Size = new System.Drawing.Size(460, 34);
             this.panelStatusTop.TabIndex = 10;
             // 
-            // butRegenerateKMLFile
+            // butRegenerateAndOpenKMLFile
             // 
-            this.butRegenerateKMLFile.Location = new System.Drawing.Point(15, 5);
-            this.butRegenerateKMLFile.Name = "butRegenerateKMLFile";
-            this.butRegenerateKMLFile.Size = new System.Drawing.Size(129, 23);
-            this.butRegenerateKMLFile.TabIndex = 14;
-            this.butRegenerateKMLFile.Text = "Regenerate KML File";
-            this.butRegenerateKMLFile.UseVisualStyleBackColor = true;
-            this.butRegenerateKMLFile.Click += new System.EventHandler(this.butRegenerateKMLFile_Click);
+            this.butRegenerateAndOpenKMLFile.Location = new System.Drawing.Point(15, 5);
+            this.butRegenerateAndOpenKMLFile.Name = "butRegenerateAndOpenKMLFile";
+            this.butRegenerateAndOpenKMLFile.Size = new System.Drawing.Size(141, 23);
+            this.butRegenerateAndOpenKMLFile.TabIndex = 14;
+            this.butRegenerateAndOpenKMLFile.Text = "Regenerate KML File";
+            this.butRegenerateAndOpenKMLFile.UseVisualStyleBackColor = true;
+            this.butRegenerateAndOpenKMLFile.Click += new System.EventHandler(this.butRegenerateKMLFile_Click);
             // 
             // checkBoxLanguage
             // 
             this.checkBoxLanguage.AutoSize = true;
-            this.checkBoxLanguage.Location = new System.Drawing.Point(159, 8);
+            this.checkBoxLanguage.Location = new System.Drawing.Point(383, 8);
             this.checkBoxLanguage.Name = "checkBoxLanguage";
             this.checkBoxLanguage.Size = new System.Drawing.Size(66, 17);
             this.checkBoxLanguage.TabIndex = 3;
             this.checkBoxLanguage.Text = "Français";
             this.checkBoxLanguage.UseVisualStyleBackColor = true;
+            this.checkBoxLanguage.Visible = false;
             // 
             // lblSubsectorName
             // 
@@ -192,7 +184,7 @@
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.panelShowButons);
+            this.splitContainer1.Panel2.Controls.Add(this.panelShowButtons);
             this.splitContainer1.Panel2.Controls.Add(this.panelViewAndEdit);
             this.splitContainer1.Size = new System.Drawing.Size(1054, 535);
             this.splitContainer1.SplitterDistance = 351;
@@ -208,58 +200,19 @@
             this.panelPolSourceSite.Size = new System.Drawing.Size(304, 347);
             this.panelPolSourceSite.TabIndex = 4;
             // 
-            // panelShowButons
+            // panelShowButtons
             // 
-            this.panelShowButons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelShowButons.Controls.Add(this.butIssues);
-            this.panelShowButons.Controls.Add(this.butMap);
-            this.panelShowButons.Controls.Add(this.butPictures);
-            this.panelShowButons.Controls.Add(this.butEdit);
-            this.panelShowButons.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelShowButons.Location = new System.Drawing.Point(0, 0);
-            this.panelShowButons.Name = "panelShowButons";
-            this.panelShowButons.Size = new System.Drawing.Size(695, 33);
-            this.panelShowButons.TabIndex = 0;
-            // 
-            // butIssues
-            // 
-            this.butIssues.Location = new System.Drawing.Point(132, 3);
-            this.butIssues.Name = "butIssues";
-            this.butIssues.Size = new System.Drawing.Size(92, 23);
-            this.butIssues.TabIndex = 1;
-            this.butIssues.Text = "Issues";
-            this.butIssues.UseVisualStyleBackColor = true;
-            this.butIssues.Click += new System.EventHandler(this.butIssues_Click);
-            // 
-            // butMap
-            // 
-            this.butMap.Location = new System.Drawing.Point(385, 3);
-            this.butMap.Name = "butMap";
-            this.butMap.Size = new System.Drawing.Size(59, 23);
-            this.butMap.TabIndex = 0;
-            this.butMap.Text = "Map";
-            this.butMap.UseVisualStyleBackColor = true;
-            this.butMap.Click += new System.EventHandler(this.butMap_Click);
-            // 
-            // butPictures
-            // 
-            this.butPictures.Location = new System.Drawing.Point(252, 2);
-            this.butPictures.Name = "butPictures";
-            this.butPictures.Size = new System.Drawing.Size(59, 23);
-            this.butPictures.TabIndex = 0;
-            this.butPictures.Text = "Pictures";
-            this.butPictures.UseVisualStyleBackColor = true;
-            this.butPictures.Click += new System.EventHandler(this.butPictures_Click);
-            // 
-            // butEdit
-            // 
-            this.butEdit.Location = new System.Drawing.Point(12, 3);
-            this.butEdit.Name = "butEdit";
-            this.butEdit.Size = new System.Drawing.Size(88, 23);
-            this.butEdit.TabIndex = 0;
-            this.butEdit.Text = "Edit";
-            this.butEdit.UseVisualStyleBackColor = true;
-            this.butEdit.Click += new System.EventHandler(this.butEdit_Click);
+            this.panelShowButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelShowButtons.Controls.Add(this.radioButtonShowMap);
+            this.panelShowButtons.Controls.Add(this.radioButtonOnlyPictures);
+            this.panelShowButtons.Controls.Add(this.radioButtonOnlyIssues);
+            this.panelShowButtons.Controls.Add(this.radioButtonDetails);
+            this.panelShowButtons.Controls.Add(this.checkBoxEditing);
+            this.panelShowButtons.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelShowButtons.Location = new System.Drawing.Point(0, 0);
+            this.panelShowButtons.Name = "panelShowButtons";
+            this.panelShowButtons.Size = new System.Drawing.Size(695, 33);
+            this.panelShowButtons.TabIndex = 0;
             // 
             // panelViewAndEdit
             // 
@@ -272,6 +225,73 @@
             // openFileDialogCSSP
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
+            // 
+            // checkBoxEditing
+            // 
+            this.checkBoxEditing.AutoSize = true;
+            this.checkBoxEditing.Location = new System.Drawing.Point(43, 6);
+            this.checkBoxEditing.Name = "checkBoxEditing";
+            this.checkBoxEditing.Size = new System.Drawing.Size(58, 17);
+            this.checkBoxEditing.TabIndex = 2;
+            this.checkBoxEditing.Text = "Editing";
+            this.checkBoxEditing.UseVisualStyleBackColor = true;
+            this.checkBoxEditing.CheckedChanged += new System.EventHandler(this.checkBoxEditing_CheckedChanged);
+            // 
+            // radioButtonDetails
+            // 
+            this.radioButtonDetails.AutoSize = true;
+            this.radioButtonDetails.Checked = true;
+            this.radioButtonDetails.Location = new System.Drawing.Point(142, 6);
+            this.radioButtonDetails.Name = "radioButtonDetails";
+            this.radioButtonDetails.Size = new System.Drawing.Size(57, 17);
+            this.radioButtonDetails.TabIndex = 3;
+            this.radioButtonDetails.TabStop = true;
+            this.radioButtonDetails.Text = "Details";
+            this.radioButtonDetails.UseVisualStyleBackColor = true;
+            this.radioButtonDetails.CheckedChanged += new System.EventHandler(this.radioButtonDetails_CheckedChanged);
+            // 
+            // radioButtonOnlyIssues
+            // 
+            this.radioButtonOnlyIssues.AutoSize = true;
+            this.radioButtonOnlyIssues.Location = new System.Drawing.Point(214, 6);
+            this.radioButtonOnlyIssues.Name = "radioButtonOnlyIssues";
+            this.radioButtonOnlyIssues.Size = new System.Drawing.Size(78, 17);
+            this.radioButtonOnlyIssues.TabIndex = 4;
+            this.radioButtonOnlyIssues.Text = "Only issues";
+            this.radioButtonOnlyIssues.UseVisualStyleBackColor = true;
+            this.radioButtonOnlyIssues.CheckedChanged += new System.EventHandler(this.radioButtonOnlyIssues_CheckedChanged);
+            // 
+            // radioButtonOnlyPictures
+            // 
+            this.radioButtonOnlyPictures.AutoSize = true;
+            this.radioButtonOnlyPictures.Location = new System.Drawing.Point(316, 6);
+            this.radioButtonOnlyPictures.Name = "radioButtonOnlyPictures";
+            this.radioButtonOnlyPictures.Size = new System.Drawing.Size(86, 17);
+            this.radioButtonOnlyPictures.TabIndex = 5;
+            this.radioButtonOnlyPictures.Text = "Only pictures";
+            this.radioButtonOnlyPictures.UseVisualStyleBackColor = true;
+            this.radioButtonOnlyPictures.CheckedChanged += new System.EventHandler(this.radioButtonOnlyPictures_CheckedChanged);
+            // 
+            // radioButtonShowMap
+            // 
+            this.radioButtonShowMap.AutoSize = true;
+            this.radioButtonShowMap.Location = new System.Drawing.Point(448, 6);
+            this.radioButtonShowMap.Name = "radioButtonShowMap";
+            this.radioButtonShowMap.Size = new System.Drawing.Size(46, 17);
+            this.radioButtonShowMap.TabIndex = 6;
+            this.radioButtonShowMap.Text = "Map";
+            this.radioButtonShowMap.UseVisualStyleBackColor = true;
+            this.radioButtonShowMap.CheckedChanged += new System.EventHandler(this.radioButtonShowMap_CheckedChanged);
+            // 
+            // butViewKMLFile
+            // 
+            this.butViewKMLFile.Location = new System.Drawing.Point(180, 5);
+            this.butViewKMLFile.Name = "butViewKMLFile";
+            this.butViewKMLFile.Size = new System.Drawing.Size(141, 23);
+            this.butViewKMLFile.TabIndex = 15;
+            this.butViewKMLFile.Text = "View KML File";
+            this.butViewKMLFile.UseVisualStyleBackColor = true;
+            this.butViewKMLFile.Click += new System.EventHandler(this.butViewKMLFile_Click);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
@@ -293,7 +313,8 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.panelShowButons.ResumeLayout(false);
+            this.panelShowButtons.ResumeLayout(false);
+            this.panelShowButtons.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -312,15 +333,16 @@
         private System.Windows.Forms.Panel panelPolSourceSite;
         private System.Windows.Forms.Label lblSubsectorName;
         private System.Windows.Forms.Panel panelStatusTop;
-        private System.Windows.Forms.Panel panelShowButons;
-        private System.Windows.Forms.Button butEdit;
-        private System.Windows.Forms.Button butMap;
-        private System.Windows.Forms.Button butPictures;
+        private System.Windows.Forms.Panel panelShowButtons;
         private System.Windows.Forms.CheckBox checkBoxLanguage;
         private System.Windows.Forms.TextBox textBoxEmpty;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button butRegenerateKMLFile;
-        private System.Windows.Forms.Button butIssues;
+        private System.Windows.Forms.Button butRegenerateAndOpenKMLFile;
+        private System.Windows.Forms.CheckBox checkBoxEditing;
+        private System.Windows.Forms.RadioButton radioButtonOnlyPictures;
+        private System.Windows.Forms.RadioButton radioButtonOnlyIssues;
+        private System.Windows.Forms.RadioButton radioButtonDetails;
+        private System.Windows.Forms.RadioButton radioButtonShowMap;
+        private System.Windows.Forms.Button butViewKMLFile;
     }
 }
 

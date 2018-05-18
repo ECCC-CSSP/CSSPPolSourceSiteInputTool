@@ -2,6 +2,7 @@
 using CSSPEnumsDLL.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -12,8 +13,35 @@ namespace CSSPPolSourceSiteInputToolHelper
 {
     public partial class PolSourceSiteInputToolHelper
     {
+        public void ViewKMLFileInGoogleEarth()
+        {
+            FileInfo fi = new FileInfo($@"{BasePath}\{CurrentSubsectorName}\{CurrentSubsectorName}.kml");
+
+            if (string.IsNullOrWhiteSpace(CurrentSubsectorName))
+            {
+                OnStatus(new StatusEventArgs($"Error: CurrentSubsectorName is empty"));
+                return;
+            }
+
+            OnStatus(new StatusEventArgs($"Opening file [{fi.FullName}] with Google Earth"));
+
+            FileInfo fiGE = new FileInfo(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe");
+
+            if (fiGE.Exists)
+            {
+                Process.Start(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe", fi.FullName);
+            }
+            else
+            {
+                Process.Start(@"IExplore.exe", fi.FullName);
+            }
+            OnStatus(new StatusEventArgs($""));
+        }
         public void RegenerateSubsectorKMLFile()
         {
+
+            OnStatus(new StatusEventArgs($@"Regenerating subsector KML file for subsector [{CurrentSubsectorName}]"));
+
             if (Language == LanguageEnum.fr)
             {
                 _BaseEnumService = new BaseEnumService(LanguageEnum.fr);
@@ -258,6 +286,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             OnStatus(new StatusEventArgs($@"The file [{fi.FullName}] has been regenerated with new changes"));
             OnStatus(new StatusEventArgs($"Done ... file [{fi.FullName}] has been regenerated"));
+            OnStatus(new StatusEventArgs($""));
         }
     }
 }

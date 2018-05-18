@@ -17,7 +17,21 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             PanelViewAndEdit.Controls.Clear();
 
-            PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
+            if (CurrentPSS == null)
+            {
+                Label lblMessage = new Label();
+                lblMessage.AutoSize = true;
+                lblMessage.Location = new Point(30, 30);
+                lblMessage.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                lblMessage.Font = new Font(new FontFamily(lblMessage.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                lblMessage.Text = $"Please select a pollution source site items for {(IsEditing ? "editing" : "viewing")} {(ShowOnlyIssues ? "issues" : (ShowOnlyPictures ? "pictures" : "pollution source site"))}";
+
+                PanelViewAndEdit.Controls.Add(lblMessage);
+
+                return;
+            }
+
+            //PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
 
             int pos = 4;
 
@@ -114,10 +128,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 pos = lblOldIssue.Bottom + 10;
             }
 
-            if (pss.PSSObs.IssueList.Count > 0)
+            if (CurrentPSS.PSSObs.IssueList.Count > 0)
             {
                 int IssueCount = 0;
-                foreach (Issue issue in pss.PSSObs.IssueList)
+                foreach (Issue issue in CurrentPSS.PSSObs.IssueList)
                 {
                     IssueCount += 1;
 
