@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CSSPEnumsDLL.Enums;
+using CSSPModelsDLL.Models;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -29,7 +32,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butAddPicture_Click(object sender, EventArgs e)
         {
             AddPicture();
-            DrawPanelPSS();
+            RedrawSinglePanelPSS();
         }
         private void butRemovePicture_Click(object sender, EventArgs e)
         {
@@ -39,27 +42,75 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butSaveLatLngAndObsAndAddress_Click(object sender, EventArgs e)
         {
             SavePolSourceSiteInfo();
-            DrawPanelPSS();
+            RedrawSinglePanelPSS();
             ReDraw();
         }
         private void butSavePictureFileName_Click(object sender, EventArgs e)
         {
             SavePictureInfo();
-            DrawPanelPSS();
+            RedrawSinglePanelPSS();
+            ReDraw();
+        }
+        private void butIssueAdd_Click(object sender, EventArgs e)
+        {
+            IssueID = int.Parse(((Button)sender).Tag.ToString());
+            AddIssue(IssueID);
+        }
+        private void butIssueDelete_Click(object sender, EventArgs e)
+        {
+            IssueID = int.Parse(((Button)sender).Tag.ToString());
+            DeleteIssue(IssueID);
+        }
+        private void butIssueMoveLeft_Click(object sender, EventArgs e)
+        {
+            IssueID = int.Parse(((Button)sender).Tag.ToString());
+            IssueMoveLeft(IssueID);
+            ReDraw();
+        }
+        private void butIssueMoveRight_Click(object sender, EventArgs e)
+        {
+            IssueID = int.Parse(((Button)sender).Tag.ToString());
+            IssueMoveRight(IssueID);
+            ReDraw();
+        }
+        private void butIssueUnDelete_Click(object sender, EventArgs e)
+        {
+            IssueID = int.Parse(((Button)sender).Tag.ToString());
+            UnDeleteIssue(IssueID);
+        }
+        private void butIssueSave_Click(object sender, EventArgs e)
+        {
+            IssueID = int.Parse(((Button)sender).Tag.ToString());
+            SaveIssue(IssueID);
+        }
+        private void butIssueSet_Click(object sender, EventArgs e)
+        {
+            IssueID = int.Parse(((Button)sender).Tag.ToString());
             ReDraw();
         }
         private void ShowPolSourceSiteViaLabel(object sender, EventArgs e)
         {
             PolSourceSiteTVItemID = int.Parse(((Label)sender).Tag.ToString());
+            IssueID = 0;
             CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
             ReDraw();
         }
         private void ShowPolSourceSiteViaPanel(object sender, EventArgs e)
         {
             PolSourceSiteTVItemID = int.Parse(((Panel)sender).Tag.ToString());
+            IssueID = 0;
             CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
             ReDraw();
         }
-
+        private void lblIssueText_Click(object sender, EventArgs e)
+        {
+            string DialogText = ((Label)sender).Tag.ToString();
+            MessageBox.Show(DialogText, "Description", MessageBoxButtons.OK);
+        }
+        private void lblIssueText2_Click(object sender, EventArgs e)
+        {
+            Label labelSelected = ((Label)sender);
+            DrawAfterLabelSelectd(labelSelected);
+        }
     }
 }

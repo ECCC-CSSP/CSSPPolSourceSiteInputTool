@@ -452,6 +452,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "TVTEXTNEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+
+                                lastPSS.TVTextNew = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                            }
+                            catch (Exception)
+                            {
+                                OnStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
                     case "ADDRESS":
                         {
                             try
@@ -553,7 +568,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
-                                picture.IsNew = null;
                                 picture.ToRemove = null;
                                 lastPSS.PSSPictureList.Add(picture);
                             }
@@ -575,7 +589,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
-                                picture.IsNew = true;
                                 picture.ToRemove = null;
                                 lastPSS.PSSPictureList.Add(picture);
                             }
@@ -597,7 +610,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
-                                picture.IsNew = null;
                                 picture.ToRemove = true;
                                 lastPSS.PSSPictureList.Add(picture);
                             }
@@ -757,11 +769,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 int Second = int.Parse(TempStr.Substring(17, 2));
                                 issue.LastUpdated_UTC = new DateTime(Year, Month, Day, Hour, Minute, Second);
 
-                                issue.IsNew = false;
                                 issue.ToRemove = false;
 
                                 string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1).Trim();
                                 issue.PolSourceObsInfoIntList = PolSourceObsInfoEnumTxt.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c)).ToList();
+
+                                issue.IsWellFormed = IssueWellFormed(issue, false);
+                                issue.IsCompleted = IssueCompleted(issue, false);
+
                                 lastPSS.PSSObs.IssueList.Add(issue);
                             }
                             catch (Exception)
@@ -776,17 +791,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                             try
                             {
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Issue lastIssue = lastPSS.PSSObs.IssueList[lastPSS.PSSObs.IssueList.Count - 1];
 
-                                Issue issue = new Issue();
-                                issue.IssueID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
-                                issue.Ordinal = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
-                                issue.LastUpdated_UTC = null;
-                                issue.IsNew = true;
-                                issue.ToRemove = false;
+                                string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos + 1, pos2 - pos - 1).Trim();
+                                lastIssue.PolSourceObsInfoIntListNew = PolSourceObsInfoEnumTxt.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c)).ToList();
 
-                                string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1).Trim();
-                                issue.PolSourceObsInfoIntList = PolSourceObsInfoEnumTxt.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c)).ToList();
-                                lastPSS.PSSObs.IssueList.Add(issue);
+                                lastIssue.IsWellFormed = IssueWellFormed(lastIssue, true);
+                                lastIssue.IsCompleted = IssueCompleted(lastIssue, true);
                             }
                             catch (Exception)
                             {
@@ -800,17 +811,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                             try
                             {
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Issue lastIssue = lastPSS.PSSObs.IssueList[lastPSS.PSSObs.IssueList.Count - 1];
 
-                                Issue issue = new Issue();
-                                issue.IssueID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
-                                issue.Ordinal = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
-                                issue.LastUpdated_UTC = null;
-                                issue.IsNew = false;
-                                issue.ToRemove = true;
-
-                                string PolSourceObsInfoEnumTxt = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1).Trim();
-                                issue.PolSourceObsInfoIntList = PolSourceObsInfoEnumTxt.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).Select(c => int.Parse(c)).ToList();
-                                lastPSS.PSSObs.IssueList.Add(issue);
+                                lastIssue.ToRemove = true;
                             }
                             catch (Exception)
                             {

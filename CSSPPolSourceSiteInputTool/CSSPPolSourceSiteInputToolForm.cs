@@ -41,12 +41,20 @@ namespace CSSPPolSourceSiteInputTool
         #endregion Constructors
 
         #region Events
+        private void butPSSAdd_Click(object sender, EventArgs e)
+        {
+            polSourceSiteInputToolHelper.PSSAdd();
+            polSourceSiteInputToolHelper.SaveSubsectorTextFile();
+            polSourceSiteInputToolHelper.RedrawPolSourceSiteList();
+        }
         private void butRegenerateKMLFile_Click(object sender, EventArgs e)
         {
             textBoxEmpty.Focus();
             if (polSourceSiteInputToolHelper != null)
             {
+                lblStatus.Text = "Regenerating Subsector KML File ...";
                 polSourceSiteInputToolHelper.RegenerateSubsectorKMLFile();
+                lblStatus.Text = "Subsector KML File was regenerated ...";
             }
         }
         private void butViewKMLFile_Click(object sender, EventArgs e)
@@ -62,10 +70,35 @@ namespace CSSPPolSourceSiteInputTool
             if (checkBoxEditing.Checked)
             {
                 polSourceSiteInputToolHelper.IsEditing = true;
+                if (polSourceSiteInputToolHelper.ShowOnlyIssues)
+                {
+                    checkBoxMoreInfo.Enabled = true;
+                }
+                else
+                {
+                    checkBoxMoreInfo.Enabled = false;
+                }
             }
             else
             {
                 polSourceSiteInputToolHelper.IsEditing = false;
+                checkBoxMoreInfo.Enabled = false;
+            }
+
+            textBoxEmpty.Focus();
+
+            polSourceSiteInputToolHelper.ReDraw();
+
+        }
+        private void checkBoxMoreInfo_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxMoreInfo.Checked)
+            {
+                polSourceSiteInputToolHelper.MoreInfo = true;
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.MoreInfo = false;
             }
 
             textBoxEmpty.Focus();
@@ -76,6 +109,8 @@ namespace CSSPPolSourceSiteInputTool
         private void comboBoxSubsectorNames_SelectedIndexChanged(object sender, EventArgs e)
         {
             polSourceSiteInputToolHelper.CurrentSubsectorName = (string)comboBoxSubsectorNames.SelectedItem;
+            polSourceSiteInputToolHelper.CurrentPSS = null;
+            polSourceSiteInputToolHelper.PolSourceSiteTVItemID = 0;
             polSourceSiteInputToolHelper.RedrawPolSourceSiteList();
             panelViewAndEdit.Controls.Clear();
             polSourceSiteInputToolHelper.CurrentPSS = null;
@@ -106,6 +141,16 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.ShowOnlyPictures = false;
             polSourceSiteInputToolHelper.ShowOnlyMap = false;
 
+            if (polSourceSiteInputToolHelper.IsEditing)
+            {
+                checkBoxMoreInfo.Enabled = true;
+            }
+            else
+            {
+                checkBoxMoreInfo.Enabled = false;
+            }
+
+
             polSourceSiteInputToolHelper.ReDraw();
         }
 
@@ -127,7 +172,7 @@ namespace CSSPPolSourceSiteInputTool
 
             polSourceSiteInputToolHelper.ReDraw();
         }
-        private void splitContainer1_Resize(object sender, EventArgs e)
+        private void splitContainer1_SizeChanged(object sender, EventArgs e)
         {
             textBoxEmpty.Focus();
             if (polSourceSiteInputToolHelper != null)
@@ -141,8 +186,8 @@ namespace CSSPPolSourceSiteInputTool
             textBoxEmpty.Focus();
             if (polSourceSiteInputToolHelper != null)
             {
-                    polSourceSiteInputToolHelper.DrawPanelPSS();
-                    polSourceSiteInputToolHelper.ReDraw();
+                polSourceSiteInputToolHelper.DrawPanelPSS();
+                polSourceSiteInputToolHelper.ReDraw();
             }
         }
         #endregion Events

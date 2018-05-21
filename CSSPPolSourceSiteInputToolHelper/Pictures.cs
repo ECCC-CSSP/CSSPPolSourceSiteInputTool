@@ -64,10 +64,13 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public void ShowPictures()
         {
-            PanelViewAndEdit.Controls.Clear();
+            int Y = 0;
+            int X = 0;
 
             if (CurrentPSS == null)
             {
+                PanelViewAndEdit.Controls.Clear();
+
                 Label lblMessage = new Label();
                 lblMessage.AutoSize = true;
                 lblMessage.Location = new Point(30, 30);
@@ -80,30 +83,49 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return;
             }
 
-            //PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
+            if (Language == LanguageEnum.fr)
+            {
+                _BaseEnumService = new BaseEnumService(LanguageEnum.fr);
+            }
+            else
+            {
+                _BaseEnumService = new BaseEnumService(LanguageEnum.en);
+            }
 
-            int pos = 4;
+            if (IsEditing || ShowOnlyPictures)
+            {
+                PanelViewAndEdit.Controls.Clear();
+                Y = 4;
+            }
+            else
+            {
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+            }
+
+            X = 10;
 
             Label lblPictures = new Label();
             lblPictures.AutoSize = true;
-            lblPictures.Location = new Point(10, pos);
+            lblPictures.Location = new Point(X, Y);
             lblPictures.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
             lblPictures.Font = new Font(new FontFamily(lblPictures.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
             lblPictures.Text = $"Pictures";
 
             PanelViewAndEdit.Controls.Add(lblPictures);
 
-            pos = lblPictures.Bottom + 10;
+            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
             if (CurrentPSS.PSSPictureList.Count > 0)
             {
                 foreach (Picture picture in CurrentPSS.PSSPictureList)
                 {
+                    X = 10;
+
                     PictureBox tempPictureBox = new PictureBox();
 
                     tempPictureBox.BorderStyle = BorderStyle.FixedSingle;
                     tempPictureBox.ImageLocation = $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
-                    tempPictureBox.Location = new Point(10, pos);
+                    tempPictureBox.Location = new Point(X, Y);
                     tempPictureBox.Size = new Size(600, 500);
                     tempPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
                     tempPictureBox.TabIndex = 0;
@@ -111,40 +133,46 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(tempPictureBox);
 
-                    pos = tempPictureBox.Bottom + 10;
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                     if (IsEditing)
                     {
+                        X = 20;
                         Label lblFileName = new Label();
                         lblFileName.AutoSize = true;
-                        lblFileName.Location = new Point(20, pos);
+                        lblFileName.Location = new Point(X, Y);
                         lblFileName.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                         lblFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                         lblFileName.Text = $@"Server File Name: ";
 
                         PanelViewAndEdit.Controls.Add(lblFileName);
 
+                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
+
                         TextBox textFileName = new TextBox();
-                        textFileName.Location = new Point(lblFileName.Right + 5, pos);
+                        textFileName.Location = new Point(X, Y);
                         textFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                         textFileName.Width = 300;
                         textFileName.Text = picture.FileName;
 
                         PanelViewAndEdit.Controls.Add(textFileName);
 
-                        pos = textFileName.Bottom + 10;
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                        X = 20;
 
                         Label lblDescription = new Label();
                         lblDescription.AutoSize = true;
-                        lblDescription.Location = new Point(20, pos);
+                        lblDescription.Location = new Point(20, Y);
                         lblDescription.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                         lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                         lblDescription.Text = $@"Description: ";
 
                         PanelViewAndEdit.Controls.Add(lblDescription);
 
+                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
+
                         TextBox textDescription = new TextBox();
-                        textDescription.Location = new Point(lblDescription.Right + 5, pos);
+                        textDescription.Location = new Point(X, Y);
                         textDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                         textDescription.Width = 300;
                         textDescription.Height = 100;
@@ -153,18 +181,21 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                         PanelViewAndEdit.Controls.Add(textDescription);
 
-                        pos = textDescription.Bottom + 10;
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                        X = 120;
 
                         Button butSavePictureFileName = new Button();
-                        butSavePictureFileName.Location = new Point(120, pos);
+                        butSavePictureFileName.Location = new Point(X, Y);
                         butSavePictureFileName.Text = "Save File Name";
                         butSavePictureFileName.Tag = $"{picture.PictureTVItemID}";
                         butSavePictureFileName.Click += butSavePictureFileName_Click;
 
                         PanelViewAndEdit.Controls.Add(butSavePictureFileName);
 
+                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
+
                         Button butRemovePicture = new Button();
-                        butRemovePicture.Location = new Point(butSavePictureFileName.Right + 20, pos);
+                        butRemovePicture.Location = new Point(X, Y);
                         butRemovePicture.Text = "Remove";
                         butRemovePicture.Tag = $"{picture.PictureTVItemID}";
                         butRemovePicture.Click += butRemovePicture_Click;
@@ -172,7 +203,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         PanelViewAndEdit.Controls.Add(butRemovePicture);
 
 
-                        pos = butRemovePicture.Bottom + 50;
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 50;
                     }
                 }
             }
@@ -182,7 +213,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     Label lblEmpty = new Label();
                     lblEmpty.AutoSize = true;
-                    lblEmpty.Location = new Point(30, pos);
+                    lblEmpty.Location = new Point(30, Y);
                     lblEmpty.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                     lblEmpty.Font = new Font(new FontFamily(lblEmpty.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     lblEmpty.Text = $"No Picture";
@@ -191,11 +222,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            pos += 20;
+            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
             if (IsEditing)
             {
                 Button butAddPicture = new Button();
-                butAddPicture.Location = new Point(20, pos);
+                butAddPicture.Location = new Point(20, Y);
                 butAddPicture.Text = "Add Picture";
                 butAddPicture.Tag = $"{CurrentPSS.SiteNumberText}";
                 butAddPicture.Click += butAddPicture_Click;

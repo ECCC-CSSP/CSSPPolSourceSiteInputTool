@@ -60,7 +60,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         public string Description { get; set; } = null;
         public string DescriptionNew { get; set; } = null;
         public bool? ToRemove { get; set; } = null;
-        public bool? IsNew { get; set; } = null;
     }
     public class Obs
     {
@@ -71,7 +70,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         public DateTime? ObsDateNew { get; set; } = null;
         public List<Issue> IssueList { get; set; } = new List<Issue>();
         public bool? ToRemove { get; set; } = null;
-        public bool? IsNew { get; set; } = null;
     }
     public class Issue
     {
@@ -83,7 +81,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public List<PolSourceObsInfoEnum> PolSourceObsInfoEnumList { get; set; } = new List<PolSourceObsInfoEnum>();
         public List<PolSourceObsInfoEnum> PolSourceObsInfoEnumListNew { get; set; } = new List<PolSourceObsInfoEnum>();
         public bool? ToRemove { get; set; } = null;
-        public bool? IsNew { get; set; } = null;
+        public bool? IsWellFormed { get; set; } = null;
+        public bool? IsCompleted { get; set; } = null;
     }
 
 }

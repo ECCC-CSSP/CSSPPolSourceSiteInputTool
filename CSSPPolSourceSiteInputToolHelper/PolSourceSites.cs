@@ -23,8 +23,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Panel tempPanel = new Panel();
 
                 tempPanel.BorderStyle = BorderStyle.FixedSingle;
-                tempPanel.Location = new Point(0, countPSS * 40);
-                tempPanel.Size = new Size(PanelPolSourceSite.Width, 40);
+                tempPanel.Location = new Point(0, countPSS * 44);
+                tempPanel.Size = new Size(PanelPolSourceSite.Width, 44);
                 tempPanel.TabIndex = 0;
                 tempPanel.Tag = pss.PSSTVItemID;
                 tempPanel.Click += ShowPolSourceSiteViaPanel;
@@ -35,8 +35,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.Location = new Point(10, 4);
                 lblTVText.TabIndex = 0;
                 lblTVText.Tag = pss.PSSTVItemID;
-                lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 8f, FontStyle.Bold);
-                lblTVText.Text = $"{pss.SiteNumber}    {pss.TVText}";
+                lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                if (!string.IsNullOrWhiteSpace(pss.TVTextNew))
+                {
+                    lblTVText.Text = $"{pss.SiteNumber}    {pss.TVTextNew}";
+                }
+                else
+                {
+                    lblTVText.Text = $"{pss.SiteNumber}    {pss.TVText}";
+                }
                 lblTVText.Click += ShowPolSourceSiteViaLabel;
 
                 tempPanel.Controls.Add(lblTVText);
@@ -47,17 +54,173 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
                 lblPSSStatus.TabIndex = 0;
                 lblPSSStatus.Tag = pss.PSSTVItemID;
-                lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 8f, FontStyle.Regular);
-                lblPSSStatus.Text = $"bonjour sleijf silefj sleifj sliefj ailsjf sef";
+                lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                lblPSSStatus.Text = $"Good";
                 lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
 
+
                 tempPanel.Controls.Add(lblPSSStatus);
+
+                foreach (Issue issue in pss.PSSObs.IssueList)
+                {
+                    if (issue.PolSourceObsInfoIntListNew.Count > 0)
+                    {
+                        issue.IsWellFormed = IssueWellFormed(issue, true);
+                        issue.IsCompleted = IssueCompleted(issue, true);
+                    }
+                    else
+                    {
+                        issue.IsWellFormed = IssueWellFormed(issue, false);
+                        issue.IsCompleted = IssueCompleted(issue, false);
+                    }
+
+                    if (issue.IsWellFormed == false)
+                    {
+                        tempPanel.BackColor = BackColorNotWellFormed;
+                        lblPSSStatus.Text = $"Not Well Formed";
+                        break;
+                    }
+                    if (issue.IsCompleted == false)
+                    {
+                        tempPanel.BackColor = BackColorNotCompleted;
+                        lblPSSStatus.Text = $"Not Completed";
+                        break;
+                    }
+                }
 
                 PanelPolSourceSite.Controls.Add(tempPanel);
 
                 countPSS += 1;
             }
+        }
+        public void PSSAdd()
+        {
+            if (subsectorDoc.Subsector.SubsectorName != null)
+            {
+                PSS pss = new PSS();
+                float LastLat = 0.0f;
+                float LastLng = 0.0f;
+                int MaxPSSTVItemID = 10000000;
+                if (subsectorDoc.Subsector.PSSList.Count > 0)
+                {
+                    int Max = subsectorDoc.Subsector.PSSList.Max(c => c.PSSTVItemID).Value;
+                    if (Max >= MaxPSSTVItemID)
+                    {
+                        MaxPSSTVItemID = Max + 1;
+                    }
+                    LastLat = ((float)subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1].Lat);
+                    LastLng = ((float)subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1].Lng);
+                }
+                pss.PSSTVItemID = MaxPSSTVItemID;
+                pss.SiteNumber = subsectorDoc.Subsector.PSSList.Max(c => c.SiteNumber).Value + 1;
+                pss.SiteNumberText = "00000".Substring(0, "00000".Length - pss.SiteNumber.ToString().Length) + pss.SiteNumber.ToString();
+                pss.Lat = LastLat + 0.1f;
+                pss.LatNew = null;
+                pss.Lng = LastLng + 0.1f;
+                pss.LngNew = null;
+                pss.IsActive = true;
+                pss.IsActiveNew = false;
+                pss.IsPointSource = false;
+                pss.IsPointSourceNew = false;
+                pss.TVText = "New PSS";
 
+                subsectorDoc.Subsector.PSSList.Add(pss);
+
+                Obs obs = new Obs();
+                obs.ObsID = 10000000;
+                obs.OldWrittenDescription = "";
+                obs.LastUpdated_UTC = DateTime.Now;
+                obs.ObsDate = DateTime.Now;
+
+                pss.PSSObs = obs;
+
+                Issue issue = new Issue();
+                issue.IssueID = 10000000;
+                issue.Ordinal = 0;
+                issue.LastUpdated_UTC = DateTime.Now;
+
+                pss.PSSObs.IssueList.Add(issue);
+            }
+        }
+        public void RedrawSinglePanelPSS()
+        {
+            Panel panel = new Panel();
+            PSS pss = new PSS();
+
+            if (PolSourceSiteTVItemID > 0)
+            {
+                foreach (Panel panel2 in PanelPolSourceSite.Controls)
+                {
+                    int PSSTVItemID = int.Parse(panel2.Tag.ToString());
+                    if (PolSourceSiteTVItemID == PSSTVItemID)
+                    {
+                        panel = panel2;
+                        pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
+                        break;
+                    }
+                }
+            }
+            panel.Controls.Clear();
+
+            if (pss != null)
+            {
+                Label lblTVText = new Label();
+
+                lblTVText.AutoSize = true;
+                lblTVText.Location = new Point(10, 4);
+                lblTVText.TabIndex = 0;
+                lblTVText.Tag = pss.PSSTVItemID;
+                lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                if (!string.IsNullOrWhiteSpace(pss.TVTextNew))
+                {
+                    lblTVText.Text = $"{pss.SiteNumber}    {pss.TVTextNew}";
+                }
+                else
+                {
+                    lblTVText.Text = $"{pss.SiteNumber}    {pss.TVText}";
+                }
+                lblTVText.Click += ShowPolSourceSiteViaLabel;
+
+                panel.Controls.Add(lblTVText);
+
+                Label lblPSSStatus = new Label();
+
+                lblPSSStatus.AutoSize = true;
+                lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                lblPSSStatus.TabIndex = 0;
+                lblPSSStatus.Tag = pss.PSSTVItemID;
+                lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                lblPSSStatus.Text = $"Good";
+                lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
+
+                panel.Controls.Add(lblPSSStatus);
+
+                foreach (Issue issue in pss.PSSObs.IssueList)
+                {
+                    if (issue.PolSourceObsInfoIntListNew.Count > 0)
+                    {
+                        issue.IsWellFormed = IssueWellFormed(issue, true);
+                        issue.IsCompleted = IssueCompleted(issue, true);
+                    }
+                    else
+                    {
+                        issue.IsWellFormed = IssueWellFormed(issue, false);
+                        issue.IsCompleted = IssueCompleted(issue, false);
+                    }
+                    if (issue.IsWellFormed == false)
+                    {
+                        panel.BackColor = BackColorNotWellFormed;
+                        lblPSSStatus.Text = $"Not Well Formed";
+                        break;
+                    }
+                    if (issue.IsCompleted == false)
+                    {
+                        panel.BackColor = BackColorNotCompleted;
+                        lblPSSStatus.Text = $"Not Completed";
+                        break;
+                    }
+                }
+            }
         }
         public void RedrawPolSourceSiteList()
         {
@@ -94,9 +257,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return;
             }
 
-            Color ChangedColor = Color.Green;
-            Color NoChangedColor = Color.Black;
-
             if (Language == LanguageEnum.fr)
             {
                 _BaseEnumService = new BaseEnumService(LanguageEnum.fr);
@@ -106,8 +266,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 _BaseEnumService = new BaseEnumService(LanguageEnum.en);
             }
 
-            int pos = 0;
-            int CurrentRight = 0;
+            int Y = 0;
+            int X = 10;
             if (CurrentPSS != null)
             {
                 Label lblTVText = new Label();
@@ -119,22 +279,22 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 PanelViewAndEdit.Controls.Add(lblTVText);
 
-                pos = lblTVText.Bottom + 20;
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
                 Label lblLat = new Label();
                 lblLat.AutoSize = true;
-                lblLat.Location = new Point(20, pos);
+                lblLat.Location = new Point(20, Y);
                 lblLat.Font = new Font(new FontFamily(lblLat.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblLat.ForeColor = CurrentPSS.LatNew != null ? ChangedColor : NoChangedColor;
+                lblLat.ForeColor = CurrentPSS.LatNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                 lblLat.Text = $@"Lat: " + $@"{(CurrentPSS.LatNew != null ? $" ({((float)CurrentPSS.Lat).ToString("F5")})" : "")}";
 
                 PanelViewAndEdit.Controls.Add(lblLat);
 
-                CurrentRight = lblLat.Right + 5;
+                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
                 if (IsEditing)
                 {
                     TextBox textBoxLat = new TextBox();
-                    textBoxLat.Location = new Point(CurrentRight, pos);
+                    textBoxLat.Location = new Point(X, Y);
                     textBoxLat.Name = "textBoxLat";
                     textBoxLat.Font = new Font(new FontFamily(lblLat.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     textBoxLat.Width = 100;
@@ -142,38 +302,38 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(textBoxLat);
 
-                    CurrentRight = textBoxLat.Right + 5;
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
 
                 }
                 else
                 {
                     Label lblLatValue = new Label();
                     lblLatValue.AutoSize = true;
-                    lblLatValue.Location = new Point(CurrentRight, pos);
+                    lblLatValue.Location = new Point(X, Y);
                     lblLatValue.Font = new Font(new FontFamily(lblLatValue.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblLatValue.ForeColor = CurrentPSS.LatNew != null ? ChangedColor : NoChangedColor;
+                    lblLatValue.ForeColor = CurrentPSS.LatNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                     lblLatValue.Text = (CurrentPSS.LatNew != null ? (float)CurrentPSS.LatNew : (float)CurrentPSS.Lat).ToString("F5");
 
                     PanelViewAndEdit.Controls.Add(lblLatValue);
 
-                    CurrentRight = lblLatValue.Right + 5;
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
                 }
 
                 Label lblLng = new Label();
                 lblLng.AutoSize = true;
-                lblLng.Location = new Point(CurrentRight, pos);
+                lblLng.Location = new Point(X, Y);
                 lblLng.Font = new Font(new FontFamily(lblLng.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblLng.ForeColor = CurrentPSS.LngNew != null ? ChangedColor : NoChangedColor;
+                lblLng.ForeColor = CurrentPSS.LngNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                 lblLng.Text = $@"Lng: " + $@"{(CurrentPSS.LngNew != null ? $" ({((float)CurrentPSS.Lng).ToString("F5")})" : "")}";
 
                 PanelViewAndEdit.Controls.Add(lblLng);
 
-                CurrentRight = lblLng.Right + 5;
+                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
 
                 if (IsEditing)
                 {
                     TextBox textBoxLng = new TextBox();
-                    textBoxLng.Location = new Point(CurrentRight, pos);
+                    textBoxLng.Location = new Point(X, Y);
                     textBoxLng.Name = "textBoxLng";
                     textBoxLng.Font = new Font(new FontFamily(lblLng.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     textBoxLng.Width = 100;
@@ -181,89 +341,89 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(textBoxLng);
 
-                    pos = textBoxLng.Bottom + 20;
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
-                    CurrentRight = textBoxLng.Right + 20;
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
                 }
                 else
                 {
                     Label lblLngValue = new Label();
                     lblLngValue.AutoSize = true;
-                    lblLngValue.Location = new Point(CurrentRight, pos);
+                    lblLngValue.Location = new Point(X, Y);
                     lblLngValue.Font = new Font(new FontFamily(lblLngValue.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblLngValue.ForeColor = CurrentPSS.LngNew != null ? ChangedColor : NoChangedColor;
+                    lblLngValue.ForeColor = CurrentPSS.LngNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                     lblLngValue.Text = CurrentPSS.LngNew != null ? ((float)CurrentPSS.LngNew).ToString() : ((float)CurrentPSS.Lng).ToString("F5");
 
                     PanelViewAndEdit.Controls.Add(lblLngValue);
 
-                    pos = lblLngValue.Bottom + 20;
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
-                    CurrentRight = lblLngValue.Right + 20;
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
                 }
 
                 if (IsEditing)
                 {
                     CheckBox checkBoxIsActive = new CheckBox();
-                    checkBoxIsActive.Location = new Point(CurrentRight, lblLat.Top);
+                    checkBoxIsActive.Location = new Point(X, lblLat.Top);
                     checkBoxIsActive.Name = "checkBoxIsActive";
                     checkBoxIsActive.AutoSize = true;
                     checkBoxIsActive.Font = new Font(new FontFamily(lblLng.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    checkBoxIsActive.ForeColor = CurrentPSS.IsActiveNew != null ? ChangedColor : NoChangedColor;
+                    checkBoxIsActive.ForeColor = CurrentPSS.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                     checkBoxIsActive.Text = (CurrentPSS.IsActiveNew != null ? ((bool)CurrentPSS.IsActiveNew ? "Is Active" : "Not Active") : ((bool)CurrentPSS.IsActive ? "Is Active" : "Not Active"));
                     checkBoxIsActive.Checked = (CurrentPSS.IsActiveNew != null ? (bool)CurrentPSS.IsActiveNew : (bool)CurrentPSS.IsActive);
 
                     PanelViewAndEdit.Controls.Add(checkBoxIsActive);
 
-                    CurrentRight = checkBoxIsActive.Right + 5;
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
                 }
                 else
                 {
                     Label lblIsActive = new Label();
                     lblIsActive.AutoSize = true;
-                    lblIsActive.Location = new Point(CurrentRight, lblLat.Top);
+                    lblIsActive.Location = new Point(X, lblLat.Top);
                     lblIsActive.Font = new Font(new FontFamily(lblIsActive.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblIsActive.ForeColor = CurrentPSS.IsActiveNew != null ? ChangedColor : NoChangedColor;
+                    lblIsActive.ForeColor = CurrentPSS.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                     lblIsActive.Text = (CurrentPSS.IsActiveNew != null ? ((bool)CurrentPSS.IsActiveNew ? "Is Active" : "Not Active") : ((bool)CurrentPSS.IsActive ? "Is Active" : "Not Active"));
 
                     PanelViewAndEdit.Controls.Add(lblIsActive);
 
-                    CurrentRight = lblIsActive.Right + 5;
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
                 }
 
                 if (IsEditing)
                 {
                     CheckBox checkBoxIsPointSource = new CheckBox();
-                    checkBoxIsPointSource.Location = new Point(CurrentRight, lblLat.Top);
+                    checkBoxIsPointSource.Location = new Point(X, lblLat.Top);
                     checkBoxIsPointSource.Name = "checkBoxIsPointSource";
                     checkBoxIsPointSource.AutoSize = true;
                     checkBoxIsPointSource.Font = new Font(new FontFamily(lblLng.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    checkBoxIsPointSource.ForeColor = CurrentPSS.IsPointSourceNew != null ? ChangedColor : NoChangedColor;
+                    checkBoxIsPointSource.ForeColor = CurrentPSS.IsPointSourceNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                     checkBoxIsPointSource.Text = (CurrentPSS.IsPointSourceNew != null ? ((bool)CurrentPSS.IsPointSourceNew ? "Is Point Source" : "Not Point Source") : ((bool)CurrentPSS.IsPointSource ? "Is Point Source" : "Not Point Source"));
                     checkBoxIsPointSource.Checked = (CurrentPSS.IsPointSourceNew != null ? (bool)CurrentPSS.IsPointSourceNew : (bool)CurrentPSS.IsPointSource);
 
                     PanelViewAndEdit.Controls.Add(checkBoxIsPointSource);
 
-                    pos = checkBoxIsPointSource.Bottom + 20;
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 }
                 else
                 {
                     Label lblIsPointSource = new Label();
                     lblIsPointSource.AutoSize = true;
-                    lblIsPointSource.Location = new Point(CurrentRight, lblLat.Top);
+                    lblIsPointSource.Location = new Point(X, lblLat.Top);
                     lblIsPointSource.Font = new Font(new FontFamily(lblIsPointSource.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblIsPointSource.ForeColor = CurrentPSS.IsPointSourceNew != null ? ChangedColor : NoChangedColor;
+                    lblIsPointSource.ForeColor = CurrentPSS.IsPointSourceNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                     lblIsPointSource.Text = (CurrentPSS.IsPointSourceNew != null ? ((bool)CurrentPSS.IsPointSourceNew ? "Is Point Source" : "Not Point Source") : ((bool)CurrentPSS.IsPointSource ? "Is Point Source" : "Not Point Source"));
 
                     PanelViewAndEdit.Controls.Add(lblIsPointSource);
 
 
-                    pos = lblIsPointSource.Bottom + 20;
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 }
 
 
                 // doing address
 
-                CurrentRight = 10;
+                X = 10;
 
                 int AddressPos = 0;
                 #region StreetNumber
@@ -272,12 +432,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 // ---------------------------------------------------------------------------------------------------------------
                 Label lblStreetNumberText = new Label();
                 lblStreetNumberText.AutoSize = true;
-                lblStreetNumberText.Location = new Point(CurrentRight, pos);
+                lblStreetNumberText.Location = new Point(X, Y);
                 lblStreetNumberText.Font = new Font(new FontFamily(lblStreetNumberText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblStreetNumberText.ForeColor = CurrentPSS.PSSAddressNew.StreetNumber != null ? ChangedColor : NoChangedColor;
+                lblStreetNumberText.ForeColor = CurrentPSS.PSSAddressNew.StreetNumber != null ? ForeColorChangedOrNew : ForeColorNormal;
                 lblStreetNumberText.Text = $@"Street Number";
 
                 PanelViewAndEdit.Controls.Add(lblStreetNumberText);
+
+                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                 if (IsEditing)
                 {
@@ -287,9 +449,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         Label lblStreetNumberOld = new Label();
                         lblStreetNumberOld.AutoSize = true;
-                        lblStreetNumberOld.Location = new Point(CurrentRight, currentTop);
+                        lblStreetNumberOld.Location = new Point(lblStreetNumberText.Left, currentTop);
                         lblStreetNumberOld.Font = new Font(new FontFamily(lblStreetNumberOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblStreetNumberOld.ForeColor = CurrentPSS.PSSAddressNew.StreetNumber != null ? ChangedColor : NoChangedColor;
+                        lblStreetNumberOld.ForeColor = CurrentPSS.PSSAddressNew.StreetNumber != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblStreetNumberOld.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddress.StreetNumber) ? "(empty)" : $"({CurrentPSS.PSSAddress.StreetNumber})";
 
                         PanelViewAndEdit.Controls.Add(lblStreetNumberOld);
@@ -299,7 +461,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
 
                     TextBox textBoxStreetNumber = new TextBox();
-                    textBoxStreetNumber.Location = new Point(CurrentRight, currentTop);
+                    textBoxStreetNumber.Location = new Point(lblStreetNumberText.Left, currentTop);
                     textBoxStreetNumber.Name = "textBoxStreetNumber";
                     textBoxStreetNumber.Font = new Font(new FontFamily(lblStreetNumberText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     textBoxStreetNumber.Width = lblStreetNumberText.Width;
@@ -322,9 +484,9 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     Label lblStreetNumber = new Label();
                     lblStreetNumber.AutoSize = true;
-                    lblStreetNumber.Location = new Point(CurrentRight, currentTop);
+                    lblStreetNumber.Location = new Point(lblStreetNumberText.Left, currentTop);
                     lblStreetNumber.Font = new Font(new FontFamily(lblStreetNumber.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblStreetNumber.ForeColor = CurrentPSS.PSSAddressNew.StreetNumber != null ? ChangedColor : NoChangedColor;
+                    lblStreetNumber.ForeColor = CurrentPSS.PSSAddressNew.StreetNumber != null ? ForeColorChangedOrNew : ForeColorNormal;
                     lblStreetNumber.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddress.StreetNumber) ? "(empty)" : $"({CurrentPSS.PSSAddress.StreetNumber})";
 
                     PanelViewAndEdit.Controls.Add(lblStreetNumber);
@@ -337,9 +499,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         Label lblStreetNumberNew = new Label();
                         lblStreetNumberNew.AutoSize = true;
-                        lblStreetNumberNew.Location = new Point(CurrentRight, currentTop);
+                        lblStreetNumberNew.Location = new Point(lblStreetNumberText.Left, currentTop);
                         lblStreetNumberNew.Font = new Font(new FontFamily(lblStreetNumberNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblStreetNumberNew.ForeColor = CurrentPSS.PSSAddressNew.StreetNumber != null ? ChangedColor : NoChangedColor;
+                        lblStreetNumberNew.ForeColor = CurrentPSS.PSSAddressNew.StreetNumber != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblStreetNumberNew.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddressNew.StreetNumber) ? "empty" : CurrentPSS.PSSAddressNew.StreetNumber;
 
                         PanelViewAndEdit.Controls.Add(lblStreetNumberNew);
@@ -352,7 +514,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 }
 
-                CurrentRight = lblStreetNumberText.Right + 10;
 
                 // ---------------------------------------------------------------------------------------------------------------
                 // end of StreetNumber
@@ -366,12 +527,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 // ---------------------------------------------------------------------------------------------------------------
                 Label lblStreetNameText = new Label();
                 lblStreetNameText.AutoSize = true;
-                lblStreetNameText.Location = new Point(CurrentRight, lblStreetNumberText.Top);
+                lblStreetNameText.Location = new Point(X, lblStreetNumberText.Top);
                 lblStreetNameText.Font = new Font(new FontFamily(lblStreetNameText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblStreetNameText.ForeColor = CurrentPSS.PSSAddressNew.StreetName != null ? ChangedColor : NoChangedColor;
+                lblStreetNameText.ForeColor = CurrentPSS.PSSAddressNew.StreetName != null ? ForeColorChangedOrNew : ForeColorNormal;
                 lblStreetNameText.Text = $@"Street Name    ";
 
                 PanelViewAndEdit.Controls.Add(lblStreetNameText);
+
+                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                 if (IsEditing)
                 {
@@ -381,9 +544,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         Label lblStreetNameOld = new Label();
                         lblStreetNameOld.AutoSize = true;
-                        lblStreetNameOld.Location = new Point(CurrentRight, currentTop);
+                        lblStreetNameOld.Location = new Point(lblStreetNameText.Left, currentTop);
                         lblStreetNameOld.Font = new Font(new FontFamily(lblStreetNameOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblStreetNameOld.ForeColor = CurrentPSS.PSSAddressNew.StreetName != null ? ChangedColor : NoChangedColor;
+                        lblStreetNameOld.ForeColor = CurrentPSS.PSSAddressNew.StreetName != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblStreetNameOld.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddress.StreetName) ? "(empty)" : $"({CurrentPSS.PSSAddress.StreetName})";
 
                         PanelViewAndEdit.Controls.Add(lblStreetNameOld);
@@ -393,7 +556,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
 
                     TextBox textBoxStreetName = new TextBox();
-                    textBoxStreetName.Location = new Point(CurrentRight, currentTop);
+                    textBoxStreetName.Location = new Point(lblStreetNameText.Left, currentTop);
                     textBoxStreetName.Name = "textBoxStreetName";
                     textBoxStreetName.Font = new Font(new FontFamily(lblStreetNameText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     textBoxStreetName.Width = lblStreetNameText.Width;
@@ -408,39 +571,41 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(textBoxStreetName);
 
-                    pos = textBoxStreetName.Bottom + 10;
                 }
                 else
                 {
+                    int currentTop = lblStreetNameText.Bottom + 4;
+
                     Label lblStreetName = new Label();
                     lblStreetName.AutoSize = true;
-                    lblStreetName.Location = new Point(CurrentRight, lblStreetNameText.Bottom + 4);
+                    lblStreetName.Location = new Point(lblStreetNameText.Left, currentTop);
                     lblStreetName.Font = new Font(new FontFamily(lblStreetName.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblStreetName.ForeColor = CurrentPSS.PSSAddressNew.StreetName != null ? ChangedColor : NoChangedColor;
+                    lblStreetName.ForeColor = CurrentPSS.PSSAddressNew.StreetName != null ? ForeColorChangedOrNew : ForeColorNormal;
                     lblStreetName.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddress.StreetName) ? "(empty)" : $"({CurrentPSS.PSSAddress.StreetName})";
 
                     PanelViewAndEdit.Controls.Add(lblStreetName);
 
-                    pos = lblStreetName.Bottom + 4;
+                    //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
 
                     if (CurrentPSS.PSSAddressNew.StreetName != null)
                     {
+                        currentTop = lblStreetName.Bottom + 4;
+
                         Label lblStreetNameNew = new Label();
                         lblStreetNameNew.AutoSize = true;
-                        lblStreetNameNew.Location = new Point(CurrentRight, lblStreetName.Bottom + 4);
+                        lblStreetNameNew.Location = new Point(lblStreetNameText.Left, lblStreetName.Bottom + 4);
                         lblStreetNameNew.Font = new Font(new FontFamily(lblStreetNameNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblStreetNameNew.ForeColor = CurrentPSS.PSSAddressNew.StreetName != null ? ChangedColor : NoChangedColor;
+                        lblStreetNameNew.ForeColor = CurrentPSS.PSSAddressNew.StreetName != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblStreetNameNew.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddressNew.StreetName) ? "empty" : CurrentPSS.PSSAddressNew.StreetName;
 
                         PanelViewAndEdit.Controls.Add(lblStreetNameNew);
 
-                        pos = lblStreetNameNew.Bottom + 4;
+                        //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
                     }
 
                 }
 
-                CurrentRight = lblStreetNameText.Right + 10;
-
+            
                 // ---------------------------------------------------------------------------------------------------------------
                 // end of StreetName
                 // ---------------------------------------------------------------------------------------------------------------
@@ -453,12 +618,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 // ---------------------------------------------------------------------------------------------------------------
                 Label lblStreetTypeText = new Label();
                 lblStreetTypeText.AutoSize = true;
-                lblStreetTypeText.Location = new Point(CurrentRight, lblStreetNumberText.Top);
+                lblStreetTypeText.Location = new Point(X, lblStreetNumberText.Top);
                 lblStreetTypeText.Font = new Font(new FontFamily(lblStreetTypeText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblStreetTypeText.ForeColor = CurrentPSS.PSSAddressNew.StreetType != null ? ChangedColor : NoChangedColor;
+                lblStreetTypeText.ForeColor = CurrentPSS.PSSAddressNew.StreetType != null ? ForeColorChangedOrNew : ForeColorNormal;
                 lblStreetTypeText.Text = $@"Street Type   ";
 
                 PanelViewAndEdit.Controls.Add(lblStreetTypeText);
+
+                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                 if (IsEditing)
                 {
@@ -468,9 +635,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         Label lblStreetTypeOld = new Label();
                         lblStreetTypeOld.AutoSize = true;
-                        lblStreetTypeOld.Location = new Point(CurrentRight, currentTop);
+                        lblStreetTypeOld.Location = new Point(lblStreetTypeText.Left, currentTop);
                         lblStreetTypeOld.Font = new Font(new FontFamily(lblStreetTypeOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblStreetTypeOld.ForeColor = CurrentPSS.PSSAddressNew.StreetType != null ? ChangedColor : NoChangedColor;
+                        lblStreetTypeOld.ForeColor = CurrentPSS.PSSAddressNew.StreetType != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblStreetTypeOld.Text = CurrentPSS.PSSAddress.StreetType == null ? "(empty)" : $"({((StreetTypeEnum)CurrentPSS.PSSAddress.StreetType).ToString()})";
 
                         PanelViewAndEdit.Controls.Add(lblStreetTypeOld);
@@ -480,7 +647,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
 
                     ComboBox comboBoxStreetType = new ComboBox();
-                    comboBoxStreetType.Location = new Point(CurrentRight, currentTop);
+                    comboBoxStreetType.Location = new Point(lblStreetTypeText.Left, currentTop);
                     comboBoxStreetType.Name = "comboBoxStreetType";
                     comboBoxStreetType.Font = new Font(new FontFamily(lblStreetNameText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     comboBoxStreetType.Width = lblStreetTypeText.Width;
@@ -504,38 +671,42 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
                     }
 
-                    pos = comboBoxStreetType.Bottom + 10;
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 }
                 else
                 {
+                    int currentTop = lblStreetTypeText.Bottom + 4;
+
                     Label lblStreetType = new Label();
                     lblStreetType.AutoSize = true;
-                    lblStreetType.Location = new Point(CurrentRight, lblStreetTypeText.Bottom + 4);
+                    lblStreetType.Location = new Point(lblStreetTypeText.Left, currentTop);
                     lblStreetType.Font = new Font(new FontFamily(lblStreetType.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblStreetType.ForeColor = CurrentPSS.PSSAddressNew.StreetType != null ? ChangedColor : NoChangedColor;
+                    lblStreetType.ForeColor = CurrentPSS.PSSAddressNew.StreetType != null ? ForeColorChangedOrNew : ForeColorNormal;
                     lblStreetType.Text = CurrentPSS.PSSAddress.StreetType == null ? "(empty)" : $"({((StreetTypeEnum)CurrentPSS.PSSAddress.StreetType).ToString()})";
 
                     PanelViewAndEdit.Controls.Add(lblStreetType);
 
-                    pos = lblStreetType.Bottom + 4;
+                    //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
 
                     if (CurrentPSS.PSSAddressNew.StreetType != null)
                     {
+                        currentTop = lblStreetType.Bottom + 4;
+
                         Label lblStreetTypeNew = new Label();
                         lblStreetTypeNew.AutoSize = true;
-                        lblStreetTypeNew.Location = new Point(CurrentRight, lblStreetType.Bottom + 4);
+                        lblStreetTypeNew.Location = new Point(lblStreetTypeText.Left, lblStreetType.Bottom + 4);
                         lblStreetTypeNew.Font = new Font(new FontFamily(lblStreetTypeNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblStreetTypeNew.ForeColor = CurrentPSS.PSSAddressNew.StreetType != null ? ChangedColor : NoChangedColor;
+                        lblStreetTypeNew.ForeColor = CurrentPSS.PSSAddressNew.StreetType != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblStreetTypeNew.Text = CurrentPSS.PSSAddressNew.StreetType == null ? "empty" : ((StreetTypeEnum)CurrentPSS.PSSAddressNew.StreetType).ToString();
 
                         PanelViewAndEdit.Controls.Add(lblStreetTypeNew);
 
-                        pos = lblStreetTypeNew.Bottom + 4;
+                        //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
                     }
 
                 }
 
-                CurrentRight = lblStreetTypeText.Right + 10;
+                //X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                 // ---------------------------------------------------------------------------------------------------------------
                 // end of StreetType
@@ -549,12 +720,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 // ---------------------------------------------------------------------------------------------------------------
                 Label lblMunicipalityText = new Label();
                 lblMunicipalityText.AutoSize = true;
-                lblMunicipalityText.Location = new Point(CurrentRight, lblStreetNumberText.Top);
+                lblMunicipalityText.Location = new Point(X, lblStreetNumberText.Top);
                 lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblMunicipalityText.ForeColor = CurrentPSS.PSSAddressNew.Municipality != null ? ChangedColor : NoChangedColor;
+                lblMunicipalityText.ForeColor = CurrentPSS.PSSAddressNew.Municipality != null ? ForeColorChangedOrNew : ForeColorNormal;
                 lblMunicipalityText.Text = $@"Municipality        ";
 
                 PanelViewAndEdit.Controls.Add(lblMunicipalityText);
+
+                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                 if (IsEditing)
                 {
@@ -564,9 +737,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         Label lblMunicipalityOld = new Label();
                         lblMunicipalityOld.AutoSize = true;
-                        lblMunicipalityOld.Location = new Point(CurrentRight, currentTop);
+                        lblMunicipalityOld.Location = new Point(lblMunicipalityText.Left, currentTop);
                         lblMunicipalityOld.Font = new Font(new FontFamily(lblMunicipalityOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblMunicipalityOld.ForeColor = CurrentPSS.PSSAddressNew.Municipality != null ? ChangedColor : NoChangedColor;
+                        lblMunicipalityOld.ForeColor = CurrentPSS.PSSAddressNew.Municipality != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblMunicipalityOld.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddress.Municipality) ? "(empty)" : $"({CurrentPSS.PSSAddress.Municipality})";
 
                         PanelViewAndEdit.Controls.Add(lblMunicipalityOld);
@@ -576,7 +749,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
 
                     TextBox textBoxMunicipality = new TextBox();
-                    textBoxMunicipality.Location = new Point(CurrentRight, currentTop);
+                    textBoxMunicipality.Location = new Point(lblMunicipalityText.Left, currentTop);
                     textBoxMunicipality.Name = "textBoxMunicipality";
                     textBoxMunicipality.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     textBoxMunicipality.Width = lblMunicipalityText.Width;
@@ -591,38 +764,42 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(textBoxMunicipality);
 
-                    pos = textBoxMunicipality.Bottom + 10;
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 }
                 else
                 {
+                    int currentTop = lblMunicipalityText.Bottom + 4;
+
                     Label lblMunicipality = new Label();
                     lblMunicipality.AutoSize = true;
-                    lblMunicipality.Location = new Point(CurrentRight, lblMunicipalityText.Bottom + 4);
+                    lblMunicipality.Location = new Point(lblMunicipalityText.Left, lblMunicipalityText.Bottom + 4);
                     lblMunicipality.Font = new Font(new FontFamily(lblMunicipality.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblMunicipality.ForeColor = CurrentPSS.PSSAddressNew.Municipality != null ? ChangedColor : NoChangedColor;
+                    lblMunicipality.ForeColor = CurrentPSS.PSSAddressNew.Municipality != null ? ForeColorChangedOrNew : ForeColorNormal;
                     lblMunicipality.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddress.Municipality) ? "(empty)" : $"({CurrentPSS.PSSAddress.Municipality})";
 
                     PanelViewAndEdit.Controls.Add(lblMunicipality);
 
-                    pos = lblMunicipality.Bottom + 4;
+                    //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
 
                     if (CurrentPSS.PSSAddressNew.Municipality != null)
                     {
+                        currentTop = lblMunicipality.Bottom + 4;
+
                         Label lblMunicipalityNew = new Label();
                         lblMunicipalityNew.AutoSize = true;
-                        lblMunicipalityNew.Location = new Point(CurrentRight, lblMunicipality.Bottom + 4);
+                        lblMunicipalityNew.Location = new Point(lblMunicipalityText.Left, lblMunicipality.Bottom + 4);
                         lblMunicipalityNew.Font = new Font(new FontFamily(lblMunicipalityNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblMunicipalityNew.ForeColor = CurrentPSS.PSSAddressNew.Municipality != null ? ChangedColor : NoChangedColor;
+                        lblMunicipalityNew.ForeColor = CurrentPSS.PSSAddressNew.Municipality != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblMunicipalityNew.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddressNew.Municipality) ? "empty" : CurrentPSS.PSSAddressNew.Municipality;
 
                         PanelViewAndEdit.Controls.Add(lblMunicipalityNew);
 
-                        pos = lblMunicipalityNew.Bottom + 4;
+                        //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
                     }
 
                 }
 
-                CurrentRight = lblMunicipalityText.Right + 10;
+                //X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                 // ---------------------------------------------------------------------------------------------------------------
                 // end of Municipality
@@ -636,12 +813,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 // ---------------------------------------------------------------------------------------------------------------
                 Label lblPostalCodeText = new Label();
                 lblPostalCodeText.AutoSize = true;
-                lblPostalCodeText.Location = new Point(CurrentRight, lblStreetNumberText.Top);
+                lblPostalCodeText.Location = new Point(X, lblStreetNumberText.Top);
                 lblPostalCodeText.Font = new Font(new FontFamily(lblPostalCodeText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblPostalCodeText.ForeColor = CurrentPSS.PSSAddressNew.PostalCode != null ? ChangedColor : NoChangedColor;
+                lblPostalCodeText.ForeColor = CurrentPSS.PSSAddressNew.PostalCode != null ? ForeColorChangedOrNew : ForeColorNormal;
                 lblPostalCodeText.Text = $@"Postal Code";
 
                 PanelViewAndEdit.Controls.Add(lblPostalCodeText);
+
+                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                 if (IsEditing)
                 {
@@ -651,9 +830,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         Label lblPostalCodeOld = new Label();
                         lblPostalCodeOld.AutoSize = true;
-                        lblPostalCodeOld.Location = new Point(CurrentRight, currentTop);
+                        lblPostalCodeOld.Location = new Point(lblPostalCodeText.Left, currentTop);
                         lblPostalCodeOld.Font = new Font(new FontFamily(lblPostalCodeOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblPostalCodeOld.ForeColor = CurrentPSS.PSSAddressNew.PostalCode != null ? ChangedColor : NoChangedColor;
+                        lblPostalCodeOld.ForeColor = CurrentPSS.PSSAddressNew.PostalCode != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblPostalCodeOld.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddress.PostalCode) ? "(empty)" : $"({CurrentPSS.PSSAddress.PostalCode})";
 
                         PanelViewAndEdit.Controls.Add(lblPostalCodeOld);
@@ -663,7 +842,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
 
                     TextBox textBoxPostalCode = new TextBox();
-                    textBoxPostalCode.Location = new Point(CurrentRight, currentTop);
+                    textBoxPostalCode.Location = new Point(lblPostalCodeText.Left, currentTop);
                     textBoxPostalCode.Name = "textBoxPostalCode";
                     textBoxPostalCode.Font = new Font(new FontFamily(lblPostalCodeText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     textBoxPostalCode.Width = lblPostalCodeText.Width;
@@ -678,38 +857,42 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(textBoxPostalCode);
 
-                    pos = textBoxPostalCode.Bottom + 10;
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 }
                 else
                 {
+                    int currentTop = lblPostalCodeText.Bottom + 4;
+
                     Label lblPostalCode = new Label();
                     lblPostalCode.AutoSize = true;
-                    lblPostalCode.Location = new Point(CurrentRight, lblPostalCodeText.Bottom + 4);
+                    lblPostalCode.Location = new Point(lblPostalCodeText.Left, lblPostalCodeText.Bottom + 4);
                     lblPostalCode.Font = new Font(new FontFamily(lblPostalCode.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblPostalCode.ForeColor = CurrentPSS.PSSAddressNew.PostalCode != null ? ChangedColor : NoChangedColor;
+                    lblPostalCode.ForeColor = CurrentPSS.PSSAddressNew.PostalCode != null ? ForeColorChangedOrNew : ForeColorNormal;
                     lblPostalCode.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddress.PostalCode) ? "(empty)" : $"({CurrentPSS.PSSAddress.PostalCode})";
 
                     PanelViewAndEdit.Controls.Add(lblPostalCode);
 
-                    pos = lblPostalCode.Bottom + 4;
+                    //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
 
                     if (CurrentPSS.PSSAddressNew.PostalCode != null)
                     {
+                        currentTop = lblPostalCode.Bottom + 4;
+
                         Label lblPostalCodeNew = new Label();
                         lblPostalCodeNew.AutoSize = true;
-                        lblPostalCodeNew.Location = new Point(CurrentRight, lblPostalCode.Bottom + 4);
+                        lblPostalCodeNew.Location = new Point(lblPostalCodeText.Left, lblPostalCode.Bottom + 4);
                         lblPostalCodeNew.Font = new Font(new FontFamily(lblPostalCodeNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblPostalCodeNew.ForeColor = CurrentPSS.PSSAddressNew.PostalCode != null ? ChangedColor : NoChangedColor;
+                        lblPostalCodeNew.ForeColor = CurrentPSS.PSSAddressNew.PostalCode != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblPostalCodeNew.Text = string.IsNullOrWhiteSpace(CurrentPSS.PSSAddressNew.PostalCode) ? "empty" : CurrentPSS.PSSAddressNew.PostalCode;
 
                         PanelViewAndEdit.Controls.Add(lblPostalCodeNew);
 
-                        pos = lblPostalCodeNew.Bottom + 4;
+                        //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
                     }
 
                 }
 
-                CurrentRight = lblPostalCodeText.Right + 10;
+                //X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                 // ---------------------------------------------------------------------------------------------------------------
                 // end of PostalCode
@@ -718,20 +901,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                 #endregion PostalCode
 
 
-                pos = lblStreetNumberText.Bottom + 80;
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
                 #region Observation
                 Label lblLastObsText = new Label();
                 lblLastObsText.AutoSize = true;
-                lblLastObsText.Location = new Point(10, pos);
+                lblLastObsText.Location = new Point(10, Y);
                 lblLastObsText.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                 lblLastObsText.Font = new Font(new FontFamily(lblLastObsText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblLastObsText.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ChangedColor : NoChangedColor;
+                lblLastObsText.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                 lblLastObsText.Text = $"Observation Date: ";
 
                 PanelViewAndEdit.Controls.Add(lblLastObsText);
 
-                CurrentRight = lblLastObsText.Right + 10;
+                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                 if (IsEditing)
                 {
@@ -739,10 +922,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         Label lblLastObsOld = new Label();
                         lblLastObsOld.AutoSize = true;
-                        lblLastObsOld.Location = new Point(CurrentRight, lblLastObsText.Top);
+                        lblLastObsOld.Location = new Point(X, lblLastObsText.Top);
                         lblLastObsOld.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                         lblLastObsOld.Font = new Font(new FontFamily(lblLastObsOld.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                        lblLastObsOld.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ChangedColor : NoChangedColor;
+                        lblLastObsOld.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                         if (CurrentPSS.PSSObs.ObsDate != null)
                         {
                             lblLastObsOld.Text = $" ({CurrentPSS.PSSObs.ObsDate})";
@@ -754,11 +937,11 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                         PanelViewAndEdit.Controls.Add(lblLastObsOld);
 
-                        CurrentRight = lblLastObsOld.Right + 10;
+                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                     }
 
                     DateTimePicker dateTimePickerObsDate = new DateTimePicker();
-                    dateTimePickerObsDate.Location = new Point(CurrentRight, lblLastObsText.Top);
+                    dateTimePickerObsDate.Location = new Point(X, lblLastObsText.Top);
                     dateTimePickerObsDate.Name = "dateTimePickerObsDate";
                     dateTimePickerObsDate.Format = DateTimePickerFormat.Custom;
                     dateTimePickerObsDate.CustomFormat = "yyyy MMMM dd";
@@ -778,10 +961,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     Label lblLastObsOld = new Label();
                     lblLastObsOld.AutoSize = true;
-                    lblLastObsOld.Location = new Point(CurrentRight, lblLastObsText.Top);
+                    lblLastObsOld.Location = new Point(X, lblLastObsText.Top);
                     lblLastObsOld.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                     lblLastObsOld.Font = new Font(new FontFamily(lblLastObsOld.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                    lblLastObsOld.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ChangedColor : NoChangedColor;
+                    lblLastObsOld.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                     if (CurrentPSS.PSSObs.ObsDateNew != null)
                     {
                         lblLastObsOld.Text = $" ({((DateTime)CurrentPSS.PSSObs.ObsDate).ToString("yyyy MMMM dd")})";
@@ -793,33 +976,33 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(lblLastObsOld);
 
-                    CurrentRight = lblLastObsOld.Right + 10;
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                     if (CurrentPSS.PSSObs.ObsDateNew != null)
                     {
                         Label lblLastObsNew = new Label();
                         lblLastObsNew.AutoSize = true;
-                        lblLastObsNew.Location = new Point(CurrentRight, lblLastObsText.Top);
+                        lblLastObsNew.Location = new Point(X, lblLastObsText.Top);
                         lblLastObsNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                         lblLastObsNew.Font = new Font(new FontFamily(lblLastObsNew.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                        lblLastObsNew.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ChangedColor : NoChangedColor;
+                        lblLastObsNew.ForeColor = CurrentPSS.PSSObs.ObsDateNew != null ? ForeColorChangedOrNew : ForeColorNormal;
                         lblLastObsNew.Text = $" {((DateTime)CurrentPSS.PSSObs.ObsDateNew).ToString("yyyy MMMM dd")}";
 
                         PanelViewAndEdit.Controls.Add(lblLastObsNew);
                     }
                 }
 
-                pos = lblLastObsText.Bottom + 20;
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
                 #endregion Observation
 
-                pos = lblLastObsText.Bottom + 80;
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 80;
 
                 if (IsEditing)
                 {
                     Button butSaveLatLngObsAndAddress = new Button();
                     butSaveLatLngObsAndAddress.AutoSize = true;
-                    butSaveLatLngObsAndAddress.Location = new Point(200, pos);
+                    butSaveLatLngObsAndAddress.Location = new Point(200, Y);
                     butSaveLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                     butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     butSaveLatLngObsAndAddress.Text = $"Save";
@@ -830,7 +1013,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (!IsEditing)
                 {
-                    ShowIssues();
+                    DrawIssuesForViewing();
                     ShowPictures();
                 }
             }
@@ -1128,11 +1311,30 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 if (a.GetType().Name == "Panel")
                 {
-                    ((Panel)a).BackColor = Color.White;
+                    ((Panel)a).BackColor = BackColorNormal;
+
+                    int PSSTVItemID = int.Parse(((Panel)a).Tag.ToString());
+                    PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PSSTVItemID).FirstOrDefault();
+                    if (pss != null)
+                    {
+                        foreach (Issue issue in pss.PSSObs.IssueList)
+                        {
+                            if (issue.IsWellFormed == false)
+                            {
+                                ((Panel)a).BackColor = BackColorNotWellFormed;
+                                break;
+                            }
+                            if (issue.IsCompleted == false)
+                            {
+                                ((Panel)a).BackColor = BackColorNotCompleted;
+                                break;
+                            }
+                        }
+                    }
 
                     if (((Panel)a).Tag.ToString() == PolSourceSiteTVItemID.ToString())
                     {
-                        ((Panel)a).BackColor = Color.LightGreen;
+                        ((Panel)a).BackColor = BackColorEditing;
                     }
                 }
             }

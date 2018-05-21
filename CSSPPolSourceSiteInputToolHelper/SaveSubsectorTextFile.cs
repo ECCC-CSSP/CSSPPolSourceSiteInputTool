@@ -23,7 +23,11 @@ namespace CSSPPolSourceSiteInputToolHelper
             foreach (PSS pss in subsectorDoc.Subsector.PSSList)
             {
                 sb.AppendLine($"-----\t-------------------------------------------------\t");
-                sb.AppendLine($"PSS\t{pss.PSSTVItemID}\t{((float)pss.Lat).ToString("F5")}\t{((float)pss.Lng).ToString("F5")}\t{(((bool)pss.IsActive) ? "true" : "false")}\t{(((bool)pss.IsPointSource) ? "true" : "false")}\t");
+                string LatText = pss.Lat == null ? "0.0" : ((float)pss.Lat).ToString("F5");
+                string LngText = pss.Lng == null ? "0.0" : ((float)pss.Lng).ToString("F5");
+                string IsActiveText = pss.IsActive == null ? "false" : (((bool)pss.IsActive) ? "true" : "false");
+                string IsPointSourceText = pss.IsPointSource == null ? "false" : (((bool)pss.IsPointSource) ? "true" : "false");
+                sb.AppendLine($"PSS\t{pss.PSSTVItemID}\t{LatText}\t{LngText}\t{IsActiveText}\t{IsPointSourceText}\t");
                 if (pss.LatNew != null)
                 {
                     sb.AppendLine($"LATNEW\t{((float)pss.LatNew).ToString("F5")}\t");
@@ -42,6 +46,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 sb.AppendLine($"SITENUMB\t{pss.SiteNumber}\t");
                 sb.AppendLine($"TVTEXT\t{pss.TVText}\t");
+                if (!string.IsNullOrWhiteSpace(pss.TVText))
+                {
+                    sb.AppendLine($"TVTEXTNEW\t{pss.TVTextNew}\t");
+                }
 
                 if (pss.PSSAddress != null)
                 {
@@ -72,35 +80,23 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 foreach (Picture picture in pss.PSSPictureList)
                 {
-                    if (picture.IsNew != null && picture.ToRemove != null)
+                    sb.AppendLine($"PICTURE\t{picture.PictureTVItemID}\t{picture.FileName}\t{picture.Extension}\t{picture.Description}\t");
+                    if (picture.ToRemove != null)
                     {
-                        OnStatus(new StatusEventArgs("Picture.IsNew and Picture.ToRemove cannot be true at the same time."));
-                        return;
+                        sb.AppendLine($"PICTURETOREMOVE\t");
                     }
-                    else if (picture.IsNew != null)
+                    if (picture.FileNameNew != null)
                     {
-                        sb.AppendLine($"PICTURENEW\t{picture.PictureTVItemID}\t{picture.FileName}\t{picture.Extension}\t{picture.Description}\t");
+                        sb.AppendLine($"PICTUREFILENAMENEW\t{picture.FileNameNew}\t");
                     }
-                    else if (picture.ToRemove != null)
+                    if (picture.ExtensionNew != null)
                     {
-                        sb.AppendLine($"PICTURETOREMOVE\t{picture.PictureTVItemID}\t{picture.FileName}\t{picture.Extension}\t{picture.Description}\t");
+                        sb.AppendLine($"PICTUREEXTENSIONNEW\t{picture.ExtensionNew}\t");
                     }
-                    else
+                    if (picture.DescriptionNew != null)
                     {
-                        sb.AppendLine($"PICTURE\t{picture.PictureTVItemID}\t{picture.FileName}\t{picture.Extension}\t{picture.Description}\t");
-                        if (picture.FileNameNew != null)
-                        {
-                            sb.AppendLine($"PICTUREFILENAMENEW\t{picture.FileNameNew}\t");
-                        }
-                        if (picture.ExtensionNew != null)
-                        {
-                            sb.AppendLine($"PICTUREEXTENSIONNEW\t{picture.ExtensionNew}\t");
-                        }
-                        if (picture.DescriptionNew != null)
-                        {
-                            sb.AppendLine($"PICTUREDESCRIPTIONNEW\t{picture.DescriptionNew}\t");
-                        }
-                    }
+                        sb.AppendLine($"PICTUREDESCRIPTIONNEW\t{picture.DescriptionNew}\t");
+                    }                  
                 }
 
                 sb.AppendLine($"OBS\t{pss.PSSObs.ObsID}\t" +
@@ -129,20 +125,14 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 foreach (Issue issue in pss.PSSObs.IssueList)
                 {
-                    if (issue.IsNew != null && issue.ToRemove != null)
+                    sb.AppendLine($"ISSUE\t{issue.IssueID}\t{issue.Ordinal}\t{((DateTime)issue.LastUpdated_UTC).Year}|{((DateTime)issue.LastUpdated_UTC).Month.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Day.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Hour.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Minute.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Second.ToString("0#")}\t{String.Join(",", issue.PolSourceObsInfoIntList)},\t");
+                    if (issue.PolSourceObsInfoIntListNew.Count > 0)
                     {
+                        sb.AppendLine($"ISSUENEW\t{String.Join(",", issue.PolSourceObsInfoIntListNew)},\t");
                     }
-                    else if (issue.IsNew != null)
+                    if (issue.ToRemove != null && issue.ToRemove == true)
                     {
-                        sb.AppendLine($"ISSUENEW\t{issue.IssueID}\t{issue.Ordinal}\t{String.Join(",", issue.PolSourceObsInfoIntList)},\t");
-                    }
-                    else if (issue.ToRemove != null)
-                    {
-                        sb.AppendLine($"ISSUETOREMOVE\t{issue.IssueID}\t{issue.Ordinal}\t{String.Join(",", issue.PolSourceObsInfoIntList)},\t");
-                    }
-                    else
-                    {
-                        sb.AppendLine($"ISSUE\t{issue.IssueID}\t{issue.Ordinal}\t{((DateTime)issue.LastUpdated_UTC).Year}|{((DateTime)issue.LastUpdated_UTC).Month.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Day.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Hour.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Minute.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Second.ToString("0#")}\t{String.Join(",", issue.PolSourceObsInfoIntList)},\t");
+                        sb.AppendLine($"ISSUETOREMOVE\t");
                     }
                 }
             }
