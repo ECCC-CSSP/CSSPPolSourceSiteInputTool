@@ -605,7 +605,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 }
 
-            
+
                 // ---------------------------------------------------------------------------------------------------------------
                 // end of StreetName
                 // ---------------------------------------------------------------------------------------------------------------
@@ -1064,41 +1064,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                             ComboBox cb = (ComboBox)control;
                             if (cb != null)
                             {
-                                if (CurrentPSS.PSSAddress.StreetType == null)
+                                if (cb.SelectedItem == null)
                                 {
-                                    if (cb.SelectedItem == null)
-                                    {
-                                        CurrentPSS.PSSAddressNew.StreetType = null;
-                                    }
-                                    else
-                                    {
-                                        for (int i = 1, count = Enum.GetNames(typeof(StreetTypeEnum)).Count(); i < count; i++)
-                                        {
-                                            if ((string)cb.SelectedItem == ((StreetTypeEnum)i).ToString())
-                                            {
-                                                CurrentPSS.PSSAddressNew.StreetType = i;
-                                                IsDirty = true;
-                                                break;
-                                            }
-                                        }
-                                    }
+                                    CurrentPSS.PSSAddressNew.StreetType = null;
                                 }
                                 else
                                 {
-                                    if ((string)cb.SelectedItem == ((StreetTypeEnum)CurrentPSS.PSSAddress.StreetType).ToString())
+                                    for (int i = 1, count = Enum.GetNames(typeof(StreetTypeEnum)).Count(); i < count; i++)
                                     {
-                                        CurrentPSS.PSSAddressNew.StreetType = null;
-                                    }
-                                    else
-                                    {
-                                        for (int i = 1, count = Enum.GetNames(typeof(StreetTypeEnum)).Count(); i < count; i++)
+                                        if ((string)cb.SelectedItem == ((StreetTypeEnum)i).ToString())
                                         {
-                                            if ((string)cb.SelectedItem == ((StreetTypeEnum)i).ToString())
-                                            {
-                                                CurrentPSS.PSSAddressNew.StreetType = i;
-                                                IsDirty = true;
-                                                break;
-                                            }
+                                            CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
+                                            CurrentPSS.PSSAddressNew.StreetType = i;
+                                            IsDirty = true;
+                                            break;
                                         }
                                     }
                                 }
@@ -1129,29 +1108,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if (CurrentPSS.PSSAddress.PostalCode == null)
+                                if (string.IsNullOrWhiteSpace(tb.Text))
                                 {
-                                    if (string.IsNullOrWhiteSpace(tb.Text))
-                                    {
-                                        CurrentPSS.PSSAddressNew.PostalCode = null;
-                                    }
-                                    else
-                                    {
-                                        CurrentPSS.PSSAddressNew.PostalCode = tb.Text;
-                                        IsDirty = true;
-                                    }
+                                    CurrentPSS.PSSAddressNew.PostalCode = null;
                                 }
                                 else
                                 {
-                                    if (tb.Text == CurrentPSS.PSSAddress.PostalCode)
-                                    {
-                                        CurrentPSS.PSSAddressNew.PostalCode = null;
-                                    }
-                                    else
-                                    {
-                                        CurrentPSS.PSSAddressNew.PostalCode = tb.Text;
-                                        IsDirty = true;
-                                    }
+                                    CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
+                                    CurrentPSS.PSSAddressNew.PostalCode = tb.Text;
+                                    IsDirty = true;
                                 }
                             }
                         }
@@ -1207,29 +1172,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if (CurrentPSS.PSSAddress.Municipality == null)
+                                if (string.IsNullOrWhiteSpace(tb.Text))
                                 {
-                                    if (string.IsNullOrWhiteSpace(tb.Text))
-                                    {
-                                        CurrentPSS.PSSAddressNew.Municipality = null;
-                                    }
-                                    else
-                                    {
-                                        CurrentPSS.PSSAddressNew.Municipality = tb.Text;
-                                        IsDirty = true;
-                                    }
+                                    CurrentPSS.PSSAddressNew.Municipality = null;
                                 }
                                 else
                                 {
-                                    if (tb.Text == CurrentPSS.PSSAddress.Municipality)
-                                    {
-                                        CurrentPSS.PSSAddressNew.Municipality = null;
-                                    }
-                                    else
-                                    {
-                                        CurrentPSS.PSSAddressNew.Municipality = tb.Text;
-                                        IsDirty = true;
-                                    }
+                                    CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
+                                    CurrentPSS.PSSAddressNew.Municipality = tb.Text;
+                                    IsDirty = true;
                                 }
                             }
                         }
@@ -1239,29 +1190,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if (CurrentPSS.PSSAddress.StreetName == null)
+                                if (string.IsNullOrWhiteSpace(tb.Text))
                                 {
-                                    if (string.IsNullOrWhiteSpace(tb.Text))
-                                    {
-                                        CurrentPSS.PSSAddressNew.StreetName = null;
-                                    }
-                                    else
-                                    {
-                                        CurrentPSS.PSSAddressNew.StreetName = tb.Text;
-                                        IsDirty = true;
-                                    }
+                                    CurrentPSS.PSSAddressNew.StreetName = null;
                                 }
                                 else
                                 {
-                                    if (tb.Text == CurrentPSS.PSSAddress.StreetName)
-                                    {
-                                        CurrentPSS.PSSAddressNew.StreetName = null;
-                                    }
-                                    else
-                                    {
-                                        CurrentPSS.PSSAddressNew.StreetName = tb.Text;
-                                        IsDirty = true;
-                                    }
+                                    CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
+                                    CurrentPSS.PSSAddressNew.StreetName = tb.Text;
+                                    IsDirty = true;
                                 }
                             }
                         }
@@ -1271,29 +1208,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if (CurrentPSS.PSSAddress.StreetNumber == null)
+                                if (string.IsNullOrWhiteSpace(tb.Text))
                                 {
-                                    if (string.IsNullOrWhiteSpace(tb.Text))
-                                    {
-                                        CurrentPSS.PSSAddressNew.StreetNumber = null;
-                                    }
-                                    else
-                                    {
-                                        CurrentPSS.PSSAddressNew.StreetNumber = tb.Text;
-                                        IsDirty = true;
-                                    }
+                                    CurrentPSS.PSSAddressNew.StreetNumber = null;
                                 }
                                 else
                                 {
-                                    if (tb.Text == CurrentPSS.PSSAddress.StreetNumber)
-                                    {
-                                        CurrentPSS.PSSAddressNew.StreetNumber = null;
-                                    }
-                                    else
-                                    {
-                                        CurrentPSS.PSSAddressNew.StreetNumber = tb.Text;
-                                        IsDirty = true;
-                                    }
+                                    CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
+                                    CurrentPSS.PSSAddressNew.StreetNumber = tb.Text;
+                                    IsDirty = true;
                                 }
                             }
                         }

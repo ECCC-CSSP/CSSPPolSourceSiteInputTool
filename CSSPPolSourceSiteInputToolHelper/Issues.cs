@@ -30,7 +30,9 @@ namespace CSSPPolSourceSiteInputToolHelper
             issue.PolSourceObsInfoEnumList = new List<PolSourceObsInfoEnum>();
             issue.PolSourceObsInfoIntList = new List<int>();
             issue.ToRemove = false;
+
             CurrentPSS.PSSObs.IssueList.Add(issue);
+
             ReDraw();
         }
         public bool IssueWellFormed(Issue issue, bool IsNew)
@@ -292,7 +294,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (CurrentPSS.PSSObs.IssueList.Count > 0)
             {
                 int IssueCount = 0;
-                foreach (Issue issue in CurrentPSS.PSSObs.IssueList)
+                foreach (Issue issue in CurrentPSS.PSSObs.IssueList.OrderBy(c => c.Ordinal))
                 {
                     bool IsWellFormed = IssueWellFormed(issue, false);
                     bool IsCompleted = IssueCompleted(issue, false);
@@ -1039,54 +1041,63 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             if (CurrentPSS.PSSObs.IssueList.Count > 0)
             {
-                Issue issue = CurrentPSS.PSSObs.IssueList.OrderBy(c => c.Ordinal).FirstOrDefault();
+                Issue issue = CurrentPSS.PSSObs.IssueList.OrderBy(c => c.Ordinal).Where(c => c.ToRemove == false).FirstOrDefault();
 
-                string TVText = "";
-                if (issue.PolSourceObsInfoIntListNew.Count > 0)
+                if (issue != null)
                 {
-                    for (int i = 0, count = issue.PolSourceObsInfoIntListNew.Count; i < count; i++)
+                    string TVText = "";
+                    if (issue.PolSourceObsInfoIntListNew.Count > 0)
                     {
-                        string StartTxt = issue.PolSourceObsInfoIntListNew[i].ToString().Substring(0, 3);
-
-                        if (startWithList.Where(c => c.StartsWith(StartTxt)).Any())
+                        for (int i = 0, count = issue.PolSourceObsInfoIntListNew.Count; i < count; i++)
                         {
-                            TVText = TVText.Trim();
-                            string TempText = _BaseEnumService.GetEnumText_PolSourceObsInfoEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntListNew[i]);
-                            if (TempText.IndexOf("|") > 0)
+                            string StartTxt = issue.PolSourceObsInfoIntListNew[i].ToString().Substring(0, 3);
+
+                            if (startWithList.Where(c => c.StartsWith(StartTxt)).Any())
                             {
-                                TempText = TempText.Substring(0, TempText.IndexOf("|")).Trim();
+                                TVText = TVText.Trim();
+                                string TempText = _BaseEnumService.GetEnumText_PolSourceObsInfoEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntListNew[i]);
+                                if (TempText.IndexOf("|") > 0)
+                                {
+                                    TempText = TempText.Substring(0, TempText.IndexOf("|")).Trim();
+                                }
+                                TVText = TVText + (TVText.Length == 0 ? "" : ", ") + TempText;
                             }
-                            TVText = TVText + (TVText.Length == 0 ? "" : ", ") + TempText;
                         }
                     }
+                    else
+                    {
+                        for (int i = 0, count = issue.PolSourceObsInfoIntList.Count; i < count; i++)
+                        {
+                            string StartTxt = issue.PolSourceObsInfoIntList[i].ToString().Substring(0, 3);
+
+                            if (startWithList.Where(c => c.StartsWith(StartTxt)).Any())
+                            {
+                                TVText = TVText.Trim();
+                                string TempText = _BaseEnumService.GetEnumText_PolSourceObsInfoEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntList[i]);
+                                if (TempText.IndexOf("|") > 0)
+                                {
+                                    TempText = TempText.Substring(0, TempText.IndexOf("|")).Trim();
+                                }
+                                TVText = TVText + (TVText.Length == 0 ? "" : ", ") + TempText;
+                            }
+                        }
+                    }
+
+                    while (TVText.Contains("  "))
+                    {
+                        TVText = TVText.Replace("  ", " ");
+                    }
+
+                    TVText = TVText + " - " + "000000".Substring(0, "000000".Length - CurrentPSS.SiteNumber.ToString().Length) + CurrentPSS.SiteNumber.ToString();
+
+                    CurrentPSS.TVTextNew = TVText;
                 }
                 else
                 {
-                    for (int i = 0, count = issue.PolSourceObsInfoIntList.Count; i < count; i++)
-                    {
-                        string StartTxt = issue.PolSourceObsInfoIntList[i].ToString().Substring(0, 3);
+                    string TVText = "PSS Empty - " + "000000".Substring(0, "000000".Length - CurrentPSS.SiteNumber.ToString().Length) + CurrentPSS.SiteNumber.ToString();
 
-                        if (startWithList.Where(c => c.StartsWith(StartTxt)).Any())
-                        {
-                            TVText = TVText.Trim();
-                            string TempText = _BaseEnumService.GetEnumText_PolSourceObsInfoEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntList[i]);
-                            if (TempText.IndexOf("|") > 0)
-                            {
-                                TempText = TempText.Substring(0, TempText.IndexOf("|")).Trim();
-                            }
-                            TVText = TVText + (TVText.Length == 0 ? "" : ", ") + TempText;
-                        }
-                    }
+                    CurrentPSS.TVTextNew = TVText;
                 }
-
-                while (TVText.Contains("  "))
-                {
-                    TVText = TVText.Replace("  ", " ");
-                }
-
-                TVText = TVText + " - " + "000000".Substring(0, "000000".Length - CurrentPSS.SiteNumber.ToString().Length) + CurrentPSS.SiteNumber.ToString();
-
-                CurrentPSS.TVTextNew = TVText;
             }
         }
         private void DeleteIssue(int IssueID)
@@ -1099,6 +1110,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 issue.ToRemove = true;
             }
 
+            RecreateTVText();
             SaveSubsectorTextFile();
             RedrawSinglePanelPSS();
             ReDraw();
@@ -1113,6 +1125,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 issue.ToRemove = false;
             }
 
+            RecreateTVText();
             SaveSubsectorTextFile();
             RedrawSinglePanelPSS();
             ReDraw();
@@ -1129,12 +1142,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (CurrentPSS.PSSObs.IssueList[i].IssueID == issue.IssueID)
                     {
                         int tempOrdinal = (int)CurrentPSS.PSSObs.IssueList[i].Ordinal;
-                        CurrentPSS.PSSObs.IssueList[i].Ordinal = (int)CurrentPSS.PSSObs.IssueList[i - 1].Ordinal;
-                        CurrentPSS.PSSObs.IssueList[i - 1].Ordinal = tempOrdinal;
+                        Issue tempIssue = CurrentPSS.PSSObs.IssueList.OrderByDescending(c => c.Ordinal).Where(c => c.Ordinal < tempOrdinal).FirstOrDefault();
+                        if (tempIssue != null)
+                        {
+                            CurrentPSS.PSSObs.IssueList[i].Ordinal = (int)tempIssue.Ordinal;
+                            tempIssue.Ordinal = tempOrdinal;
+                        }
                     }
                 }
             }
 
+            RecreateTVText();
             SaveSubsectorTextFile();
             RedrawSinglePanelPSS();
             ReDraw();
@@ -1151,12 +1169,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (CurrentPSS.PSSObs.IssueList[i].IssueID == issue.IssueID)
                     {
                         int tempOrdinal = (int)CurrentPSS.PSSObs.IssueList[i].Ordinal;
-                        CurrentPSS.PSSObs.IssueList[i].Ordinal = (int)CurrentPSS.PSSObs.IssueList[i + 1].Ordinal; ;
-                        CurrentPSS.PSSObs.IssueList[i + 1].Ordinal = tempOrdinal;
+                        Issue tempIssue = CurrentPSS.PSSObs.IssueList.OrderBy(c => c.Ordinal).Where(c => c.Ordinal > tempOrdinal).FirstOrDefault();
+                        if (tempIssue != null)
+                        {
+                            CurrentPSS.PSSObs.IssueList[i].Ordinal = (int)tempIssue.Ordinal;
+                            tempIssue.Ordinal = tempOrdinal;
+                        }
                     }
                 }
             }
 
+            RecreateTVText();
             SaveSubsectorTextFile();
             RedrawSinglePanelPSS();
             ReDraw();

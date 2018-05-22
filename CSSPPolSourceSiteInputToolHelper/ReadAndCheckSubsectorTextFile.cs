@@ -604,14 +604,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                             try
                             {
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Picture lastPicture = lastPSS.PSSPictureList[lastPSS.PSSPictureList.Count - 1];
 
-                                Picture picture = new Picture();
-                                picture.PictureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
-                                picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
-                                picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
-                                picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
-                                picture.ToRemove = true;
-                                lastPSS.PSSPictureList.Add(picture);
+                                lastPicture.ToRemove = true;
                             }
                             catch (Exception)
                             {

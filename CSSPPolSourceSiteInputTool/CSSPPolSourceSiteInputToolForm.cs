@@ -47,7 +47,7 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.SaveSubsectorTextFile();
             polSourceSiteInputToolHelper.RedrawPolSourceSiteList();
         }
-        private void butRegenerateKMLFile_Click(object sender, EventArgs e)
+        private void butViewKMLFile_Click(object sender, EventArgs e)
         {
             textBoxEmpty.Focus();
             if (polSourceSiteInputToolHelper != null)
@@ -55,14 +55,10 @@ namespace CSSPPolSourceSiteInputTool
                 lblStatus.Text = "Regenerating Subsector KML File ...";
                 polSourceSiteInputToolHelper.RegenerateSubsectorKMLFile();
                 lblStatus.Text = "Subsector KML File was regenerated ...";
-            }
-        }
-        private void butViewKMLFile_Click(object sender, EventArgs e)
-        {
-            textBoxEmpty.Focus();
-            if (polSourceSiteInputToolHelper != null)
-            {
+
+                lblStatus.Text = "Opening Google Earth";
                 polSourceSiteInputToolHelper.ViewKMLFileInGoogleEarth();
+                lblStatus.Text = "";
             }
         }
         private void checkBoxEditing_CheckedChanged(object sender, EventArgs e)
@@ -116,7 +112,10 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.CurrentPSS = null;
             polSourceSiteInputToolHelper.ReDraw();
 
-            lblSubsectorName.Text = $"{polSourceSiteInputToolHelper.subsectorDoc.Subsector.SubsectorName}";
+            if (polSourceSiteInputToolHelper.subsectorDoc.Subsector != null)
+            {
+                lblSubsectorName.Text = $"{polSourceSiteInputToolHelper.subsectorDoc.Subsector.SubsectorName}";
+            }
         }
         private void polSourceSiteInputToolHelper_UpdateStatus(object sender, PolSourceSiteInputToolHelper.StatusEventArgs e)
         {

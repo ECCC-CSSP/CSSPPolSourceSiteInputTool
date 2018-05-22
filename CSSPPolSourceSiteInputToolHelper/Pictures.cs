@@ -16,7 +16,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public void AddPicture()
         {
             OpenFileDialog openFileDialogPictures = new OpenFileDialog();
-            openFileDialogPictures.InitialDirectory = $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\";
+            openFileDialogPictures.InitialDirectory = $@"C:\";
             openFileDialogPictures.Title = "Browse Pictures Files";
             openFileDialogPictures.DefaultExt = @"jpg";
             openFileDialogPictures.Filter = @"jpg files (*.jpg)|*.jpg";
@@ -49,18 +49,76 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public void RemovePicture(int PictureTVItemID)
         {
-            PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
-
-            Picture pictureToRemove = pss.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+            Picture pictureToRemove = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
             if (pictureToRemove != null)
             {
-                pss.PSSPictureList.Remove(pictureToRemove);
+                pictureToRemove.ToRemove = true;
             }
 
+            SaveSubsectorTextFile();
             ShowPictures();
         }
-        public void SavePictureInfo()
+        public void UnRemovePicture(int PictureTVItemID)
         {
+            Picture pictureToRemove = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+            if (pictureToRemove != null)
+            {
+                pictureToRemove.ToRemove = false;
+            }
+
+            SaveSubsectorTextFile();
+            ShowPictures();
+        }
+        public void SavePictureInfo(int PictureTVItemID)
+        {
+            Picture picture = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+            if (picture != null)
+            {
+                foreach (Control control in PanelViewAndEdit.Controls)
+                {
+                    if (control.GetType().Name == "Panel")
+                    {
+                        int PictureTVItemID2 = int.Parse(control.Tag.ToString());
+                        if (PictureTVItemID2 == PictureTVItemID)
+                        {
+                            TextBox tbFileName = new TextBox();
+                            TextBox tbDesc = new TextBox();
+                            PictureBox pbFileName = new PictureBox();
+                            foreach (Control control2 in control.Controls)
+                            {
+                                if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxFileName")
+                                {
+                                    tbFileName = (TextBox)control2;
+                                    if (tbFileName.Text.Trim() != picture.FileName)
+                                    {
+                                        picture.FileNameNew = tbFileName.Text.Trim();
+                                    }
+                                }
+                                if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxDescription")
+                                {
+                                    tbDesc = (TextBox)control2;
+                                    if (tbDesc.Text.Trim() != picture.Description)
+                                    {
+                                        picture.DescriptionNew = tbDesc.Text.Trim();
+                                    }
+                                }
+                                if (control2.GetType().Name == "pictureBox" && control2.Name == "pictureBoxPicture")
+                                {
+                                    pbFileName = (PictureBox)control2;
+                                    FileInfo fiPicture = new FileInfo(pbFileName.ImageLocation);
+                                    if (fiPicture.Extension != picture.Extension)
+                                    {
+                                        picture.ExtensionNew = fiPicture.Extension;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            SaveSubsectorTextFile();
+            ShowPictures();
         }
         public void ShowPictures()
         {
@@ -121,19 +179,35 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     X = 10;
 
-                    PictureBox tempPictureBox = new PictureBox();
+                    Panel panelPicture = new Panel();
+                    panelPicture.AutoSize = true;
+                    panelPicture.Location = new Point(X, Y);
+                    panelPicture.Tag = $"{picture.PictureTVItemID}";
+                    panelPicture.BorderStyle = BorderStyle.FixedSingle;
+                    panelPicture.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
 
-                    tempPictureBox.BorderStyle = BorderStyle.FixedSingle;
-                    tempPictureBox.ImageLocation = $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
-                    tempPictureBox.Location = new Point(X, Y);
-                    tempPictureBox.Size = new Size(600, 500);
-                    tempPictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
-                    tempPictureBox.TabIndex = 0;
-                    tempPictureBox.TabStop = false;
+                    PanelViewAndEdit.Controls.Add(panelPicture);
 
-                    PanelViewAndEdit.Controls.Add(tempPictureBox);
+                    //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    X = 10;
+                    Y = 10;
+
+                    PictureBox pictureBoxPicture = new PictureBox();
+
+                    pictureBoxPicture.BorderStyle = BorderStyle.FixedSingle;
+                    pictureBoxPicture.ImageLocation = $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                    pictureBoxPicture.Location = new Point(X, Y);
+                    pictureBoxPicture.Size = new Size(600, 500);
+                    pictureBoxPicture.SizeMode = PictureBoxSizeMode.StretchImage;
+                    pictureBoxPicture.TabIndex = 0;
+                    pictureBoxPicture.TabStop = false;
+                    pictureBoxPicture.Name = "pictureBoxPicture";
+                    pictureBoxPicture.Tag = $"{picture.PictureTVItemID}";
+
+                    panelPicture.Controls.Add(pictureBoxPicture);
+
+                    Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
 
                     if (IsEditing)
                     {
@@ -143,21 +217,46 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblFileName.Location = new Point(X, Y);
                         lblFileName.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                         lblFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblFileName.Tag = $"{picture.PictureTVItemID}";
                         lblFileName.Text = $@"Server File Name: ";
 
-                        PanelViewAndEdit.Controls.Add(lblFileName);
+                        panelPicture.Controls.Add(lblFileName);
 
-                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
+                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
 
-                        TextBox textFileName = new TextBox();
-                        textFileName.Location = new Point(X, Y);
-                        textFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        textFileName.Width = 300;
-                        textFileName.Text = picture.FileName;
+                        if (picture.FileNameNew != null)
+                        {
+                            Label lblFileNameOld = new Label();
+                            lblFileNameOld.AutoSize = true;
+                            lblFileNameOld.Location = new Point(X, Y);
+                            lblFileNameOld.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                            lblFileNameOld.Font = new Font(new FontFamily(lblFileNameOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                            lblFileNameOld.Tag = $"{picture.PictureTVItemID}";
+                            lblFileNameOld.Text = $@" ({picture.FileName})";
 
-                        PanelViewAndEdit.Controls.Add(textFileName);
+                            panelPicture.Controls.Add(lblFileNameOld);
 
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                            Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+                        }
+
+                        TextBox textBoxFileName = new TextBox();
+                        textBoxFileName.Location = new Point(X, Y);
+                        textBoxFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        textBoxFileName.Width = 300;
+                        textBoxFileName.Name = "textBoxFileName";
+                        textBoxFileName.Tag = $"{picture.PictureTVItemID}";
+                        if (picture.FileNameNew != null)
+                        {
+                            textBoxFileName.Text = picture.FileNameNew;
+                        }
+                        else
+                        {
+                            textBoxFileName.Text = picture.FileName;
+                        }
+
+                        panelPicture.Controls.Add(textBoxFileName);
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
                         X = 20;
 
                         Label lblDescription = new Label();
@@ -165,46 +264,91 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblDescription.Location = new Point(20, Y);
                         lblDescription.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                         lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblDescription.Tag = $"{picture.PictureTVItemID}";
                         lblDescription.Text = $@"Description: ";
 
-                        PanelViewAndEdit.Controls.Add(lblDescription);
+                        panelPicture.Controls.Add(lblDescription);
 
-                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
+                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
 
-                        TextBox textDescription = new TextBox();
-                        textDescription.Location = new Point(X, Y);
-                        textDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        textDescription.Width = 300;
-                        textDescription.Height = 100;
-                        textDescription.Multiline = true;
-                        textDescription.Text = picture.Description;
+                        if (picture.DescriptionNew != null)
+                        {
+                            Label lblDescriptionOld = new Label();
+                            lblDescriptionOld.AutoSize = true;
+                            lblDescriptionOld.Location = new Point(X, Y);
+                            lblDescriptionOld.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                            lblDescriptionOld.Font = new Font(new FontFamily(lblDescriptionOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                            lblDescriptionOld.Tag = $"{picture.PictureTVItemID}";
+                            lblDescriptionOld.Text = $@" ({picture.Description})";
 
-                        PanelViewAndEdit.Controls.Add(textDescription);
+                            panelPicture.Controls.Add(lblDescriptionOld);
 
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                            Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+                        }
+
+                        TextBox textBoxDescription = new TextBox();
+                        textBoxDescription.Location = new Point(X, Y);
+                        textBoxDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        textBoxDescription.Width = 300;
+                        textBoxDescription.Height = 100;
+                        textBoxDescription.Multiline = true;
+                        textBoxDescription.Name = "textBoxDescription";
+                        textBoxDescription.Tag = $"{picture.PictureTVItemID}";
+                        if (picture.DescriptionNew != null)
+                        {
+                            textBoxDescription.Text = picture.DescriptionNew;
+                        }
+                        else
+                        {
+                            textBoxDescription.Text = picture.Description;
+                        }
+
+                        panelPicture.Controls.Add(textBoxDescription);
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
                         X = 120;
 
-                        Button butSavePictureFileName = new Button();
-                        butSavePictureFileName.Location = new Point(X, Y);
-                        butSavePictureFileName.Text = "Save File Name";
-                        butSavePictureFileName.Tag = $"{picture.PictureTVItemID}";
-                        butSavePictureFileName.Click += butSavePictureFileName_Click;
+                        Button butSavePictureInfo = new Button();
+                        butSavePictureInfo.AutoSize = true;
+                        butSavePictureInfo.Location = new Point(X, Y);
+                        butSavePictureInfo.Text = "Save File Name And Description";
+                        butSavePictureInfo.Tag = $"{picture.PictureTVItemID}";
+                        butSavePictureInfo.Click += butSavePictureInfo_Click;
 
-                        PanelViewAndEdit.Controls.Add(butSavePictureFileName);
+                        panelPicture.Controls.Add(butSavePictureInfo);
 
-                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
+                        X = butSavePictureInfo.Right + 20;
 
-                        Button butRemovePicture = new Button();
-                        butRemovePicture.Location = new Point(X, Y);
-                        butRemovePicture.Text = "Remove";
-                        butRemovePicture.Tag = $"{picture.PictureTVItemID}";
-                        butRemovePicture.Click += butRemovePicture_Click;
+                        if (picture.ToRemove == true)
+                        {
+                            Button butUnRemovePicture = new Button();
+                            butUnRemovePicture.AutoSize = true;
+                            butUnRemovePicture.Location = new Point(X, Y);
+                            butUnRemovePicture.Text = "Unremove";
+                            butUnRemovePicture.Tag = $"{picture.PictureTVItemID}";
+                            butUnRemovePicture.Click += butUnRemovePicture_Click;
 
-                        PanelViewAndEdit.Controls.Add(butRemovePicture);
+                            panelPicture.Controls.Add(butUnRemovePicture);
 
+                            pictureBoxPicture.Paint += PictureBoxPicture_Paint;
+                             }
+                        else
+                        {
+                            Button butRemovePicture = new Button();
+                            butRemovePicture.AutoSize = true;
+                            butRemovePicture.Location = new Point(X, Y);
+                            butRemovePicture.Text = "Remove";
+                            butRemovePicture.Tag = $"{picture.PictureTVItemID}";
+                            butRemovePicture.Click += butRemovePicture_Click;
 
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 50;
+                            panelPicture.Controls.Add(butRemovePicture);
+
+                        }
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 50;
                     }
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 }
             }
             else
@@ -233,6 +377,13 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 PanelViewAndEdit.Controls.Add(butAddPicture);
             }
+        }
+
+        private void PictureBoxPicture_Paint(object sender, PaintEventArgs e)
+        {
+            PictureBox pictureBoxPicture = (PictureBox)sender;
+            e.Graphics.DrawLine(new Pen(new SolidBrush(Color.Red), 5), pictureBoxPicture.Left + 100, pictureBoxPicture.Top + 100, pictureBoxPicture.Right - 100, pictureBoxPicture.Bottom - 100);
+            e.Graphics.DrawLine(new Pen(new SolidBrush(Color.Red), 5), pictureBoxPicture.Left + 100, pictureBoxPicture.Bottom - 100, pictureBoxPicture.Right - 100, pictureBoxPicture.Top + 100);
         }
     }
 }

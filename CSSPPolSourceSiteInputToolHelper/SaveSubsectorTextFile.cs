@@ -28,6 +28,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 string IsActiveText = pss.IsActive == null ? "false" : (((bool)pss.IsActive) ? "true" : "false");
                 string IsPointSourceText = pss.IsPointSource == null ? "false" : (((bool)pss.IsPointSource) ? "true" : "false");
                 sb.AppendLine($"PSS\t{pss.PSSTVItemID}\t{LatText}\t{LngText}\t{IsActiveText}\t{IsPointSourceText}\t");
+                sb.AppendLine($"SITENUMB\t{pss.SiteNumber}\t");
                 if (pss.LatNew != null)
                 {
                     sb.AppendLine($"LATNEW\t{((float)pss.LatNew).ToString("F5")}\t");
@@ -44,9 +45,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     sb.AppendLine($"ISPOINTSOURCENEW\t{(((bool)pss.IsPointSourceNew) ? "true" : "false")}\t");
                 }
-                sb.AppendLine($"SITENUMB\t{pss.SiteNumber}\t");
                 sb.AppendLine($"TVTEXT\t{pss.TVText}\t");
-                if (!string.IsNullOrWhiteSpace(pss.TVText))
+                if (!string.IsNullOrWhiteSpace(pss.TVTextNew))
                 {
                     sb.AppendLine($"TVTEXTNEW\t{pss.TVTextNew}\t");
                 }
@@ -65,38 +65,39 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                         sb.AppendLine($"ADDRESS\t{pss.PSSAddress.AddressTVItemID}\t{pss.PSSAddress.Municipality}\t{((int)pss.PSSAddress.AddressType).ToString()}\t{pss.PSSAddress.StreetNumber}\t{pss.PSSAddress.StreetName}\t{((int)pss.PSSAddress.StreetType).ToString()}\t{pss.PSSAddress.PostalCode}\t");
                     }
-                    if (pss.PSSAddress.AddressTVItemID != null)
-                    {
-                        string AddressTVItemID = pss.PSSAddressNew.AddressTVItemID == null ? "-999999999" : pss.PSSAddressNew.AddressTVItemID.ToString();
-                        string Municipality = pss.PSSAddressNew.Municipality == null ? "" : pss.PSSAddressNew.Municipality;
-                        string AddressType = pss.PSSAddressNew.AddressType == null ? "" : ((int)pss.PSSAddressNew.AddressType).ToString();
-                        string StreetNumber = pss.PSSAddressNew.StreetNumber == null ? "" : pss.PSSAddressNew.StreetNumber;
-                        string StreetName = pss.PSSAddressNew.StreetName == null ? "" : pss.PSSAddressNew.StreetName;
-                        string StreetType = pss.PSSAddressNew.StreetType == null ? "" : ((int)pss.PSSAddressNew.StreetType).ToString();
-                        string PostalCode = pss.PSSAddressNew.PostalCode == null ? "" : pss.PSSAddressNew.PostalCode;
-                        sb.AppendLine($"ADDRESSNEW\t{AddressTVItemID}\t{Municipality}\t{AddressType}\t{StreetNumber}\t{StreetName}\t{StreetType}\t{PostalCode}\t");
-                    }
+                }
+
+                if (pss.PSSAddressNew.AddressTVItemID != null)
+                {
+                    string AddressTVItemID = pss.PSSAddressNew.AddressTVItemID.ToString();
+                    string Municipality = pss.PSSAddressNew.Municipality == null ? "" : pss.PSSAddressNew.Municipality;
+                    string AddressType = pss.PSSAddressNew.AddressType == null ? "" : ((int)pss.PSSAddressNew.AddressType).ToString();
+                    string StreetNumber = pss.PSSAddressNew.StreetNumber == null ? "" : pss.PSSAddressNew.StreetNumber;
+                    string StreetName = pss.PSSAddressNew.StreetName == null ? "" : pss.PSSAddressNew.StreetName;
+                    string StreetType = pss.PSSAddressNew.StreetType == null ? "" : ((int)pss.PSSAddressNew.StreetType).ToString();
+                    string PostalCode = pss.PSSAddressNew.PostalCode == null ? "" : pss.PSSAddressNew.PostalCode;
+                    sb.AppendLine($"ADDRESSNEW\t{AddressTVItemID}\t{Municipality}\t{AddressType}\t{StreetNumber}\t{StreetName}\t{StreetType}\t{PostalCode}\t");
                 }
 
                 foreach (Picture picture in pss.PSSPictureList)
                 {
                     sb.AppendLine($"PICTURE\t{picture.PictureTVItemID}\t{picture.FileName}\t{picture.Extension}\t{picture.Description}\t");
-                    if (picture.ToRemove != null)
+                    if (picture.ToRemove != null && picture.ToRemove == true)
                     {
                         sb.AppendLine($"PICTURETOREMOVE\t");
                     }
-                    if (picture.FileNameNew != null)
+                    if (!string.IsNullOrWhiteSpace(picture.FileNameNew))
                     {
                         sb.AppendLine($"PICTUREFILENAMENEW\t{picture.FileNameNew}\t");
                     }
-                    if (picture.ExtensionNew != null)
+                    if (!string.IsNullOrWhiteSpace(picture.ExtensionNew))
                     {
                         sb.AppendLine($"PICTUREEXTENSIONNEW\t{picture.ExtensionNew}\t");
                     }
-                    if (picture.DescriptionNew != null)
+                    if (!string.IsNullOrWhiteSpace(picture.DescriptionNew))
                     {
-                        sb.AppendLine($"PICTUREDESCRIPTIONNEW\t{picture.DescriptionNew}\t");
-                    }                  
+                        sb.AppendLine($"PICTUREDESCRIPTIONNEW\t{picture.DescriptionNew.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("  ", " ")}\t");
+                    }
                 }
 
                 sb.AppendLine($"OBS\t{pss.PSSObs.ObsID}\t" +
@@ -123,7 +124,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     sb.AppendLine($"OLDISSUETEXT\t{oldIssueText}\t");
                 }
 
-                foreach (Issue issue in pss.PSSObs.IssueList)
+                foreach (Issue issue in pss.PSSObs.IssueList.OrderBy(c => c.Ordinal))
                 {
                     sb.AppendLine($"ISSUE\t{issue.IssueID}\t{issue.Ordinal}\t{((DateTime)issue.LastUpdated_UTC).Year}|{((DateTime)issue.LastUpdated_UTC).Month.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Day.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Hour.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Minute.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Second.ToString("0#")}\t{String.Join(",", issue.PolSourceObsInfoIntList)},\t");
                     if (issue.PolSourceObsInfoIntListNew.Count > 0)
@@ -137,7 +138,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            DirectoryInfo di = new DirectoryInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\{CurrentSubsectorName}\");
+            DirectoryInfo di = new DirectoryInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\");
 
             if (!di.Exists)
             {

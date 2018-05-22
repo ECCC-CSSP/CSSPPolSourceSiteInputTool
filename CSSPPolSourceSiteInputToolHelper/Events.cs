@@ -39,15 +39,21 @@ namespace CSSPPolSourceSiteInputToolHelper
             int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
             RemovePicture(PictureTVItemID);
         }
+        private void butUnRemovePicture_Click(object sender, EventArgs e)
+        {
+            int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
+            UnRemovePicture(PictureTVItemID);
+        }
         private void butSaveLatLngAndObsAndAddress_Click(object sender, EventArgs e)
         {
             SavePolSourceSiteInfo();
             RedrawSinglePanelPSS();
             ReDraw();
         }
-        private void butSavePictureFileName_Click(object sender, EventArgs e)
+        private void butSavePictureInfo_Click(object sender, EventArgs e)
         {
-            SavePictureInfo();
+            int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
+            SavePictureInfo(PictureTVItemID);
             RedrawSinglePanelPSS();
             ReDraw();
         }
