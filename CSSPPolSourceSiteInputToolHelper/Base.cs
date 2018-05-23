@@ -38,8 +38,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Color ForeColorNormal = Color.Black;
         //public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
         //public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
-        public string baseURLEN = "http://localhost:11562/en-CA/PolSource/";
-        public string baseURLFR = "http://localhost:11562/fr-CA/PolSource/";
+        public string baseURLEN = "http://localhost:11561/en-CA/PolSource/";
+        public string baseURLFR = "http://localhost:11561/fr-CA/PolSource/";
         public string BasePath = @"C:\PollutionSourceSites\";
         public List<PolSourceObsInfoEnumTextAndID> polSourceObsInfoEnumTextAndIDList = new List<PolSourceObsInfoEnumTextAndID>();
         public List<PolSourceObsInfoEnumHideAndID> polSourceObsInfoEnumHideAndIDList = new List<PolSourceObsInfoEnumHideAndID>();

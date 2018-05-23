@@ -17,80 +17,198 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             PanelPolSourceSite.Controls.Clear();
 
-            int countPSS = 0;
-            foreach (PSS pss in subsectorDoc.Subsector.PSSList.OrderBy(c => c.SiteNumber))
+            if (subsectorDoc.Subsector == null)
             {
-                Panel tempPanel = new Panel();
-
-                tempPanel.BorderStyle = BorderStyle.FixedSingle;
-                tempPanel.Location = new Point(0, countPSS * 44);
-                tempPanel.Size = new Size(PanelPolSourceSite.Width, 44);
-                tempPanel.TabIndex = 0;
-                tempPanel.Tag = pss.PSSTVItemID;
-                tempPanel.Click += ShowPolSourceSiteViaPanel;
-
                 Label lblTVText = new Label();
 
                 lblTVText.AutoSize = true;
                 lblTVText.Location = new Point(10, 4);
                 lblTVText.TabIndex = 0;
-                lblTVText.Tag = pss.PSSTVItemID;
                 lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                if (!string.IsNullOrWhiteSpace(pss.TVTextNew))
+                lblTVText.Text = $"Selected subsector has no local pollution source sites";
+
+                PanelPolSourceSite.Controls.Add(lblTVText);
+            }
+            else
+            {
+                int countPSS = 0;
+                foreach (PSS pss in subsectorDoc.Subsector.PSSList.OrderBy(c => c.SiteNumber))
                 {
-                    lblTVText.Text = $"{pss.SiteNumber}    {pss.TVTextNew}";
-                }
-                else
-                {
-                    lblTVText.Text = $"{pss.SiteNumber}    {pss.TVText}";
-                }
-                lblTVText.Click += ShowPolSourceSiteViaLabel;
+                    Panel panelpss = new Panel();
 
-                tempPanel.Controls.Add(lblTVText);
+                    panelpss.BorderStyle = BorderStyle.FixedSingle;
+                    panelpss.Location = new Point(0, countPSS * 44);
+                    panelpss.Size = new Size(PanelPolSourceSite.Width, 44);
+                    panelpss.TabIndex = 0;
+                    panelpss.Tag = pss.PSSTVItemID;
+                    panelpss.Click += ShowPolSourceSiteViaPanel;
 
-                Label lblPSSStatus = new Label();
+                    Label lblTVText = new Label();
 
-                lblPSSStatus.AutoSize = true;
-                lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
-                lblPSSStatus.TabIndex = 0;
-                lblPSSStatus.Tag = pss.PSSTVItemID;
-                lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                lblPSSStatus.Text = $"Good";
-                lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
-
-
-                tempPanel.Controls.Add(lblPSSStatus);
-
-                foreach (Issue issue in pss.PSSObs.IssueList)
-                {
-                    if (issue.PolSourceObsInfoIntListNew.Count > 0)
+                    lblTVText.AutoSize = true;
+                    lblTVText.Location = new Point(10, 4);
+                    lblTVText.TabIndex = 0;
+                    lblTVText.Tag = pss.PSSTVItemID;
+                    lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    if (!string.IsNullOrWhiteSpace(pss.TVTextNew))
                     {
-                        issue.IsWellFormed = IssueWellFormed(issue, true);
-                        issue.IsCompleted = IssueCompleted(issue, true);
+                        lblTVText.Text = $"{pss.SiteNumber}    {pss.TVTextNew}";
                     }
                     else
                     {
-                        issue.IsWellFormed = IssueWellFormed(issue, false);
-                        issue.IsCompleted = IssueCompleted(issue, false);
+                        lblTVText.Text = $"{pss.SiteNumber}    {pss.TVText}";
+                    }
+                    lblTVText.Click += ShowPolSourceSiteViaLabel;
+
+                    panelpss.Controls.Add(lblTVText);
+
+
+                    Label lblPSSStatus = new Label();
+
+                    bool NeedDetailsUpdate = false;
+                    bool NeedIssuesUpdate = false;
+                    bool NeedPicturesUpdate = false;
+                    if (IsAdmin)
+                    {
+                        if (pss.LatNew != null
+                           || pss.LngNew != null
+                           || pss.IsActiveNew != null
+                           || pss.IsPointSourceNew != null
+                           || pss.PSSAddressNew.AddressTVItemID != null
+                           || pss.PSSAddressNew.AddressType != null
+                           || pss.PSSAddressNew.Municipality != null
+                           || pss.PSSAddressNew.PostalCode != null
+                           || pss.PSSAddressNew.StreetName != null
+                           || pss.PSSAddressNew.StreetNumber != null
+                           || pss.PSSAddressNew.StreetType != null
+                           || pss.PSSObs.ObsDateNew != null)
+                        {
+                            NeedDetailsUpdate = true;
+                        }
+
+                        foreach (Issue issue in pss.PSSObs.IssueList)
+                        {
+                            if (issue.PolSourceObsInfoIntListNew.Count > 0 || issue.ToRemove == true)
+                            {
+                                NeedIssuesUpdate = true;
+                                break;
+                            }
+                        }
+                        foreach (Picture picture in pss.PSSPictureList)
+                        {
+                            if (picture.DescriptionNew != null
+                                || picture.ExtensionNew != null
+                                || picture.FileNameNew != null
+                                || picture.ToRemove != null)
+                            {
+                                NeedPicturesUpdate = true;
+                                break;
+                            }
+                        }
+
+                        lblPSSStatus.AutoSize = true;
+                        lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                        lblPSSStatus.TabIndex = 0;
+                        lblPSSStatus.Tag = pss.PSSTVItemID;
+                        lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
+                        string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
+                        string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
+                        if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                        {
+                            lblPSSStatus.Text = $"Good --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                        }
+                        else
+                        {
+                            lblPSSStatus.Text = $"Good";
+                        }
+                        lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
+
+
+                        panelpss.Controls.Add(lblPSSStatus);
+
+                    }
+                    else
+                    {
+
+                        lblPSSStatus.AutoSize = true;
+                        lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                        lblPSSStatus.TabIndex = 0;
+                        lblPSSStatus.Tag = pss.PSSTVItemID;
+                        lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblPSSStatus.Text = $"Good";
+                        lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
+
+
+                        panelpss.Controls.Add(lblPSSStatus);
                     }
 
-                    if (issue.IsWellFormed == false)
+
+                    foreach (Issue issue in pss.PSSObs.IssueList)
                     {
-                        tempPanel.BackColor = BackColorNotWellFormed;
-                        lblPSSStatus.Text = $"Not Well Formed";
-                        break;
+                        if (issue.PolSourceObsInfoIntListNew.Count > 0)
+                        {
+                            issue.IsWellFormed = IssueWellFormed(issue, true);
+                            issue.IsCompleted = IssueCompleted(issue, true);
+                        }
+                        else
+                        {
+                            issue.IsWellFormed = IssueWellFormed(issue, false);
+                            issue.IsCompleted = IssueCompleted(issue, false);
+                        }
+
+                        if (issue.IsWellFormed == false)
+                        {
+                            panelpss.BackColor = BackColorNotWellFormed;
+                            if (IsAdmin)
+                            {
+                                string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
+                                string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
+                                string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
+                                if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                                {
+                                    lblPSSStatus.Text = $"Not Well Formed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                                }
+                                else
+                                {
+                                    lblPSSStatus.Text = $"Not Well Formed";
+                                }
+                            }
+                            else
+                            {
+                                lblPSSStatus.Text = $"Not Well Formed";
+                            }
+                            break;
+                        }
+                        if (issue.IsCompleted == false)
+                        {
+                            panelpss.BackColor = BackColorNotCompleted;
+                            if (IsAdmin)
+                            {
+                                string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
+                                string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
+                                string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
+                                if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                                {
+                                    lblPSSStatus.Text = $"Not Completed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                                }
+                                else
+                                {
+                                    lblPSSStatus.Text = $"Not Completed";
+                                }
+                            }
+                            else
+                            {
+                                lblPSSStatus.Text = $"Not Completed";
+                            }
+                            break;
+                        }
                     }
-                    if (issue.IsCompleted == false)
-                    {
-                        tempPanel.BackColor = BackColorNotCompleted;
-                        lblPSSStatus.Text = $"Not Completed";
-                        break;
-                    }
+
+                    PanelPolSourceSite.Controls.Add(panelpss);
+
+                    countPSS += 1;
                 }
-
-                PanelPolSourceSite.Controls.Add(tempPanel);
-
-                countPSS += 1;
             }
         }
         public void PSSAdd()
@@ -142,6 +260,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 pss.PSSObs.IssueList.Add(issue);
             }
         }
+        public void PSSSaveToCSSPWebTools()
+        {
+            MessageBox.Show("PSSSaveToCSSPWebTools " + CurrentPSS.PSSTVItemID.ToString(), PolSourceSiteTVItemID.ToString());
+        }
         public void RedrawSinglePanelPSS()
         {
             Panel panel = new Panel();
@@ -185,15 +307,81 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 Label lblPSSStatus = new Label();
 
-                lblPSSStatus.AutoSize = true;
-                lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
-                lblPSSStatus.TabIndex = 0;
-                lblPSSStatus.Tag = pss.PSSTVItemID;
-                lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                lblPSSStatus.Text = $"Good";
-                lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
+                bool NeedDetailsUpdate = false;
+                bool NeedIssuesUpdate = false;
+                bool NeedPicturesUpdate = false;
+                if (IsAdmin)
+                {
+                    if (pss.LatNew != null
+                       || pss.LngNew != null
+                       || pss.IsActiveNew != null
+                       || pss.IsPointSourceNew != null
+                       || pss.PSSAddressNew.AddressTVItemID != null
+                       || pss.PSSAddressNew.AddressType != null
+                       || pss.PSSAddressNew.Municipality != null
+                       || pss.PSSAddressNew.PostalCode != null
+                       || pss.PSSAddressNew.StreetName != null
+                       || pss.PSSAddressNew.StreetNumber != null
+                       || pss.PSSAddressNew.StreetType != null
+                       || pss.PSSObs.ObsDateNew != null)
+                    {
+                        NeedDetailsUpdate = true;
+                    }
 
-                panel.Controls.Add(lblPSSStatus);
+                    foreach (Issue issue in pss.PSSObs.IssueList)
+                    {
+                        if (issue.PolSourceObsInfoIntListNew.Count > 0 || issue.ToRemove == true)
+                        {
+                            NeedIssuesUpdate = true;
+                            break;
+                        }
+                    }
+                    foreach (Picture picture in pss.PSSPictureList)
+                    {
+                        if (picture.DescriptionNew != null
+                            || picture.ExtensionNew != null
+                            || picture.FileNameNew != null
+                            || picture.ToRemove != null)
+                        {
+                            NeedPicturesUpdate = true;
+                            break;
+                        }
+                    }
+
+                    lblPSSStatus.AutoSize = true;
+                    lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                    lblPSSStatus.TabIndex = 0;
+                    lblPSSStatus.Tag = pss.PSSTVItemID;
+                    lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
+                    string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
+                    string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
+                    if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                    {
+                        lblPSSStatus.Text = $"Good --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                    }
+                    else
+                    {
+                        lblPSSStatus.Text = $"Good";
+                    }
+                    lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
+
+                    panel.Controls.Add(lblPSSStatus);
+                }
+                else
+                {
+                    lblPSSStatus.AutoSize = true;
+                    lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                    lblPSSStatus.TabIndex = 0;
+                    lblPSSStatus.Tag = pss.PSSTVItemID;
+                    lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    lblPSSStatus.Text = $"Good";
+                    lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
+
+                    panel.Controls.Add(lblPSSStatus);
+                }
+
+
 
                 foreach (Issue issue in pss.PSSObs.IssueList)
                 {
@@ -210,16 +398,51 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (issue.IsWellFormed == false)
                     {
                         panel.BackColor = BackColorNotWellFormed;
-                        lblPSSStatus.Text = $"Not Well Formed";
+                        if (IsAdmin)
+                        {
+                            string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
+                            string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
+                            string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
+                            if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                            {
+                                lblPSSStatus.Text = $"Not Well Formed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                            }
+                            else
+                            {
+                                lblPSSStatus.Text = $"Not Well Formed";
+                            }
+                        }
+                        else
+                        {
+                            lblPSSStatus.Text = $"Not Well Formed";
+                        }
                         break;
                     }
                     if (issue.IsCompleted == false)
                     {
                         panel.BackColor = BackColorNotCompleted;
-                        lblPSSStatus.Text = $"Not Completed";
+                        if (IsAdmin)
+                        {
+                            string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
+                            string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
+                            string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
+                            if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                            {
+                                lblPSSStatus.Text = $"Not Completed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                            }
+                            else
+                            {
+                                lblPSSStatus.Text = $"Not Completed";
+                            }
+                        }
+                        else
+                        {
+                            lblPSSStatus.Text = $"Not Completed";
+                        }
                         break;
                     }
                 }
+
             }
         }
         public void RedrawPolSourceSiteList()
@@ -996,8 +1219,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 #endregion Observation
 
-                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 80;
-
                 if (IsEditing)
                 {
                     Button butSaveLatLngObsAndAddress = new Button();
@@ -1005,6 +1226,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     butSaveLatLngObsAndAddress.Location = new Point(200, Y);
                     butSaveLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                     butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    butSaveLatLngObsAndAddress.Padding = new Padding(5);
                     butSaveLatLngObsAndAddress.Text = $"Save";
                     butSaveLatLngObsAndAddress.Click += butSaveLatLngAndObsAndAddress_Click;
 
@@ -1016,6 +1238,183 @@ namespace CSSPPolSourceSiteInputToolHelper
                     DrawIssuesForViewing();
                     ShowPictures();
                 }
+
+                if (IsAdmin)
+                {
+                    bool NeedDetailsUpdate = false;
+                    bool NeedIssuesUpdate = false;
+                    bool NeedPicturesUpdate = false;
+                    if (CurrentPSS.LatNew != null
+                       || CurrentPSS.LngNew != null
+                       || CurrentPSS.IsActiveNew != null
+                       || CurrentPSS.IsPointSourceNew != null
+                       || CurrentPSS.PSSAddressNew.AddressTVItemID != null
+                       || CurrentPSS.PSSAddressNew.AddressType != null
+                       || CurrentPSS.PSSAddressNew.Municipality != null
+                       || CurrentPSS.PSSAddressNew.PostalCode != null
+                       || CurrentPSS.PSSAddressNew.StreetName != null
+                       || CurrentPSS.PSSAddressNew.StreetNumber != null
+                       || CurrentPSS.PSSAddressNew.StreetType != null
+                       || CurrentPSS.PSSObs.ObsDateNew != null)
+                    {
+                        NeedDetailsUpdate = true;
+                    }
+
+                    foreach (Issue issue in CurrentPSS.PSSObs.IssueList)
+                    {
+                        if (issue.PolSourceObsInfoIntListNew.Count > 0 || issue.ToRemove == true)
+                        {
+                            NeedIssuesUpdate = true;
+                            break;
+                        }
+                    }
+                    foreach (Picture picture in CurrentPSS.PSSPictureList)
+                    {
+                        if (picture.DescriptionNew != null
+                            || picture.ExtensionNew != null
+                            || picture.FileNameNew != null
+                            || picture.ToRemove != null)
+                        {
+                            NeedPicturesUpdate = true;
+                            break;
+                        }
+                    }
+
+                    string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
+                    string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
+                    string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
+                    if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                    {
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                        X = 20;
+
+                        Label lblUndersandWhatWillBeSentToDB = new Label();
+                        lblUndersandWhatWillBeSentToDB.AutoSize = true;
+                        lblUndersandWhatWillBeSentToDB.Location = new Point(30, Y);
+                        lblUndersandWhatWillBeSentToDB.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        lblUndersandWhatWillBeSentToDB.Font = new Font(new FontFamily(lblUndersandWhatWillBeSentToDB.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+
+                        StringBuilder sb = new StringBuilder();
+                        sb.AppendLine($"Here are all the thing that will be sent to the CSSPWebTools and stored in it's DB");
+                        sb.AppendLine("");
+                        sb.AppendLine($"{NeedDetailsUpdateText}");
+                        sb.AppendLine("");
+                        if (CurrentPSS.LatNew != null)
+                        {
+                            sb.AppendLine("     Lat       (changed)");
+                        }
+                        if (CurrentPSS.LngNew != null)
+                        {
+                            sb.AppendLine("     Lng       (changed)");
+                        }
+                        if (CurrentPSS.IsActiveNew != null)
+                        {
+                            sb.AppendLine("     IsActive       (changed)");
+                        }
+                        if (CurrentPSS.IsPointSourceNew != null)
+                        {
+                            sb.AppendLine("     IsPointSource       (changed)");
+                        }
+                        if (CurrentPSS.PSSAddressNew.AddressType != null
+                            || CurrentPSS.PSSAddressNew.Municipality != null
+                            || CurrentPSS.PSSAddressNew.PostalCode != null
+                            || CurrentPSS.PSSAddressNew.StreetName != null
+                            || CurrentPSS.PSSAddressNew.StreetNumber != null
+                            || CurrentPSS.PSSAddressNew.StreetType != null)
+                        {
+                            NeedDetailsUpdate = true;
+                        }
+                        if (CurrentPSS.PSSAddressNew.AddressTVItemID != null)
+                        {
+                            sb.AppendLine("     Address       (changed)");
+                        }
+                        if (CurrentPSS.PSSObs.ObsDateNew != null)
+                        {
+                            sb.AppendLine("     ObsDate       (changed)");
+                        }
+
+                        sb.AppendLine("");
+                        sb.AppendLine($"{NeedIssuesUpdateText}");
+                        sb.AppendLine("");
+
+                        int count = 0;
+                        foreach (Issue issue in CurrentPSS.PSSObs.IssueList.OrderBy(c => c.Ordinal))
+                        {
+                            count += 1;
+                            if (issue.PolSourceObsInfoIntListNew.Count > 0 || issue.ToRemove == true)
+                            {
+                                if (issue.ToRemove == true)
+                                {
+                                    sb.AppendLine($"     Issue {count}          (to be removed)");
+                                }
+                                else
+                                {
+                                    sb.AppendLine($"     Issue {count}          (changed)");
+                                }
+                            }
+                        }
+
+                        sb.AppendLine("");
+                        sb.AppendLine($"{NeedPictuesUpdateText}");
+                        sb.AppendLine("");
+
+                        count = 0;
+                        foreach (Picture picture in CurrentPSS.PSSPictureList)
+                        {
+                            count += 1;
+                            if (picture.DescriptionNew != null
+                                || picture.ExtensionNew != null
+                                || picture.FileNameNew != null
+                                || picture.ToRemove != null)
+                            {
+                                if (picture.ToRemove != null && picture.ToRemove == true)
+                                {
+                                    sb.AppendLine($"     Picture {count}          (to be removed)");
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(picture.FileNameNew) 
+                                        || !string.IsNullOrWhiteSpace(picture.ExtensionNew)
+                                        || !string.IsNullOrWhiteSpace(picture.DescriptionNew))
+                                    {
+                                        sb.AppendLine($"     Picture {count}          (filename and/or description changed)");
+                                    }
+                                }
+                            }
+                        }
+
+                        lblUndersandWhatWillBeSentToDB.Text = sb.ToString();
+
+                        PanelViewAndEdit.Controls.Add(lblUndersandWhatWillBeSentToDB);
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                        X = 20;
+
+                        Button butPSSSaveToCSSPWebTools = new Button();
+                        butPSSSaveToCSSPWebTools.AutoSize = true;
+                        butPSSSaveToCSSPWebTools.Location = new Point(20, Y);
+                        butPSSSaveToCSSPWebTools.Text = "Update All Pollution Source Site Related Information To CSSPWebTools";
+                        butPSSSaveToCSSPWebTools.Tag = $"{CurrentPSS.PSSTVItemID}";
+                        butPSSSaveToCSSPWebTools.Font = new Font(new FontFamily(butPSSSaveToCSSPWebTools.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+                        butPSSSaveToCSSPWebTools.Padding = new Padding(5);
+                        butPSSSaveToCSSPWebTools.Click += butPSSSaveToCSSPWebTools_Click;
+
+                        PanelViewAndEdit.Controls.Add(butPSSSaveToCSSPWebTools);
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                        X = 20;
+
+                        Label lblReturns = new Label();
+                        lblReturns.AutoSize = true;
+                        lblReturns.Location = new Point(30, Y);
+                        lblReturns.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        lblReturns.Font = new Font(new FontFamily(lblUndersandWhatWillBeSentToDB.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+                        lblReturns.Text = "\r\n\r\n\r\n\r\n";
+
+                        PanelViewAndEdit.Controls.Add(lblReturns);
+                    }
+                }
+
             }
             IsReading = false;
         }

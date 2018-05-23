@@ -205,39 +205,45 @@ namespace CSSPPolSourceSiteInputToolHelper
                     pictureBoxPicture.Name = "pictureBoxPicture";
                     pictureBoxPicture.Tag = $"{picture.PictureTVItemID}";
 
+                    if (picture.ToRemove == true)
+                    {
+                        pictureBoxPicture.Paint += PictureBoxPicture_Paint;
+                    }
+
                     panelPicture.Controls.Add(pictureBoxPicture);
 
                     Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
 
+                    X = 20;
+                    Label lblFileName = new Label();
+                    lblFileName.AutoSize = true;
+                    lblFileName.Location = new Point(X, Y);
+                    lblFileName.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                    lblFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    lblFileName.Tag = $"{picture.PictureTVItemID}";
+                    lblFileName.Text = $@"Server File Name: ";
+
+                    panelPicture.Controls.Add(lblFileName);
+
+                    X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
+
+                    if (picture.FileNameNew != null)
+                    {
+                        Label lblFileNameOld = new Label();
+                        lblFileNameOld.AutoSize = true;
+                        lblFileNameOld.Location = new Point(X, Y);
+                        lblFileNameOld.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                        lblFileNameOld.Font = new Font(new FontFamily(lblFileNameOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblFileNameOld.Tag = $"{picture.PictureTVItemID}";
+                        lblFileNameOld.Text = $@" ({picture.FileName})";
+
+                        panelPicture.Controls.Add(lblFileNameOld);
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+                    }
+
                     if (IsEditing)
                     {
-                        X = 20;
-                        Label lblFileName = new Label();
-                        lblFileName.AutoSize = true;
-                        lblFileName.Location = new Point(X, Y);
-                        lblFileName.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
-                        lblFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                        lblFileName.Tag = $"{picture.PictureTVItemID}";
-                        lblFileName.Text = $@"Server File Name: ";
-
-                        panelPicture.Controls.Add(lblFileName);
-
-                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
-
-                        if (picture.FileNameNew != null)
-                        {
-                            Label lblFileNameOld = new Label();
-                            lblFileNameOld.AutoSize = true;
-                            lblFileNameOld.Location = new Point(X, Y);
-                            lblFileNameOld.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
-                            lblFileNameOld.Font = new Font(new FontFamily(lblFileNameOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                            lblFileNameOld.Tag = $"{picture.PictureTVItemID}";
-                            lblFileNameOld.Text = $@" ({picture.FileName})";
-
-                            panelPicture.Controls.Add(lblFileNameOld);
-
-                            Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
-                        }
 
                         TextBox textBoxFileName = new TextBox();
                         textBoxFileName.Location = new Point(X, Y);
@@ -255,37 +261,58 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
 
                         panelPicture.Controls.Add(textBoxFileName);
-
-                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
-                        X = 20;
-
-                        Label lblDescription = new Label();
-                        lblDescription.AutoSize = true;
-                        lblDescription.Location = new Point(20, Y);
-                        lblDescription.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
-                        lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                        lblDescription.Tag = $"{picture.PictureTVItemID}";
-                        lblDescription.Text = $@"Description: ";
-
-                        panelPicture.Controls.Add(lblDescription);
-
-                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
-
-                        if (picture.DescriptionNew != null)
+                    }
+                    else
+                    {
+                        Label lblFileName2 = new Label();
+                        lblFileName2.Location = new Point(X, Y);
+                        lblFileName2.Font = new Font(new FontFamily(lblFileName2.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblFileName2.Width = 300;
+                        lblFileName2.Tag = $"{picture.PictureTVItemID}";
+                        if (picture.FileNameNew != null)
                         {
-                            Label lblDescriptionOld = new Label();
-                            lblDescriptionOld.AutoSize = true;
-                            lblDescriptionOld.Location = new Point(X, Y);
-                            lblDescriptionOld.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
-                            lblDescriptionOld.Font = new Font(new FontFamily(lblDescriptionOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                            lblDescriptionOld.Tag = $"{picture.PictureTVItemID}";
-                            lblDescriptionOld.Text = $@" ({picture.Description})";
-
-                            panelPicture.Controls.Add(lblDescriptionOld);
-
-                            Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+                            lblFileName2.Text = picture.FileNameNew;
+                        }
+                        else
+                        {
+                            lblFileName2.Text = picture.FileName;
                         }
 
+                        panelPicture.Controls.Add(lblFileName2);
+                    }
+
+                    Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+                    X = 20;
+
+                    Label lblDescription = new Label();
+                    lblDescription.AutoSize = true;
+                    lblDescription.Location = new Point(20, Y);
+                    lblDescription.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                    lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    lblDescription.Tag = $"{picture.PictureTVItemID}";
+                    lblDescription.Text = $@"Description: ";
+
+                    panelPicture.Controls.Add(lblDescription);
+
+                    X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
+
+                    if (picture.DescriptionNew != null)
+                    {
+                        Label lblDescriptionOld = new Label();
+                        lblDescriptionOld.AutoSize = true;
+                        lblDescriptionOld.Location = new Point(X, Y);
+                        lblDescriptionOld.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                        lblDescriptionOld.Font = new Font(new FontFamily(lblDescriptionOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblDescriptionOld.Tag = $"{picture.PictureTVItemID}";
+                        lblDescriptionOld.Text = $@" ({picture.Description})";
+
+                        panelPicture.Controls.Add(lblDescriptionOld);
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+                    }
+
+                    if (IsEditing)
+                    {
                         TextBox textBoxDescription = new TextBox();
                         textBoxDescription.Location = new Point(X, Y);
                         textBoxDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
@@ -304,15 +331,39 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
 
                         panelPicture.Controls.Add(textBoxDescription);
+                    }
+                    else
+                    {
+                        Label lblDescription2 = new Label();
+                        lblDescription2.AutoSize = true;
+                        lblDescription2.Location = new Point(X, Y);
+                        lblDescription2.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblDescription2.Width = 300;
+                        lblDescription2.Height = 100;
+                        lblDescription2.Tag = $"{picture.PictureTVItemID}";
+                        if (picture.DescriptionNew != null)
+                        {
+                            lblDescription2.Text = picture.DescriptionNew;
+                        }
+                        else
+                        {
+                            lblDescription2.Text = picture.Description;
+                        }
 
-                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
-                        X = 120;
+                        panelPicture.Controls.Add(lblDescription2);
+                    }
 
+                    Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+                    X = 120;
+
+                    if (IsEditing)
+                    {
                         Button butSavePictureInfo = new Button();
                         butSavePictureInfo.AutoSize = true;
                         butSavePictureInfo.Location = new Point(X, Y);
                         butSavePictureInfo.Text = "Save File Name And Description";
                         butSavePictureInfo.Tag = $"{picture.PictureTVItemID}";
+                        butSavePictureInfo.Padding = new Padding(5);
                         butSavePictureInfo.Click += butSavePictureInfo_Click;
 
                         panelPicture.Controls.Add(butSavePictureInfo);
@@ -326,12 +377,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                             butUnRemovePicture.Location = new Point(X, Y);
                             butUnRemovePicture.Text = "Unremove";
                             butUnRemovePicture.Tag = $"{picture.PictureTVItemID}";
+                            butUnRemovePicture.Padding = new Padding(5);
                             butUnRemovePicture.Click += butUnRemovePicture_Click;
 
                             panelPicture.Controls.Add(butUnRemovePicture);
-
-                            pictureBoxPicture.Paint += PictureBoxPicture_Paint;
-                             }
+                        }
                         else
                         {
                             Button butRemovePicture = new Button();
@@ -339,14 +389,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                             butRemovePicture.Location = new Point(X, Y);
                             butRemovePicture.Text = "Remove";
                             butRemovePicture.Tag = $"{picture.PictureTVItemID}";
+                            butRemovePicture.Padding = new Padding(5);
                             butRemovePicture.Click += butRemovePicture_Click;
 
                             panelPicture.Controls.Add(butRemovePicture);
 
                         }
-
-                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 50;
                     }
+
+                    //Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 50;
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 }
@@ -359,7 +410,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblEmpty.AutoSize = true;
                     lblEmpty.Location = new Point(30, Y);
                     lblEmpty.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblEmpty.Font = new Font(new FontFamily(lblEmpty.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    lblEmpty.Font = new Font(new FontFamily(lblEmpty.Font.FontFamily.Name).Name, 12f, FontStyle.Regular);
                     lblEmpty.Text = $"No Picture";
 
                     PanelViewAndEdit.Controls.Add(lblEmpty);
@@ -367,12 +418,16 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+            X = 200;
             if (IsEditing)
             {
                 Button butAddPicture = new Button();
+                butAddPicture.AutoSize = true;
                 butAddPicture.Location = new Point(20, Y);
-                butAddPicture.Text = "Add Picture";
                 butAddPicture.Tag = $"{CurrentPSS.SiteNumberText}";
+                butAddPicture.Font = new Font(new FontFamily(butAddPicture.Font.FontFamily.Name).Name, 14f, FontStyle.Regular);
+                butAddPicture.Padding = new Padding(5);
+                butAddPicture.Text = "Add Picture";
                 butAddPicture.Click += butAddPicture_Click;
 
                 PanelViewAndEdit.Controls.Add(butAddPicture);
@@ -384,6 +439,10 @@ namespace CSSPPolSourceSiteInputToolHelper
             PictureBox pictureBoxPicture = (PictureBox)sender;
             e.Graphics.DrawLine(new Pen(new SolidBrush(Color.Red), 5), pictureBoxPicture.Left + 100, pictureBoxPicture.Top + 100, pictureBoxPicture.Right - 100, pictureBoxPicture.Bottom - 100);
             e.Graphics.DrawLine(new Pen(new SolidBrush(Color.Red), 5), pictureBoxPicture.Left + 100, pictureBoxPicture.Bottom - 100, pictureBoxPicture.Right - 100, pictureBoxPicture.Top + 100);
+        }
+        private void PicturesSaveToCSSPWebTools()
+        {
+            MessageBox.Show("PicturesSaveToCSSPWebTools " + CurrentPSS.PSSTVItemID.ToString(), PolSourceSiteTVItemID.ToString());
         }
     }
 }

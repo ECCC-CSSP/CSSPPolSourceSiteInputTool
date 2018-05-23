@@ -401,7 +401,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblSelected.AutoSize = true;
                     lblSelected.Location = new Point(X, Y);
                     lblSelected.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    if (issue.ToRemove == true)
+                    {
+                        lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                    }
+                    else
+                    {
+                        lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    }
 
                     if (!IsWellFormed)
                     {
@@ -517,7 +524,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblSelectedNew.AutoSize = true;
                         lblSelectedNew.Location = new Point(X, Y);
                         lblSelectedNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                        lblSelectedNew.Font = new Font(new FontFamily(lblSelectedNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        if (issue.ToRemove == true)
+                        {
+                            lblSelectedNew.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                        }
+                        else
+                        {
+                            lblSelectedNew.Font = new Font(new FontFamily(lblSelectedNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        }
                         lblSelectedNew.ForeColor = ForeColorChangedOrNew;
 
                         if (!IsWellFormed)
@@ -546,6 +560,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 DrawIssueButtonsEditing();
                 DrawCurrentIssueEditing();
             }
+
         }
         public void DrawIssueButtonsEditing()
         {
@@ -1184,5 +1199,10 @@ namespace CSSPPolSourceSiteInputToolHelper
             RedrawSinglePanelPSS();
             ReDraw();
         }
+        private void IssuesSaveToCSSPWebTools()
+        {
+            MessageBox.Show("IssuesSaveToCSSPWebTools " + CurrentPSS.PSSTVItemID.ToString(), PolSourceSiteTVItemID.ToString());
+        }
+
     }
 }

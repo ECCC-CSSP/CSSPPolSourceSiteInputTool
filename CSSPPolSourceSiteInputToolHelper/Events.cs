@@ -34,6 +34,10 @@ namespace CSSPPolSourceSiteInputToolHelper
             AddPicture();
             RedrawSinglePanelPSS();
         }
+        private void butPSSSaveToCSSPWebTools_Click(object sender, EventArgs e)
+        {
+            PSSSaveToCSSPWebTools();
+        }
         private void butRemovePicture_Click(object sender, EventArgs e)
         {
             int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
