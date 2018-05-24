@@ -262,7 +262,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public void PSSSaveToCSSPWebTools()
         {
-            MessageBox.Show("PSSSaveToCSSPWebTools " + CurrentPSS.PSSTVItemID.ToString(), PolSourceSiteTVItemID.ToString());
+            //MessageBox.Show("PSSSaveToCSSPWebTools " + CurrentPSS.PSSTVItemID.ToString(), PolSourceSiteTVItemID.ToString());
+            MessageBox.Show("This functionality has not been implemented yet.");
         }
         public void RedrawSinglePanelPSS()
         {

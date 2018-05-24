@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSPPolSourceSiteInputTool"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSPPolSourceSiteInputToolHelper", "CSSPPolSourceSiteInputToolHelper\CSSPPolSourceSiteInputToolHelper.csproj", "{CB88516B-C109-4C5A-B47A-3E03211275EA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSPPolSourceSiteInputTool.Test", "CSSPPolSourceSiteInputTool.Test\CSSPPolSourceSiteInputTool.Test.csproj", "{3F63E7E1-715D-49E8-978E-ED129AA6BCA4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSPPolSourceSiteInputToolHelper.Test", "CSSPPolSourceSiteInputToolHelper.Test\CSSPPolSourceSiteInputToolHelper.Test.csproj", "{AE2FDD8F-E776-44B7-A61C-05076B559E3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +25,14 @@ Global
 		{CB88516B-C109-4C5A-B47A-3E03211275EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CB88516B-C109-4C5A-B47A-3E03211275EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CB88516B-C109-4C5A-B47A-3E03211275EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F63E7E1-715D-49E8-978E-ED129AA6BCA4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F63E7E1-715D-49E8-978E-ED129AA6BCA4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F63E7E1-715D-49E8-978E-ED129AA6BCA4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F63E7E1-715D-49E8-978E-ED129AA6BCA4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE2FDD8F-E776-44B7-A61C-05076B559E3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2FDD8F-E776-44B7-A61C-05076B559E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2FDD8F-E776-44B7-A61C-05076B559E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2FDD8F-E776-44B7-A61C-05076B559E3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
