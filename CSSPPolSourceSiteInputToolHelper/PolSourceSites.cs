@@ -49,7 +49,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblTVText.Location = new Point(10, 4);
                     lblTVText.TabIndex = 0;
                     lblTVText.Tag = pss.PSSTVItemID;
-                    lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    if (pss.IsActive == false)
+                    {
+                        lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                    }
+                    else
+                    {
+                        lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    }
                     if (!string.IsNullOrWhiteSpace(pss.TVTextNew))
                     {
                         lblTVText.Text = $"{pss.SiteNumber}    {pss.TVTextNew}";
@@ -110,7 +117,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
                         lblPSSStatus.TabIndex = 0;
                         lblPSSStatus.Tag = pss.PSSTVItemID;
-                        lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        if (pss.IsActive == false)
+                        {
+                            lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                        }
+                        else
+                        {
+                            lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        }
                         string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                         string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
                         string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
@@ -135,7 +149,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
                         lblPSSStatus.TabIndex = 0;
                         lblPSSStatus.Tag = pss.PSSTVItemID;
-                        lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        if (pss.IsActive == false)
+                        {
+                            lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                        }
+                        else
+                        {
+                            lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        }
                         lblPSSStatus.Text = $"Good";
                         lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
 
@@ -293,7 +314,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.Location = new Point(10, 4);
                 lblTVText.TabIndex = 0;
                 lblTVText.Tag = pss.PSSTVItemID;
-                lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                if (pss.IsActive == false)
+                {
+                    lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                }
+                else
+                {
+                    lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                }
                 if (!string.IsNullOrWhiteSpace(pss.TVTextNew))
                 {
                     lblTVText.Text = $"{pss.SiteNumber}    {pss.TVTextNew}";
@@ -353,7 +381,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
                     lblPSSStatus.TabIndex = 0;
                     lblPSSStatus.Tag = pss.PSSTVItemID;
-                    lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    if (pss.IsActive == false)
+                    {
+                        lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                    }
+                    else
+                    {
+                        lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    }
                     string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                     string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
                     string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
@@ -375,7 +410,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
                     lblPSSStatus.TabIndex = 0;
                     lblPSSStatus.Tag = pss.PSSTVItemID;
-                    lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    if (pss.IsActive == false)
+                    {
+                        lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                    }
+                    else
+                    {
+                        lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    }
                     lblPSSStatus.Text = $"Good";
                     lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
 
@@ -498,7 +540,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.AutoSize = true;
                 lblTVText.Location = new Point(10, 4);
                 lblTVText.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                if (CurrentPSS.IsActive == false)
+                {
+                    lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                }
+                else
+                {
+                    lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                }
+                //lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
                 lblTVText.Text = $"{CurrentPSS.SiteNumber} {(CurrentPSS.TVTextNew != null ? CurrentPSS.TVTextNew : CurrentPSS.TVText)}";
 
                 PanelViewAndEdit.Controls.Add(lblTVText);
@@ -587,16 +637,34 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (IsEditing)
                 {
-                    CheckBox checkBoxIsActive = new CheckBox();
-                    checkBoxIsActive.Location = new Point(X, lblLat.Top);
-                    checkBoxIsActive.Name = "checkBoxIsActive";
-                    checkBoxIsActive.AutoSize = true;
-                    checkBoxIsActive.Font = new Font(new FontFamily(lblLng.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    checkBoxIsActive.ForeColor = CurrentPSS.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
-                    checkBoxIsActive.Text = (CurrentPSS.IsActiveNew != null ? ((bool)CurrentPSS.IsActiveNew ? "Is Active" : "Not Active") : ((bool)CurrentPSS.IsActive ? "Is Active" : "Not Active"));
-                    checkBoxIsActive.Checked = (CurrentPSS.IsActiveNew != null ? (bool)CurrentPSS.IsActiveNew : (bool)CurrentPSS.IsActive);
+                    if ((bool)CurrentPSS.IsActive)
+                    {
+                        Button butChangeToIsNotActive = new Button();
+                        butChangeToIsNotActive.AutoSize = true;
+                        butChangeToIsNotActive.Location = new Point(X, lblLat.Top);
+                        butChangeToIsNotActive.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        butChangeToIsNotActive.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butChangeToIsNotActive.Padding = new Padding(5);
+                        butChangeToIsNotActive.Tag = CurrentPSS.PSSTVItemID.ToString();
+                        butChangeToIsNotActive.Text = $"Set as non active";
+                        butChangeToIsNotActive.Click += butChangeToIsNotActive_Click;
 
-                    PanelViewAndEdit.Controls.Add(checkBoxIsActive);
+                        PanelViewAndEdit.Controls.Add(butChangeToIsNotActive);
+                    }
+                    else
+                    {
+                        Button butChangeToIsActive = new Button();
+                        butChangeToIsActive.AutoSize = true;
+                        butChangeToIsActive.Location = new Point(X, lblLat.Top);
+                        butChangeToIsActive.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        butChangeToIsActive.Font = new Font(new FontFamily(butChangeToIsActive.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butChangeToIsActive.Padding = new Padding(5);
+                        butChangeToIsActive.Tag = CurrentPSS.PSSTVItemID.ToString();
+                        butChangeToIsActive.Text = $"Set as active";
+                        butChangeToIsActive.Click += butChangeToIsActive_Click;
+
+                        PanelViewAndEdit.Controls.Add(butChangeToIsActive);
+                    }
 
                     X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
                 }
@@ -616,16 +684,34 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (IsEditing)
                 {
-                    CheckBox checkBoxIsPointSource = new CheckBox();
-                    checkBoxIsPointSource.Location = new Point(X, lblLat.Top);
-                    checkBoxIsPointSource.Name = "checkBoxIsPointSource";
-                    checkBoxIsPointSource.AutoSize = true;
-                    checkBoxIsPointSource.Font = new Font(new FontFamily(lblLng.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    checkBoxIsPointSource.ForeColor = CurrentPSS.IsPointSourceNew != null ? ForeColorChangedOrNew : ForeColorNormal;
-                    checkBoxIsPointSource.Text = (CurrentPSS.IsPointSourceNew != null ? ((bool)CurrentPSS.IsPointSourceNew ? "Is Point Source" : "Not Point Source") : ((bool)CurrentPSS.IsPointSource ? "Is Point Source" : "Not Point Source"));
-                    checkBoxIsPointSource.Checked = (CurrentPSS.IsPointSourceNew != null ? (bool)CurrentPSS.IsPointSourceNew : (bool)CurrentPSS.IsPointSource);
+                    if ((bool)CurrentPSS.IsPointSource)
+                    {
+                        Button butChangeToIsNonPointSource = new Button();
+                        butChangeToIsNonPointSource.AutoSize = true;
+                        butChangeToIsNonPointSource.Location = new Point(X, lblLat.Top);
+                        butChangeToIsNonPointSource.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        butChangeToIsNonPointSource.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butChangeToIsNonPointSource.Padding = new Padding(5);
+                        butChangeToIsNonPointSource.Tag = CurrentPSS.PSSTVItemID.ToString();
+                        butChangeToIsNonPointSource.Text = $"Set as non point source";
+                        butChangeToIsNonPointSource.Click += butChangeToIsNonPointSource_Click;
 
-                    PanelViewAndEdit.Controls.Add(checkBoxIsPointSource);
+                        PanelViewAndEdit.Controls.Add(butChangeToIsNonPointSource);
+                    }
+                    else
+                    {
+                        Button butChangeToIsPointSource = new Button();
+                        butChangeToIsPointSource.AutoSize = true;
+                        butChangeToIsPointSource.Location = new Point(X, lblLat.Top);
+                        butChangeToIsPointSource.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        butChangeToIsPointSource.Font = new Font(new FontFamily(butChangeToIsPointSource.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butChangeToIsPointSource.Padding = new Padding(5);
+                        butChangeToIsPointSource.Tag = CurrentPSS.PSSTVItemID.ToString();
+                        butChangeToIsPointSource.Text = $"Set as point source";
+                        butChangeToIsPointSource.Click += butChangeToIsPointSource_Click;
+
+                        PanelViewAndEdit.Controls.Add(butChangeToIsPointSource);
+                    }
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 }
@@ -1232,6 +1318,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     butSaveLatLngObsAndAddress.Click += butSaveLatLngAndObsAndAddress_Click;
 
                     PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
+
                 }
 
                 if (!IsEditing)

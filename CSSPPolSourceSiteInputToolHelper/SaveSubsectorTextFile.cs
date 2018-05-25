@@ -81,7 +81,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 foreach (Picture picture in pss.PSSPictureList)
                 {
-                    sb.AppendLine($"PICTURE\t{picture.PictureTVItemID}\t{picture.FileName}\t{picture.Extension}\t{picture.Description}\t");
+                    sb.AppendLine($"PICTURE\t{picture.PictureTVItemID}\t{picture.FileName.Replace("\r", "_").Replace("\n", "_").Replace("\t", "_")}\t{picture.Extension}\t{picture.Description.Replace("\r", "_").Replace("\n", "_").Replace("\t", "_")}\t");
                     if (picture.ToRemove != null && picture.ToRemove == true)
                     {
                         sb.AppendLine($"PICTURETOREMOVE\t");

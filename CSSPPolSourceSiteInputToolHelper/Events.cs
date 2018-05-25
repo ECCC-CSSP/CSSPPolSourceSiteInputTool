@@ -34,6 +34,34 @@ namespace CSSPPolSourceSiteInputToolHelper
             AddPicture();
             RedrawSinglePanelPSS();
         }
+        private void butChangeToIsActive_Click(object sender, EventArgs e)
+        {
+            CurrentPSS.IsActive = true;
+            SavePolSourceSiteInfo();
+            RedrawSinglePanelPSS();
+            ReDraw();
+        }
+        private void butChangeToIsNotActive_Click(object sender, EventArgs e)
+        {
+            CurrentPSS.IsActive = false;
+            SavePolSourceSiteInfo();
+            RedrawSinglePanelPSS();
+            ReDraw();
+        }
+        private void butChangeToIsPointSource_Click(object sender, EventArgs e)
+        {
+            CurrentPSS.IsPointSource = true;
+            SavePolSourceSiteInfo();
+            RedrawSinglePanelPSS();
+            ReDraw();
+        }
+        private void butChangeToIsNonPointSource_Click(object sender, EventArgs e)
+        {
+            CurrentPSS.IsPointSource = false;
+            SavePolSourceSiteInfo();
+            RedrawSinglePanelPSS();
+            ReDraw();
+        }
         private void butPSSSaveToCSSPWebTools_Click(object sender, EventArgs e)
         {
             PSSSaveToCSSPWebTools();
