@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace CSSPPolSourceSiteInputToolHelper
 {
+
     public class SubsectorDoc
     {
         public int? Version { get; set; } = null;

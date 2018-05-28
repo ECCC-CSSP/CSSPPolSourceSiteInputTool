@@ -17,15 +17,20 @@ namespace CSSPPolSourceSiteInputToolHelper
         #region Variables
         private List<string> startWithList = new List<string>() { "101", "143", "910" };
         public string CurrentSubsectorName = "";
+        public string CurrentMunicipalityName = "";
         public bool IsSaving = false;
-        public List<string> SubDirectoryList = new List<string>();
+        public List<string> SubDirectoryOrMunicipalityList = new List<string>();
+        public List<TVItemModel> tvItemModelProvinceList { get; set; }
+        public List<TVItemModel> tvItemModelSubsectorOrMunicipalityList { get; set; }
         public int PolSourceSiteTVItemID = 0;
+        public int InfrastructureTVItemID = 0;
         public int IssueID = 0;
         public bool IsEditing = false;
         public bool MoreInfo = false;
         public bool IsDirty = false;
         public bool IsReading = false;
         public bool IsAdmin = false;
+        public bool IsPolSourceSite = true;
         public bool ShowPolSourceSiteDetails = true;
         public bool ShowOnlyPictures = false;
         public bool ShowOnlyIssues = false;
@@ -36,11 +41,12 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Color BackColorNormal = Color.White;
         public Color ForeColorChangedOrNew = Color.Green;
         public Color ForeColorNormal = Color.Black;
-        public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
-        public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
-        //public string baseURLEN = "http://localhost:11561/en-CA/PolSource/";
-        //public string baseURLFR = "http://localhost:11561/fr-CA/PolSource/";
-        public string BasePath = @"C:\PollutionSourceSites\";
+        //public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
+        //public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
+        public string baseURLEN = "http://localhost:11561/en-CA/PolSource/";
+        public string baseURLFR = "http://localhost:11561/fr-CA/PolSource/";
+        public string BasePathPollutionSourceSites = @"C:\PollutionSourceSites\";
+        public string BasePathInfrastructures = @"C:\Infrastructures\";
         public List<PolSourceObsInfoEnumTextAndID> polSourceObsInfoEnumTextAndIDList = new List<PolSourceObsInfoEnumTextAndID>();
         public List<PolSourceObsInfoEnumHideAndID> polSourceObsInfoEnumHideAndIDList = new List<PolSourceObsInfoEnumHideAndID>();
         public List<PolSourceObsInfoEnumTextAndID> polSourceObsInfoEnumDescTextAndIDList = new List<PolSourceObsInfoEnumTextAndID>();
@@ -49,10 +55,9 @@ namespace CSSPPolSourceSiteInputToolHelper
 
         #region Properties
         public SubsectorDoc subsectorDoc { get; set; }
+        public MunicipalityDoc municipalityDoc { get; set; }
         public PSS CurrentPSS { get; set; }
-        //public Issue CurrentIssue { get; set; }
-        //public Address CurrentAddress { get; set; }
-        //public Picture CurrentPicture { get; set; }
+        public PSS CurrentInfrastructure { get; set; }
         public BaseEnumService _BaseEnumService { get; set; }
         public BaseModelService _BaseModelService { get; set; }
         public Panel PanelViewAndEdit { get; set; }
@@ -67,6 +72,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             PanelPolSourceSite = panelPolSourceSite;
             Language = language;
             subsectorDoc = new SubsectorDoc();
+            municipalityDoc = new MunicipalityDoc();
 
             if (Language == LanguageEnum.fr)
             {
@@ -95,7 +101,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             _BaseModelService.FillPolSourceObsInfoChild(polSourceObsInfoChildList);
-
         }
         public void ReDraw()
         {

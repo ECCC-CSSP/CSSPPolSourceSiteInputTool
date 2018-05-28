@@ -58,7 +58,8 @@
     <Compile Include="ReadAndCheckSubsectorTextFile.cs" />
     <Compile Include="SaveSubsectorTextFile.cs" />
     <Compile Include="PolSourceSites.cs" />
-    <Compile Include="SubClasses.cs" />
+    <Compile Include="SubClassesMunicipality.cs" />
+    <Compile Include="SubClassesSubsector.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

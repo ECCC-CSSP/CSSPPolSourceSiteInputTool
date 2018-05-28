@@ -246,7 +246,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public bool ReadPollutionSourceSitesSubsectorFile()
         {
-            FileInfo fi = new FileInfo($@"{BasePath}{CurrentSubsectorName}\{CurrentSubsectorName}.txt");
+            FileInfo fi = new FileInfo($@"{BasePathPollutionSourceSites}{CurrentSubsectorName}\{CurrentSubsectorName}.txt");
 
             if (!fi.Exists)
             {

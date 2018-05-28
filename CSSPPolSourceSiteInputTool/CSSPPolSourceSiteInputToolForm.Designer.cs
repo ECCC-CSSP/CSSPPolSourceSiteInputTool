@@ -30,20 +30,17 @@
         {
             this.panelButtonBar = new System.Windows.Forms.Panel();
             this.textBoxEmpty = new System.Windows.Forms.TextBox();
-            this.panelStatusTop = new System.Windows.Forms.Panel();
+            this.panelViewKMLFileTop = new System.Windows.Forms.Panel();
             this.butViewKMLFile = new System.Windows.Forms.Button();
             this.checkBoxLanguage = new System.Windows.Forms.CheckBox();
-            this.lblSubsectorName = new System.Windows.Forms.Label();
-            this.lblSubsector = new System.Windows.Forms.Label();
-            this.comboBoxSubsectorNames = new System.Windows.Forms.ComboBox();
             this.panelStatusBar = new System.Windows.Forms.Panel();
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusTxt = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.panelAddNewPollutionSourceSite = new System.Windows.Forms.Panel();
             this.butPSSAdd = new System.Windows.Forms.Button();
             this.panelPolSourceSite = new System.Windows.Forms.Panel();
-            this.panelShowButtons = new System.Windows.Forms.Panel();
+            this.panelShowInputOptions = new System.Windows.Forms.Panel();
             this.checkBoxMoreInfo = new System.Windows.Forms.CheckBox();
             this.radioButtonShowMap = new System.Windows.Forms.RadioButton();
             this.radioButtonOnlyPictures = new System.Windows.Forms.RadioButton();
@@ -52,25 +49,68 @@
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
+            this.checkBoxShowAdmin = new System.Windows.Forms.CheckBox();
+            this.panelShowInfrastructure = new System.Windows.Forms.Panel();
+            this.checkBoxShowInfrastructure = new System.Windows.Forms.CheckBox();
+            this.panelSubsectorOrMunicipality = new System.Windows.Forms.Panel();
+            this.lblSubsectorOrMunicipality = new System.Windows.Forms.Label();
+            this.comboBoxSubsectorOrMunicipality = new System.Windows.Forms.ComboBox();
+            this.panelEmpty = new System.Windows.Forms.Panel();
+            this.butCreateSubsectorDirectory = new System.Windows.Forms.Button();
+            this.comboBoxProvince = new System.Windows.Forms.ComboBox();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.richTextBoxStatus = new System.Windows.Forms.RichTextBox();
+            this.panelShowAdmin = new System.Windows.Forms.Panel();
+            this.panelLanguage = new System.Windows.Forms.Panel();
+            this.panelProvinces = new System.Windows.Forms.Panel();
+            this.panelCreateSubsectorDirectory = new System.Windows.Forms.Panel();
+            this.panelCreateMunicipalityDirectory = new System.Windows.Forms.Panel();
+            this.butCreateMunicipalityDirectory = new System.Windows.Forms.Button();
+            this.panelShowInput = new System.Windows.Forms.Panel();
+            this.checkBoxShowInput = new System.Windows.Forms.CheckBox();
+            this.panelSubsectorOrMunicipalityAdmin = new System.Windows.Forms.Panel();
+            this.comboBoxSubsectorOrMunicipalityAdmin = new System.Windows.Forms.ComboBox();
+            this.panelAdminPassword = new System.Windows.Forms.Panel();
+            this.textBoxPassword = new System.Windows.Forms.TextBox();
             this.panelButtonBar.SuspendLayout();
-            this.panelStatusTop.SuspendLayout();
+            this.panelViewKMLFileTop.SuspendLayout();
             this.panelStatusBar.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.panel1.SuspendLayout();
-            this.panelShowButtons.SuspendLayout();
+            this.panelAddNewPollutionSourceSite.SuspendLayout();
+            this.panelShowInputOptions.SuspendLayout();
+            this.panelShowInfrastructure.SuspendLayout();
+            this.panelSubsectorOrMunicipality.SuspendLayout();
+            this.panelEmpty.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
+            this.splitContainer2.Panel1.SuspendLayout();
+            this.splitContainer2.Panel2.SuspendLayout();
+            this.splitContainer2.SuspendLayout();
+            this.panelShowAdmin.SuspendLayout();
+            this.panelLanguage.SuspendLayout();
+            this.panelProvinces.SuspendLayout();
+            this.panelCreateSubsectorDirectory.SuspendLayout();
+            this.panelCreateMunicipalityDirectory.SuspendLayout();
+            this.panelShowInput.SuspendLayout();
+            this.panelSubsectorOrMunicipalityAdmin.SuspendLayout();
+            this.panelAdminPassword.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelButtonBar
             // 
             this.panelButtonBar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelButtonBar.Controls.Add(this.textBoxEmpty);
-            this.panelButtonBar.Controls.Add(this.panelStatusTop);
-            this.panelButtonBar.Controls.Add(this.lblSubsectorName);
-            this.panelButtonBar.Controls.Add(this.lblSubsector);
-            this.panelButtonBar.Controls.Add(this.comboBoxSubsectorNames);
+            this.panelButtonBar.Controls.Add(this.panelAdminPassword);
+            this.panelButtonBar.Controls.Add(this.panelSubsectorOrMunicipalityAdmin);
+            this.panelButtonBar.Controls.Add(this.panelShowInput);
+            this.panelButtonBar.Controls.Add(this.panelSubsectorOrMunicipality);
+            this.panelButtonBar.Controls.Add(this.panelProvinces);
+            this.panelButtonBar.Controls.Add(this.panelShowAdmin);
+            this.panelButtonBar.Controls.Add(this.panelEmpty);
+            this.panelButtonBar.Controls.Add(this.panelShowInfrastructure);
+            this.panelButtonBar.Controls.Add(this.panelViewKMLFileTop);
+            this.panelButtonBar.Controls.Add(this.panelLanguage);
             this.panelButtonBar.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelButtonBar.Location = new System.Drawing.Point(0, 0);
             this.panelButtonBar.Name = "panelButtonBar";
@@ -79,26 +119,26 @@
             // 
             // textBoxEmpty
             // 
-            this.textBoxEmpty.Location = new System.Drawing.Point(2, 6);
+            this.textBoxEmpty.Dock = System.Windows.Forms.DockStyle.Left;
+            this.textBoxEmpty.Location = new System.Drawing.Point(0, 0);
             this.textBoxEmpty.Name = "textBoxEmpty";
-            this.textBoxEmpty.Size = new System.Drawing.Size(10, 20);
+            this.textBoxEmpty.Size = new System.Drawing.Size(1, 20);
             this.textBoxEmpty.TabIndex = 1;
             // 
-            // panelStatusTop
+            // panelViewKMLFileTop
             // 
-            this.panelStatusTop.Controls.Add(this.butViewKMLFile);
-            this.panelStatusTop.Controls.Add(this.checkBoxLanguage);
-            this.panelStatusTop.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelStatusTop.Location = new System.Drawing.Point(903, 0);
-            this.panelStatusTop.Name = "panelStatusTop";
-            this.panelStatusTop.Size = new System.Drawing.Size(235, 34);
-            this.panelStatusTop.TabIndex = 10;
+            this.panelViewKMLFileTop.Controls.Add(this.butViewKMLFile);
+            this.panelViewKMLFileTop.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelViewKMLFileTop.Location = new System.Drawing.Point(959, 0);
+            this.panelViewKMLFileTop.Name = "panelViewKMLFileTop";
+            this.panelViewKMLFileTop.Size = new System.Drawing.Size(103, 34);
+            this.panelViewKMLFileTop.TabIndex = 10;
             // 
             // butViewKMLFile
             // 
             this.butViewKMLFile.Location = new System.Drawing.Point(7, 6);
             this.butViewKMLFile.Name = "butViewKMLFile";
-            this.butViewKMLFile.Size = new System.Drawing.Size(141, 23);
+            this.butViewKMLFile.Size = new System.Drawing.Size(88, 23);
             this.butViewKMLFile.TabIndex = 15;
             this.butViewKMLFile.Text = "View KML File";
             this.butViewKMLFile.UseVisualStyleBackColor = true;
@@ -107,41 +147,14 @@
             // checkBoxLanguage
             // 
             this.checkBoxLanguage.AutoSize = true;
-            this.checkBoxLanguage.Location = new System.Drawing.Point(165, 8);
+            this.checkBoxLanguage.Location = new System.Drawing.Point(6, 10);
             this.checkBoxLanguage.Name = "checkBoxLanguage";
             this.checkBoxLanguage.Size = new System.Drawing.Size(66, 17);
             this.checkBoxLanguage.TabIndex = 3;
             this.checkBoxLanguage.Text = "Français";
             this.checkBoxLanguage.UseVisualStyleBackColor = true;
             this.checkBoxLanguage.Visible = false;
-            // 
-            // lblSubsectorName
-            // 
-            this.lblSubsectorName.AutoSize = true;
-            this.lblSubsectorName.Location = new System.Drawing.Point(350, 10);
-            this.lblSubsectorName.Name = "lblSubsectorName";
-            this.lblSubsectorName.Size = new System.Drawing.Size(88, 13);
-            this.lblSubsectorName.TabIndex = 3;
-            this.lblSubsectorName.Text = "(subsector name)";
-            // 
-            // lblSubsector
-            // 
-            this.lblSubsector.AutoSize = true;
-            this.lblSubsector.Location = new System.Drawing.Point(23, 10);
-            this.lblSubsector.Name = "lblSubsector";
-            this.lblSubsector.Size = new System.Drawing.Size(63, 13);
-            this.lblSubsector.TabIndex = 9;
-            this.lblSubsector.Text = "Subsectors:";
-            // 
-            // comboBoxSubsectorNames
-            // 
-            this.comboBoxSubsectorNames.DropDownWidth = 500;
-            this.comboBoxSubsectorNames.FormattingEnabled = true;
-            this.comboBoxSubsectorNames.Location = new System.Drawing.Point(96, 6);
-            this.comboBoxSubsectorNames.Name = "comboBoxSubsectorNames";
-            this.comboBoxSubsectorNames.Size = new System.Drawing.Size(237, 21);
-            this.comboBoxSubsectorNames.TabIndex = 2;
-            this.comboBoxSubsectorNames.SelectedIndexChanged += new System.EventHandler(this.comboBoxSubsectorNames_SelectedIndexChanged);
+            this.checkBoxLanguage.CheckedChanged += new System.EventHandler(this.checkBoxLanguage_CheckedChanged);
             // 
             // panelStatusBar
             // 
@@ -182,33 +195,36 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.panel1);
+            this.splitContainer1.Panel1.Controls.Add(this.panelCreateMunicipalityDirectory);
+            this.splitContainer1.Panel1.Controls.Add(this.panelCreateSubsectorDirectory);
+            this.splitContainer1.Panel1.Controls.Add(this.panelAddNewPollutionSourceSite);
             this.splitContainer1.Panel1.Controls.Add(this.panelPolSourceSite);
             // 
             // splitContainer1.Panel2
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.panelShowButtons);
-            this.splitContainer1.Panel2.Controls.Add(this.panelViewAndEdit);
+            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
+            this.splitContainer1.Panel2.Controls.Add(this.panelShowInputOptions);
             this.splitContainer1.Size = new System.Drawing.Size(1054, 535);
             this.splitContainer1.SplitterDistance = 351;
             this.splitContainer1.TabIndex = 11;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             this.splitContainer1.SizeChanged += new System.EventHandler(this.splitContainer1_SizeChanged);
             // 
-            // panel1
+            // panelAddNewPollutionSourceSite
             // 
-            this.panel1.Controls.Add(this.butPSSAdd);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(347, 37);
-            this.panel1.TabIndex = 5;
+            this.panelAddNewPollutionSourceSite.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelAddNewPollutionSourceSite.Controls.Add(this.butPSSAdd);
+            this.panelAddNewPollutionSourceSite.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelAddNewPollutionSourceSite.Location = new System.Drawing.Point(0, 0);
+            this.panelAddNewPollutionSourceSite.Name = "panelAddNewPollutionSourceSite";
+            this.panelAddNewPollutionSourceSite.Size = new System.Drawing.Size(347, 37);
+            this.panelAddNewPollutionSourceSite.TabIndex = 5;
             // 
             // butPSSAdd
             // 
-            this.butPSSAdd.Location = new System.Drawing.Point(65, 7);
+            this.butPSSAdd.Location = new System.Drawing.Point(45, 2);
             this.butPSSAdd.Name = "butPSSAdd";
-            this.butPSSAdd.Size = new System.Drawing.Size(179, 23);
+            this.butPSSAdd.Size = new System.Drawing.Size(227, 28);
             this.butPSSAdd.TabIndex = 15;
             this.butPSSAdd.Text = "Add New Pollution Source Site";
             this.butPSSAdd.UseVisualStyleBackColor = true;
@@ -217,25 +233,25 @@
             // panelPolSourceSite
             // 
             this.panelPolSourceSite.AutoScroll = true;
-            this.panelPolSourceSite.Location = new System.Drawing.Point(17, 111);
+            this.panelPolSourceSite.Location = new System.Drawing.Point(18, 163);
             this.panelPolSourceSite.Name = "panelPolSourceSite";
             this.panelPolSourceSite.Size = new System.Drawing.Size(304, 347);
             this.panelPolSourceSite.TabIndex = 4;
             // 
-            // panelShowButtons
+            // panelShowInputOptions
             // 
-            this.panelShowButtons.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelShowButtons.Controls.Add(this.checkBoxMoreInfo);
-            this.panelShowButtons.Controls.Add(this.radioButtonShowMap);
-            this.panelShowButtons.Controls.Add(this.radioButtonOnlyPictures);
-            this.panelShowButtons.Controls.Add(this.radioButtonOnlyIssues);
-            this.panelShowButtons.Controls.Add(this.radioButtonDetails);
-            this.panelShowButtons.Controls.Add(this.checkBoxEditing);
-            this.panelShowButtons.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelShowButtons.Location = new System.Drawing.Point(0, 0);
-            this.panelShowButtons.Name = "panelShowButtons";
-            this.panelShowButtons.Size = new System.Drawing.Size(695, 33);
-            this.panelShowButtons.TabIndex = 0;
+            this.panelShowInputOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelShowInputOptions.Controls.Add(this.checkBoxMoreInfo);
+            this.panelShowInputOptions.Controls.Add(this.radioButtonShowMap);
+            this.panelShowInputOptions.Controls.Add(this.radioButtonOnlyPictures);
+            this.panelShowInputOptions.Controls.Add(this.radioButtonOnlyIssues);
+            this.panelShowInputOptions.Controls.Add(this.radioButtonDetails);
+            this.panelShowInputOptions.Controls.Add(this.checkBoxEditing);
+            this.panelShowInputOptions.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelShowInputOptions.Location = new System.Drawing.Point(0, 0);
+            this.panelShowInputOptions.Name = "panelShowInputOptions";
+            this.panelShowInputOptions.Size = new System.Drawing.Size(695, 33);
+            this.panelShowInputOptions.TabIndex = 0;
             // 
             // checkBoxMoreInfo
             // 
@@ -309,14 +325,241 @@
             // panelViewAndEdit
             // 
             this.panelViewAndEdit.AutoScroll = true;
-            this.panelViewAndEdit.Location = new System.Drawing.Point(44, 60);
+            this.panelViewAndEdit.Location = new System.Drawing.Point(87, 16);
             this.panelViewAndEdit.Name = "panelViewAndEdit";
-            this.panelViewAndEdit.Size = new System.Drawing.Size(462, 398);
+            this.panelViewAndEdit.Size = new System.Drawing.Size(426, 308);
             this.panelViewAndEdit.TabIndex = 1;
             // 
             // openFileDialogCSSP
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
+            // 
+            // checkBoxShowAdmin
+            // 
+            this.checkBoxShowAdmin.AutoSize = true;
+            this.checkBoxShowAdmin.Location = new System.Drawing.Point(11, 10);
+            this.checkBoxShowAdmin.Name = "checkBoxShowAdmin";
+            this.checkBoxShowAdmin.Size = new System.Drawing.Size(55, 17);
+            this.checkBoxShowAdmin.TabIndex = 11;
+            this.checkBoxShowAdmin.Text = "Admin";
+            this.checkBoxShowAdmin.UseVisualStyleBackColor = true;
+            this.checkBoxShowAdmin.CheckedChanged += new System.EventHandler(this.checkBoxAdmin_CheckedChanged);
+            // 
+            // panelShowInfrastructure
+            // 
+            this.panelShowInfrastructure.Controls.Add(this.checkBoxShowInfrastructure);
+            this.panelShowInfrastructure.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelShowInfrastructure.Location = new System.Drawing.Point(864, 0);
+            this.panelShowInfrastructure.Name = "panelShowInfrastructure";
+            this.panelShowInfrastructure.Size = new System.Drawing.Size(95, 34);
+            this.panelShowInfrastructure.TabIndex = 12;
+            // 
+            // checkBoxShowInfrastructure
+            // 
+            this.checkBoxShowInfrastructure.AutoSize = true;
+            this.checkBoxShowInfrastructure.Location = new System.Drawing.Point(6, 10);
+            this.checkBoxShowInfrastructure.Name = "checkBoxShowInfrastructure";
+            this.checkBoxShowInfrastructure.Size = new System.Drawing.Size(88, 17);
+            this.checkBoxShowInfrastructure.TabIndex = 12;
+            this.checkBoxShowInfrastructure.Text = "Infrastructure";
+            this.checkBoxShowInfrastructure.UseVisualStyleBackColor = true;
+            this.checkBoxShowInfrastructure.CheckedChanged += new System.EventHandler(this.checkBoxInfrastructure_CheckedChanged);
+            // 
+            // panelSubsectorOrMunicipality
+            // 
+            this.panelSubsectorOrMunicipality.Controls.Add(this.lblSubsectorOrMunicipality);
+            this.panelSubsectorOrMunicipality.Controls.Add(this.comboBoxSubsectorOrMunicipality);
+            this.panelSubsectorOrMunicipality.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelSubsectorOrMunicipality.Location = new System.Drawing.Point(211, 0);
+            this.panelSubsectorOrMunicipality.Name = "panelSubsectorOrMunicipality";
+            this.panelSubsectorOrMunicipality.Size = new System.Drawing.Size(67, 34);
+            this.panelSubsectorOrMunicipality.TabIndex = 13;
+            // 
+            // lblSubsectorOrMunicipality
+            // 
+            this.lblSubsectorOrMunicipality.AutoSize = true;
+            this.lblSubsectorOrMunicipality.Location = new System.Drawing.Point(265, 11);
+            this.lblSubsectorOrMunicipality.Name = "lblSubsectorOrMunicipality";
+            this.lblSubsectorOrMunicipality.Size = new System.Drawing.Size(157, 13);
+            this.lblSubsectorOrMunicipality.TabIndex = 11;
+            this.lblSubsectorOrMunicipality.Text = "(subsector or municipality name)";
+            // 
+            // comboBoxSubsectorOrMunicipality
+            // 
+            this.comboBoxSubsectorOrMunicipality.DropDownWidth = 500;
+            this.comboBoxSubsectorOrMunicipality.FormattingEnabled = true;
+            this.comboBoxSubsectorOrMunicipality.Location = new System.Drawing.Point(11, 7);
+            this.comboBoxSubsectorOrMunicipality.Name = "comboBoxSubsectorOrMunicipality";
+            this.comboBoxSubsectorOrMunicipality.Size = new System.Drawing.Size(237, 21);
+            this.comboBoxSubsectorOrMunicipality.TabIndex = 10;
+            this.comboBoxSubsectorOrMunicipality.SelectedIndexChanged += new System.EventHandler(this.comboBoxSubsectorOrMunicipality_SelectedIndexChanged);
+            // 
+            // panelEmpty
+            // 
+            this.panelEmpty.Controls.Add(this.textBoxEmpty);
+            this.panelEmpty.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelEmpty.Location = new System.Drawing.Point(0, 0);
+            this.panelEmpty.Name = "panelEmpty";
+            this.panelEmpty.Size = new System.Drawing.Size(2, 34);
+            this.panelEmpty.TabIndex = 14;
+            // 
+            // butCreateSubsectorDirectory
+            // 
+            this.butCreateSubsectorDirectory.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.butCreateSubsectorDirectory.Location = new System.Drawing.Point(55, 7);
+            this.butCreateSubsectorDirectory.Name = "butCreateSubsectorDirectory";
+            this.butCreateSubsectorDirectory.Size = new System.Drawing.Size(217, 25);
+            this.butCreateSubsectorDirectory.TabIndex = 11;
+            this.butCreateSubsectorDirectory.Text = "Create Subsector Directory";
+            this.butCreateSubsectorDirectory.UseVisualStyleBackColor = true;
+            // 
+            // comboBoxProvince
+            // 
+            this.comboBoxProvince.DropDownWidth = 500;
+            this.comboBoxProvince.FormattingEnabled = true;
+            this.comboBoxProvince.Location = new System.Drawing.Point(3, 6);
+            this.comboBoxProvince.Name = "comboBoxProvince";
+            this.comboBoxProvince.Size = new System.Drawing.Size(196, 21);
+            this.comboBoxProvince.TabIndex = 13;
+            this.comboBoxProvince.SelectedIndexChanged += new System.EventHandler(this.comboBoxProvince_SelectedIndexChanged);
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer2.Location = new System.Drawing.Point(78, 59);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.panelViewAndEdit);
+            // 
+            // splitContainer2.Panel2
+            // 
+            this.splitContainer2.Panel2.Controls.Add(this.richTextBoxStatus);
+            this.splitContainer2.Size = new System.Drawing.Size(609, 451);
+            this.splitContainer2.SplitterDistance = 384;
+            this.splitContainer2.TabIndex = 2;
+            // 
+            // richTextBoxStatus
+            // 
+            this.richTextBoxStatus.Location = new System.Drawing.Point(103, 3);
+            this.richTextBoxStatus.Name = "richTextBoxStatus";
+            this.richTextBoxStatus.Size = new System.Drawing.Size(377, 45);
+            this.richTextBoxStatus.TabIndex = 0;
+            this.richTextBoxStatus.Text = "";
+            // 
+            // panelShowAdmin
+            // 
+            this.panelShowAdmin.Controls.Add(this.checkBoxShowAdmin);
+            this.panelShowAdmin.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelShowAdmin.Location = new System.Drawing.Point(796, 0);
+            this.panelShowAdmin.Name = "panelShowAdmin";
+            this.panelShowAdmin.Size = new System.Drawing.Size(68, 34);
+            this.panelShowAdmin.TabIndex = 16;
+            // 
+            // panelLanguage
+            // 
+            this.panelLanguage.Controls.Add(this.checkBoxLanguage);
+            this.panelLanguage.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelLanguage.Location = new System.Drawing.Point(1062, 0);
+            this.panelLanguage.Name = "panelLanguage";
+            this.panelLanguage.Size = new System.Drawing.Size(76, 34);
+            this.panelLanguage.TabIndex = 17;
+            // 
+            // panelProvinces
+            // 
+            this.panelProvinces.Controls.Add(this.comboBoxProvince);
+            this.panelProvinces.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelProvinces.Location = new System.Drawing.Point(2, 0);
+            this.panelProvinces.Name = "panelProvinces";
+            this.panelProvinces.Size = new System.Drawing.Size(209, 34);
+            this.panelProvinces.TabIndex = 18;
+            // 
+            // panelCreateSubsectorDirectory
+            // 
+            this.panelCreateSubsectorDirectory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelCreateSubsectorDirectory.Controls.Add(this.butCreateSubsectorDirectory);
+            this.panelCreateSubsectorDirectory.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelCreateSubsectorDirectory.Location = new System.Drawing.Point(0, 37);
+            this.panelCreateSubsectorDirectory.Name = "panelCreateSubsectorDirectory";
+            this.panelCreateSubsectorDirectory.Size = new System.Drawing.Size(347, 37);
+            this.panelCreateSubsectorDirectory.TabIndex = 12;
+            // 
+            // panelCreateMunicipalityDirectory
+            // 
+            this.panelCreateMunicipalityDirectory.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelCreateMunicipalityDirectory.Controls.Add(this.butCreateMunicipalityDirectory);
+            this.panelCreateMunicipalityDirectory.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelCreateMunicipalityDirectory.Location = new System.Drawing.Point(0, 74);
+            this.panelCreateMunicipalityDirectory.Name = "panelCreateMunicipalityDirectory";
+            this.panelCreateMunicipalityDirectory.Size = new System.Drawing.Size(347, 37);
+            this.panelCreateMunicipalityDirectory.TabIndex = 13;
+            // 
+            // butCreateMunicipalityDirectory
+            // 
+            this.butCreateMunicipalityDirectory.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+            this.butCreateMunicipalityDirectory.Location = new System.Drawing.Point(55, 7);
+            this.butCreateMunicipalityDirectory.Name = "butCreateMunicipalityDirectory";
+            this.butCreateMunicipalityDirectory.Size = new System.Drawing.Size(217, 25);
+            this.butCreateMunicipalityDirectory.TabIndex = 11;
+            this.butCreateMunicipalityDirectory.Text = "Create Municipality Directory";
+            this.butCreateMunicipalityDirectory.UseVisualStyleBackColor = true;
+            // 
+            // panelShowInput
+            // 
+            this.panelShowInput.Controls.Add(this.checkBoxShowInput);
+            this.panelShowInput.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelShowInput.Location = new System.Drawing.Point(728, 0);
+            this.panelShowInput.Name = "panelShowInput";
+            this.panelShowInput.Size = new System.Drawing.Size(68, 34);
+            this.panelShowInput.TabIndex = 19;
+            // 
+            // checkBoxShowInput
+            // 
+            this.checkBoxShowInput.AutoSize = true;
+            this.checkBoxShowInput.Location = new System.Drawing.Point(11, 10);
+            this.checkBoxShowInput.Name = "checkBoxShowInput";
+            this.checkBoxShowInput.Size = new System.Drawing.Size(50, 17);
+            this.checkBoxShowInput.TabIndex = 11;
+            this.checkBoxShowInput.Text = "Input";
+            this.checkBoxShowInput.UseVisualStyleBackColor = true;
+            // 
+            // panelSubsectorOrMunicipalityAdmin
+            // 
+            this.panelSubsectorOrMunicipalityAdmin.Controls.Add(this.comboBoxSubsectorOrMunicipalityAdmin);
+            this.panelSubsectorOrMunicipalityAdmin.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelSubsectorOrMunicipalityAdmin.Location = new System.Drawing.Point(278, 0);
+            this.panelSubsectorOrMunicipalityAdmin.Name = "panelSubsectorOrMunicipalityAdmin";
+            this.panelSubsectorOrMunicipalityAdmin.Size = new System.Drawing.Size(396, 34);
+            this.panelSubsectorOrMunicipalityAdmin.TabIndex = 20;
+            // 
+            // comboBoxSubsectorOrMunicipalityAdmin
+            // 
+            this.comboBoxSubsectorOrMunicipalityAdmin.DropDownWidth = 500;
+            this.comboBoxSubsectorOrMunicipalityAdmin.FormattingEnabled = true;
+            this.comboBoxSubsectorOrMunicipalityAdmin.Location = new System.Drawing.Point(11, 7);
+            this.comboBoxSubsectorOrMunicipalityAdmin.Name = "comboBoxSubsectorOrMunicipalityAdmin";
+            this.comboBoxSubsectorOrMunicipalityAdmin.Size = new System.Drawing.Size(344, 21);
+            this.comboBoxSubsectorOrMunicipalityAdmin.TabIndex = 10;
+            this.comboBoxSubsectorOrMunicipalityAdmin.SelectedIndexChanged += new System.EventHandler(this.comboBoxSubsectorOrMunicipalityAdmin_SelectedIndexChanged);
+            // 
+            // panelAdminPassword
+            // 
+            this.panelAdminPassword.Controls.Add(this.textBoxPassword);
+            this.panelAdminPassword.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panelAdminPassword.Location = new System.Drawing.Point(660, 0);
+            this.panelAdminPassword.Name = "panelAdminPassword";
+            this.panelAdminPassword.Size = new System.Drawing.Size(68, 34);
+            this.panelAdminPassword.TabIndex = 21;
+            // 
+            // textBoxPassword
+            // 
+            this.textBoxPassword.Location = new System.Drawing.Point(16, 8);
+            this.textBoxPassword.Name = "textBoxPassword";
+            this.textBoxPassword.Size = new System.Drawing.Size(38, 20);
+            this.textBoxPassword.TabIndex = 0;
+            this.textBoxPassword.TextChanged += new System.EventHandler(this.textBoxPassword_TextChanged);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
@@ -329,18 +572,38 @@
             this.Name = "CSSPPolSourceSiteInputToolForm";
             this.Text = "CSSP Pollution Source Site Input Tool";
             this.panelButtonBar.ResumeLayout(false);
-            this.panelButtonBar.PerformLayout();
-            this.panelStatusTop.ResumeLayout(false);
-            this.panelStatusTop.PerformLayout();
+            this.panelViewKMLFileTop.ResumeLayout(false);
             this.panelStatusBar.ResumeLayout(false);
             this.panelStatusBar.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.panel1.ResumeLayout(false);
-            this.panelShowButtons.ResumeLayout(false);
-            this.panelShowButtons.PerformLayout();
+            this.panelAddNewPollutionSourceSite.ResumeLayout(false);
+            this.panelShowInputOptions.ResumeLayout(false);
+            this.panelShowInputOptions.PerformLayout();
+            this.panelShowInfrastructure.ResumeLayout(false);
+            this.panelShowInfrastructure.PerformLayout();
+            this.panelSubsectorOrMunicipality.ResumeLayout(false);
+            this.panelSubsectorOrMunicipality.PerformLayout();
+            this.panelEmpty.ResumeLayout(false);
+            this.panelEmpty.PerformLayout();
+            this.splitContainer2.Panel1.ResumeLayout(false);
+            this.splitContainer2.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
+            this.splitContainer2.ResumeLayout(false);
+            this.panelShowAdmin.ResumeLayout(false);
+            this.panelShowAdmin.PerformLayout();
+            this.panelLanguage.ResumeLayout(false);
+            this.panelLanguage.PerformLayout();
+            this.panelProvinces.ResumeLayout(false);
+            this.panelCreateSubsectorDirectory.ResumeLayout(false);
+            this.panelCreateMunicipalityDirectory.ResumeLayout(false);
+            this.panelShowInput.ResumeLayout(false);
+            this.panelShowInput.PerformLayout();
+            this.panelSubsectorOrMunicipalityAdmin.ResumeLayout(false);
+            this.panelAdminPassword.ResumeLayout(false);
+            this.panelAdminPassword.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -348,8 +611,6 @@
         #endregion
 
         private System.Windows.Forms.Panel panelButtonBar;
-        private System.Windows.Forms.Label lblSubsector;
-        private System.Windows.Forms.ComboBox comboBoxSubsectorNames;
         private System.Windows.Forms.Panel panelStatusBar;
         private System.Windows.Forms.Label lblStatus;
         private System.Windows.Forms.Label lblStatusTxt;
@@ -357,9 +618,8 @@
         private System.Windows.Forms.Panel panelViewAndEdit;
         private System.Windows.Forms.OpenFileDialog openFileDialogCSSP;
         private System.Windows.Forms.Panel panelPolSourceSite;
-        private System.Windows.Forms.Label lblSubsectorName;
-        private System.Windows.Forms.Panel panelStatusTop;
-        private System.Windows.Forms.Panel panelShowButtons;
+        private System.Windows.Forms.Panel panelViewKMLFileTop;
+        private System.Windows.Forms.Panel panelShowInputOptions;
         private System.Windows.Forms.CheckBox checkBoxLanguage;
         private System.Windows.Forms.TextBox textBoxEmpty;
         private System.Windows.Forms.CheckBox checkBoxEditing;
@@ -369,8 +629,31 @@
         private System.Windows.Forms.RadioButton radioButtonShowMap;
         private System.Windows.Forms.Button butViewKMLFile;
         private System.Windows.Forms.CheckBox checkBoxMoreInfo;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panelAddNewPollutionSourceSite;
         private System.Windows.Forms.Button butPSSAdd;
+        private System.Windows.Forms.Panel panelShowInfrastructure;
+        private System.Windows.Forms.CheckBox checkBoxShowInfrastructure;
+        private System.Windows.Forms.CheckBox checkBoxShowAdmin;
+        private System.Windows.Forms.Panel panelShowAdmin;
+        private System.Windows.Forms.Button butCreateSubsectorDirectory;
+        private System.Windows.Forms.ComboBox comboBoxProvince;
+        private System.Windows.Forms.Panel panelSubsectorOrMunicipality;
+        private System.Windows.Forms.Label lblSubsectorOrMunicipality;
+        private System.Windows.Forms.ComboBox comboBoxSubsectorOrMunicipality;
+        private System.Windows.Forms.Panel panelEmpty;
+        private System.Windows.Forms.Panel panelLanguage;
+        private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.RichTextBox richTextBoxStatus;
+        private System.Windows.Forms.Panel panelProvinces;
+        private System.Windows.Forms.Panel panelCreateMunicipalityDirectory;
+        private System.Windows.Forms.Button butCreateMunicipalityDirectory;
+        private System.Windows.Forms.Panel panelCreateSubsectorDirectory;
+        private System.Windows.Forms.Panel panelShowInput;
+        private System.Windows.Forms.CheckBox checkBoxShowInput;
+        private System.Windows.Forms.Panel panelSubsectorOrMunicipalityAdmin;
+        private System.Windows.Forms.ComboBox comboBoxSubsectorOrMunicipalityAdmin;
+        private System.Windows.Forms.Panel panelAdminPassword;
+        private System.Windows.Forms.TextBox textBoxPassword;
     }
 }
 
