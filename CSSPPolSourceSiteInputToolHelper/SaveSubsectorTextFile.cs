@@ -148,7 +148,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 catch (Exception)
                 {
-                    OnStatus(new StatusEventArgs("Could not create directory [" + di.FullName + "]"));
+                    EmitStatus(new StatusEventArgs("Could not create directory [" + di.FullName + "]"));
                 }
             }
 

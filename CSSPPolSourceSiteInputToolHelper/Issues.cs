@@ -33,7 +33,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             CurrentPSS.PSSObs.IssueList.Add(issue);
 
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         public bool IssueWellFormed(Issue issue, bool IsNew)
         {
@@ -1048,7 +1048,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             RecreateTVText();
             SaveSubsectorTextFile();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
 
 
         }
@@ -1128,7 +1128,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             RecreateTVText();
             SaveSubsectorTextFile();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void UnDeleteIssue(int IssueID)
         {
@@ -1143,7 +1143,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             RecreateTVText();
             SaveSubsectorTextFile();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void IssueMoveLeft(int IssueID)
         {
@@ -1170,7 +1170,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             RecreateTVText();
             SaveSubsectorTextFile();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void IssueMoveRight(int IssueID)
         {
@@ -1197,7 +1197,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             RecreateTVText();
             SaveSubsectorTextFile();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void IssuesSaveToCSSPWebTools()
         {

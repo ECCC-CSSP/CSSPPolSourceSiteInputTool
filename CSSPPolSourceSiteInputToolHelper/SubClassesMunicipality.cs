@@ -22,8 +22,10 @@ namespace CSSPPolSourceSiteInputToolHelper
     public class Infrastructure
     {
         public int? InfrastructureTVItemID { get; set; } = null;
-        public string InfrastructureName { get; set; } = null;
-        public string InfrastructureNameNew { get; set; } = null;
+        public bool? IsActive { get; set; } = null;
+        public bool? IsActiveNew { get; set; } = null;
+        public string TVText { get; set; } = null;
+        public string TVTextNew { get; set; } = null;
         public string Comment { get; set; } = null;
         public string CommentNew { get; set; } = null;
         public float? Lat { get; set; } = null;
@@ -124,7 +126,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Address InfrastructureAddressNew { get; set; } = new Address();
         public DateTime? LastUpdateDate_UTC { get; set; } = null;
         public List<Picture> InfrastructurePictureList { get; set; } = new List<Picture>();
-        public bool? ToRemove { get; set; } = null;
         public int? PumpsToTVItemID { get; set; } = null;
         public int? PumpsToTVItemIDNew { get; set; } = null;
         public List<Coord> PathCoordList { get; set; } = new List<Coord>();

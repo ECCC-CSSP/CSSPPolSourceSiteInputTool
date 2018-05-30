@@ -20,12 +20,28 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             public string Status { get; set; }
         }
-        protected virtual void OnStatus(StatusEventArgs e)
+        protected virtual void EmitStatus(StatusEventArgs e)
         {
             UpdateStatus?.Invoke(this, e);
         }
 
         public event EventHandler<StatusEventArgs> UpdateStatus;
+
+        public class RTBMessageEventArgs : EventArgs
+        {
+            public RTBMessageEventArgs(string Message)
+            {
+                this.Message = Message;
+            }
+            public string Message { get; set; }
+        }
+        protected virtual void EmitRTBMessage(RTBMessageEventArgs e)
+        {
+            UpdateRTBMessage?.Invoke(this, e);
+        }
+
+        public event EventHandler<RTBMessageEventArgs> UpdateRTBMessage;
+
 
         // -------------------------------------------------------------------------------------------------
 
@@ -39,28 +55,28 @@ namespace CSSPPolSourceSiteInputToolHelper
             CurrentPSS.IsActive = true;
             SavePolSourceSiteInfo();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void butChangeToIsNotActive_Click(object sender, EventArgs e)
         {
             CurrentPSS.IsActive = false;
             SavePolSourceSiteInfo();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void butChangeToIsPointSource_Click(object sender, EventArgs e)
         {
             CurrentPSS.IsPointSource = true;
             SavePolSourceSiteInfo();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void butChangeToIsNonPointSource_Click(object sender, EventArgs e)
         {
             CurrentPSS.IsPointSource = false;
             SavePolSourceSiteInfo();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void butPSSSaveToCSSPWebTools_Click(object sender, EventArgs e)
         {
@@ -80,14 +96,14 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             SavePolSourceSiteInfo();
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void butSavePictureInfo_Click(object sender, EventArgs e)
         {
             int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
             SavePictureInfo(PictureTVItemID);
             RedrawSinglePanelPSS();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void butIssueAdd_Click(object sender, EventArgs e)
         {
@@ -103,13 +119,13 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             IssueID = int.Parse(((Button)sender).Tag.ToString());
             IssueMoveLeft(IssueID);
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void butIssueMoveRight_Click(object sender, EventArgs e)
         {
             IssueID = int.Parse(((Button)sender).Tag.ToString());
             IssueMoveRight(IssueID);
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void butIssueUnDelete_Click(object sender, EventArgs e)
         {
@@ -124,21 +140,21 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butIssueSet_Click(object sender, EventArgs e)
         {
             IssueID = int.Parse(((Button)sender).Tag.ToString());
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void ShowPolSourceSiteViaLabel(object sender, EventArgs e)
         {
             PolSourceSiteTVItemID = int.Parse(((Label)sender).Tag.ToString());
             IssueID = 0;
             CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void ShowPolSourceSiteViaPanel(object sender, EventArgs e)
         {
             PolSourceSiteTVItemID = int.Parse(((Panel)sender).Tag.ToString());
             IssueID = 0;
             CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
-            ReDraw();
+            ReDrawPolSourceSite();
         }
         private void lblIssueText_Click(object sender, EventArgs e)
         {

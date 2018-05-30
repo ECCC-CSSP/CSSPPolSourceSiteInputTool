@@ -19,9 +19,9 @@ namespace CSSPPolSourceSiteInputToolHelper
         public string CurrentSubsectorName = "";
         public string CurrentMunicipalityName = "";
         public bool IsSaving = false;
-        public List<string> SubDirectoryOrMunicipalityList = new List<string>();
         public List<TVItemModel> tvItemModelProvinceList { get; set; }
-        public List<TVItemModel> tvItemModelSubsectorOrMunicipalityList { get; set; }
+        public List<TVItemModel> tvItemModelSubsectorList { get; set; }
+        public List<TVItemModel> tvItemModelMunicipalityList { get; set; }
         public int PolSourceSiteTVItemID = 0;
         public int InfrastructureTVItemID = 0;
         public int IssueID = 0;
@@ -102,7 +102,27 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             _BaseModelService.FillPolSourceObsInfoChild(polSourceObsInfoChildList);
         }
-        public void ReDraw()
+        public void ReDrawMunicipality()
+        {
+            if (ShowOnlyPictures)
+            {
+                ShowPictures();
+            }
+            else if (ShowOnlyIssues)
+            {
+                DrawIssuesForViewing();
+            }
+            else if (ShowOnlyMap)
+            {
+                ShowMap();
+            }
+            else
+            {
+                ShowPolSourceSite();
+            }
+            UpdatePolSourceSitePanelColor();
+        }
+        public void ReDrawPolSourceSite()
         {
             if (ShowOnlyPictures)
             {

@@ -13,6 +13,154 @@ namespace CSSPPolSourceSiteInputToolHelper
 {
     public partial class PolSourceSiteInputToolHelper
     {
+        public void DrawPanelInfrastructures()
+        {
+            PanelPolSourceSite.Controls.Clear();
+
+            if (municipalityDoc.Municipality == null)
+            {
+                Label lblTVText = new Label();
+
+                lblTVText.AutoSize = true;
+                lblTVText.Location = new Point(10, 4);
+                lblTVText.TabIndex = 0;
+                lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                lblTVText.Text = $"Selected municipality has no local pollution source sites";
+
+                PanelPolSourceSite.Controls.Add(lblTVText);
+            }
+            else
+            {
+                int countInfrastructure = 0;
+                foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList.OrderBy(c => c.TVText))
+                {
+                    Panel panelInfrastructure = new Panel();
+
+                    panelInfrastructure.BorderStyle = BorderStyle.FixedSingle;
+                    panelInfrastructure.Location = new Point(0, countInfrastructure * 44);
+                    panelInfrastructure.Size = new Size(PanelPolSourceSite.Width, 44);
+                    panelInfrastructure.TabIndex = 0;
+                    panelInfrastructure.Tag = infrastructure.InfrastructureTVItemID;
+                    panelInfrastructure.Click += ShowPolSourceSiteViaPanel;
+
+                    Label lblTVText = new Label();
+
+                    lblTVText.AutoSize = true;
+                    lblTVText.Location = new Point(10, 4);
+                    lblTVText.TabIndex = 0;
+                    lblTVText.Tag = infrastructure.InfrastructureTVItemID;
+                    if (infrastructure.IsActive == false)
+                    {
+                        lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                    }
+                    else
+                    {
+                        lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    }
+                    if (!string.IsNullOrWhiteSpace(infrastructure.TVTextNew))
+                    {
+                        lblTVText.Text = $"{infrastructure.TVTextNew}";
+                    }
+                    else
+                    {
+                        lblTVText.Text = $"{infrastructure.TVText}";
+                    }
+                    lblTVText.Click += ShowPolSourceSiteViaLabel;
+
+                    panelInfrastructure.Controls.Add(lblTVText);
+
+
+                    Label lblPSSStatus = new Label();
+
+                    bool NeedDetailsUpdate = false;
+                    bool NeedIssuesUpdate = false;
+                    bool NeedPicturesUpdate = false;
+                    if (IsAdmin)
+                    {
+                        if (infrastructure.LatNew != null
+                           || infrastructure.LngNew != null
+                           || infrastructure.IsActiveNew != null
+                           || infrastructure.InfrastructureAddressNew.AddressTVItemID != null
+                           || infrastructure.InfrastructureAddressNew.AddressType != null
+                           || infrastructure.InfrastructureAddressNew.Municipality != null
+                           || infrastructure.InfrastructureAddressNew.PostalCode != null
+                           || infrastructure.InfrastructureAddressNew.StreetName != null
+                           || infrastructure.InfrastructureAddressNew.StreetNumber != null
+                           || infrastructure.InfrastructureAddressNew.StreetType != null)
+                        {
+                            NeedDetailsUpdate = true;
+                        }
+
+                        foreach (Picture picture in infrastructure.InfrastructurePictureList)
+                        {
+                            if (picture.DescriptionNew != null
+                                || picture.ExtensionNew != null
+                                || picture.FileNameNew != null
+                                || picture.ToRemove != null)
+                            {
+                                NeedPicturesUpdate = true;
+                                break;
+                            }
+                        }
+
+                        lblPSSStatus.AutoSize = true;
+                        lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                        lblPSSStatus.TabIndex = 0;
+                        lblPSSStatus.Tag = infrastructure.InfrastructureTVItemID;
+                        if (infrastructure.IsActive == false)
+                        {
+                            lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                        }
+                        else
+                        {
+                            lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        }
+                        string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
+                        string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
+                        string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
+                        if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                        {
+                            lblPSSStatus.Text = $"Good --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                        }
+                        else
+                        {
+                            lblPSSStatus.Text = $"Good";
+                        }
+                        lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
+
+
+                        panelInfrastructure.Controls.Add(lblPSSStatus);
+
+                    }
+                    else
+                    {
+
+                        lblPSSStatus.AutoSize = true;
+                        lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                        lblPSSStatus.TabIndex = 0;
+                        lblPSSStatus.Tag = infrastructure.InfrastructureTVItemID;
+                        if (infrastructure.IsActive == false)
+                        {
+                            lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                        }
+                        else
+                        {
+                            lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        }
+                        lblPSSStatus.Text = $"Good";
+                        lblPSSStatus.Click += ShowPolSourceSiteViaLabel;
+
+
+                        panelInfrastructure.Controls.Add(lblPSSStatus);
+                    }
+
+
+                    PanelPolSourceSite.Controls.Add(panelInfrastructure);
+
+                    countInfrastructure += 1;
+                }
+            }
+        }
         public void DrawPanelPSS()
         {
             PanelPolSourceSite.Controls.Clear();
@@ -488,17 +636,47 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             }
         }
-        public void RedrawPolSourceSiteList()
+        public void RedrawInfrastructureList()
+        {
+            IsReading = true;
+            if (!ReadInfrastructuresMunicipalityFile())
+            {
+                return;
+            }
+            IsReading = false;
+            if (!CheckAllReadDataMunicipalityOK())
+            {
+                return;
+            }
+
+            DrawPanelInfrastructures();
+        }
+        public void RedrawMunicipalityList()
         {
             //polSourceSiteInputToolHelper.CurrentSubsectorName = (string)comboBoxSubsectorNames.SelectedItem;
 
+            IsReading = true;
+            if (!ReadInfrastructuresMunicipalityFile())
+            {
+                return;
+            }
+            IsReading = false;
+            if (!CheckAllReadDataMunicipalityOK())
+            {
+                return;
+            }
+
+            DrawPanelInfrastructures();
+        }
+        public void RedrawPolSourceSiteList()
+        {
             IsReading = true;
             if (!ReadPollutionSourceSitesSubsectorFile())
             {
                 return;
             }
             IsReading = false;
-            if (!CheckAllReadDataOK())
+            if (!CheckAllReadDataPollutionSourceSiteOK())
             {
                 return;
             }
@@ -1580,7 +1758,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 if (dtp.Value == CurrentPSS.PSSObs.ObsDate)
                                 {
                                     CurrentPSS.PSSObs.ObsDateNew = null;
-                                    OnStatus(new StatusEventArgs("Please enter a valid date for ObsDate"));
+                                    EmitStatus(new StatusEventArgs("Please enter a valid date for ObsDate"));
                                 }
                                 else
                                 {
@@ -1627,7 +1805,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             else
                             {
                                 tb.Text = CurrentPSS.Lat.ToString();
-                                OnStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
                             }
                         }
                         break;
@@ -1650,7 +1828,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             else
                             {
                                 tb.Text = CurrentPSS.Lng.ToString();
-                                OnStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
                             }
                         }
                         break;
