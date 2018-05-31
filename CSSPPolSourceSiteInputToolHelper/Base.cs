@@ -57,7 +57,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public SubsectorDoc subsectorDoc { get; set; }
         public MunicipalityDoc municipalityDoc { get; set; }
         public PSS CurrentPSS { get; set; }
-        public PSS CurrentInfrastructure { get; set; }
+        public Infrastructure CurrentInfrastructure { get; set; }
         public BaseEnumService _BaseEnumService { get; set; }
         public BaseModelService _BaseModelService { get; set; }
         public Panel PanelViewAndEdit { get; set; }
@@ -102,15 +102,11 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             _BaseModelService.FillPolSourceObsInfoChild(polSourceObsInfoChildList);
         }
-        public void ReDrawMunicipality()
+        public void ReDrawInfrastructure()
         {
             if (ShowOnlyPictures)
             {
                 ShowPictures();
-            }
-            else if (ShowOnlyIssues)
-            {
-                DrawIssuesForViewing();
             }
             else if (ShowOnlyMap)
             {
@@ -118,7 +114,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
-                ShowPolSourceSite();
+                ShowInfrastructure();
             }
             UpdatePolSourceSitePanelColor();
         }

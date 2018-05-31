@@ -14,234 +14,61 @@ namespace CSSPPolSourceSiteInputToolHelper
     {
         public bool CheckAllReadDataMunicipalityOK()
         {
-            //if (subsectorDoc.Version == null)
-            //{
-            //    EmitStatus(new StatusEventArgs("VERSION line could not be found"));
-            //    return false;
-            //}
-            //if (subsectorDoc.Version != 1)
-            //{
-            //    EmitStatus(new StatusEventArgs($"VERSION is not equal to 1 it is [{subsectorDoc.Version}]"));
-            //    return false;
-            //}
-            //if (subsectorDoc.DocDate == null)
-            //{
-            //    EmitStatus(new StatusEventArgs("DOCDATE line could not be found"));
-            //    return false;
-            //}
-            //if (subsectorDoc.DocDate < new DateTime(1980, 1, 1))
-            //{
-            //    EmitStatus(new StatusEventArgs($"DOCDATE does not have the right date it is [{subsectorDoc.DocDate}]"));
-            //    return false;
-            //}
-            //if (subsectorDoc.Subsector == null)
-            //{
-            //    EmitStatus(new StatusEventArgs("SUBSECTOR line could not be found"));
-            //    return false;
-            //}
-            //if (subsectorDoc.Subsector.SubsectorTVItemID == null)
-            //{
-            //    EmitStatus(new StatusEventArgs($"SubsectorTVItemID could not be set [{subsectorDoc.Subsector.SubsectorTVItemID}]"));
-            //    return false;
-            //}
-            //if (subsectorDoc.Subsector.SubsectorTVItemID < 1)
-            //{
-            //    EmitStatus(new StatusEventArgs($"SubsectorTVItemID does not have a valid value it is [{subsectorDoc.Subsector.SubsectorTVItemID}]"));
-            //    return false;
-            //}
-            //if (string.IsNullOrWhiteSpace(subsectorDoc.Subsector.SubsectorName))
-            //{
-            //    EmitStatus(new StatusEventArgs($"SubsectorName could not be set it is null or empty"));
-            //    return false;
-            //}
-            //foreach (PSS pss in subsectorDoc.Subsector.PSSList)
-            //{
-            //    if (pss.PSSTVItemID == null)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"PSSTVItemID could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    if (pss.PSSTVItemID < 1)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"PSSTVItemID does not have a valid value it is [{pss.PSSTVItemID}]"));
-            //        return false;
-            //    }
-            //    if (pss.SiteNumber == null)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"SiteNumber could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    if (pss.SiteNumber < 0)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"SiteNumber does not have a valid value it is [{pss.SiteNumber}]"));
-            //        return false;
-            //    }
-            //    if (string.IsNullOrWhiteSpace(pss.SiteNumberText))
-            //    {
-            //        EmitStatus(new StatusEventArgs($"SiteNumberText could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    if (pss.Lat == null)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"Lat could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    if (!(pss.Lat < 90.0f && pss.Lat >= -90.0f))
-            //    {
-            //        EmitStatus(new StatusEventArgs($"Lat does not have a valid value it is [{pss.Lat}]"));
-            //        return false;
-            //    }
-            //    // LatNew can be null and it is ok
-            //    if (pss.Lng == null)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"Lng could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    if (!(pss.Lng < 180.0f && pss.Lng >= -180.0f))
-            //    {
-            //        EmitStatus(new StatusEventArgs($"Lng does not have a valid value it is [{pss.Lng}]"));
-            //        return false;
-            //    }
-            //    // LngNew can be null and it is ok
-            //    if (pss.IsActive == null)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"IsActive could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    // IsActiveNew can be null and it is ok
-            //    if (pss.IsPointSource == null)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"IsPointSource could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    // IsPointSourceNew can be null and it is ok
-            //    if (string.IsNullOrWhiteSpace(pss.TVText))
-            //    {
-            //        EmitStatus(new StatusEventArgs($"TVText could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    // TVTextNew can be null and it is ok
-            //    // PSSAddress can be null and it is ok
-            //    // AddressTVItemID can be null and it is ok
-            //    // Municipality can be null
-            //    // AddressType can be null
-            //    // StreetNumber can be null
-            //    // StreetName can be null
-            //    // StreetType can be null
-            //    // PostalCode can be null
-            //    // PSSAddressNew can be null and it is ok
+            if (municipalityDoc.Version == null)
+            {
+                EmitStatus(new StatusEventArgs("VERSION line could not be found"));
+                return false;
+            }
+            if (municipalityDoc.Version != 1)
+            {
+                EmitStatus(new StatusEventArgs($"VERSION is not equal to 1 it is [{municipalityDoc.Version}]"));
+                return false;
+            }
+            if (municipalityDoc.DocDate == null)
+            {
+                EmitStatus(new StatusEventArgs("DOCDATE line could not be found"));
+                return false;
+            }
+            if (municipalityDoc.DocDate < new DateTime(1980, 1, 1))
+            {
+                EmitStatus(new StatusEventArgs($"DOCDATE does not have the right date it is [{municipalityDoc.DocDate}]"));
+                return false;
+            }
+            if (municipalityDoc.Municipality == null)
+            {
+                EmitStatus(new StatusEventArgs("SUBSECTOR line could not be found"));
+                return false;
+            }
+            if (municipalityDoc.Municipality.MunicipalityTVItemID == null)
+            {
+                EmitStatus(new StatusEventArgs($"MunicipalityTVItemID could not be set [{municipalityDoc.Municipality.MunicipalityTVItemID}]"));
+                return false;
+            }
+            if (municipalityDoc.Municipality.MunicipalityTVItemID < 1)
+            {
+                EmitStatus(new StatusEventArgs($"MunicipalityTVItemID does not have a valid value it is [{municipalityDoc.Municipality.MunicipalityTVItemID}]"));
+                return false;
+            }
+            if (string.IsNullOrWhiteSpace(municipalityDoc.Municipality.MunicipalityName))
+            {
+                EmitStatus(new StatusEventArgs($"MunicipalityName is empty"));
+                return false;
+            }
 
-            //    foreach (Picture picture in pss.PSSPictureList)
-            //    {
-            //        if (picture.PictureTVItemID == null)
-            //        {
-            //            EmitStatus(new StatusEventArgs($"PSSPictureList could not be set it is null or empty"));
-            //            return false;
-            //        }
-            //        if (picture.PictureTVItemID < 1)
-            //        {
-            //            EmitStatus(new StatusEventArgs($"PSSPictureList does not have a valid value it is [{picture.PictureTVItemID}]"));
-            //            return false;
-            //        }
-            //        if (string.IsNullOrWhiteSpace(picture.FileName))
-            //        {
-            //            EmitStatus(new StatusEventArgs($"FileName could not be set it is null or empty"));
-            //            return false;
-            //        }
-            //        // FileNameNew ca be null and it is ok
-            //        if (string.IsNullOrWhiteSpace(picture.Extension))
-            //        {
-            //            EmitStatus(new StatusEventArgs($"Extension could not be set it is null or empty"));
-            //            return false;
-            //        }
-            //        // ExtensionNew can be null and it is ok
-            //        if (string.IsNullOrWhiteSpace(picture.Description))
-            //        {
-            //            EmitStatus(new StatusEventArgs($"Description could not be set it is null or empty"));
-            //            return false;
-            //        }
-            //        // DescriptionNew can be null and it is ok
-            //        // ToRemove can be null and it is ok
-            //        // IsNew can be null and it is ok
-            //    }
+            foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
+            {
+                if (infrastructure.InfrastructureTVItemID == null)
+                {
+                    EmitStatus(new StatusEventArgs($"InfrastructureTVItemID could not be set [{infrastructure.InfrastructureTVItemID}]"));
+                    return false;
+                }
+                if (infrastructure.InfrastructureTVItemID < 1)
+                {
+                    EmitStatus(new StatusEventArgs($"InfrastructureTVItemID does not have a valid value it is [{infrastructure.InfrastructureTVItemID}]"));
+                    return false;
+                }
+            }
 
-            //    if (pss.PSSObs.ObsID == null)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"ObsID could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    if (pss.PSSObs.ObsID < 1)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"ObsID does not have a valid value it is [{pss.PSSObs.ObsID}]"));
-            //        return false;
-            //    }
-            //    // OldWrittenDescription can be null and it is ok
-            //    if (pss.PSSObs.LastUpdated_UTC == null)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"LastUpdated_UTC could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    if (pss.PSSObs.LastUpdated_UTC < new DateTime(1980, 1, 1))
-            //    {
-            //        EmitStatus(new StatusEventArgs($"LastUpdated_UTC does not have a valid value it is [{pss.PSSObs.LastUpdated_UTC}]"));
-            //        return false;
-            //    }
-            //    // LastUpdate_UTCNew can be null and it is ok
-            //    if (pss.PSSObs.ObsDate == null)
-            //    {
-            //        EmitStatus(new StatusEventArgs($"ObsDate could not be set it is null or empty"));
-            //        return false;
-            //    }
-            //    if (pss.PSSObs.ObsDate < new DateTime(1980, 1, 1))
-            //    {
-            //        EmitStatus(new StatusEventArgs($"ObsDate does not have a valid value it is [{pss.PSSObs.ObsDate}]"));
-            //        return false;
-            //    }
-            //    // ObsDateNew can be null and it is ok
-            //    // ToRemove can be null and it is ok
-            //    // IsNew can be null and it is ok
-
-            //    foreach (Issue issue in pss.PSSObs.IssueList)
-            //    {
-            //        if (issue.IssueID == null)
-            //        {
-            //            EmitStatus(new StatusEventArgs($"IssueID could not be set it is null or empty"));
-            //            return false;
-            //        }
-            //        if (issue.IssueID < 0)
-            //        {
-            //            EmitStatus(new StatusEventArgs($"IssueID does not have a valid value it is [{issue.IssueID}]"));
-            //            return false;
-            //        }
-            //        if (issue.Ordinal == null)
-            //        {
-            //            EmitStatus(new StatusEventArgs($"Ordinal could not be set it is null or empty"));
-            //            return false;
-            //        }
-            //        if (issue.Ordinal < 0)
-            //        {
-            //            EmitStatus(new StatusEventArgs($"Ordinal does not have a valid value it is [{issue.Ordinal}]"));
-            //            return false;
-            //        }
-            //        if (issue.LastUpdated_UTC == null)
-            //        {
-            //            EmitStatus(new StatusEventArgs($"LastUpdated_UTC could not be set it is null or empty"));
-            //            return false;
-            //        }
-            //        if (issue.LastUpdated_UTC < new DateTime(1980, 1, 1))
-            //        {
-            //            EmitStatus(new StatusEventArgs($"LastUpdated_UTC does not have a valid value it is [{issue.LastUpdated_UTC}]"));
-            //            return false;
-            //        }
-            //        // LastUpdated_UTCNew can be null and it is ok
-            //        // PolSourceObsInfoIntList can have 0 items
-            //        // PolSourceObsInfoIntListNew can have 0 items
-            //        // PolSourceObsInfoEnumList can have 0 items
-            //        // PolSourceObsInfoEnumListNew can have 0 items
-            //        // ToRemove can be null and it is ok
-            //        // Isnew can be null and it is ok
-            //    }
-            //}
             return true;
         }
         public bool CheckAllReadDataPollutionSourceSiteOK()
@@ -580,39 +407,50 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 Infrastructure infrastructure = new Infrastructure();
                                 infrastructure.InfrastructureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                //0123456789012345678
+                                //2018|03|02|08|23|12
+                                string TempStr = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1).Trim();
+                                int Year = int.Parse(TempStr.Substring(0, 4));
+                                int Month = int.Parse(TempStr.Substring(5, 2));
+                                int Day = int.Parse(TempStr.Substring(8, 2));
+                                int Hour = int.Parse(TempStr.Substring(11, 2));
+                                int Minute = int.Parse(TempStr.Substring(14, 2));
+                                int Second = int.Parse(TempStr.Substring(17, 2));
+                                infrastructure.LastUpdateDate_UTC = new DateTime(Year, Month, Day, Hour, Minute, Second);
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
                                 {
                                     infrastructure.Lat = null;
                                 }
                                 else
                                 {
-                                    infrastructure.Lat = float.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
+                                    infrastructure.Lat = float.Parse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1));
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1)))
                                 {
                                     infrastructure.Lng = null;
                                 }
                                 else
                                 {
-                                    infrastructure.Lng = float.Parse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1));
+                                    infrastructure.Lng = float.Parse(LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1));
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1)))
                                 {
                                     infrastructure.LatOutfall = null;
                                 }
                                 else
                                 {
-                                    infrastructure.LatOutfall = float.Parse(LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1));
+                                    infrastructure.LatOutfall = float.Parse(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1));
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1)))
                                 {
                                     infrastructure.LngOutfall = null;
                                 }
                                 else
                                 {
-                                    infrastructure.LngOutfall = float.Parse(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1));
+                                    infrastructure.LngOutfall = float.Parse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1));
                                 }
-                                infrastructure.IsActive = bool.Parse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1));
+                                infrastructure.IsActive = bool.Parse(LineTxt.Substring(pos7 + 1, pos8 - pos7 - 1));
                                 municipalityDoc.Municipality.InfrastructureList.Add(infrastructure);
                             }
                             catch (Exception)

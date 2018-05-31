@@ -47,8 +47,16 @@ namespace CSSPPolSourceSiteInputToolHelper
 
         private void butAddPicture_Click(object sender, EventArgs e)
         {
-            AddPicture();
-            RedrawSinglePanelPSS();
+            if (IsPolSourceSite)
+            {
+                AddPicture();
+                RedrawSinglePanelPSS();
+            }
+            else
+            {
+                AddPicture();
+                RedrawSinglePanelInfrastructure();
+            }
         }
         private void butChangeToIsActive_Click(object sender, EventArgs e)
         {
@@ -94,16 +102,35 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         private void butSaveLatLngAndObsAndAddress_Click(object sender, EventArgs e)
         {
-            SavePolSourceSiteInfo();
-            RedrawSinglePanelPSS();
-            ReDrawPolSourceSite();
+            if (IsPolSourceSite)
+            {
+                SavePolSourceSiteInfo();
+                RedrawSinglePanelPSS();
+                ReDrawPolSourceSite();
+            }
+            else
+            {
+                SaveInfrastructureInfo();
+                RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+            }
         }
         private void butSavePictureInfo_Click(object sender, EventArgs e)
         {
-            int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
-            SavePictureInfo(PictureTVItemID);
-            RedrawSinglePanelPSS();
-            ReDrawPolSourceSite();
+            if (IsPolSourceSite)
+            {
+                int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
+                SavePictureInfo(PictureTVItemID);
+                RedrawSinglePanelPSS();
+                ReDrawPolSourceSite();
+            }
+            else
+            {
+                int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
+                SavePictureInfo(PictureTVItemID);
+                RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+            }
         }
         private void butIssueAdd_Click(object sender, EventArgs e)
         {
@@ -142,19 +169,18 @@ namespace CSSPPolSourceSiteInputToolHelper
             IssueID = int.Parse(((Button)sender).Tag.ToString());
             ReDrawPolSourceSite();
         }
-        private void ShowPolSourceSiteViaLabel(object sender, EventArgs e)
+        private void ShowPolSourceSite_Click(object sender, EventArgs e)
         {
-            PolSourceSiteTVItemID = int.Parse(((Label)sender).Tag.ToString());
+            PolSourceSiteTVItemID = int.Parse(((Control)sender).Tag.ToString());
             IssueID = 0;
             CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
             ReDrawPolSourceSite();
         }
-        private void ShowPolSourceSiteViaPanel(object sender, EventArgs e)
+        private void ShowMunicipality_Click(object sender, EventArgs e)
         {
-            PolSourceSiteTVItemID = int.Parse(((Panel)sender).Tag.ToString());
-            IssueID = 0;
-            CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
-            ReDrawPolSourceSite();
+            InfrastructureTVItemID = int.Parse(((Control)sender).Tag.ToString());
+            CurrentInfrastructure = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == InfrastructureTVItemID).FirstOrDefault();
+            ReDrawInfrastructure();
         }
         private void lblIssueText_Click(object sender, EventArgs e)
         {

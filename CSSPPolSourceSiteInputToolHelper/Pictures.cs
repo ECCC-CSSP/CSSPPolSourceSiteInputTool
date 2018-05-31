@@ -15,130 +15,274 @@ namespace CSSPPolSourceSiteInputToolHelper
     {
         public void AddPicture()
         {
-            OpenFileDialog openFileDialogPictures = new OpenFileDialog();
-            openFileDialogPictures.InitialDirectory = $@"C:\";
-            openFileDialogPictures.Title = "Browse Pictures Files";
-            openFileDialogPictures.DefaultExt = @"jpg";
-            openFileDialogPictures.Filter = @"jpg files (*.jpg)|*.jpg";
-            if (openFileDialogPictures.ShowDialog() == DialogResult.OK)
+            if (IsPolSourceSite)
             {
-                PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
-
-                Picture pictureNew = new Picture();
-
-                pictureNew.PictureTVItemID = 10000000;
-                pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
-                pss.PSSPictureList.Add(pictureNew);
-
-                FileInfo fi = new FileInfo(openFileDialogPictures.FileName);
-
-                FileInfo fiCheck = new FileInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
-                pictureNew.Extension = fi.Extension;
-                pictureNew.Description = "Insert Required Description";
-                while (fiCheck.Exists)
+                OpenFileDialog openFileDialogPictures = new OpenFileDialog();
+                openFileDialogPictures.InitialDirectory = $@"C:\";
+                openFileDialogPictures.Title = "Browse Pictures Files";
+                openFileDialogPictures.DefaultExt = @"jpg";
+                openFileDialogPictures.Filter = @"jpg files (*.jpg)|*.jpg";
+                if (openFileDialogPictures.ShowDialog() == DialogResult.OK)
                 {
-                    pictureNew.PictureTVItemID += 1;
+                    PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
+
+                    Picture pictureNew = new Picture();
+
+                    pictureNew.PictureTVItemID = 10000000;
                     pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
-                    fiCheck = new FileInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    pss.PSSPictureList.Add(pictureNew);
+
+                    FileInfo fi = new FileInfo(openFileDialogPictures.FileName);
+
+                    FileInfo fiCheck = new FileInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    pictureNew.Extension = fi.Extension;
+                    pictureNew.Description = "Insert Required Description";
+                    while (fiCheck.Exists)
+                    {
+                        pictureNew.PictureTVItemID += 1;
+                        pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
+                        fiCheck = new FileInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    }
+
+                    File.Copy(openFileDialogPictures.FileName, $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+
+                    SaveSubsectorTextFile();
+
+                    ShowPictures();
                 }
+            }
+            else
+            {
+                OpenFileDialog openFileDialogPictures = new OpenFileDialog();
+                openFileDialogPictures.InitialDirectory = $@"C:\";
+                openFileDialogPictures.Title = "Browse Pictures Files";
+                openFileDialogPictures.DefaultExt = @"jpg";
+                openFileDialogPictures.Filter = @"jpg files (*.jpg)|*.jpg";
+                if (openFileDialogPictures.ShowDialog() == DialogResult.OK)
+                {
+                    Infrastructure infrastructure = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == InfrastructureTVItemID).FirstOrDefault();
 
-                File.Copy(openFileDialogPictures.FileName, $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    Picture pictureNew = new Picture();
 
-                ShowPictures();
+                    pictureNew.PictureTVItemID = 10000000;
+                    pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
+                    infrastructure.InfrastructurePictureList.Add(pictureNew);
+
+                    FileInfo fi = new FileInfo(openFileDialogPictures.FileName);
+
+                    FileInfo fiCheck = new FileInfo($@"C:\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    pictureNew.Extension = fi.Extension;
+                    pictureNew.Description = "Insert Required Description";
+                    while (fiCheck.Exists)
+                    {
+                        pictureNew.PictureTVItemID += 1;
+                        pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
+                        fiCheck = new FileInfo($@"C:\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    }
+
+                    File.Copy(openFileDialogPictures.FileName, $@"C:\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+
+                    SaveMunicipalityTextFile();
+
+                    ShowPictures();
+                }
             }
         }
         public void RemovePicture(int PictureTVItemID)
         {
-            Picture pictureToRemove = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
-            if (pictureToRemove != null)
+            if (IsPolSourceSite)
             {
-                pictureToRemove.ToRemove = true;
-            }
+                Picture pictureToRemove = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+                if (pictureToRemove != null)
+                {
+                    pictureToRemove.ToRemove = true;
+                }
 
-            SaveSubsectorTextFile();
-            ShowPictures();
+                SaveSubsectorTextFile();
+                ShowPictures();
+            }
+            else
+            {
+                Picture pictureToRemove = CurrentInfrastructure.InfrastructurePictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+                if (pictureToRemove != null)
+                {
+                    pictureToRemove.ToRemove = true;
+                }
+
+                SaveMunicipalityTextFile();
+                ShowPictures();
+            }
         }
         public void UnRemovePicture(int PictureTVItemID)
         {
-            Picture pictureToRemove = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
-            if (pictureToRemove != null)
+            if (IsPolSourceSite)
             {
-                pictureToRemove.ToRemove = false;
-            }
+                Picture pictureToRemove = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+                if (pictureToRemove != null)
+                {
+                    pictureToRemove.ToRemove = false;
+                }
 
-            SaveSubsectorTextFile();
-            ShowPictures();
+                SaveSubsectorTextFile();
+                ShowPictures();
+            }
+            else
+            {
+                Picture pictureToRemove = CurrentInfrastructure.InfrastructurePictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+                if (pictureToRemove != null)
+                {
+                    pictureToRemove.ToRemove = false;
+                }
+
+                SaveMunicipalityTextFile();
+                ShowPictures();
+            }
         }
         public void SavePictureInfo(int PictureTVItemID)
         {
-            Picture picture = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
-            if (picture != null)
+            if (IsPolSourceSite)
             {
-                foreach (Control control in PanelViewAndEdit.Controls)
+                Picture picture = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+                if (picture != null)
                 {
-                    if (control.GetType().Name == "Panel")
+                    foreach (Control control in PanelViewAndEdit.Controls)
                     {
-                        int PictureTVItemID2 = int.Parse(control.Tag.ToString());
-                        if (PictureTVItemID2 == PictureTVItemID)
+                        if (control.GetType().Name == "Panel")
                         {
-                            TextBox tbFileName = new TextBox();
-                            TextBox tbDesc = new TextBox();
-                            PictureBox pbFileName = new PictureBox();
-                            foreach (Control control2 in control.Controls)
+                            int PictureTVItemID2 = int.Parse(control.Tag.ToString());
+                            if (PictureTVItemID2 == PictureTVItemID)
                             {
-                                if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxFileName")
+                                TextBox tbFileName = new TextBox();
+                                TextBox tbDesc = new TextBox();
+                                PictureBox pbFileName = new PictureBox();
+                                foreach (Control control2 in control.Controls)
                                 {
-                                    tbFileName = (TextBox)control2;
-                                    if (tbFileName.Text.Trim() != picture.FileName)
+                                    if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxFileName")
                                     {
-                                        picture.FileNameNew = tbFileName.Text.Trim();
+                                        tbFileName = (TextBox)control2;
+                                        if (tbFileName.Text.Trim() != picture.FileName)
+                                        {
+                                            picture.FileNameNew = tbFileName.Text.Trim();
+                                        }
                                     }
-                                }
-                                if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxDescription")
-                                {
-                                    tbDesc = (TextBox)control2;
-                                    if (tbDesc.Text.Trim() != picture.Description)
+                                    if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxDescription")
                                     {
-                                        picture.DescriptionNew = tbDesc.Text.Trim();
+                                        tbDesc = (TextBox)control2;
+                                        if (tbDesc.Text.Trim() != picture.Description)
+                                        {
+                                            picture.DescriptionNew = tbDesc.Text.Trim();
+                                        }
                                     }
-                                }
-                                if (control2.GetType().Name == "pictureBox" && control2.Name == "pictureBoxPicture")
-                                {
-                                    pbFileName = (PictureBox)control2;
-                                    FileInfo fiPicture = new FileInfo(pbFileName.ImageLocation);
-                                    if (fiPicture.Extension != picture.Extension)
+                                    if (control2.GetType().Name == "pictureBox" && control2.Name == "pictureBoxPicture")
                                     {
-                                        picture.ExtensionNew = fiPicture.Extension;
+                                        pbFileName = (PictureBox)control2;
+                                        FileInfo fiPicture = new FileInfo(pbFileName.ImageLocation);
+                                        if (fiPicture.Extension != picture.Extension)
+                                        {
+                                            picture.ExtensionNew = fiPicture.Extension;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            SaveSubsectorTextFile();
-            ShowPictures();
+                SaveSubsectorTextFile();
+                ShowPictures();
+            }
+            else
+            {
+                Picture picture = CurrentInfrastructure.InfrastructurePictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+                if (picture != null)
+                {
+                    foreach (Control control in PanelViewAndEdit.Controls)
+                    {
+                        if (control.GetType().Name == "Panel")
+                        {
+                            int PictureTVItemID2 = int.Parse(control.Tag.ToString());
+                            if (PictureTVItemID2 == PictureTVItemID)
+                            {
+                                TextBox tbFileName = new TextBox();
+                                TextBox tbDesc = new TextBox();
+                                PictureBox pbFileName = new PictureBox();
+                                foreach (Control control2 in control.Controls)
+                                {
+                                    if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxFileName")
+                                    {
+                                        tbFileName = (TextBox)control2;
+                                        if (tbFileName.Text.Trim() != picture.FileName)
+                                        {
+                                            picture.FileNameNew = tbFileName.Text.Trim();
+                                        }
+                                    }
+                                    if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxDescription")
+                                    {
+                                        tbDesc = (TextBox)control2;
+                                        if (tbDesc.Text.Trim() != picture.Description)
+                                        {
+                                            picture.DescriptionNew = tbDesc.Text.Trim();
+                                        }
+                                    }
+                                    if (control2.GetType().Name == "pictureBox" && control2.Name == "pictureBoxPicture")
+                                    {
+                                        pbFileName = (PictureBox)control2;
+                                        FileInfo fiPicture = new FileInfo(pbFileName.ImageLocation);
+                                        if (fiPicture.Extension != picture.Extension)
+                                        {
+                                            picture.ExtensionNew = fiPicture.Extension;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                SaveMunicipalityTextFile();
+                ShowPictures();
+            }
         }
         public void ShowPictures()
         {
             int Y = 0;
             int X = 0;
 
-            if (CurrentPSS == null)
+            if (IsPolSourceSite)
             {
-                PanelViewAndEdit.Controls.Clear();
+                if (CurrentPSS == null)
+                {
+                    PanelViewAndEdit.Controls.Clear();
 
-                Label lblMessage = new Label();
-                lblMessage.AutoSize = true;
-                lblMessage.Location = new Point(30, 30);
-                lblMessage.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                lblMessage.Font = new Font(new FontFamily(lblMessage.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
-                lblMessage.Text = $"Please select a pollution source site items for {(IsEditing ? "editing" : "viewing")} {(ShowOnlyIssues ? "issues" : (ShowOnlyPictures ? "pictures" : "pollution source site"))}";
+                    Label lblMessage = new Label();
+                    lblMessage.AutoSize = true;
+                    lblMessage.Location = new Point(30, 30);
+                    lblMessage.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblMessage.Font = new Font(new FontFamily(lblMessage.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                    lblMessage.Text = $"Please select a pollution source site items for {(IsEditing ? "editing" : "viewing")} {(ShowOnlyIssues ? "issues" : (ShowOnlyPictures ? "pictures" : "pollution source site"))}";
 
-                PanelViewAndEdit.Controls.Add(lblMessage);
+                    PanelViewAndEdit.Controls.Add(lblMessage);
 
-                return;
+                    return;
+                }
+            }
+            else
+            {
+                if (CurrentInfrastructure == null)
+                {
+                    PanelViewAndEdit.Controls.Clear();
+
+                    Label lblMessage = new Label();
+                    lblMessage.AutoSize = true;
+                    lblMessage.Location = new Point(30, 30);
+                    lblMessage.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblMessage.Font = new Font(new FontFamily(lblMessage.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                    lblMessage.Text = $"Please select an infrastructure items for {(IsEditing ? "editing" : "viewing")} {(ShowOnlyIssues ? "issues" : (ShowOnlyPictures ? "pictures" : "infrastructure"))}";
+
+                    PanelViewAndEdit.Controls.Add(lblMessage);
+
+                    return;
+                }
             }
 
             if (Language == LanguageEnum.fr)
@@ -173,9 +317,19 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
-            if (CurrentPSS.PSSPictureList.Count > 0)
+            List<Picture> pictureList = new List<Picture>();
+
+            if (IsPolSourceSite)
             {
-                foreach (Picture picture in CurrentPSS.PSSPictureList)
+                pictureList = CurrentPSS.PSSPictureList;
+            }
+            else
+            {
+                pictureList = CurrentInfrastructure.InfrastructurePictureList;
+            }
+            if (pictureList.Count > 0)
+            {
+                foreach (Picture picture in pictureList)
                 {
                     X = 10;
 
@@ -196,7 +350,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     PictureBox pictureBoxPicture = new PictureBox();
 
                     pictureBoxPicture.BorderStyle = BorderStyle.FixedSingle;
-                    pictureBoxPicture.ImageLocation = $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                    if (IsPolSourceSite)
+                    {
+                        pictureBoxPicture.ImageLocation = $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                    }
+                    else
+                    {
+                        pictureBoxPicture.ImageLocation = $@"C:\Infrastructures\{CurrentMunicipalityName}\Pictures\{CurrentInfrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{picture.Extension}";
+                    }
                     pictureBoxPicture.Location = new Point(X, Y);
                     pictureBoxPicture.Size = new Size(600, 500);
                     pictureBoxPicture.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -218,7 +379,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                     Label lblFileName = new Label();
                     lblFileName.AutoSize = true;
                     lblFileName.Location = new Point(X, Y);
-                    lblFileName.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                     lblFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                     lblFileName.Tag = $"{picture.PictureTVItemID}";
                     lblFileName.Text = $@"Server File Name: ";
@@ -232,7 +392,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Label lblFileNameOld = new Label();
                         lblFileNameOld.AutoSize = true;
                         lblFileNameOld.Location = new Point(X, Y);
-                        lblFileNameOld.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                         lblFileNameOld.Font = new Font(new FontFamily(lblFileNameOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                         lblFileNameOld.Tag = $"{picture.PictureTVItemID}";
                         lblFileNameOld.Text = $@" ({picture.FileName})";
@@ -287,7 +446,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                     Label lblDescription = new Label();
                     lblDescription.AutoSize = true;
                     lblDescription.Location = new Point(20, Y);
-                    lblDescription.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                     lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                     lblDescription.Tag = $"{picture.PictureTVItemID}";
                     lblDescription.Text = $@"Description: ";
@@ -301,7 +459,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Label lblDescriptionOld = new Label();
                         lblDescriptionOld.AutoSize = true;
                         lblDescriptionOld.Location = new Point(X, Y);
-                        lblDescriptionOld.Tag = $"{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                         lblDescriptionOld.Font = new Font(new FontFamily(lblDescriptionOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                         lblDescriptionOld.Tag = $"{picture.PictureTVItemID}";
                         lblDescriptionOld.Text = $@" ({picture.Description})";
@@ -424,7 +581,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Button butAddPicture = new Button();
                 butAddPicture.AutoSize = true;
                 butAddPicture.Location = new Point(20, Y);
-                butAddPicture.Tag = $"{CurrentPSS.SiteNumberText}";
+                if (IsPolSourceSite)
+                {
+                    butAddPicture.Tag = $"{CurrentPSS.PSSTVItemID}";
+                }
+                else
+                {
+                    butAddPicture.Tag = $"{CurrentInfrastructure.InfrastructureTVItemID}";
+                }
                 butAddPicture.Font = new Font(new FontFamily(butAddPicture.Font.FontFamily.Name).Name, 14f, FontStyle.Regular);
                 butAddPicture.Padding = new Padding(5);
                 butAddPicture.Text = "Add Picture";
