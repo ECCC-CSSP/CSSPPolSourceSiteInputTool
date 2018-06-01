@@ -66,10 +66,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     sb.AppendLine($"TVTEXTNEW\t{infrastructure.TVTextNew}\t");
                 }
-                sb.AppendLine($"COMMENT\t{infrastructure.Comment}\t");
+                string Comment = string.IsNullOrWhiteSpace(infrastructure.Comment) ? "" : infrastructure.Comment.Replace("\r\n", "|||");
+                sb.AppendLine($"COMMENT\t{Comment}\t");
                 if (!string.IsNullOrWhiteSpace(infrastructure.CommentNew))
                 {
-                    sb.AppendLine($"COMMENTNEW\t{infrastructure.CommentNew}\t");
+                    string CommentNew = string.IsNullOrWhiteSpace(infrastructure.CommentNew) ? "" : infrastructure.CommentNew.Replace("\r\n", "|||");
+                    sb.AppendLine($"COMMENTNEW\t{CommentNew}\t");
                 }
                 sb.AppendLine($"PRISMID\t{infrastructure.PrismID}\t");
                 if (infrastructure.PrismIDNew != null)
@@ -222,10 +224,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string TimeOffset_hourNew = infrastructure.TimeOffset_hourNew != null ? ((float)infrastructure.TimeOffset_hourNew).ToString("F1") : "";
                     sb.AppendLine($"TIMEOFFSET_HOURNEW\t{TimeOffset_hourNew}\t");
                 }
-                sb.AppendLine($"TEMPCATCHALLREMOVELATER\t{infrastructure.TempCatchAllRemoveLater.Replace("\r\n", "|||")}\t");
+                string TempCatchAllRemoveLater = string.IsNullOrWhiteSpace(infrastructure.TempCatchAllRemoveLater) ? "" : infrastructure.TempCatchAllRemoveLater.Replace("\r\n", "|||");
+                sb.AppendLine($"TEMPCATCHALLREMOVELATER\t{TempCatchAllRemoveLater}\t");
                 if (!string.IsNullOrWhiteSpace(infrastructure.TempCatchAllRemoveLaterNew))
                 {
-                    sb.AppendLine($"TEMPCATCHALLREMOVELATER\t{infrastructure.TempCatchAllRemoveLaterNew.Replace("\r\n", "|||")}\t");
+                    string TempCatchAllRemoveLaterNew = string.IsNullOrWhiteSpace(infrastructure.TempCatchAllRemoveLaterNew) ? "" : infrastructure.TempCatchAllRemoveLaterNew.Replace("\r\n", "|||");
+                    sb.AppendLine($"TEMPCATCHALLREMOVELATER\t{TempCatchAllRemoveLaterNew}\t");
                 }
                 string AverageDepth_m = infrastructure.AverageDepth_m != null ? ((float)infrastructure.AverageDepth_m).ToString("F1") : "";
                 sb.AppendLine($"AVERAGEDEPTH_M\t{AverageDepth_m}\t");
@@ -406,7 +410,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             }
 
-            DirectoryInfo di = new DirectoryInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\");
+            DirectoryInfo di = new DirectoryInfo($@"C:\Infrastructures\{CurrentMunicipalityName}\");
 
             if (!di.Exists)
             {
@@ -420,7 +424,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            FileInfo fi = new FileInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\{CurrentSubsectorName}.txt");
+            FileInfo fi = new FileInfo($@"C:\Infrastructures\{CurrentMunicipalityName}\{CurrentMunicipalityName}.txt");
 
             StreamWriter sw = fi.CreateText();
             sw.Write(sb.ToString());

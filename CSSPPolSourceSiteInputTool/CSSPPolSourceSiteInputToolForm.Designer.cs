@@ -50,6 +50,8 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusTxt = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.panelAddNewInfrastructure = new System.Windows.Forms.Panel();
+            this.butInfrastructureAdd = new System.Windows.Forms.Button();
             this.panelCreateMunicipalityDirectory = new System.Windows.Forms.Panel();
             this.butCreateMunicipalityDirectory = new System.Windows.Forms.Button();
             this.panelCreateSubsectorDirectory = new System.Windows.Forms.Panel();
@@ -82,6 +84,7 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.panelAddNewInfrastructure.SuspendLayout();
             this.panelCreateMunicipalityDirectory.SuspendLayout();
             this.panelCreateSubsectorDirectory.SuspendLayout();
             this.panelAddNewPollutionSourceSite.SuspendLayout();
@@ -310,6 +313,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.panelAddNewInfrastructure);
             this.splitContainer1.Panel1.Controls.Add(this.panelCreateMunicipalityDirectory);
             this.splitContainer1.Panel1.Controls.Add(this.panelCreateSubsectorDirectory);
             this.splitContainer1.Panel1.Controls.Add(this.panelAddNewPollutionSourceSite);
@@ -324,6 +328,26 @@
             this.splitContainer1.TabIndex = 11;
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             this.splitContainer1.SizeChanged += new System.EventHandler(this.splitContainer1_SizeChanged);
+            // 
+            // panelAddNewInfrastructure
+            // 
+            this.panelAddNewInfrastructure.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelAddNewInfrastructure.Controls.Add(this.butInfrastructureAdd);
+            this.panelAddNewInfrastructure.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panelAddNewInfrastructure.Location = new System.Drawing.Point(0, 111);
+            this.panelAddNewInfrastructure.Name = "panelAddNewInfrastructure";
+            this.panelAddNewInfrastructure.Size = new System.Drawing.Size(347, 37);
+            this.panelAddNewInfrastructure.TabIndex = 14;
+            // 
+            // butInfrastructureAdd
+            // 
+            this.butInfrastructureAdd.Location = new System.Drawing.Point(45, 2);
+            this.butInfrastructureAdd.Name = "butInfrastructureAdd";
+            this.butInfrastructureAdd.Size = new System.Drawing.Size(227, 28);
+            this.butInfrastructureAdd.TabIndex = 15;
+            this.butInfrastructureAdd.Text = "Add New Infrastructure";
+            this.butInfrastructureAdd.UseVisualStyleBackColor = true;
+            this.butInfrastructureAdd.Click += new System.EventHandler(this.butInfrastructureAdd_Click);
             // 
             // panelCreateMunicipalityDirectory
             // 
@@ -547,6 +571,7 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.panelAddNewInfrastructure.ResumeLayout(false);
             this.panelCreateMunicipalityDirectory.ResumeLayout(false);
             this.panelCreateSubsectorDirectory.ResumeLayout(false);
             this.panelAddNewPollutionSourceSite.ResumeLayout(false);
@@ -602,6 +627,8 @@
         private System.Windows.Forms.Panel panelAdminPassword;
         private System.Windows.Forms.TextBox textBoxAccessCode;
         private System.Windows.Forms.Label lblAccessCodeText;
+        private System.Windows.Forms.Panel panelAddNewInfrastructure;
+        private System.Windows.Forms.Button butInfrastructureAdd;
     }
 }
 

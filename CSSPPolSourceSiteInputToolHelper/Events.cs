@@ -60,17 +60,37 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         private void butChangeToIsActive_Click(object sender, EventArgs e)
         {
-            CurrentPSS.IsActive = true;
-            SavePolSourceSiteInfo();
-            RedrawSinglePanelPSS();
-            ReDrawPolSourceSite();
+            if (IsPolSourceSite)
+            {
+                CurrentPSS.IsActive = true;
+                SavePolSourceSiteInfo();
+                RedrawSinglePanelPSS();
+                ReDrawPolSourceSite();
+            }
+            else
+            {
+                CurrentInfrastructure.IsActive = true;
+                SaveInfrastructureInfo();
+                RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+            }
         }
         private void butChangeToIsNotActive_Click(object sender, EventArgs e)
         {
-            CurrentPSS.IsActive = false;
-            SavePolSourceSiteInfo();
-            RedrawSinglePanelPSS();
-            ReDrawPolSourceSite();
+            if (IsPolSourceSite)
+            {
+                CurrentPSS.IsActive = false;
+                SavePolSourceSiteInfo();
+                RedrawSinglePanelPSS();
+                ReDrawPolSourceSite();
+            }
+            else
+            {
+                CurrentInfrastructure.IsActive = false;
+                SaveInfrastructureInfo();
+                RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+            }
         }
         private void butChangeToIsPointSource_Click(object sender, EventArgs e)
         {
@@ -88,7 +108,14 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         private void butPSSSaveToCSSPWebTools_Click(object sender, EventArgs e)
         {
-            PSSSaveToCSSPWebTools();
+            if (IsPolSourceSite)
+            {
+                PSSSaveToCSSPWebTools();
+            }
+            else
+            {
+                InfrastructureSaveToCSSPWebTools();
+            }
         }
         private void butRemovePicture_Click(object sender, EventArgs e)
         {
