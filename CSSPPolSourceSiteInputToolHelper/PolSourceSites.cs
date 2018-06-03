@@ -496,6 +496,573 @@ namespace CSSPPolSourceSiteInputToolHelper
             #endregion Address
 
         }
+        private void DrawItemBool(int x, int y, bool? val, bool? valNew, string lblTxt, string textBoxName)
+        {
+            Label lblItem = new Label();
+            lblItem.AutoSize = true;
+            lblItem.Location = new Point(x, y);
+            lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+            lblItem.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+            lblItem.Text = $@"{lblTxt}: " + $@"{(valNew == null ? "" : $" ({(val == null ? "empty" : ((bool)val).ToString())})")}";
+
+            PanelViewAndEdit.Controls.Add(lblItem);
+
+            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
+
+            if (IsEditing)
+            {
+                TextBox textItem = new TextBox();
+                textItem.Location = new Point(x, y);
+                textItem.Name = $"{textBoxName}";
+                textItem.Font = new Font(new FontFamily(textItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                textItem.Width = 100;
+                textItem.Text = (valNew == null ? (val == null ? "" : ((bool)val).ToString()) : ((bool)valNew).ToString());
+
+                PanelViewAndEdit.Controls.Add(textItem);
+
+
+            }
+            else
+            {
+                Label lblItemNew = new Label();
+                lblItemNew.AutoSize = true;
+                lblItemNew.Location = new Point(x, y);
+                lblItemNew.Font = new Font(new FontFamily(lblItemNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                lblItemNew.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((bool)val).ToString()) : ((bool)valNew).ToString());
+
+                PanelViewAndEdit.Controls.Add(lblItemNew);
+            }
+
+        }
+        private void DrawItemEnum(int x, int y, int? val, int? valNew, string lblTxt, string comboBoxName, Type enumType)
+        {
+            Label lblItemEnum = new Label();
+            lblItemEnum.AutoSize = true;
+            lblItemEnum.Location = new Point(x, y);
+            lblItemEnum.Font = new Font(new FontFamily(lblItemEnum.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+            lblItemEnum.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+            switch (enumType.Name)
+            {
+                case "InfrastructureTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Infrastructure Type";
+                    }
+                    break;
+                case "FacilityTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Facility Type";
+                    }
+                    break;
+                case "AerationTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Aeration Type";
+                    }
+                    break;
+                case "PreliminaryTreatmentTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Preliminary Treatment Type";
+                    }
+                    break;
+                case "PrimaryTreatmentTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Primary Treatment Type";
+                    }
+                    break;
+                case "SecondaryTreatmentTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Secondary Treatment Type";
+                    }
+                    break;
+                case "TertiaryTreatmentTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Tertiary Treatment Type";
+                    }
+                    break;
+                case "TreatmentTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Treatment Type";
+                    }
+                    break;
+                case "DisinfectionTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Disinfection Type";
+                    }
+                    break;
+                case "CollectionSystemTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Collection System Type";
+                    }
+                    break;
+                case "AlarmSystemTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Alarm System Type";
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            PanelViewAndEdit.Controls.Add(lblItemEnum);
+
+            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+            if (IsEditing)
+            {
+                if (valNew != null)
+                {
+                    Label lblItemEnumOld = new Label();
+                    lblItemEnumOld.AutoSize = true;
+                    lblItemEnumOld.Location = new Point(lblItemEnum.Right + 4, lblItemEnum.Top);
+                    lblItemEnumOld.Font = new Font(new FontFamily(lblItemEnumOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    lblItemEnumOld.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                    switch (enumType.Name)
+                    {
+                        case "InfrastructureTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((InfrastructureTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "FacilityTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((FacilityTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "AerationTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((AerationTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "PreliminaryTreatmentTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((PreliminaryTreatmentTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "PrimaryTreatmentTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((PrimaryTreatmentTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "SecondaryTreatmentTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((SecondaryTreatmentTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "TertiaryTreatmentTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((TertiaryTreatmentTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "TreatmentTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((TreatmentTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "DisinfectionTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((DisinfectionTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "CollectionSystemTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((CollectionSystemTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "AlarmSystemTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({((AlarmSystemTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    PanelViewAndEdit.Controls.Add(lblItemEnumOld);
+
+                    x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                }
+
+                ComboBox comboBoxItem = new ComboBox();
+                comboBoxItem.Location = new Point(x, lblItemEnum.Top);
+                comboBoxItem.Name = comboBoxName;
+                comboBoxItem.Font = new Font(new FontFamily(lblItemEnum.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                //comboBoxStreetType.Width = lblItemEnum.Width;
+
+                PanelViewAndEdit.Controls.Add(comboBoxItem);
+
+                switch (enumType.Name)
+                {
+                    case "InfrastructureTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(InfrastructureTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((InfrastructureTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((InfrastructureTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((InfrastructureTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "FacilityTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(FacilityTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((FacilityTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((FacilityTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((FacilityTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "AerationTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(AerationTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((AerationTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((AerationTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((AerationTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "PreliminaryTreatmentTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(PreliminaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((PreliminaryTreatmentTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((PreliminaryTreatmentTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((PreliminaryTreatmentTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "PrimaryTreatmentTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(PrimaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((PrimaryTreatmentTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((PrimaryTreatmentTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((PrimaryTreatmentTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "SecondaryTreatmentTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((SecondaryTreatmentTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((SecondaryTreatmentTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((SecondaryTreatmentTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "TertiaryTreatmentTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(TertiaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((TertiaryTreatmentTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((TertiaryTreatmentTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((TertiaryTreatmentTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "TreatmentTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(TreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((TreatmentTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((TreatmentTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((TreatmentTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "DisinfectionTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(DisinfectionTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((DisinfectionTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((DisinfectionTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((DisinfectionTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "CollectionSystemTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(CollectionSystemTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((CollectionSystemTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((CollectionSystemTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((CollectionSystemTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    case "AlarmSystemTypeEnum":
+                        {
+                            for (int i = 1, count = Enum.GetNames(typeof(AlarmSystemTypeEnum)).Count(); i < count; i++)
+                            {
+                                comboBoxItem.Items.Add(((AlarmSystemTypeEnum)i).ToString());
+                            }
+
+                            if (valNew != null)
+                            {
+                                comboBoxItem.SelectedItem = ((AlarmSystemTypeEnum)valNew).ToString();
+                            }
+                            else
+                            {
+                                if (val != null)
+                                {
+                                    comboBoxItem.SelectedItem = ((AlarmSystemTypeEnum)val).ToString();
+                                }
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+            }
+            else
+            {
+                Label lblItemEnum2 = new Label();
+                lblItemEnum2.AutoSize = true;
+                lblItemEnum2.Location = new Point(lblItemEnum.Right + 4, lblItemEnum.Top);
+                lblItemEnum2.Font = new Font(new FontFamily(lblItemEnum2.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                lblItemEnum2.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                switch (enumType.Name)
+                {
+                    case "InfrastructureTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((InfrastructureTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "FacilityTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((FacilityTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "AerationTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((AerationTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "PreliminaryTreatmentTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((PreliminaryTreatmentTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "PrimaryTreatmentTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((PrimaryTreatmentTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "SecondaryTreatmentTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((SecondaryTreatmentTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "TertiaryTreatmentTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((TertiaryTreatmentTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "TreatmentTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((TreatmentTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "DisinfectionTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((DisinfectionTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "CollectionSystemTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((CollectionSystemTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "AlarmSystemTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({((AlarmSystemTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                PanelViewAndEdit.Controls.Add(lblItemEnum2);
+
+                //y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
+
+                if (valNew != null)
+                {
+                    Label lblItemEnumNew = new Label();
+                    lblItemEnumNew.AutoSize = true;
+                    lblItemEnumNew.Location = new Point(lblItemEnum2.Right + 4, lblItemEnum2.Top);
+                    lblItemEnumNew.Font = new Font(new FontFamily(lblItemEnumNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    lblItemEnumNew.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                    switch (enumType.Name)
+                    {
+                        case "InfrastructureTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((InfrastructureTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "FacilityTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((FacilityTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "AerationTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((AerationTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "PreliminaryTreatmentTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((PreliminaryTreatmentTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "PrimaryTreatmentTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((PrimaryTreatmentTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "SecondaryTreatmentTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((SecondaryTreatmentTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "TertiaryTreatmentTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((TertiaryTreatmentTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "TreatmentTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((TreatmentTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "DisinfectionTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((DisinfectionTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "CollectionSystemTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((CollectionSystemTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "AlarmSystemTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : ((AlarmSystemTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+
+                    PanelViewAndEdit.Controls.Add(lblItemEnumNew);
+                }
+
+            }
+        }
         private void DrawItemFloat(int x, int y, float? val, float? valNew, string lblTxt, int fix, string textBoxName)
         {
             Label lblItem = new Label();
@@ -529,7 +1096,46 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblItemNew.Location = new Point(x, y);
                 lblItemNew.Font = new Font(new FontFamily(lblItemNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 lblItemNew.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
-                lblItemNew.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+
+                PanelViewAndEdit.Controls.Add(lblItemNew);
+            }
+
+        }
+        private void DrawItemInt(int x, int y, int? val, int? valNew, string lblTxt, string textBoxName)
+        {
+            Label lblItem = new Label();
+            lblItem.AutoSize = true;
+            lblItem.Location = new Point(x, y);
+            lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+            lblItem.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+            lblItem.Text = $@"{lblTxt}: " + $@"{(valNew == null ? "" : $" ({(val == null ? "empty" : ((int)val).ToString())})")}";
+
+            PanelViewAndEdit.Controls.Add(lblItem);
+
+            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
+
+            if (IsEditing)
+            {
+                TextBox textItem = new TextBox();
+                textItem.Location = new Point(x, y);
+                textItem.Name = $"{textBoxName}";
+                textItem.Font = new Font(new FontFamily(textItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                textItem.Width = 100;
+                textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+
+                PanelViewAndEdit.Controls.Add(textItem);
+
+
+            }
+            else
+            {
+                Label lblItemNew = new Label();
+                lblItemNew.AutoSize = true;
+                lblItemNew.Location = new Point(x, y);
+                lblItemNew.Font = new Font(new FontFamily(lblItemNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                lblItemNew.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((int)val).ToString()) : ((int)valNew).ToString());
 
                 PanelViewAndEdit.Controls.Add(lblItemNew);
             }
@@ -552,6 +1158,48 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 TextBox textItem = new TextBox();
                 textItem.Width = width;
+                textItem.Location = new Point(x, y);
+                textItem.Name = $"{textBoxName}";
+                textItem.Font = new Font(new FontFamily(textItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                textItem.Text = (string.IsNullOrWhiteSpace(valNew) ? (string.IsNullOrWhiteSpace(val) ? "" : val) : valNew);
+
+                PanelViewAndEdit.Controls.Add(textItem);
+
+
+            }
+            else
+            {
+                Label lblItemNew = new Label();
+                lblItemNew.AutoSize = true;
+                lblItemNew.Location = new Point(x, y);
+                lblItemNew.Font = new Font(new FontFamily(lblItemNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                lblItemNew.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                lblItemNew.Text = (string.IsNullOrWhiteSpace(valNew) ? (string.IsNullOrWhiteSpace(val) ? "" : val) : valNew);
+
+                PanelViewAndEdit.Controls.Add(lblItemNew);
+            }
+
+        }
+        private void DrawItemTextMultiline(int x, int y, string val, string valNew, string lblTxt, string textBoxName, int width)
+        {
+            Label lblItem = new Label();
+            lblItem.AutoSize = true;
+            lblItem.Location = new Point(x, y);
+            lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+            lblItem.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+            lblItem.Text = $@"{lblTxt}: " + (string.IsNullOrWhiteSpace(valNew) ? "" : $" ({(string.IsNullOrWhiteSpace(val) ? "empty" : val)})");
+
+            PanelViewAndEdit.Controls.Add(lblItem);
+
+            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
+
+            if (IsEditing)
+            {
+                TextBox textItem = new TextBox();
+                textItem.Width = width;
+                textItem.Height = 100;
+                textItem.ScrollBars = ScrollBars.Both;
+                textItem.Multiline = true;
                 textItem.Location = new Point(x, y);
                 textItem.Name = $"{textBoxName}";
                 textItem.Font = new Font(new FontFamily(textItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
@@ -1514,6 +2162,321 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 #endregion Address
 
+                #region Comment
+                X = 10;
+                DrawItemTextMultiline(X, Y, CurrentInfrastructure.Comment, CurrentInfrastructure.CommentNew, "Comment", "textBoxComment", 300);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion Comment
+
+                #region PrismID
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.PrismID, CurrentInfrastructure.PrismIDNew, "PrismID", "textBoxPrismID");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PrismID
+
+                #region TPID
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.TPID, CurrentInfrastructure.TPIDNew, "TPID", "textBoxTPID");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion TPID
+
+                #region LSID
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.LSID, CurrentInfrastructure.LSIDNew, "LSID", "textBoxLSID");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion LSID
+
+                #region SiteID
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.SiteID, CurrentInfrastructure.SiteIDNew, "SiteID", "textBoxSiteID");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion SiteID
+
+                #region Site
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.Site, CurrentInfrastructure.SiteNew, "Site", "textBoxSite");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion Site
+
+                #region InfrastructureCategory
+                X = 10;
+                DrawItemText(X, Y, CurrentInfrastructure.InfrastructureCategory, CurrentInfrastructure.InfrastructureCategoryNew, "Infrastructure Category", "textBoxInfrastructureCategory", 300);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion InfrastructureCategory
+
+                #region InfrastructureType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.InfrastructureType, CurrentInfrastructure.InfrastructureTypeNew, "Infrastructure Type", "comboBoxInfrastructureType", typeof(InfrastructureTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion InfrastructureType
+
+                #region FacilityType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.FacilityType, CurrentInfrastructure.FacilityTypeNew, "Facility Type", "comboBoxFacilityType", typeof(FacilityTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion FacilityType
+
+                #region IsMechanicallyAerated
+                X = 10;
+                DrawItemBool(X, Y, CurrentInfrastructure.IsMechanicallyAerated, CurrentInfrastructure.IsMechanicallyAeratedNew, "Is Mechanically Aerated", "textBoxIsMechanicallyAerated");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion IsMechanicallyAerated
+
+                #region NumberOfCells
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.NumberOfCells, CurrentInfrastructure.NumberOfCellsNew, "Number Of Cells", "textBoxNumberOfCells");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion NumberOfCells
+
+                #region NumberOfAeratedCells
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.NumberOfAeratedCells, CurrentInfrastructure.NumberOfAeratedCellsNew, "Number Of Aerated Cells", "textBoxNumberOfAeratedCells");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion NumberOfAeratedCells
+
+                #region AerationType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion AerationType
+
+                #region PreliminaryTreatmentType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.PreliminaryTreatmentType, CurrentInfrastructure.PreliminaryTreatmentTypeNew, "Preliminary Treatment Type", "comboBoxPreliminaryTreatmentType", typeof(PreliminaryTreatmentTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PreliminaryTreatmentType
+
+                #region PrimaryTreatmentType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.PrimaryTreatmentType, CurrentInfrastructure.PrimaryTreatmentTypeNew, "Primary Treatment Type", "comboBoxPrimaryTreatmentType", typeof(PrimaryTreatmentTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PrimaryTreatmentType
+
+                #region SecondaryTreatmentType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.SecondaryTreatmentType, CurrentInfrastructure.SecondaryTreatmentTypeNew, "Secondary Treatment Type", "comboBoxPrimarySecondaryTreatmentType", typeof(SecondaryTreatmentTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion SecondaryTreatmentType
+
+                #region TertiaryTreatmentType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.TertiaryTreatmentType, CurrentInfrastructure.TertiaryTreatmentTypeNew, "Tertiary Treatment Type", "comboBoxTertiaryTreatmentType", typeof(TertiaryTreatmentTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion TertiaryTreatmentType
+
+                #region TreatmentType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.TreatmentType, CurrentInfrastructure.TreatmentTypeNew, "Treatment Type", "comboBoxTreatmentType", typeof(TreatmentTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion TreatmentType
+
+                #region DisinfectionType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion DisinfectionType
+
+                #region CollectionSystemType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.CollectionSystemType, CurrentInfrastructure.CollectionSystemTypeNew, "Collection System Type", "comboBoxCollectionSystemType", typeof(CollectionSystemTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion CollectionSystemType
+
+                #region AlarmSystemType
+                X = 10;
+                DrawItemEnum(X, Y, CurrentInfrastructure.AlarmSystemType, CurrentInfrastructure.AlarmSystemTypeNew, "Alarm System Type", "comboBoxAlarmSystemType", typeof(AlarmSystemTypeEnum));
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion AlarmSystemType
+
+                #region DesignFlow_m3_day
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.DesignFlow_m3_day, CurrentInfrastructure.DesignFlow_m3_dayNew, "Design Flow (m3/day)", 5, "textBoxDesignFlow_m3_day");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion DesignFlow_m3_day
+
+                #region AverageFlow_m3_day
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.AverageFlow_m3_day, CurrentInfrastructure.AverageFlow_m3_dayNew, "Average Flow (m3/day)", 5, "textBoxAverageFlow_m3_day");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion AverageFlow_m3_day
+
+                #region PeakFlow_m3_day
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.PeakFlow_m3_day, CurrentInfrastructure.PeakFlow_m3_dayNew, "Peak Flow (m3/day)", 5, "textBoxPeakFlow_m3_day");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PeakFlow_m3_day
+
+                #region PopServed
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.PopServed, CurrentInfrastructure.PopServedNew, "Population Served", "textBoxPopServed");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PopServed
+
+                #region CanOverflow
+                X = 10;
+                DrawItemBool(X, Y, CurrentInfrastructure.CanOverflow, CurrentInfrastructure.CanOverflowNew, "Can Overflow", "textBoxCanOverflow");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion CanOverflow
+
+                #region PercFlowOfTotal
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.PercFlowOfTotal, CurrentInfrastructure.PercFlowOfTotalNew, "Percentage Flow Of Total", 5, "textBoxPercFlowOfTotal");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PercFlowOfTotal
+
+                #region TimeOffset_hour
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.TimeOffset_hour, CurrentInfrastructure.TimeOffset_hourNew, "Time Offset (hour)", 5, "textBoxTimeOffset_hour");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion TimeOffset_hour
+
+                #region TempCatchAllRemoveLater
+                X = 10;
+                DrawItemTextMultiline(X, Y, CurrentInfrastructure.TempCatchAllRemoveLater, CurrentInfrastructure.TempCatchAllRemoveLaterNew, "Temp Catch All Remove Later", "textBoxTempCatchAllRemoveLater", 400);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion TempCatchAllRemoveLater
+
+                #region AverageDepth_m
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.AverageDepth_m, CurrentInfrastructure.AverageDepth_mNew, "Average Depth (m)", 5, "textBoxAverageDepth_m");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion AverageDepth_m
+
+                #region NumberOfPorts
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.NumberOfPorts, CurrentInfrastructure.NumberOfPortsNew, "Number Of Ports", "textBoxNumberOfPorts");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion NumberOfPorts
+
+                #region PortDiameter_m
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.PortDiameter_m, CurrentInfrastructure.PortDiameter_mNew, "Port Diameter (m)", 5, "textBoxPortDiameter_m");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PortDiameter_m
+
+                #region PortSpacing_m
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.PortSpacing_m, CurrentInfrastructure.PortSpacing_mNew, "Port Spacing (m)", 5, "textBoxPortSpacing_m");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PortSpacing_m
+
+                #region PortElevation_m
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.PortElevation_m, CurrentInfrastructure.PortElevation_mNew, "Port Elevation (m)", 5, "textBoxPortElevation_m");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PortElevation_m
+
+                #region VerticalAngle_deg
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.VerticalAngle_deg, CurrentInfrastructure.VerticalAngle_degNew, "Vertical Angle (deg)", 5, "textBoxVerticalAngle_deg");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion VerticalAngle_deg
+
+                #region HorizontalAngle_deg
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.HorizontalAngle_deg, CurrentInfrastructure.HorizontalAngle_degNew, "Horizontal Angle (deg)", 5, "textBoxHorizontalAngle_deg");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion HorizontalAngle_deg
+
+                #region DecayRate_per_day
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.DecayRate_per_day, CurrentInfrastructure.DecayRate_per_dayNew, "Decay Rate (/day)", 5, "textBoxDecayRate_per_day");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion DecayRate_per_day
+
+                #region NearFieldVelocity_m_s
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.NearFieldVelocity_m_s, CurrentInfrastructure.NearFieldVelocity_m_sNew, "Near Field Velocity (m/s)", 5, "textBoxNearFieldVelocity_m_s");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion NearFieldVelocity_m_s
+
+                #region FarFieldVelocity_m_s
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.FarFieldVelocity_m_s, CurrentInfrastructure.FarFieldVelocity_m_sNew, "Far Field Velocity (m/s)", 5, "textBoxFarFieldVelocity_m_s");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion FarFieldVelocity_m_s
+
+                #region ReceivingWaterSalinity_PSU
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.ReceivingWaterSalinity_PSU, CurrentInfrastructure.ReceivingWaterSalinity_PSUNew, "Receiving Water Salinity (PSU)", 5, "textBoxReceivingWaterSalinity_PSU");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion ReceivingWaterSalinity_PSU
+
+                #region ReceivingWaterTemperature_C
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.ReceivingWaterTemperature_C, CurrentInfrastructure.ReceivingWaterTemperature_CNew, "Receiving Water Temperature (C)", 5, "textBoxReceivingWaterTemperature_C");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion ReceivingWaterTemperature_C
+
+                #region ReceivingWater_MPN_per_100ml
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.ReceivingWater_MPN_per_100ml, CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew, "Receiving Water (MPN /100 mL)", "textBoxReceivingWater_MPN_per_100ml");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion ReceivingWater_MPN_per_100ml
+
+                #region DistanceFromShore_m
+                X = 10;
+                DrawItemFloat(X, Y, CurrentInfrastructure.DistanceFromShore_m, CurrentInfrastructure.DistanceFromShore_mNew, "Distance From Shore (m)", 5, "textBoxDistanceFromShore_m");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion DistanceFromShore_m
+
+                #region SeeOtherTVItemID
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.SeeOtherTVItemID, CurrentInfrastructure.SeeOtherTVItemIDNew, "See Other TVItemID", "textBoxSeeOtherTVItemID");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion SeeOtherTVItemID
+
+                #region PumpsToTVItemID
+                X = 10;
+                DrawItemInt(X, Y, CurrentInfrastructure.PumpsToTVItemID, CurrentInfrastructure.PumpsToTVItemID, "Pumps To TVItemID", "textBoxPumpsToTVItemID");
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion PumpsToTVItemID
+
                 #region Save button
                 if (IsEditing)
                 {
@@ -1869,108 +2832,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                         X = 20;
 
-                        Label lblUndersandWhatWillBeSentToDB = new Label();
-                        lblUndersandWhatWillBeSentToDB.AutoSize = true;
-                        lblUndersandWhatWillBeSentToDB.Location = new Point(30, Y);
-                        lblUndersandWhatWillBeSentToDB.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                        lblUndersandWhatWillBeSentToDB.Font = new Font(new FontFamily(lblUndersandWhatWillBeSentToDB.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
-
-                        StringBuilder sb = new StringBuilder();
-                        sb.AppendLine($"Here are all the thing that will be sent to the CSSPWebTools and stored in it's DB");
-                        sb.AppendLine("");
-                        sb.AppendLine($"{NeedDetailsUpdateText}");
-                        sb.AppendLine("");
-                        if (CurrentPSS.LatNew != null)
-                        {
-                            sb.AppendLine("     Lat       (changed)");
-                        }
-                        if (CurrentPSS.LngNew != null)
-                        {
-                            sb.AppendLine("     Lng       (changed)");
-                        }
-                        if (CurrentPSS.IsActiveNew != null)
-                        {
-                            sb.AppendLine("     IsActive       (changed)");
-                        }
-                        if (CurrentPSS.IsPointSourceNew != null)
-                        {
-                            sb.AppendLine("     IsPointSource       (changed)");
-                        }
-                        if (CurrentPSS.PSSAddressNew.AddressType != null
-                            || CurrentPSS.PSSAddressNew.Municipality != null
-                            || CurrentPSS.PSSAddressNew.PostalCode != null
-                            || CurrentPSS.PSSAddressNew.StreetName != null
-                            || CurrentPSS.PSSAddressNew.StreetNumber != null
-                            || CurrentPSS.PSSAddressNew.StreetType != null)
-                        {
-                            NeedDetailsUpdate = true;
-                        }
-                        if (CurrentPSS.PSSAddressNew.AddressTVItemID != null)
-                        {
-                            sb.AppendLine("     Address       (changed)");
-                        }
-                        if (CurrentPSS.PSSObs.ObsDateNew != null)
-                        {
-                            sb.AppendLine("     ObsDate       (changed)");
-                        }
-
-                        sb.AppendLine("");
-                        sb.AppendLine($"{NeedIssuesUpdateText}");
-                        sb.AppendLine("");
-
-                        int count = 0;
-                        foreach (Issue issue in CurrentPSS.PSSObs.IssueList.OrderBy(c => c.Ordinal))
-                        {
-                            count += 1;
-                            if (issue.PolSourceObsInfoIntListNew.Count > 0 || issue.ToRemove == true)
-                            {
-                                if (issue.ToRemove == true)
-                                {
-                                    sb.AppendLine($"     Issue {count}          (to be removed)");
-                                }
-                                else
-                                {
-                                    sb.AppendLine($"     Issue {count}          (changed)");
-                                }
-                            }
-                        }
-
-                        sb.AppendLine("");
-                        sb.AppendLine($"{NeedPictuesUpdateText}");
-                        sb.AppendLine("");
-
-                        count = 0;
-                        foreach (Picture picture in CurrentPSS.PSSPictureList)
-                        {
-                            count += 1;
-                            if (picture.DescriptionNew != null
-                                || picture.ExtensionNew != null
-                                || picture.FileNameNew != null
-                                || picture.ToRemove != null)
-                            {
-                                if (picture.ToRemove != null && picture.ToRemove == true)
-                                {
-                                    sb.AppendLine($"     Picture {count}          (to be removed)");
-                                }
-                                else
-                                {
-                                    if (!string.IsNullOrWhiteSpace(picture.FileNameNew)
-                                        || !string.IsNullOrWhiteSpace(picture.ExtensionNew)
-                                        || !string.IsNullOrWhiteSpace(picture.DescriptionNew))
-                                    {
-                                        sb.AppendLine($"     Picture {count}          (filename and/or description changed)");
-                                    }
-                                }
-                            }
-                        }
-
-                        lblUndersandWhatWillBeSentToDB.Text = sb.ToString();
-
-                        PanelViewAndEdit.Controls.Add(lblUndersandWhatWillBeSentToDB);
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                        X = 20;
-
                         Button butPSSSaveToCSSPWebTools = new Button();
                         butPSSSaveToCSSPWebTools.AutoSize = true;
                         butPSSSaveToCSSPWebTools.Location = new Point(20, Y);
@@ -1989,7 +2850,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblReturns.AutoSize = true;
                         lblReturns.Location = new Point(30, Y);
                         lblReturns.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                        lblReturns.Font = new Font(new FontFamily(lblUndersandWhatWillBeSentToDB.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+                        lblReturns.Font = new Font(new FontFamily(lblReturns.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
                         lblReturns.Text = "\r\n\r\n\r\n\r\n";
 
                         PanelViewAndEdit.Controls.Add(lblReturns);
@@ -2020,9 +2881,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     {
                                         if ((string)cb.SelectedItem == ((StreetTypeEnum)i).ToString())
                                         {
-                                            CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                            CurrentInfrastructure.InfrastructureAddressNew.StreetType = i;
-                                            IsDirty = true;
+                                            if (CurrentInfrastructure.InfrastructureAddress.StreetType == i)
+                                            {
+                                                CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
+                                                CurrentInfrastructure.InfrastructureAddressNew.StreetType = i;
+                                                IsDirty = true;
+                                            }
                                             break;
                                         }
                                     }
@@ -2215,6 +3084,1081 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "textBoxComment":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                if ("" + CurrentInfrastructure.Comment == tb.Text)
+                                {
+                                    CurrentInfrastructure.CommentNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.CommentNew = tb.Text;
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxPrismID":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.PrismID)
+                                {
+                                    CurrentInfrastructure.PrismIDNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PrismIDNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.PrismIDNew = null;
+                                tb.Text = CurrentInfrastructure.PrismID.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for PrismID"));
+                            }
+                        }
+                        break;
+                    case "textBoxTPID":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.TPID)
+                                {
+                                    CurrentInfrastructure.TPIDNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.TPIDNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.TPIDNew = null;
+                                tb.Text = CurrentInfrastructure.TPID.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for TPID"));
+                            }
+                        }
+                        break;
+                    case "textBoxLSID":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.LSID)
+                                {
+                                    CurrentInfrastructure.LSIDNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.LSIDNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.LSIDNew = null;
+                                tb.Text = CurrentInfrastructure.LSID.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for LSID"));
+                            }
+                        }
+                        break;
+                    case "textBoxSiteID":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.SiteID)
+                                {
+                                    CurrentInfrastructure.SiteIDNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.SiteIDNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.SiteIDNew = null;
+                                tb.Text = CurrentInfrastructure.SiteID.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for SiteID"));
+                            }
+                        }
+                        break;
+                    case "textBoxSite":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.Site)
+                                {
+                                    CurrentInfrastructure.SiteNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.SiteNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.SiteNew = null;
+                                tb.Text = CurrentInfrastructure.Site.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Site"));
+                            }
+                        }
+                        break;
+                    case "textBoxInfrastructureCategory":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                if ("" + CurrentInfrastructure.InfrastructureCategory == tb.Text)
+                                {
+                                    CurrentInfrastructure.InfrastructureCategoryNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.InfrastructureCategoryNew = tb.Text;
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxInfrastructureType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.InfrastructureTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(InfrastructureTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((InfrastructureTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.InfrastructureType == i)
+                                            {
+                                                CurrentInfrastructure.InfrastructureTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.InfrastructureTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxFacilityType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.FacilityTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(FacilityTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((FacilityTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.FacilityType == i)
+                                            {
+                                                CurrentInfrastructure.FacilityTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.FacilityTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxAerationType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.AerationTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(AerationTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((AerationTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.AerationType == i)
+                                            {
+                                                CurrentInfrastructure.AerationTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.AerationTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxPreliminaryTreatmentType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.PreliminaryTreatmentTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(PreliminaryTreatmentTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((PreliminaryTreatmentTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.PreliminaryTreatmentType == i)
+                                            {
+                                                CurrentInfrastructure.PreliminaryTreatmentTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.PreliminaryTreatmentTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxPrimaryTreatmentType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.PrimaryTreatmentTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(PrimaryTreatmentTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((PrimaryTreatmentTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.PrimaryTreatmentType == i)
+                                            {
+                                                CurrentInfrastructure.PrimaryTreatmentTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.PrimaryTreatmentTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxSecondaryTreatmentType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.SecondaryTreatmentTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((SecondaryTreatmentTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.SecondaryTreatmentType == i)
+                                            {
+                                                CurrentInfrastructure.SecondaryTreatmentTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.SecondaryTreatmentTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxTertiaryTreatmentType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.TertiaryTreatmentTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(TertiaryTreatmentTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((TertiaryTreatmentTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.TertiaryTreatmentType == i)
+                                            {
+                                                CurrentInfrastructure.TertiaryTreatmentTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.TertiaryTreatmentTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxTreatmentType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.TreatmentTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(TreatmentTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((TreatmentTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.TreatmentType == i)
+                                            {
+                                                CurrentInfrastructure.TreatmentTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.TreatmentTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxDisinfectionType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.DisinfectionTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(DisinfectionTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((DisinfectionTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.DisinfectionType == i)
+                                            {
+                                                CurrentInfrastructure.DisinfectionTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.DisinfectionTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxCollectionSystemType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.CollectionSystemTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(CollectionSystemTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((CollectionSystemTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.CollectionSystemType == i)
+                                            {
+                                                CurrentInfrastructure.CollectionSystemTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.CollectionSystemTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxAlarmSystemType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.AlarmSystemTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 1, count = Enum.GetNames(typeof(AlarmSystemTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if ((string)cb.SelectedItem == ((AlarmSystemTypeEnum)i).ToString())
+                                        {
+                                            if (CurrentInfrastructure.AlarmSystemType == i)
+                                            {
+                                                CurrentInfrastructure.AlarmSystemTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.AlarmSystemTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxDesignFlow_m3_day":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.DesignFlow_m3_day)
+                                {
+                                    CurrentInfrastructure.DesignFlow_m3_dayNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.DesignFlow_m3_dayNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.DesignFlow_m3_dayNew = null;
+                                tb.Text = CurrentInfrastructure.DesignFlow_m3_day.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxAverageFlow_m3_day":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.AverageFlow_m3_day)
+                                {
+                                    CurrentInfrastructure.AverageFlow_m3_dayNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.AverageFlow_m3_dayNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.AverageFlow_m3_dayNew = null;
+                                tb.Text = CurrentInfrastructure.AverageFlow_m3_day.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxPeakFlow_m3_day":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.PeakFlow_m3_day)
+                                {
+                                    CurrentInfrastructure.PeakFlow_m3_dayNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PeakFlow_m3_dayNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.PeakFlow_m3_dayNew = null;
+                                tb.Text = CurrentInfrastructure.PeakFlow_m3_day.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxPopServed":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.PopServed)
+                                {
+                                    CurrentInfrastructure.PopServedNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PopServedNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.PopServedNew = null;
+                                tb.Text = CurrentInfrastructure.PopServed.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxCanOverflow":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (bool.TryParse(tb.Text, out bool TempBool))
+                            {
+                                if (TempBool == CurrentInfrastructure.CanOverflow)
+                                {
+                                    CurrentInfrastructure.CanOverflowNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.CanOverflowNew = TempBool;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.CanOverflowNew = null;
+                                tb.Text = CurrentInfrastructure.CanOverflow.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxPercFlowOfTotal":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.PercFlowOfTotal)
+                                {
+                                    CurrentInfrastructure.PercFlowOfTotalNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PercFlowOfTotalNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.PercFlowOfTotalNew = null;
+                                tb.Text = CurrentInfrastructure.PercFlowOfTotal.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxTimeOffset_hour":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.TimeOffset_hour)
+                                {
+                                    CurrentInfrastructure.TimeOffset_hourNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.TimeOffset_hourNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.TimeOffset_hourNew = null;
+                                tb.Text = CurrentInfrastructure.TimeOffset_hour.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxTempCatchAllRemoveLater":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                if ("" + CurrentInfrastructure.TempCatchAllRemoveLater == tb.Text)
+                                {
+                                    CurrentInfrastructure.TempCatchAllRemoveLaterNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.TempCatchAllRemoveLaterNew = tb.Text;
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxAverageDepth_m":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.AverageDepth_m)
+                                {
+                                    CurrentInfrastructure.AverageDepth_mNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.AverageDepth_mNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.AverageDepth_mNew = null;
+                                tb.Text = CurrentInfrastructure.AverageDepth_m.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxNumberOfPorts":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.NumberOfPorts)
+                                {
+                                    CurrentInfrastructure.NumberOfPortsNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.NumberOfPortsNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.NumberOfPortsNew = null;
+                                tb.Text = CurrentInfrastructure.NumberOfPorts.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxPortDiameter_m":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.PortDiameter_m)
+                                {
+                                    CurrentInfrastructure.PortDiameter_mNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PortDiameter_mNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.PortDiameter_mNew = null;
+                                tb.Text = CurrentInfrastructure.PortDiameter_m.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxPortSpacing_m":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.PortSpacing_m)
+                                {
+                                    CurrentInfrastructure.PortSpacing_mNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PortSpacing_mNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.PortSpacing_mNew = null;
+                                tb.Text = CurrentInfrastructure.PortSpacing_m.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxPortElevation_m":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.PortElevation_m)
+                                {
+                                    CurrentInfrastructure.PortElevation_mNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PortElevation_mNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.PortElevation_mNew = null;
+                                tb.Text = CurrentInfrastructure.PortElevation_m.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxVerticalAngle_deg":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.VerticalAngle_deg)
+                                {
+                                    CurrentInfrastructure.VerticalAngle_degNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.VerticalAngle_degNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.VerticalAngle_degNew = null;
+                                tb.Text = CurrentInfrastructure.VerticalAngle_deg.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxHorizontalAngle_deg":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.HorizontalAngle_deg)
+                                {
+                                    CurrentInfrastructure.HorizontalAngle_degNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.HorizontalAngle_degNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.HorizontalAngle_degNew = null;
+                                tb.Text = CurrentInfrastructure.HorizontalAngle_deg.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxDecayRate_per_day":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.DecayRate_per_day)
+                                {
+                                    CurrentInfrastructure.DecayRate_per_dayNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.DecayRate_per_dayNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.DecayRate_per_dayNew = null;
+                                tb.Text = CurrentInfrastructure.DecayRate_per_day.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxNearFieldVelocity_m_s":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.NearFieldVelocity_m_s)
+                                {
+                                    CurrentInfrastructure.NearFieldVelocity_m_sNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.NearFieldVelocity_m_sNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.NearFieldVelocity_m_sNew = null;
+                                tb.Text = CurrentInfrastructure.NearFieldVelocity_m_s.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxFarFieldVelocity_m_s":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.FarFieldVelocity_m_s)
+                                {
+                                    CurrentInfrastructure.FarFieldVelocity_m_sNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.FarFieldVelocity_m_sNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.FarFieldVelocity_m_sNew = null;
+                                tb.Text = CurrentInfrastructure.FarFieldVelocity_m_s.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxReceivingWaterSalinity_PSU":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.ReceivingWaterSalinity_PSU)
+                                {
+                                    CurrentInfrastructure.ReceivingWaterSalinity_PSUNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.ReceivingWaterSalinity_PSUNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.ReceivingWaterSalinity_PSUNew = null;
+                                tb.Text = CurrentInfrastructure.ReceivingWaterSalinity_PSU.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxReceivingWaterTemperature_C":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.ReceivingWaterTemperature_C)
+                                {
+                                    CurrentInfrastructure.ReceivingWaterTemperature_CNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.ReceivingWaterTemperature_CNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.ReceivingWaterTemperature_CNew = null;
+                                tb.Text = CurrentInfrastructure.ReceivingWaterTemperature_C.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxReceivingWater_MPN_per_100ml":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.ReceivingWater_MPN_per_100ml)
+                                {
+                                    CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew = null;
+                                tb.Text = CurrentInfrastructure.ReceivingWater_MPN_per_100ml.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxDistanceFromShore_m":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (float.TryParse(tb.Text, out float TempFloat))
+                            {
+                                if (TempFloat == CurrentInfrastructure.DistanceFromShore_m)
+                                {
+                                    CurrentInfrastructure.DistanceFromShore_mNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.DistanceFromShore_mNew = TempFloat;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.DistanceFromShore_mNew = null;
+                                tb.Text = CurrentInfrastructure.DistanceFromShore_m.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxSeeOtherTVItemID":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.SeeOtherTVItemID)
+                                {
+                                    CurrentInfrastructure.SeeOtherTVItemIDNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.SeeOtherTVItemIDNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.SeeOtherTVItemIDNew = null;
+                                tb.Text = CurrentInfrastructure.SeeOtherTVItemID.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
+                    case "textBoxPumpsToTVItemID":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.PumpsToTVItemID)
+                                {
+                                    CurrentInfrastructure.PumpsToTVItemIDNew = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PumpsToTVItemIDNew = TempInt;
+                                    IsDirty = true;
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.PumpsToTVItemIDNew = null;
+                                tb.Text = CurrentInfrastructure.PumpsToTVItemID.ToString();
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -2243,9 +4187,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     {
                                         if ((string)cb.SelectedItem == ((StreetTypeEnum)i).ToString())
                                         {
-                                            CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
-                                            CurrentPSS.PSSAddressNew.StreetType = i;
-                                            IsDirty = true;
+                                            if (CurrentPSS.PSSAddress.StreetType == i)
+                                            {
+                                                CurrentPSS.PSSAddressNew.StreetType = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
+                                                CurrentPSS.PSSAddressNew.StreetType = i;
+                                                IsDirty = true;
+                                            }
                                             break;
                                         }
                                     }
