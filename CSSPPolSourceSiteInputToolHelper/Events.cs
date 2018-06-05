@@ -42,6 +42,21 @@ namespace CSSPPolSourceSiteInputToolHelper
 
         public event EventHandler<RTBMessageEventArgs> UpdateRTBMessage;
 
+        public class RTBFileNameEventArgs : EventArgs
+        {
+            public RTBFileNameEventArgs(string FileName)
+            {
+                this.FileName = FileName;
+            }
+            public string FileName { get; set; }
+        }
+        protected virtual void EmitRTBFileName(RTBFileNameEventArgs e)
+        {
+            UpdateRTBFileName?.Invoke(this, e);
+        }
+
+        public event EventHandler<RTBFileNameEventArgs> UpdateRTBFileName;
+
 
         // -------------------------------------------------------------------------------------------------
 
@@ -55,7 +70,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             else
             {
                 AddPicture();
-                RedrawSinglePanelInfrastructure();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
             }
         }
         private void butChangeToIsActive_Click(object sender, EventArgs e)
@@ -71,7 +87,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 CurrentInfrastructure.IsActive = true;
                 SaveInfrastructureInfo();
-                RedrawSinglePanelInfrastructure();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
                 ReDrawInfrastructure();
             }
         }
@@ -88,7 +105,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 CurrentInfrastructure.IsActive = false;
                 SaveInfrastructureInfo();
-                RedrawSinglePanelInfrastructure();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
                 ReDrawInfrastructure();
             }
         }
@@ -106,7 +124,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             RedrawSinglePanelPSS();
             ReDrawPolSourceSite();
         }
-        private void butPSSSaveToCSSPWebTools_Click(object sender, EventArgs e)
+        private void butSaveToCSSPWebTools_Click(object sender, EventArgs e)
         {
             if (IsPolSourceSite)
             {
@@ -137,8 +155,42 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
+                bool PumpsToChanged = false;
+                foreach (Control control in PanelViewAndEdit.Controls)
+                {
+                    if (control.Name == "textBoxPumpsToTVItemID")
+                    {
+                        TextBox tb = (TextBox)control;
+                        if (int.TryParse(tb.Text, out int TempInt))
+                        {
+                            if (CurrentInfrastructure.PumpsToTVItemIDNew != null)
+                            {
+                                if (TempInt != CurrentInfrastructure.PumpsToTVItemIDNew)
+                                {
+                                    PumpsToChanged = true;
+                                }
+                            }
+                            else
+                            {
+                                if (TempInt != CurrentInfrastructure.PumpsToTVItemID)
+                                {
+                                    PumpsToChanged = true;
+                                }
+                            }
+                            break;
+                        }
+                    }
+                }
+
                 SaveInfrastructureInfo();
-                RedrawSinglePanelInfrastructure();
+                if (PumpsToChanged)
+                {
+                    CurrentInfrastructure = null;
+                    InfrastructureTVItemID = 0;
+                }
+                RedrawInfrastructureList();
+                //DrawPanelInfrastructures();
+                ////RedrawSinglePanelInfrastructure();
                 ReDrawInfrastructure();
             }
         }
@@ -155,7 +207,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
                 SavePictureInfo(PictureTVItemID);
-                RedrawSinglePanelInfrastructure();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
                 ReDrawInfrastructure();
             }
         }
@@ -195,6 +248,21 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             IssueID = int.Parse(((Button)sender).Tag.ToString());
             ReDrawPolSourceSite();
+        }
+        private void SaveAndRedraw(object sender, EventArgs e)
+        {
+            if (!IsReading)
+            {
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+            }
+        }
+        private void ShowRTFDocument(object sender, EventArgs e)
+        {
+            string FileName = ((Label)sender).Tag.ToString();
+            EmitRTBFileName(new RTBFileNameEventArgs(FileName));
         }
         private void ShowPolSourceSite_Click(object sender, EventArgs e)
         {

@@ -561,6 +561,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                 DrawCurrentIssueEditing();
             }
 
+            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+            Label lblReturns = new Label();
+            lblReturns.AutoSize = true;
+            lblReturns.Location = new Point(30, Y);
+            lblReturns.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+            lblReturns.Font = new Font(new FontFamily(lblReturns.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+            lblReturns.Text = "\r\n\r\n\r\n\r\n";
+
+            PanelViewAndEdit.Controls.Add(lblReturns);
+
         }
         public void DrawIssueButtonsEditing()
         {

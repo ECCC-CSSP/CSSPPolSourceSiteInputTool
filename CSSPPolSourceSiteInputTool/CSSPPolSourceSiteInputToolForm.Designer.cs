@@ -471,7 +471,6 @@
             // checkBoxMoreInfo
             // 
             this.checkBoxMoreInfo.AutoSize = true;
-            this.checkBoxMoreInfo.Enabled = false;
             this.checkBoxMoreInfo.Location = new System.Drawing.Point(77, 6);
             this.checkBoxMoreInfo.Name = "checkBoxMoreInfo";
             this.checkBoxMoreInfo.Size = new System.Drawing.Size(71, 17);

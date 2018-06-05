@@ -130,10 +130,17 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int? PumpsToTVItemIDNew { get; set; } = null;
         public List<Coord> PathCoordList { get; set; } = new List<Coord>();
         public List<Coord> PathCoordListNew { get; set; } = new List<Coord>();
+        public bool Shown { get; set; } = false;
+        public int Ordinal { get; set; } = 0;
     }
     public class Coord
     {
         public float? Lat { get; set; } = null;
         public float? Lng { get; set; } = null;
+    }
+    public class EnumTextAndID
+    {
+        public string EnumText { get; set; }
+        public int EnumID { get; set; }
     }
 }

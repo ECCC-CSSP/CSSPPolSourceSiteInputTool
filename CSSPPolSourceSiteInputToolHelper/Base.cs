@@ -41,12 +41,12 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Color BackColorNormal = Color.White;
         public Color ForeColorChangedOrNew = Color.Green;
         public Color ForeColorNormal = Color.Black;
-        //public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
-        //public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
-        public string baseURLEN = "http://localhost:11561/en-CA/PolSource/";
-        public string baseURLFR = "http://localhost:11561/fr-CA/PolSource/";
-        public string BasePathPollutionSourceSites = @"C:\PollutionSourceSites\";
-        public string BasePathInfrastructures = @"C:\Infrastructures\";
+        public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
+        public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
+        //public string baseURLEN = "http://localhost:11561/en-CA/PolSource/";
+        //public string baseURLFR = "http://localhost:11561/fr-CA/PolSource/";
+        public string BasePathPollutionSourceSites = @"C:\PollutionSourceSites\Subsectors\";
+        public string BasePathInfrastructures = @"C:\PollutionSourceSites\Infrastructures\";
         public List<PolSourceObsInfoEnumTextAndID> polSourceObsInfoEnumTextAndIDList = new List<PolSourceObsInfoEnumTextAndID>();
         public List<PolSourceObsInfoEnumHideAndID> polSourceObsInfoEnumHideAndIDList = new List<PolSourceObsInfoEnumHideAndID>();
         public List<PolSourceObsInfoEnumTextAndID> polSourceObsInfoEnumDescTextAndIDList = new List<PolSourceObsInfoEnumTextAndID>();
@@ -104,6 +104,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public void ReDrawInfrastructure()
         {
+            IsReading = true;
             if (ShowOnlyPictures)
             {
                 ShowPictures();
@@ -117,6 +118,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 ShowInfrastructure();
             }
             UpdatePolSourceSitePanelColor();
+            IsReading = false;
         }
         public void ReDrawPolSourceSite()
         {

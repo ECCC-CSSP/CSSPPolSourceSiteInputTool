@@ -683,7 +683,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     sbKML.AppendLine($@"                <ul>");
                     foreach (Picture picture in infrastructure.InfrastructurePictureList)
                     {
-                        string url = @"file:///C:\Infrastructures\" + CurrentMunicipalityName + @"\Pictures\" + infrastructure.InfrastructureTVItemID + "_" + picture.PictureTVItemID + ".jpg";
+                        string url = @"file:///C:\PollutionSourceSites\Infrastructures\" + CurrentMunicipalityName + @"\Pictures\" + infrastructure.InfrastructureTVItemID + "_" + picture.PictureTVItemID + ".jpg";
 
                         sbKML.AppendLine($@"                <li><img style=""max-width:600px;"" src=""{url}"" /></li>");
                     }
@@ -930,7 +930,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         sbKML.AppendLine($@"                <ul>");
                         foreach (Picture picture in pss.PSSPictureList)
                         {
-                            string url = @"file:///C:\PollutionSourceSites\" + CurrentSubsectorName + @"\Pictures\" + pss.SiteNumberText + "_" + picture.PictureTVItemID + ".jpg";
+                            string url = @"file:///C:\PollutionSourceSites\Subsectors\" + CurrentSubsectorName + @"\Pictures\" + pss.SiteNumberText + "_" + picture.PictureTVItemID + ".jpg";
 
                             sbKML.AppendLine($@"                <li><img style=""max-width:600px;"" src=""{url}"" /></li>");
                         }

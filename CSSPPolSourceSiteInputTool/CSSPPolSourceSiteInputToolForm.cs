@@ -115,17 +115,17 @@ namespace CSSPPolSourceSiteInputTool
                 polSourceSiteInputToolHelper.IsEditing = true;
                 if (polSourceSiteInputToolHelper.ShowOnlyIssues)
                 {
-                    checkBoxMoreInfo.Enabled = true;
+                    checkBoxMoreInfo.Visible = true;
                 }
                 else
                 {
-                    checkBoxMoreInfo.Enabled = false;
+                    checkBoxMoreInfo.Visible = false;
                 }
             }
             else
             {
                 polSourceSiteInputToolHelper.IsEditing = false;
-                checkBoxMoreInfo.Enabled = false;
+                checkBoxMoreInfo.Visible = false;
             }
 
             textBoxEmpty.Focus();
@@ -198,6 +198,26 @@ namespace CSSPPolSourceSiteInputTool
             lblStatus.Refresh();
             Application.DoEvents();
         }
+        private void polSourceSiteInputToolHelper_UpdateRTBFileName(object sender, PolSourceSiteInputToolHelper.RTBFileNameEventArgs e)
+        {
+            lblStatus.Text = $"Loading file [{e.FileName}]";
+            lblStatus.Refresh();
+            Application.DoEvents();
+
+            richTextBoxStatus.Clear();
+            try
+            {
+                richTextBoxStatus.LoadFile($@"C:\PollutionSourceSites\Documentations\{e.FileName}.rtf");
+            }
+            catch (Exception ex)
+            {
+                richTextBoxStatus.Text = ex.Message;
+            }
+            if (splitContainer2.Panel2.Height < panelViewAndEdit.Height * 1 / 3)
+            {
+                splitContainer2.SplitterDistance = panelViewAndEdit.Height * 2 / 3;
+            }
+        }
         private void polSourceSiteInputToolHelper_UpdateRTBMessage(object sender, PolSourceSiteInputToolHelper.RTBMessageEventArgs e)
         {
             lblStatus.Text = e.Message;
@@ -212,6 +232,8 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.ShowOnlyIssues = false;
             polSourceSiteInputToolHelper.ShowOnlyPictures = false;
             polSourceSiteInputToolHelper.ShowOnlyMap = false;
+
+            checkBoxMoreInfo.Visible = false;
 
             if (polSourceSiteInputToolHelper.IsPolSourceSite)
             {
@@ -230,13 +252,13 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.ShowOnlyPictures = false;
             polSourceSiteInputToolHelper.ShowOnlyMap = false;
 
-            if (polSourceSiteInputToolHelper.IsEditing)
+            if (polSourceSiteInputToolHelper.IsEditing && radioButtonOnlyIssues.Checked)
             {
-                checkBoxMoreInfo.Enabled = true;
+                checkBoxMoreInfo.Visible = true;
             }
             else
             {
-                checkBoxMoreInfo.Enabled = false;
+                checkBoxMoreInfo.Visible = false;
             }
 
             if (polSourceSiteInputToolHelper.IsPolSourceSite)
@@ -255,6 +277,8 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.ShowOnlyIssues = false;
             polSourceSiteInputToolHelper.ShowOnlyPictures = false;
             polSourceSiteInputToolHelper.ShowOnlyMap = true;
+
+            checkBoxMoreInfo.Visible = false;
 
             if (polSourceSiteInputToolHelper.IsPolSourceSite)
             {
@@ -813,7 +837,7 @@ namespace CSSPPolSourceSiteInputTool
             string MunicipalityText = tvItemModelMunicipality.TVText;
 
 
-            FileInfo fi = new FileInfo(@"C:\Infrastructures\" + MunicipalityText + @"\" + MunicipalityText + ".txt");
+            FileInfo fi = new FileInfo(@"C:\PollutionSourceSites\Infrastructures\" + MunicipalityText + @"\" + MunicipalityText + ".txt");
 
             string url = "";
             if (checkBoxLanguage.Checked)
@@ -871,7 +895,7 @@ namespace CSSPPolSourceSiteInputTool
                 SubsectorText = SubsectorText.Substring(0, SubsectorText.IndexOf(" "));
             }
 
-            FileInfo fi = new FileInfo(@"C:\PollutionSourceSites\" + SubsectorText + @"\" + SubsectorText + ".txt");
+            FileInfo fi = new FileInfo(@"C:\PollutionSourceSites\Subsectors\" + SubsectorText + @"\" + SubsectorText + ".txt");
 
             string url = "";
             if (checkBoxLanguage.Checked)
@@ -1315,11 +1339,13 @@ namespace CSSPPolSourceSiteInputTool
             panelAddNewPollutionSourceSite.Visible = false;
             panelShowInputOptions.Visible = false;
             radioButtonShowMap.Visible = false;
+            checkBoxMoreInfo.Visible = false;
 
 
             polSourceSiteInputToolHelper = new PolSourceSiteInputToolHelper(panelViewAndEdit, panelPolSourceSite, LanguageEnum.en);
             polSourceSiteInputToolHelper.UpdateStatus += polSourceSiteInputToolHelper_UpdateStatus;
             polSourceSiteInputToolHelper.UpdateRTBMessage += polSourceSiteInputToolHelper_UpdateRTBMessage;
+            polSourceSiteInputToolHelper.UpdateRTBFileName += polSourceSiteInputToolHelper_UpdateRTBFileName;
             polSourceSiteInputToolHelper.subsectorDoc = new SubsectorDoc();
             polSourceSiteInputToolHelper.municipalityDoc = new MunicipalityDoc();
 
@@ -1348,7 +1374,37 @@ namespace CSSPPolSourceSiteInputTool
                 }
             }
 
-            di = new DirectoryInfo(@"C:\Infrastructures\");
+            di = new DirectoryInfo(@"C:\PollutionSourceSites\Subsectors\");
+
+            if (!di.Exists)
+            {
+                try
+                {
+                    di.Create();
+                }
+                catch (Exception ex)
+                {
+                    richTextBoxStatus.Text = ex.Message + (ex.InnerException != null ? " InnerException = " + ex.InnerException.Message : "");
+                    return;
+                }
+            }
+
+            di = new DirectoryInfo(@"C:\PollutionSourceSites\Documentations\");
+
+            if (!di.Exists)
+            {
+                try
+                {
+                    di.Create();
+                }
+                catch (Exception ex)
+                {
+                    richTextBoxStatus.Text = ex.Message + (ex.InnerException != null ? " InnerException = " + ex.InnerException.Message : "");
+                    return;
+                }
+            }
+
+            di = new DirectoryInfo(@"C:\PollutionSourceSites\Infrastructures\");
 
             if (!di.Exists)
             {
@@ -1376,7 +1432,7 @@ namespace CSSPPolSourceSiteInputTool
 
             string SubsectorText = tvItemModelInfrastructure.TVText;
 
-            DirectoryInfo di = new DirectoryInfo(@"C:\Infrastructures\" + SubsectorText + @"\");
+            DirectoryInfo di = new DirectoryInfo(@"C:\PollutionSourceSites\Infrastructures\" + SubsectorText + @"\");
 
             if (!di.Exists)
             {
@@ -1408,7 +1464,7 @@ namespace CSSPPolSourceSiteInputTool
                 SubsectorText = SubsectorText.Substring(0, SubsectorText.IndexOf(" "));
             }
 
-            DirectoryInfo di = new DirectoryInfo(@"C:\PollutionSourceSites\" + SubsectorText + @"\");
+            DirectoryInfo di = new DirectoryInfo(@"C:\PollutionSourceSites\Subsectors\" + SubsectorText + @"\");
 
             if (!di.Exists)
             {

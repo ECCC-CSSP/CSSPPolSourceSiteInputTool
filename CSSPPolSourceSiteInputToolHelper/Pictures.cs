@@ -34,17 +34,17 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     FileInfo fi = new FileInfo(openFileDialogPictures.FileName);
 
-                    FileInfo fiCheck = new FileInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    FileInfo fiCheck = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
                     pictureNew.Extension = fi.Extension;
                     pictureNew.Description = "Insert Required Description";
                     while (fiCheck.Exists)
                     {
                         pictureNew.PictureTVItemID += 1;
                         pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
-                        fiCheck = new FileInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                        fiCheck = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
                     }
 
-                    File.Copy(openFileDialogPictures.FileName, $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    File.Copy(openFileDialogPictures.FileName, $@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
 
                     SaveSubsectorTextFile();
 
@@ -70,20 +70,20 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     FileInfo fi = new FileInfo(openFileDialogPictures.FileName);
 
-                    FileInfo fiCheck = new FileInfo($@"C:\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    FileInfo fiCheck = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
                     pictureNew.Extension = fi.Extension;
                     pictureNew.Description = "Insert Required Description";
                     while (fiCheck.Exists)
                     {
                         pictureNew.PictureTVItemID += 1;
                         pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
-                        fiCheck = new FileInfo($@"C:\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                        fiCheck = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
                     }
 
-                    File.Copy(openFileDialogPictures.FileName, $@"C:\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                    File.Copy(openFileDialogPictures.FileName, $@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
 
                     SaveMunicipalityTextFile();
-
+                    RedrawInfrastructureList();
                     ShowPictures();
                 }
             }
@@ -110,6 +110,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
 
                 SaveMunicipalityTextFile();
+                RedrawInfrastructureList();
                 ShowPictures();
             }
         }
@@ -135,6 +136,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
 
                 SaveMunicipalityTextFile();
+                RedrawInfrastructureList();
                 ShowPictures();
             }
         }
@@ -240,6 +242,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
 
                 SaveMunicipalityTextFile();
+                RedrawInfrastructureList();
                 ShowPictures();
             }
         }
@@ -352,11 +355,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                     pictureBoxPicture.BorderStyle = BorderStyle.FixedSingle;
                     if (IsPolSourceSite)
                     {
-                        pictureBoxPicture.ImageLocation = $@"C:\PollutionSourceSites\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                        pictureBoxPicture.ImageLocation = $@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                     }
                     else
                     {
-                        pictureBoxPicture.ImageLocation = $@"C:\Infrastructures\{CurrentMunicipalityName}\Pictures\{CurrentInfrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{picture.Extension}";
+                        pictureBoxPicture.ImageLocation = $@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{CurrentInfrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{picture.Extension}";
                     }
                     pictureBoxPicture.Location = new Point(X, Y);
                     pictureBoxPicture.Size = new Size(600, 500);
@@ -596,6 +599,18 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 PanelViewAndEdit.Controls.Add(butAddPicture);
             }
+
+            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+            Label lblReturns = new Label();
+            lblReturns.AutoSize = true;
+            lblReturns.Location = new Point(30, Y);
+            lblReturns.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+            lblReturns.Font = new Font(new FontFamily(lblReturns.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+            lblReturns.Text = "\r\n\r\n\r\n\r\n";
+
+            PanelViewAndEdit.Controls.Add(lblReturns);
+
         }
 
         private void PictureBoxPicture_Paint(object sender, PaintEventArgs e)

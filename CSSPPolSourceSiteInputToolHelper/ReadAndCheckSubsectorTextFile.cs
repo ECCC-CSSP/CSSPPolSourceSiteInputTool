@@ -406,7 +406,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             try
                             {
                                 Infrastructure infrastructure = new Infrastructure();
-                                infrastructure.InfrastructureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                infrastructure.InfrastructureTVItemID = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 //0123456789012345678
                                 //2018|03|02|08|23|12
                                 string TempStr = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1).Trim();
@@ -2501,10 +2501,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
 
                                 Address address = new Address();
+                                double tempDouble = 0;
                                 int temp = 0;
-                                if (int.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out temp))
+                                if (double.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out tempDouble))
                                 {
-                                    address.AddressTVItemID = temp;
+                                    address.AddressTVItemID = (int)tempDouble;
                                 }
                                 else
                                 {
@@ -2546,10 +2547,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
 
                                 Address address = new Address();
+                                double tempDouble = 0;
                                 int temp = 0;
-                                if (int.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out temp))
+                                if (double.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out tempDouble))
                                 {
-                                    address.AddressTVItemID = temp;
+                                    address.AddressTVItemID = (int)temp;
                                 }
                                 else
                                 {
@@ -2591,7 +2593,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
 
                                 Picture picture = new Picture();
-                                picture.PictureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                picture.PictureTVItemID = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
@@ -2612,7 +2614,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
 
                                 Picture picture = new Picture();
-                                picture.PictureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                picture.PictureTVItemID = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
@@ -2702,7 +2704,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    lastInfrastructure.PumpsToTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    lastInfrastructure.PumpsToTVItemID = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 }
                             }
                             catch (Exception)
@@ -2724,7 +2726,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    lastInfrastructure.PumpsToTVItemIDNew = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    lastInfrastructure.PumpsToTVItemIDNew = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 }
                             }
                             catch (Exception)
@@ -2815,12 +2817,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public bool ReadPollutionSourceSitesSubsectorFile()
         {
-            //if (tvItemModelProvinceList.Count == 0)
-            //{
-            //    EmitStatus(new StatusEventArgs($"No province found."));
-            //    return false;
-            //}
-
             FileInfo fi = new FileInfo($@"{BasePathPollutionSourceSites}{CurrentSubsectorName}\{CurrentSubsectorName}.txt");
 
             if (!fi.Exists)
@@ -2893,7 +2889,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             try
                             {
                                 Subsector subsector = new Subsector();
-                                subsector.SubsectorTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                subsector.SubsectorTVItemID = (int)(float.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 subsector.SubsectorName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 subsectorDoc.Subsector = subsector;
                             }
@@ -2922,7 +2918,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             try
                             {
                                 PSS pss = new PSS();
-                                pss.PSSTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                pss.PSSTVItemID = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 pss.Lat = float.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
                                 pss.Lng = float.Parse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1));
                                 pss.IsActive = bool.Parse(LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1));
@@ -3002,7 +2998,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
-                                lastPSS.SiteNumber = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                lastPSS.SiteNumber = (int)(float.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 lastPSS.SiteNumberText = "00000".Substring(0, "00000".Length - lastPSS.SiteNumber.ToString().Length) + lastPSS.SiteNumber.ToString();
                             }
                             catch (Exception)
@@ -3049,10 +3045,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Address address = new Address();
+                                double tempDouble = 0;
                                 int temp = 0;
-                                if (int.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out temp))
+                                if (double.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out tempDouble))
                                 {
-                                    address.AddressTVItemID = temp;
+                                    address.AddressTVItemID = (int)tempDouble;
                                 }
                                 else
                                 {
@@ -3094,10 +3091,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Address address = new Address();
+                                double tempDouble = 0;
                                 int temp = 0;
-                                if (int.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out temp))
+                                if (double.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out tempDouble))
                                 {
-                                    address.AddressTVItemID = temp;
+                                    address.AddressTVItemID = (int)tempDouble;
                                 }
                                 else
                                 {
@@ -3139,7 +3137,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Picture picture = new Picture();
-                                picture.PictureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                picture.PictureTVItemID = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
@@ -3160,7 +3158,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Picture picture = new Picture();
-                                picture.PictureTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                picture.PictureTVItemID = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 picture.FileName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 picture.Extension = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 picture.Description = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
@@ -3245,7 +3243,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Obs obs = new Obs();
-                                obs.ObsID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                obs.ObsID = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
 
                                 string TempStr = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 int Year = int.Parse(TempStr.Substring(0, 4));
@@ -3327,7 +3325,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
 
                                 Issue issue = new Issue();
-                                issue.IssueID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                issue.IssueID = (int)(double.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1)));
                                 issue.Ordinal = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
 
                                 string TempStr = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);

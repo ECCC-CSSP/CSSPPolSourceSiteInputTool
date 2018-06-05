@@ -29,7 +29,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 string LngOutfallText = infrastructure.LngOutfall == null ? "" : ((float)infrastructure.LngOutfall).ToString("F5");
                 string IsActiveText = infrastructure.IsActive == null ? "false" : (((bool)infrastructure.IsActive) ? "true" : "false");
 
-                sb.AppendLine($"INFRASTRUCTURE\t{infrastructure.InfrastructureTVItemID}\t{((DateTime)infrastructure.LastUpdateDate_UTC).Year}|" +
+                sb.AppendLine($"INFRASTRUCTURE\t{((double)infrastructure.InfrastructureTVItemID).ToString("F0")}\t{((DateTime)infrastructure.LastUpdateDate_UTC).Year}|" +
                     $"{((DateTime)infrastructure.LastUpdateDate_UTC).Month.ToString("0#")}|" +
                     $"{((DateTime)infrastructure.LastUpdateDate_UTC).Day.ToString("0#")}|{((DateTime)infrastructure.LastUpdateDate_UTC).Hour.ToString("0#")}|" +
                     $"{((DateTime)infrastructure.LastUpdateDate_UTC).Minute.ToString("0#")}|{((DateTime)infrastructure.LastUpdateDate_UTC).Second.ToString("0#")}\t" +
@@ -340,7 +340,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 sb.AppendLine($"PUMPSTOTVITEMID\t{PumpsToTVItemID}\t");
                 if (infrastructure.PumpsToTVItemIDNew != null)
                 {
-                    string PumpsToTVItemIDNew = infrastructure.PumpsToTVItemIDNew != null ? ((float)infrastructure.PumpsToTVItemIDNew).ToString() : "";
+                    string PumpsToTVItemIDNew = infrastructure.PumpsToTVItemIDNew != null ? ((double)infrastructure.PumpsToTVItemIDNew).ToString("F0") : "";
                     sb.AppendLine($"PUMPSTOTVITEMIDNEW\t{PumpsToTVItemIDNew}\t");
                 }
                 string PathCoordList = "";
@@ -410,7 +410,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             }
 
-            DirectoryInfo di = new DirectoryInfo($@"C:\Infrastructures\{CurrentMunicipalityName}\");
+            DirectoryInfo di = new DirectoryInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\");
 
             if (!di.Exists)
             {
@@ -424,7 +424,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            FileInfo fi = new FileInfo($@"C:\Infrastructures\{CurrentMunicipalityName}\{CurrentMunicipalityName}.txt");
+            FileInfo fi = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\{CurrentMunicipalityName}.txt");
 
             StreamWriter sw = fi.CreateText();
             sw.Write(sb.ToString());
@@ -444,7 +444,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 string LngText = pss.Lng == null ? "0.0" : ((float)pss.Lng).ToString("F5");
                 string IsActiveText = pss.IsActive == null ? "false" : (((bool)pss.IsActive) ? "true" : "false");
                 string IsPointSourceText = pss.IsPointSource == null ? "false" : (((bool)pss.IsPointSource) ? "true" : "false");
-                sb.AppendLine($"PSS\t{pss.PSSTVItemID}\t{LatText}\t{LngText}\t{IsActiveText}\t{IsPointSourceText}\t");
+                sb.AppendLine($"PSS\t{((double)pss.PSSTVItemID).ToString("F0")}\t{LatText}\t{LngText}\t{IsActiveText}\t{IsPointSourceText}\t");
                 sb.AppendLine($"SITENUMB\t{pss.SiteNumber}\t");
                 if (pss.LatNew != null)
                 {
@@ -472,7 +472,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     if (pss.PSSAddress.AddressTVItemID != null)
                     {
-                        string AddressTVItemID = pss.PSSAddress.AddressTVItemID == null ? "-999999999" : pss.PSSAddress.AddressTVItemID.ToString();
+                        string AddressTVItemID = pss.PSSAddress.AddressTVItemID == null ? "-999999999" : ((double)pss.PSSAddress.AddressTVItemID).ToString("F0");
                         string Municipality = pss.PSSAddress.Municipality == null ? "" : pss.PSSAddress.Municipality;
                         string AddressType = pss.PSSAddress.AddressType == null ? "" : ((int)pss.PSSAddress.AddressType).ToString();
                         string StreetNumber = pss.PSSAddress.StreetNumber == null ? "" : pss.PSSAddress.StreetNumber;
@@ -486,7 +486,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (pss.PSSAddressNew.AddressTVItemID != null)
                 {
-                    string AddressTVItemID = pss.PSSAddressNew.AddressTVItemID.ToString();
+                    string AddressTVItemID = ((double)pss.PSSAddressNew.AddressTVItemID).ToString("F0");
                     string Municipality = pss.PSSAddressNew.Municipality == null ? "" : pss.PSSAddressNew.Municipality;
                     string AddressType = pss.PSSAddressNew.AddressType == null ? "" : ((int)pss.PSSAddressNew.AddressType).ToString();
                     string StreetNumber = pss.PSSAddressNew.StreetNumber == null ? "" : pss.PSSAddressNew.StreetNumber;
@@ -498,7 +498,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 foreach (Picture picture in pss.PSSPictureList)
                 {
-                    sb.AppendLine($"PICTURE\t{picture.PictureTVItemID}\t{picture.FileName.Replace("\r", "_").Replace("\n", "_").Replace("\t", "_")}\t{picture.Extension}\t{picture.Description.Replace("\r", "_").Replace("\n", "_").Replace("\t", "_")}\t");
+                    sb.AppendLine($"PICTURE\t{((double)picture.PictureTVItemID).ToString("F0")}\t{picture.FileName.Replace("\r", "_").Replace("\n", "_").Replace("\t", "_")}\t{picture.Extension}\t{picture.Description.Replace("\r", "_").Replace("\n", "_").Replace("\t", "_")}\t");
                     if (picture.ToRemove != null && picture.ToRemove == true)
                     {
                         sb.AppendLine($"PICTURETOREMOVE\t");
@@ -517,7 +517,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                 }
 
-                sb.AppendLine($"OBS\t{pss.PSSObs.ObsID}\t" +
+                sb.AppendLine($"OBS\t{((double)pss.PSSObs.ObsID).ToString("F0")}\t" +
                     $"{((DateTime)pss.PSSObs.LastUpdated_UTC).Year}|{((DateTime)pss.PSSObs.LastUpdated_UTC).Month.ToString("0#")}|" +
                     $"{((DateTime)pss.PSSObs.LastUpdated_UTC).Day.ToString("0#")}|{((DateTime)pss.PSSObs.LastUpdated_UTC).Hour.ToString("0#")}|" +
                     $"{((DateTime)pss.PSSObs.LastUpdated_UTC).Minute.ToString("0#")}|{((DateTime)pss.PSSObs.LastUpdated_UTC).Second.ToString("0#")}" +
@@ -543,7 +543,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 foreach (Issue issue in pss.PSSObs.IssueList.OrderBy(c => c.Ordinal))
                 {
-                    sb.AppendLine($"ISSUE\t{issue.IssueID}\t{issue.Ordinal}\t{((DateTime)issue.LastUpdated_UTC).Year}|{((DateTime)issue.LastUpdated_UTC).Month.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Day.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Hour.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Minute.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Second.ToString("0#")}\t{String.Join(",", issue.PolSourceObsInfoIntList)},\t");
+                    sb.AppendLine($"ISSUE\t{((double)issue.IssueID).ToString("F0")}\t{issue.Ordinal}\t{((DateTime)issue.LastUpdated_UTC).Year}|{((DateTime)issue.LastUpdated_UTC).Month.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Day.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Hour.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Minute.ToString("0#")}|{((DateTime)issue.LastUpdated_UTC).Second.ToString("0#")}\t{String.Join(",", issue.PolSourceObsInfoIntList)},\t");
                     if (issue.PolSourceObsInfoIntListNew.Count > 0)
                     {
                         sb.AppendLine($"ISSUENEW\t{String.Join(",", issue.PolSourceObsInfoIntListNew)},\t");
@@ -555,7 +555,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            DirectoryInfo di = new DirectoryInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\");
+            DirectoryInfo di = new DirectoryInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\");
 
             if (!di.Exists)
             {
@@ -569,7 +569,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            FileInfo fi = new FileInfo($@"C:\PollutionSourceSites\{CurrentSubsectorName}\{CurrentSubsectorName}.txt");
+            FileInfo fi = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\{CurrentSubsectorName}.txt");
 
             StreamWriter sw = fi.CreateText();
             sw.Write(sb.ToString());
