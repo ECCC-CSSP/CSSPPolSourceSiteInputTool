@@ -198,6 +198,10 @@ namespace CSSPPolSourceSiteInputTool
             lblStatus.Refresh();
             Application.DoEvents();
         }
+        private void polSourceSiteInputToolHelper_UpdateRTBClear(object sender, PolSourceSiteInputToolHelper.RTBClearEventArgs e)
+        {
+            richTextBoxStatus.Text = "";
+        }
         private void polSourceSiteInputToolHelper_UpdateRTBFileName(object sender, PolSourceSiteInputToolHelper.RTBFileNameEventArgs e)
         {
             lblStatus.Text = $"Loading file [{e.FileName}]";
@@ -1344,6 +1348,7 @@ namespace CSSPPolSourceSiteInputTool
 
             polSourceSiteInputToolHelper = new PolSourceSiteInputToolHelper(panelViewAndEdit, panelPolSourceSite, LanguageEnum.en);
             polSourceSiteInputToolHelper.UpdateStatus += polSourceSiteInputToolHelper_UpdateStatus;
+            polSourceSiteInputToolHelper.UpdateRTBClear += polSourceSiteInputToolHelper_UpdateRTBClear;
             polSourceSiteInputToolHelper.UpdateRTBMessage += polSourceSiteInputToolHelper_UpdateRTBMessage;
             polSourceSiteInputToolHelper.UpdateRTBFileName += polSourceSiteInputToolHelper_UpdateRTBFileName;
             polSourceSiteInputToolHelper.subsectorDoc = new SubsectorDoc();

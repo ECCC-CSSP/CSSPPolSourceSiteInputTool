@@ -480,7 +480,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         string StreetType = pss.PSSAddress.StreetType == null ? "" : ((int)pss.PSSAddress.StreetType).ToString();
                         string PostalCode = pss.PSSAddress.PostalCode == null ? "" : pss.PSSAddress.PostalCode;
 
-                        sb.AppendLine($"ADDRESS\t{pss.PSSAddress.AddressTVItemID}\t{pss.PSSAddress.Municipality}\t{((int)pss.PSSAddress.AddressType).ToString()}\t{pss.PSSAddress.StreetNumber}\t{pss.PSSAddress.StreetName}\t{((int)pss.PSSAddress.StreetType).ToString()}\t{pss.PSSAddress.PostalCode}\t");
+                        sb.AppendLine($"ADDRESS\t{AddressTVItemID}\t{Municipality}\t{AddressType}\t{StreetNumber}\t{StreetName}\t{StreetType}\t{PostalCode}\t");
                     }
                 }
 

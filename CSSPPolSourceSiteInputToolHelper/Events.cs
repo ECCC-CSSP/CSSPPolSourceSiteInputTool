@@ -27,6 +27,20 @@ namespace CSSPPolSourceSiteInputToolHelper
 
         public event EventHandler<StatusEventArgs> UpdateStatus;
 
+        public class RTBClearEventArgs : EventArgs
+        {
+            public RTBClearEventArgs()
+            {
+            }
+        }
+        protected virtual void EmitRTBClear(RTBClearEventArgs e)
+        {
+            UpdateRTBClear?.Invoke(this, e);
+        }
+
+        public event EventHandler<RTBClearEventArgs> UpdateRTBClear;
+
+
         public class RTBMessageEventArgs : EventArgs
         {
             public RTBMessageEventArgs(string Message)
@@ -126,6 +140,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         private void butSaveToCSSPWebTools_Click(object sender, EventArgs e)
         {
+            EmitRTBClear(new RTBClearEventArgs());
+
             if (IsPolSourceSite)
             {
                 PSSSaveToCSSPWebTools();
