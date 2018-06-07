@@ -79,8 +79,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         public DateTime? LastUpdated_UTC { get; set; } = null;
         public List<int> PolSourceObsInfoIntList { get; set; } = new List<int>();
         public List<int> PolSourceObsInfoIntListNew { get; set; } = new List<int>();
-        public List<PolSourceObsInfoEnum> PolSourceObsInfoEnumList { get; set; } = new List<PolSourceObsInfoEnum>();
-        public List<PolSourceObsInfoEnum> PolSourceObsInfoEnumListNew { get; set; } = new List<PolSourceObsInfoEnum>();
         public bool? ToRemove { get; set; } = null;
         public bool? IsWellFormed { get; set; } = null;
         public bool? IsCompleted { get; set; } = null;

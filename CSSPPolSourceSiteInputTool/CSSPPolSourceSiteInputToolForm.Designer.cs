@@ -30,8 +30,9 @@
         {
             this.panelButtonBar = new System.Windows.Forms.Panel();
             this.panelAdminPassword = new System.Windows.Forms.Panel();
-            this.lblAccessCodeText = new System.Windows.Forms.Label();
-            this.textBoxAccessCode = new System.Windows.Forms.TextBox();
+            this.butConnect = new System.Windows.Forms.Button();
+            this.lblAdminEmail = new System.Windows.Forms.Label();
+            this.textBoxAdminEmail = new System.Windows.Forms.TextBox();
             this.panelShowAdmin = new System.Windows.Forms.Panel();
             this.checkBoxShowAdmin = new System.Windows.Forms.CheckBox();
             this.panelShowInfrastructure = new System.Windows.Forms.Panel();
@@ -114,30 +115,42 @@
             // 
             // panelAdminPassword
             // 
-            this.panelAdminPassword.Controls.Add(this.lblAccessCodeText);
-            this.panelAdminPassword.Controls.Add(this.textBoxAccessCode);
+            this.panelAdminPassword.Controls.Add(this.butConnect);
+            this.panelAdminPassword.Controls.Add(this.lblAdminEmail);
+            this.panelAdminPassword.Controls.Add(this.textBoxAdminEmail);
             this.panelAdminPassword.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelAdminPassword.Location = new System.Drawing.Point(662, 0);
+            this.panelAdminPassword.Location = new System.Drawing.Point(307, 0);
             this.panelAdminPassword.Name = "panelAdminPassword";
-            this.panelAdminPassword.Size = new System.Drawing.Size(134, 34);
+            this.panelAdminPassword.Size = new System.Drawing.Size(489, 34);
             this.panelAdminPassword.TabIndex = 21;
             // 
-            // lblAccessCodeText
+            // butConnect
             // 
-            this.lblAccessCodeText.AutoSize = true;
-            this.lblAccessCodeText.Location = new System.Drawing.Point(9, 11);
-            this.lblAccessCodeText.Name = "lblAccessCodeText";
-            this.lblAccessCodeText.Size = new System.Drawing.Size(73, 13);
-            this.lblAccessCodeText.TabIndex = 1;
-            this.lblAccessCodeText.Text = "Access Code:";
+            this.butConnect.Location = new System.Drawing.Point(391, 6);
+            this.butConnect.Name = "butConnect";
+            this.butConnect.Size = new System.Drawing.Size(79, 23);
+            this.butConnect.TabIndex = 16;
+            this.butConnect.Text = "Connect";
+            this.butConnect.UseVisualStyleBackColor = true;
+            this.butConnect.Click += new System.EventHandler(this.butConnect_Click);
             // 
-            // textBoxAccessCode
+            // lblAdminEmail
             // 
-            this.textBoxAccessCode.Location = new System.Drawing.Point(84, 8);
-            this.textBoxAccessCode.Name = "textBoxAccessCode";
-            this.textBoxAccessCode.Size = new System.Drawing.Size(38, 20);
-            this.textBoxAccessCode.TabIndex = 0;
-            this.textBoxAccessCode.TextChanged += new System.EventHandler(this.textBoxAccessCode_TextChanged);
+            this.lblAdminEmail.AutoSize = true;
+            this.lblAdminEmail.Location = new System.Drawing.Point(9, 11);
+            this.lblAdminEmail.Name = "lblAdminEmail";
+            this.lblAdminEmail.Size = new System.Drawing.Size(67, 13);
+            this.lblAdminEmail.TabIndex = 1;
+            this.lblAdminEmail.Text = "Admin Email:";
+            // 
+            // textBoxAdminEmail
+            // 
+            this.textBoxAdminEmail.Location = new System.Drawing.Point(84, 8);
+            this.textBoxAdminEmail.Name = "textBoxAdminEmail";
+            this.textBoxAdminEmail.Size = new System.Drawing.Size(292, 20);
+            this.textBoxAdminEmail.TabIndex = 0;
+            this.textBoxAdminEmail.Text = "@canada.ca";
+            this.textBoxAdminEmail.TextChanged += new System.EventHandler(this.textBoxAccessCode_TextChanged);
             // 
             // panelShowAdmin
             // 
@@ -147,6 +160,7 @@
             this.panelShowAdmin.Name = "panelShowAdmin";
             this.panelShowAdmin.Size = new System.Drawing.Size(68, 34);
             this.panelShowAdmin.TabIndex = 16;
+            this.panelShowAdmin.Visible = false;
             // 
             // checkBoxShowAdmin
             // 
@@ -624,10 +638,11 @@
         private System.Windows.Forms.Button butCreateMunicipalityDirectory;
         private System.Windows.Forms.Panel panelCreateSubsectorDirectory;
         private System.Windows.Forms.Panel panelAdminPassword;
-        private System.Windows.Forms.TextBox textBoxAccessCode;
-        private System.Windows.Forms.Label lblAccessCodeText;
+        private System.Windows.Forms.TextBox textBoxAdminEmail;
+        private System.Windows.Forms.Label lblAdminEmail;
         private System.Windows.Forms.Panel panelAddNewInfrastructure;
         private System.Windows.Forms.Button butInfrastructureAdd;
+        private System.Windows.Forms.Button butConnect;
     }
 }
 

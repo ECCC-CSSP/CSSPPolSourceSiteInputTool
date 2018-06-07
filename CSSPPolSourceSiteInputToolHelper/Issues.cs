@@ -27,7 +27,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 issue.Ordinal = 0;
             }
-            issue.PolSourceObsInfoEnumList = new List<PolSourceObsInfoEnum>();
             issue.PolSourceObsInfoIntList = new List<int>();
             issue.ToRemove = false;
 

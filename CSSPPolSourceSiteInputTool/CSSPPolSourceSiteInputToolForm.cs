@@ -41,6 +41,10 @@ namespace CSSPPolSourceSiteInputTool
         #endregion Constructors
 
         #region Events
+        private void butConnect_Click(object sender, EventArgs e)
+        {
+            Connect();
+        }
         private void butCreateSubsectorDirectory_Click(object sender, EventArgs e)
         {
             CreateSubsectorDirectoryWithInfo();
@@ -92,7 +96,7 @@ namespace CSSPPolSourceSiteInputTool
         {
             if (checkBoxShowAdmin.Checked)
             {
-                ShowAdminPasswordParts();
+                ShowAdminEmailParts();
             }
             else
             {
@@ -344,7 +348,7 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void textBoxAccessCode_TextChanged(object sender, EventArgs e)
         {
-            if (textBoxAccessCode.Text == "mt")
+            if (textBoxAdminEmail.Text == "mt")
             {
                 ShowAdminParts();
             }
@@ -530,6 +534,26 @@ namespace CSSPPolSourceSiteInputTool
                     polSourceSiteInputToolHelper.ReDrawInfrastructure();
                     butViewKMLFile.Enabled = true;
                 }
+            }
+        }
+        public void Connect()
+        {
+            if (string.IsNullOrWhiteSpace(textBoxAdminEmail.Text))
+            {
+                MessageBox.Show("Please write a valid email address which is registered in CSSPWebTools", "Email address not valid");
+                return;
+            }
+
+            string ret = polSourceSiteInputToolHelper.UserExistInCSSPWebTools(textBoxAdminEmail.Text);
+            ret = ret.Replace("\"", "");
+            if (ret.StartsWith("ERROR:"))
+            {
+                MessageBox.Show("Please write a valid email address which is registered in CSSPWebTools", "Email address not valid");
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.AdminEmail = textBoxAdminEmail.Text.Trim();
+                ShowAdminParts();
             }
         }
         private void CreateMunicipalityDirectoryWithInfo()
@@ -1146,13 +1170,13 @@ namespace CSSPPolSourceSiteInputTool
                 }
             }
         }
-        private void ShowAdminPasswordParts()
+        private void ShowAdminEmailParts()
         {
             ClearAllPanelAndComboBoxes();
 
             panelAdminPassword.Visible = true;
-            textBoxAccessCode.Text = "";
-            textBoxAccessCode.Focus();
+            //textBoxAdminEmail.Text = "";
+            textBoxAdminEmail.Focus();
         }
         private void ShowAdminParts()
         {
@@ -1488,5 +1512,6 @@ namespace CSSPPolSourceSiteInputTool
         }
 
         #endregion Functions private
+
     }
 }

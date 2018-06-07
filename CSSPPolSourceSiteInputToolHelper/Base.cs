@@ -4,8 +4,10 @@ using CSSPModelsDLL.Models;
 using CSSPModelsDLL.Services;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.Drawing;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -41,16 +43,18 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Color BackColorNormal = Color.White;
         public Color ForeColorChangedOrNew = Color.Green;
         public Color ForeColorNormal = Color.Black;
-        //public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
-        //public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
-        public string baseURLEN = "http://localhost:11561/en-CA/PolSource/";
-        public string baseURLFR = "http://localhost:11561/fr-CA/PolSource/";
+        public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
+        public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
+        //public string baseURLEN = "http://localhost:11561/en-CA/PolSource/";
+        //public string baseURLFR = "http://localhost:11561/fr-CA/PolSource/";
         public string BasePathPollutionSourceSites = @"C:\PollutionSourceSites\Subsectors\";
         public string BasePathInfrastructures = @"C:\PollutionSourceSites\Infrastructures\";
         public List<PolSourceObsInfoEnumTextAndID> polSourceObsInfoEnumTextAndIDList = new List<PolSourceObsInfoEnumTextAndID>();
         public List<PolSourceObsInfoEnumHideAndID> polSourceObsInfoEnumHideAndIDList = new List<PolSourceObsInfoEnumHideAndID>();
         public List<PolSourceObsInfoEnumTextAndID> polSourceObsInfoEnumDescTextAndIDList = new List<PolSourceObsInfoEnumTextAndID>();
         public List<PolSourceObsInfoChild> polSourceObsInfoChildList = new List<PolSourceObsInfoChild>();
+        public bool CreateMunicipality = false;
+        public string AdminEmail = "";
         #endregion Variables
 
         #region Properties
@@ -139,6 +143,39 @@ namespace CSSPPolSourceSiteInputToolHelper
                 ShowPolSourceSite();
             }
             UpdatePolSourceSitePanelColor();
+        }
+        public string UserExistInCSSPWebTools(string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}UserExistJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}UserExistJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
         }
         #endregion Constructors
 
