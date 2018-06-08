@@ -55,6 +55,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public List<PolSourceObsInfoChild> polSourceObsInfoChildList = new List<PolSourceObsInfoChild>();
         public bool CreateMunicipality = false;
         public string AdminEmail = "";
+        public bool MunicipalityExist = false;
+        public bool AutoCreateMunicipality = false;
         #endregion Variables
 
         #region Properties

@@ -265,6 +265,18 @@ namespace CSSPPolSourceSiteInputToolHelper
             IssueID = int.Parse(((Button)sender).Tag.ToString());
             ReDrawPolSourceSite();
         }
+        private void checkBoxCreateMunicipality_CheckedChanged(object sender, EventArgs e)
+        {
+            CheckBox checkBoxCreateMun = (CheckBox)sender;
+            if (checkBoxCreateMun.Checked)
+            {
+                CreateMunicipality = true;
+            }
+            else
+            {
+                CreateMunicipality = false;
+            }
+        }
         private void SaveAndRedraw(object sender, EventArgs e)
         {
             if (!IsReading)
@@ -285,6 +297,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             PolSourceSiteTVItemID = int.Parse(((Control)sender).Tag.ToString());
             IssueID = 0;
             CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
+            MunicipalityExist = true;
+            CreateMunicipality = false;
             ReDrawPolSourceSite();
         }
         private void ShowMunicipality_Click(object sender, EventArgs e)

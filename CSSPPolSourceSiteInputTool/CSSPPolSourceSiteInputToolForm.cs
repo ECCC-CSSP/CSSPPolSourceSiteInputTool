@@ -41,10 +41,6 @@ namespace CSSPPolSourceSiteInputTool
         #endregion Constructors
 
         #region Events
-        private void butConnect_Click(object sender, EventArgs e)
-        {
-            Connect();
-        }
         private void butCreateSubsectorDirectory_Click(object sender, EventArgs e)
         {
             CreateSubsectorDirectoryWithInfo();
@@ -94,9 +90,38 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void checkBoxAdmin_CheckedChanged(object sender, EventArgs e)
         {
+            polSourceSiteInputToolHelper.AdminEmail = "";
+
+
             if (checkBoxShowAdmin.Checked)
             {
-                ShowAdminEmailParts();
+                switch (Environment.UserName.ToLower())
+                {
+                    case "leblancc":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc2@canada.ca";
+                        }
+                        break;
+                    case "pomeroyj":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Joe.Pomeroy@canada.ca";
+                        }
+                        break;
+                    case "thibodeaum":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Mark.Thibodeau@canada.ca";
+                        }
+                        break;
+                    case "perchardg":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@canada.ca";
+                        }
+                        break;
+                    default:
+                        break;
+                }
+                ClearAllPanelAndComboBoxes();
+                Connect();
             }
             else
             {
@@ -346,13 +371,6 @@ namespace CSSPPolSourceSiteInputTool
                 }
             }
         }
-        private void textBoxAccessCode_TextChanged(object sender, EventArgs e)
-        {
-            if (textBoxAdminEmail.Text == "mt")
-            {
-                ShowAdminParts();
-            }
-        }
         #endregion Events
 
         #region Functions private
@@ -538,21 +556,14 @@ namespace CSSPPolSourceSiteInputTool
         }
         public void Connect()
         {
-            if (string.IsNullOrWhiteSpace(textBoxAdminEmail.Text))
-            {
-                MessageBox.Show("Please write a valid email address which is registered in CSSPWebTools", "Email address not valid");
-                return;
-            }
-
-            string ret = polSourceSiteInputToolHelper.UserExistInCSSPWebTools(textBoxAdminEmail.Text);
+            string ret = polSourceSiteInputToolHelper.UserExistInCSSPWebTools(polSourceSiteInputToolHelper.AdminEmail);
             ret = ret.Replace("\"", "");
             if (ret.StartsWith("ERROR:"))
             {
-                MessageBox.Show("Please write a valid email address which is registered in CSSPWebTools", "Email address not valid");
+                MessageBox.Show("Admin users list [pomeroyj, thibodeaum or perchardg]\r\n\r\nPlease contact Joe Pomeroy if you think you should have admin rights", "Invalid user for admin rights");
             }
             else
             {
-                polSourceSiteInputToolHelper.AdminEmail = textBoxAdminEmail.Text.Trim();
                 ShowAdminParts();
             }
         }
@@ -1170,14 +1181,6 @@ namespace CSSPPolSourceSiteInputTool
                 }
             }
         }
-        private void ShowAdminEmailParts()
-        {
-            ClearAllPanelAndComboBoxes();
-
-            panelAdminPassword.Visible = true;
-            //textBoxAdminEmail.Text = "";
-            textBoxAdminEmail.Focus();
-        }
         private void ShowAdminParts()
         {
             ClearAllPanelAndComboBoxes();
@@ -1188,7 +1191,6 @@ namespace CSSPPolSourceSiteInputTool
             comboBoxSubsectorOrMunicipality.DisplayMember = "TVText";
             panelProvinces.Visible = true;
             panelSubsectorOrMunicipality.Visible = true;
-            panelAdminPassword.Visible = false;
             panelProvinces.Visible = true;
             panelSubsectorOrMunicipality.Visible = true;
 
@@ -1239,7 +1241,6 @@ namespace CSSPPolSourceSiteInputTool
             panelProvinces.Visible = false;
             panelSubsectorOrMunicipality.Visible = true;
             panelViewKMLFileTop.Enabled = true;
-            panelAdminPassword.Visible = false;
             panelAddNewPollutionSourceSite.Visible = true;
             panelShowInputOptions.Visible = true;
             panelPolSourceSite.Controls.Clear();
@@ -1343,6 +1344,14 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void Setup()
         {
+            panelShowAdmin.Visible = false;
+            if (Environment.UserName.ToLower() == "leblancc" ||
+                Environment.UserName.ToLower() == "pomeroyj" ||
+                Environment.UserName.ToLower() == "thibodeaum" ||
+                Environment.UserName.ToLower() == "perchardg")
+            {
+                panelShowAdmin.Visible = true;
+            }
             splitContainer1.Dock = DockStyle.Fill;
             splitContainer1.BringToFront();
             splitContainer1.SplitterDistance = 400;
@@ -1358,7 +1367,6 @@ namespace CSSPPolSourceSiteInputTool
             panelProvinces.Visible = false;
             panelCreateMunicipalityDirectory.Visible = false;
             panelCreateSubsectorDirectory.Visible = false;
-            panelAdminPassword.Visible = false;
             panelSubsectorOrMunicipality.Dock = DockStyle.Fill;
             panelViewAndEdit.Dock = DockStyle.Fill;
             panelPolSourceSite.Dock = DockStyle.Fill;

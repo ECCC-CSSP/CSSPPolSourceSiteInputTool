@@ -495,8 +495,42 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             #endregion PostalCode
 
-            #endregion Address
+            int MaxY = 0;
+            foreach (Control control in PanelViewAndEdit.Controls)
+            {
+                if (control.Bottom > MaxY)
+                {
+                    MaxY = control.Bottom;
+                }
+            }
 
+            y = MaxY + 20;
+            if (!MunicipalityExist)
+            {
+                string TheMunicipality = addressNew.Municipality == null ? address.Municipality : addressNew.Municipality;
+
+                Label lblCreateMunicipality = new Label();
+                lblCreateMunicipality.AutoSize = true;
+                lblCreateMunicipality.Location = new Point(20, y);
+                lblCreateMunicipality.Font = new Font(new FontFamily(lblCreateMunicipality.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                lblCreateMunicipality.Text = $@"Municipality [{TheMunicipality}] does not exist. Create Municipality ?";
+
+                PanelViewAndEdit.Controls.Add(lblCreateMunicipality);
+
+                CheckBox checkBoxCreateMunicipality = new CheckBox();
+                checkBoxCreateMunicipality.AutoSize = true;
+                checkBoxCreateMunicipality.Location = new Point(lblCreateMunicipality.Right + 5, y);
+                checkBoxCreateMunicipality.Name = "checkBoxCreateMunicipality";
+                checkBoxCreateMunicipality.Font = new Font(new FontFamily(lblPostalCodeText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                checkBoxCreateMunicipality.CheckedChanged += checkBoxCreateMunicipality_CheckedChanged;
+                checkBoxCreateMunicipality.Checked = CreateMunicipality;
+
+                PanelViewAndEdit.Controls.Add(checkBoxCreateMunicipality);
+
+                y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+            }
+
+            #endregion Address
         }
         private void DrawItemBool(int x, int y, bool? val, bool? valNew, string lblTxt, string checkBoxName)
         {
@@ -2062,15 +2096,25 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 PSSName = CurrentPSS.TVTextNew;
             }
+
             EmitRTBMessage(new RTBMessageEventArgs($"Trying to save all information for PSS [{PSSName}]\r\n"));
+
+            EmitRTBMessage(new RTBMessageEventArgs($"Checking if PSS [{PSSName}] already exist in CSSPWebTools\r\n"));
 
             ret = PSSExistInCSSPWebTools((int)CurrentPSS.PSSTVItemID, AdminEmail);
             ret = ret.Replace("\"", "");
 
+            if (ret.StartsWith("ERROR:"))
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"PSS [{PSSName}] does not exist in CSSPWebTools\r\n"));
+            }
+            else
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"PSS [{PSSName}] already exist in CSSPWebTools\r\n"));
+            }
+
             if (CurrentPSS.PSSTVItemID >= 10000000 || ret.StartsWith("ERROR:"))
             {
-                EmitRTBMessage(new RTBMessageEventArgs($"Creating new PSS [{PSSName}]\r\n"));
-
                 float Lat = 0.0f;
                 float Lng = 0.0f;
                 if (CurrentPSS.LatNew == null)
@@ -2096,30 +2140,34 @@ namespace CSSPPolSourceSiteInputToolHelper
                     Lng = (float)CurrentPSS.LngNew;
                 }
 
+                string MessageText = $"Trying to creating new PSS [{PSSName}]\tSite Number [{(int)CurrentPSS.SiteNumber}]\tLat[{Lat}]\tLong[{Lng}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
                 ret = SaveToCSSPWebToolsCreateNewPSS((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, PSSName, (int)CurrentPSS.SiteNumber, Lat, Lng, AdminEmail);
                 ret = ret.Replace("\"", "");
                 if (ret.StartsWith("ERROR:"))
                 {
-                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: While creating new PSS [{PSSName}]\r\n"));
+                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
                     EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
                     if (NeedToSave)
                     {
                         SaveSubsectorTextFile();
                     }
-                    return;
                 }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
-                EmitRTBMessage(new RTBMessageEventArgs($"Creating new PSS Success [{PSSName}]\r\n"));
-
-                CurrentPSS.PSSTVItemID = int.Parse(ret);
-                CurrentPSS.TVTextNew = null;
-                CurrentPSS.Lat = Lat;
-                CurrentPSS.Lng = Lng;
-                CurrentPSS.LatNew = null;
-                CurrentPSS.LngNew = null;
-                PolSourceSiteTVItemID = (int)CurrentPSS.PSSTVItemID;
-                NeedToSave = true;
-                IsNewPSS = true;
+                    CurrentPSS.PSSTVItemID = int.Parse(ret);
+                    CurrentPSS.TVTextNew = null;
+                    CurrentPSS.Lat = Lat;
+                    CurrentPSS.Lng = Lng;
+                    CurrentPSS.LatNew = null;
+                    CurrentPSS.LngNew = null;
+                    PolSourceSiteTVItemID = (int)CurrentPSS.PSSTVItemID;
+                    NeedToSave = true;
+                    IsNewPSS = true;
+                }
             }
 
             if (!IsNewPSS)
@@ -2127,31 +2175,30 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (CurrentPSS.TVTextNew != null)
                 {
-                    EmitRTBMessage(new RTBMessageEventArgs($"Changing Name --- old [{CurrentPSS.TVText}] --- new [{CurrentPSS.TVTextNew}]\r\n"));
+                    string MessageText = $"Trying To change PSS Name --- old [{CurrentPSS.TVText}] --- new [{CurrentPSS.TVTextNew}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
                     ret = SaveToCSSPWebToolsTVText((int)CurrentPSS.PSSTVItemID, CurrentPSS.TVTextNew, AdminEmail);
                     ret = ret.Replace("\"", "");
-                    if (!string.IsNullOrWhiteSpace(ret))
+                    if (ret.StartsWith("ERROR:"))
                     {
-                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: While changing Name --- old [{CurrentPSS.TVText}] --- new [{CurrentPSS.TVTextNew}]\r\n"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
                         EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
                         }
-                        return;
                     }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
-                    EmitRTBMessage(new RTBMessageEventArgs($"Changing Name Success --- old [{CurrentPSS.TVText}] --- new [{CurrentPSS.TVTextNew}]\r\n"));
-
-                    CurrentPSS.TVText = CurrentPSS.TVTextNew;
-                    CurrentPSS.TVTextNew = null;
-                    NeedToSave = true;
+                        CurrentPSS.TVText = CurrentPSS.TVTextNew;
+                        CurrentPSS.TVTextNew = null;
+                        NeedToSave = true;
+                    }
                 }
-            }
 
-            if (!IsNewPSS)
-            {
                 if (CurrentPSS.LatNew != null || CurrentPSS.LngNew != null)
                 {
                     float Lat = 0.0f;
@@ -2181,28 +2228,31 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     string LatText = CurrentPSS.Lat == null ? "(empty)" : ((float)CurrentPSS.Lat).ToString("F5");
                     string LngText = CurrentPSS.Lng == null ? "(empty)" : ((float)CurrentPSS.Lng).ToString("F5");
-                    EmitRTBMessage(new RTBMessageEventArgs($"Changing Lat and Lng --- old [{LatText} {LngText}] --- new [{Lat.ToString("F5")} {Lng.ToString("F5")}]\r\n"));
+
+                    string MessageText = $"Trying to Change Lat and Lng --- old [{LatText} {LngText}] --- new [{Lat.ToString("F5")} {Lng.ToString("F5")}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
                     ret = SaveToCSSPWebToolsLatLng((int)CurrentPSS.PSSTVItemID, Lat, Lng, AdminEmail);
                     ret = ret.Replace("\"", "");
-                    if (!string.IsNullOrWhiteSpace(ret))
+                    if (ret.StartsWith("ERROR:"))
                     {
-                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: While changing Lat and Lng --- old [{LatText} {LngText}] --- new [{Lat.ToString("F5")} {Lng.ToString("F5")}]\r\n"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
                         EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
                         }
-                        return;
                     }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
-                    EmitRTBMessage(new RTBMessageEventArgs($"Changing Lat and Lng Success --- old [{LatText} {LngText}] --- new [{Lat.ToString("F5")} {Lng.ToString("F5")}]\r\n"));
-
-                    CurrentPSS.Lat = Lat;
-                    CurrentPSS.Lng = Lng;
-                    CurrentPSS.LatNew = null;
-                    CurrentPSS.LngNew = null;
-                    NeedToSave = true;
+                        CurrentPSS.Lat = Lat;
+                        CurrentPSS.Lng = Lng;
+                        CurrentPSS.LatNew = null;
+                        CurrentPSS.LngNew = null;
+                        NeedToSave = true;
+                    }
                 }
             }
 
@@ -2230,38 +2280,62 @@ namespace CSSPPolSourceSiteInputToolHelper
                     int StreetTypeNew = CurrentPSS.PSSAddressNew.StreetType == null ? 0 : (int)CurrentPSS.PSSAddressNew.StreetType;
                     string MunicipalityNewText = CurrentPSS.PSSAddressNew.Municipality == null ? "" : CurrentPSS.PSSAddressNew.Municipality;
                     string PostalCodeNewText = CurrentPSS.PSSAddressNew.PostalCode == null ? "" : CurrentPSS.PSSAddressNew.PostalCode;
-                    EmitRTBMessage(new RTBMessageEventArgs($"Changing Address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n"));
 
-                    ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, CreateMunicipality, AdminEmail);
+
+                    string MessageText = $"Checking if municipality exist [{MunicipalityNewText}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                    ret = MunicipalityExistUnderSubsectorInCSSPWebTools((int)subsectorDoc.Subsector.SubsectorTVItemID, MunicipalityNewText, AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR"))
                     {
-                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: While changing address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
-                        if (NeedToSave)
-                        {
-                            SaveSubsectorTextFile();
-                        }
-                        return;
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        MunicipalityExist = false;
+                        NeedToSave = true;
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+                        MunicipalityExist = true;
                     }
 
-                    EmitRTBMessage(new RTBMessageEventArgs($"Changing Address Success --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n"));
+                    if (!MunicipalityExist && CreateMunicipality)
+                    {
+                        MessageText = $"Trying to Change address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                    CurrentPSS.PSSAddress.AddressType = (int)AddressTypeEnum.Civic;
-                    CurrentPSS.PSSAddress.AddressTVItemID = int.Parse(ret);
-                    CurrentPSS.PSSAddress.StreetNumber = CurrentPSS.PSSAddressNew.StreetNumber;
-                    CurrentPSS.PSSAddress.StreetName = CurrentPSS.PSSAddressNew.StreetName;
-                    CurrentPSS.PSSAddress.StreetType = CurrentPSS.PSSAddressNew.StreetType;
-                    CurrentPSS.PSSAddress.Municipality = CurrentPSS.PSSAddressNew.Municipality;
-                    CurrentPSS.PSSAddress.PostalCode = CurrentPSS.PSSAddressNew.PostalCode;
-                    CurrentPSS.PSSAddressNew.StreetNumber = null;
-                    CurrentPSS.PSSAddressNew.StreetName = null;
-                    CurrentPSS.PSSAddressNew.StreetType = null;
-                    CurrentPSS.PSSAddressNew.Municipality = null;
-                    CurrentPSS.PSSAddressNew.PostalCode = null;
-                    CurrentPSS.PSSAddressNew.AddressTVItemID = null;
-                    CurrentPSS.PSSAddressNew.AddressType = null;
-                    NeedToSave = true;
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, CreateMunicipality, AdminEmail);
+                        ret = ret.Replace("\"", "");
+                        if (ret.StartsWith("ERROR"))
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                            if (NeedToSave)
+                            {
+                                SaveSubsectorTextFile();
+                            }
+                        }
+                        else
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                            CurrentPSS.PSSAddress.AddressType = (int)AddressTypeEnum.Civic;
+                            CurrentPSS.PSSAddress.AddressTVItemID = int.Parse(ret);
+                            CurrentPSS.PSSAddress.StreetNumber = CurrentPSS.PSSAddressNew.StreetNumber;
+                            CurrentPSS.PSSAddress.StreetName = CurrentPSS.PSSAddressNew.StreetName;
+                            CurrentPSS.PSSAddress.StreetType = CurrentPSS.PSSAddressNew.StreetType;
+                            CurrentPSS.PSSAddress.Municipality = CurrentPSS.PSSAddressNew.Municipality;
+                            CurrentPSS.PSSAddress.PostalCode = CurrentPSS.PSSAddressNew.PostalCode;
+                            CurrentPSS.PSSAddressNew.StreetNumber = null;
+                            CurrentPSS.PSSAddressNew.StreetName = null;
+                            CurrentPSS.PSSAddressNew.StreetType = null;
+                            CurrentPSS.PSSAddressNew.Municipality = null;
+                            CurrentPSS.PSSAddressNew.PostalCode = null;
+                            CurrentPSS.PSSAddressNew.AddressTVItemID = null;
+                            CurrentPSS.PSSAddressNew.AddressType = null;
+                            NeedToSave = true;
+                        }
+                    }
                 }
             }
 
@@ -2271,7 +2345,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     CurrentPSS.PSSObs.ObsDateNew = CurrentPSS.PSSObs.ObsDate;
                 }
-                EmitRTBMessage(new RTBMessageEventArgs($"Creating Obs Date --- [{((DateTime)CurrentPSS.PSSObs.ObsDateNew).ToString("yyyy MMMM dd")}]\r\n"));
+
+                string MessageText = $"Trying to create Obs Date --- [{((DateTime)CurrentPSS.PSSObs.ObsDateNew).ToString("yyyy MMMM dd")}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
                 DateTime ObsDate = CurrentPSS.PSSObs.ObsDateNew != null ? (DateTime)CurrentPSS.PSSObs.ObsDateNew : (DateTime)CurrentPSS.PSSObs.ObsDate;
 
@@ -2279,48 +2355,51 @@ namespace CSSPPolSourceSiteInputToolHelper
                 ret = ret.Replace("\"", "");
                 if (ret.StartsWith("ERROR"))
                 {
-                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: While creating Obs Date --- [{((DateTime)CurrentPSS.PSSObs.ObsDateNew).ToString("yyyy MMMM dd")}]\r\n"));
+                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
                     EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
                     if (NeedToSave)
                     {
                         SaveSubsectorTextFile();
                     }
-                    return;
                 }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
-                EmitRTBMessage(new RTBMessageEventArgs($"Creating Obs Date Success --- [{((DateTime)CurrentPSS.PSSObs.ObsDateNew).ToString("yyyy MMMM dd")}]\r\n"));
-
-                CurrentPSS.PSSObs.ObsID = int.Parse(ret);
-                CurrentPSS.PSSObs.ObsDate = CurrentPSS.PSSObs.ObsDateNew;
-                CurrentPSS.PSSObs.ObsDateNew = null;
-                NeedToSave = true;
+                    CurrentPSS.PSSObs.ObsID = int.Parse(ret);
+                    CurrentPSS.PSSObs.ObsDate = CurrentPSS.PSSObs.ObsDateNew;
+                    CurrentPSS.PSSObs.ObsDateNew = null;
+                    NeedToSave = true;
+                }
             }
 
             foreach (Issue issue in CurrentPSS.PSSObs.IssueList)
             {
                 if (issue.PolSourceObsInfoIntListNew != null || IsNewPSS)
                 {
-                    EmitRTBMessage(new RTBMessageEventArgs($"Changing or adding issue # --- [{issue.Ordinal}]\r\n"));
+                    string MessageText = $"Changing or adding issue # --- [{issue.Ordinal}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
                     ret = SaveToCSSPWebToolsIssue((int)CurrentPSS.PSSObs.ObsID, (int)issue.IssueID, (int)issue.Ordinal, String.Join(",", issue.PolSourceObsInfoIntListNew) + ",", AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR:"))
                     {
-                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: While changing or adding issue # --- [{issue.Ordinal}]\r\n"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
                         EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
                         }
-                        return;
                     }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
-                    EmitRTBMessage(new RTBMessageEventArgs($"Changing or adding issue # Success --- [{issue.Ordinal}]\r\n"));
-
-                    issue.IssueID = int.Parse(ret);
-                    issue.PolSourceObsInfoIntList = issue.PolSourceObsInfoIntListNew;
-                    issue.PolSourceObsInfoIntListNew = new List<int>();
-                    NeedToSave = true;
+                        issue.IssueID = int.Parse(ret);
+                        issue.PolSourceObsInfoIntList = issue.PolSourceObsInfoIntListNew;
+                        issue.PolSourceObsInfoIntListNew = new List<int>();
+                        NeedToSave = true;
+                    }
                 }
             }
 
@@ -5048,6 +5127,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                             {
                                                 CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
                                                 CurrentPSS.PSSAddressNew.StreetType = i;
+                                                SaveRestOfAddressNew();
                                                 IsDirty = true;
                                             }
                                             break;
@@ -5070,6 +5150,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
                                     CurrentPSS.PSSAddressNew.PostalCode = tb.Text;
+                                    SaveRestOfAddressNew();
                                     IsDirty = true;
                                 }
                             }
@@ -5136,6 +5217,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
                                     CurrentPSS.PSSAddressNew.Municipality = tb.Text;
+                                    SaveRestOfAddressNew();
                                     IsDirty = true;
                                 }
                             }
@@ -5154,6 +5236,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
                                     CurrentPSS.PSSAddressNew.StreetName = tb.Text;
+                                    SaveRestOfAddressNew();
                                     IsDirty = true;
                                 }
                             }
@@ -5172,6 +5255,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
                                     CurrentPSS.PSSAddressNew.StreetNumber = tb.Text;
+                                    SaveRestOfAddressNew();
                                     IsDirty = true;
                                 }
                             }
@@ -5216,7 +5300,39 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
+            if (CurrentPSS.PSSAddressNew.StreetNumber != null
+                || CurrentPSS.PSSAddressNew.StreetName != null
+                || CurrentPSS.PSSAddressNew.StreetType != null
+                || CurrentPSS.PSSAddressNew.Municipality != null
+                || CurrentPSS.PSSAddressNew.PostalCode != null)
+            {
+                SaveRestOfAddressNew();
+            }
+
             SaveSubsectorTextFile();
+        }
+        public void SaveRestOfAddressNew()
+        {
+            if (CurrentPSS.PSSAddressNew.StreetNumber == null)
+            {
+                CurrentPSS.PSSAddressNew.StreetNumber = CurrentPSS.PSSAddress.StreetNumber;
+            }
+            if (CurrentPSS.PSSAddressNew.StreetName == null)
+            {
+                CurrentPSS.PSSAddressNew.StreetName = CurrentPSS.PSSAddress.StreetName;
+            }
+            if (CurrentPSS.PSSAddressNew.StreetType == null)
+            {
+                CurrentPSS.PSSAddressNew.StreetType = CurrentPSS.PSSAddress.StreetType;
+            }
+            if (CurrentPSS.PSSAddressNew.Municipality == null)
+            {
+                CurrentPSS.PSSAddressNew.Municipality = CurrentPSS.PSSAddress.Municipality;
+            }
+            if (CurrentPSS.PSSAddressNew.PostalCode == null)
+            {
+                CurrentPSS.PSSAddressNew.PostalCode = CurrentPSS.PSSAddress.PostalCode;
+            }
         }
         private string SaveToCSSPWebToolsAddress(int SubsectorTVItemID, int TVItemID, string StreetNumber, string StreetName, int StreetType, string Municipality, string PostalCode, bool CreateMunicipality, string AdminEmail)
         {
@@ -5519,6 +5635,41 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (Language == LanguageEnum.fr)
                     {
                         uri = new Uri($"{baseURLFR}PSSExistJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+        }
+        public string MunicipalityExistUnderSubsectorInCSSPWebTools(int SubsectorTVItemID, string Municipality, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("SubsectorTVItemID", SubsectorTVItemID.ToString());
+                paramList.Add("Municipality", Municipality);
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}MunicipalityExistJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}MunicipalityExistJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);
