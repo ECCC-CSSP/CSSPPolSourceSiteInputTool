@@ -1696,7 +1696,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                         if (picture.DescriptionNew != null
                             || picture.ExtensionNew != null
                             || picture.FileNameNew != null
-                            || picture.ToRemove != null)
+                            || picture.ToRemove != null
+                            || picture.PictureTVItemID >= 10000000)
                         {
                             NeedPicturesUpdate = true;
                             break;
@@ -1878,7 +1879,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                             if (picture.DescriptionNew != null
                                 || picture.ExtensionNew != null
                                 || picture.FileNameNew != null
-                                || picture.ToRemove != null)
+                                || picture.ToRemove != null
+                                || picture.PictureTVItemID >= 10000000)
                             {
                                 NeedPicturesUpdate = true;
                                 break;
@@ -2076,6 +2078,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 issue.IssueID = 10000000;
                 issue.Ordinal = 0;
                 issue.LastUpdated_UTC = DateTime.Now;
+                issue.PolSourceObsInfoIntList = new List<int>() { (int)PolSourceObsInfoEnum.SourceHumanLand };
+                issue.PolSourceObsInfoIntListNew = new List<int>() { (int)PolSourceObsInfoEnum.SourceHumanLand };
 
                 pss.PSSObs.IssueList.Add(issue);
             }
@@ -2299,9 +2303,49 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MunicipalityExist = true;
                     }
 
-                    if (!MunicipalityExist && CreateMunicipality)
+                    if (!MunicipalityExist)
                     {
-                        MessageText = $"Trying to Change address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+                        if (CreateMunicipality)
+                        {
+                            MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+                            EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                            ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, CreateMunicipality, AdminEmail);
+                            ret = ret.Replace("\"", "");
+                            if (ret.StartsWith("ERROR"))
+                            {
+                                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                                EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                                if (NeedToSave)
+                                {
+                                    SaveSubsectorTextFile();
+                                }
+                            }
+                            else
+                            {
+                                EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                                CurrentPSS.PSSAddress.AddressType = (int)AddressTypeEnum.Civic;
+                                CurrentPSS.PSSAddress.AddressTVItemID = int.Parse(ret);
+                                CurrentPSS.PSSAddress.StreetNumber = CurrentPSS.PSSAddressNew.StreetNumber;
+                                CurrentPSS.PSSAddress.StreetName = CurrentPSS.PSSAddressNew.StreetName;
+                                CurrentPSS.PSSAddress.StreetType = CurrentPSS.PSSAddressNew.StreetType;
+                                CurrentPSS.PSSAddress.Municipality = CurrentPSS.PSSAddressNew.Municipality;
+                                CurrentPSS.PSSAddress.PostalCode = CurrentPSS.PSSAddressNew.PostalCode;
+                                CurrentPSS.PSSAddressNew.StreetNumber = null;
+                                CurrentPSS.PSSAddressNew.StreetName = null;
+                                CurrentPSS.PSSAddressNew.StreetType = null;
+                                CurrentPSS.PSSAddressNew.Municipality = null;
+                                CurrentPSS.PSSAddressNew.PostalCode = null;
+                                CurrentPSS.PSSAddressNew.AddressTVItemID = null;
+                                CurrentPSS.PSSAddressNew.AddressType = null;
+                                NeedToSave = true;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
                         ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, CreateMunicipality, AdminEmail);
@@ -2373,9 +2417,55 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            foreach (Issue issue in CurrentPSS.PSSObs.IssueList)
+            foreach (Issue issue in CurrentPSS.PSSObs.IssueList.Where(c => c.ToRemove == true).OrderBy(c => c.Ordinal))
             {
-                if (issue.PolSourceObsInfoIntListNew != null || IsNewPSS)
+                if (issue.IssueID >= 10000000)
+                {
+                    CurrentPSS.PSSObs.IssueList.Remove(issue);
+                    NeedToSave = true;
+                }
+                else
+                {
+                    string MessageText = $"Removing issue # --- [{issue.Ordinal}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                    ret = RemoveFromCSSPWebToolsIssue((int)CurrentPSS.PSSObs.ObsID, (int)issue.IssueID, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR:"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        if (NeedToSave)
+                        {
+                            SaveSubsectorTextFile();
+                        }
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                        CurrentPSS.PSSObs.IssueList.Remove(issue);
+                        NeedToSave = true;
+                    }
+                }
+
+                if (CurrentPSS.PSSObs.IssueList.Count == 0)
+                {
+                    Issue issue2 = new Issue();
+                    issue2.IssueID = 10000000;
+                    issue2.Ordinal = 0;
+                    issue2.LastUpdated_UTC = DateTime.Now;
+                    issue2.PolSourceObsInfoIntList = new List<int>() { (int)PolSourceObsInfoEnum.SourceHumanLand };
+                    issue2.PolSourceObsInfoIntListNew = new List<int>() { (int)PolSourceObsInfoEnum.SourceHumanLand };
+
+                    CurrentPSS.PSSObs.IssueList.Add(issue2);
+                    NeedToSave = true;
+                }
+            }
+
+            foreach (Issue issue in CurrentPSS.PSSObs.IssueList.OrderBy(c => c.Ordinal))
+            {
+                if (issue.PolSourceObsInfoIntListNew.Count > 0 || IsNewPSS)
                 {
                     string MessageText = $"Changing or adding issue # --- [{issue.Ordinal}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs(MessageText));
@@ -2405,9 +2495,97 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             foreach (Picture picture in CurrentPSS.PSSPictureList)
             {
-                if (picture.FileNameNew != null || IsNewPSS)
+                bool IsNew = false;
+                if (picture.PictureTVItemID >= 10000000)
                 {
-                    // will need to create or change the issue.
+                    IsNew = true;
+
+                    string MessageText = $"Adding picture --- [{picture.FileNameNew}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                    FileInfo fiPicture = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}");
+
+                    if (!fiPicture.Exists)
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        continue;
+                    }
+
+                    ret = SaveToCSSPWebToolsPicture(fiPicture, (int)CurrentPSS.PSSTVItemID, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR:"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        if (NeedToSave)
+                        {
+                            SaveSubsectorTextFile();
+                        }
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                        picture.PictureTVItemID = int.Parse(ret);
+
+                        FileInfo fiPictureNew = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}");
+
+                        if (fiPicture.Exists)
+                        {
+                            try
+                            {
+                                File.Copy(fiPicture.FullName, fiPictureNew.FullName);
+                                fiPicture.Delete();
+                            }
+                            catch (Exception ex)
+                            {
+                                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                                string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+                                EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
+                            }
+                        }
+
+                        NeedToSave = true;
+                    }
+                }
+
+                if (picture.FileNameNew != null
+                    || picture.DescriptionNew != null
+                    || picture.ExtensionNew != null
+                    || IsNew)
+                {
+                    string FileNameText = picture.FileNameNew != null ? picture.FileNameNew : picture.FileName;
+                    string DescriptionText = picture.DescriptionNew != null ? picture.DescriptionNew : picture.Description;
+                    string ExtensionText = picture.ExtensionNew != null ? picture.ExtensionNew : picture.Extension;
+
+                    string MessageText = $"Changing properties of picture --- [{picture.FileNameNew}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+
+                    ret = SaveToCSSPWebToolsPictureInfo((int)CurrentPSS.PSSTVItemID, (int)picture.PictureTVItemID, FileNameText, DescriptionText, ExtensionText, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR:"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        if (NeedToSave)
+                        {
+                            SaveSubsectorTextFile();
+                        }
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                        picture.PictureTVItemID = int.Parse(ret);
+                        picture.FileName = FileNameText;
+                        picture.Description = DescriptionText;
+                        picture.Extension = ExtensionText;
+                        picture.FileNameNew = null;
+                        picture.DescriptionNew = null;
+                        picture.ExtensionNew = null;
+                        NeedToSave = true;
+                    }
                 }
             }
 
@@ -2503,7 +2681,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                         if (picture.DescriptionNew != null
                             || picture.ExtensionNew != null
                             || picture.FileNameNew != null
-                            || picture.ToRemove != null)
+                            || picture.ToRemove != null
+                            || picture.PictureTVItemID >= 10000000)
                         {
                             NeedPicturesUpdate = true;
                             break;
@@ -2650,6 +2829,41 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             DrawPanelPSS();
+        }
+        public string RemoveFromCSSPWebToolsIssue(int ObsID, int IssueID, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("ObsID", ObsID.ToString());
+                paramList.Add("IssueID", IssueID.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}RemoveIssueJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}RemoveIssueJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
         }
         public void ShowInfrastructure()
         {
@@ -3324,7 +3538,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                         if (picture.DescriptionNew != null
                             || picture.ExtensionNew != null
                             || picture.FileNameNew != null
-                            || picture.ToRemove != null)
+                            || picture.ToRemove != null
+                            || picture.PictureTVItemID >= 10000000)
                         {
                             NeedPicturesUpdate = true;
                             break;
@@ -3684,7 +3899,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                         if (picture.DescriptionNew != null
                             || picture.ExtensionNew != null
                             || picture.FileNameNew != null
-                            || picture.ToRemove != null)
+                            || picture.ToRemove != null
+                            || picture.PictureTVItemID >= 10000000)
                         {
                             NeedPicturesUpdate = true;
                             break;
@@ -5547,6 +5763,76 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (Language == LanguageEnum.fr)
                     {
                         uri = new Uri($"{baseURLFR}SavePSSTVTextJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+
+        }
+        private string SaveToCSSPWebToolsPicture(FileInfo fiPicture, int TVItemID, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    //webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}SavePSSPictureJSON?e={AdminEmail}&t={TVItemID}");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}SavePSSPictureJSON?e={AdminEmail}&t={TVItemID}");
+                    }
+
+                    byte[] ret = webClient.UploadFile(uri, "POST", fiPicture.FullName);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+
+        }
+        private string SaveToCSSPWebToolsPictureInfo(int TVItemID, int PictureTVItemID, string FileName, string Description, string Extension, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("TVItemID", TVItemID.ToString());
+                paramList.Add("PictureTVItemID", PictureTVItemID.ToString());
+                paramList.Add("FileName", FileName);
+                paramList.Add("Description", Description);
+                paramList.Add("Extension", Extension);
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}SavePictureInfoJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}SavePictureInfoJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);

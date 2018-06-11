@@ -97,6 +97,11 @@ namespace CSSPPolSourceSiteInputTool
             {
                 switch (Environment.UserName.ToLower())
                 {
+                    case "charles":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc2@canada.ca";
+                        }
+                        break;
                     case "leblancc":
                         {
                             polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc2@canada.ca";
@@ -608,6 +613,10 @@ namespace CSSPPolSourceSiteInputTool
             }
             polSourceSiteInputToolHelper.RegenerateSubsectorKMLFile();
 
+            polSourceSiteInputToolHelper.InfrastructureTVItemID = 0;
+            polSourceSiteInputToolHelper.PolSourceSiteTVItemID = 0;
+            polSourceSiteInputToolHelper.CurrentInfrastructure = null;
+            polSourceSiteInputToolHelper.CurrentPSS = null;
             polSourceSiteInputToolHelper.DrawPanelPSS();
             polSourceSiteInputToolHelper.ReDrawPolSourceSite();
             butViewKMLFile.Enabled = true;
@@ -1345,7 +1354,8 @@ namespace CSSPPolSourceSiteInputTool
         private void Setup()
         {
             panelShowAdmin.Visible = false;
-            if (Environment.UserName.ToLower() == "leblancc" ||
+            if (Environment.UserName.ToLower() == "charles" || 
+                Environment.UserName.ToLower() == "leblancc" ||
                 Environment.UserName.ToLower() == "pomeroyj" ||
                 Environment.UserName.ToLower() == "thibodeaum" ||
                 Environment.UserName.ToLower() == "perchardg")

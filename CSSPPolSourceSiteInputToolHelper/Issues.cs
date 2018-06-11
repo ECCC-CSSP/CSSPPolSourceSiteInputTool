@@ -1164,6 +1164,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 for (int i = 0, count = CurrentPSS.PSSObs.IssueList.Count; i < count; i++)
                 {
+                    CurrentPSS.PSSObs.IssueList[i].PolSourceObsInfoIntListNew = CurrentPSS.PSSObs.IssueList[i].PolSourceObsInfoIntList;
                     if (CurrentPSS.PSSObs.IssueList[i].IssueID == issue.IssueID)
                     {
                         int tempOrdinal = (int)CurrentPSS.PSSObs.IssueList[i].Ordinal;
@@ -1191,6 +1192,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 for (int i = 0, count = CurrentPSS.PSSObs.IssueList.Count; i < count; i++)
                 {
+                    CurrentPSS.PSSObs.IssueList[i].PolSourceObsInfoIntListNew = CurrentPSS.PSSObs.IssueList[i].PolSourceObsInfoIntList;
                     if (CurrentPSS.PSSObs.IssueList[i].IssueID == issue.IssueID)
                     {
                         int tempOrdinal = (int)CurrentPSS.PSSObs.IssueList[i].Ordinal;

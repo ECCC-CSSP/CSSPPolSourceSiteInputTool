@@ -358,7 +358,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                     sb.AppendLine($"PATHCOORDLISTNEW\t{PathCoordListNew}\t");
                 }
-                
+
                 if (infrastructure.InfrastructureAddress != null)
                 {
                     if (infrastructure.InfrastructureAddress.AddressTVItemID != null)
@@ -539,6 +539,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                 foreach (string oldIssueText in pss.OldIssueTextList)
                 {
                     sb.AppendLine($"OLDISSUETEXT\t{oldIssueText}\t");
+                }
+
+                int count = 0;
+                foreach (Issue issue in pss.PSSObs.IssueList.OrderBy(c => c.Ordinal))
+                {
+                    issue.Ordinal = count;
+                    count += 1;
                 }
 
                 foreach (Issue issue in pss.PSSObs.IssueList.OrderBy(c => c.Ordinal))
