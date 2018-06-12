@@ -1508,7 +1508,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             PanelViewAndEdit.Controls.Add(lblItem2);
 
-            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
+            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
             if (IsEditing)
             {
@@ -1523,8 +1523,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                 textItem.Text = (string.IsNullOrWhiteSpace(valNew) ? (string.IsNullOrWhiteSpace(val) ? "" : val) : valNew);
 
                 PanelViewAndEdit.Controls.Add(textItem);
-
-
             }
             else
             {
@@ -2493,6 +2491,114 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
+            // need to do ExtraComment
+            foreach (Issue issue in CurrentPSS.PSSObs.IssueList.OrderBy(c => c.Ordinal))
+            {
+                if (issue.PolSourceObsInfoIntListNew.Count > 0 || IsNewPSS)
+                {
+                    string MessageText = $"Changing Extra Comment of issue # --- [{issue.Ordinal}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                    string ExtraComment = (string.IsNullOrWhiteSpace(issue.ExtraCommentNew) ? (string.IsNullOrWhiteSpace(issue.ExtraComment) ? "" : issue.ExtraComment) : "");
+
+                    ret = SaveToCSSPWebToolsIssueExtraComment((int)CurrentPSS.PSSObs.ObsID, (int)issue.IssueID, ExtraComment, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR:"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        if (NeedToSave)
+                        {
+                            SaveSubsectorTextFile();
+                        }
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                        issue.ExtraComment = issue.ExtraCommentNew;
+                        issue.ExtraCommentNew = null;
+                        NeedToSave = true;
+                    }
+                }
+            }
+
+            List<int> PictureTVItemIDListToRemove = new List<int>();
+
+            foreach (Picture picture in CurrentPSS.PSSPictureList)
+            {
+                FileInfo fiPictureToDelete = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}");
+
+                if (picture.ToRemove == true)
+                {
+                    if (picture.PictureTVItemID >= 10000000)
+                    {
+                        if (fiPictureToDelete.Exists)
+                        {
+                            try
+                            {
+                                fiPictureToDelete.Delete();
+                            }
+                            catch (Exception ex)
+                            {
+                                string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+                                EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
+                            }
+                        }
+
+                        continue;
+                    }
+
+                    string MessageText = $"Removing picture --- [{picture.FileNameNew}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                    ret = SaveToCSSPWebToolsPictureToRemove((int)CurrentPSS.PSSTVItemID, (int)picture.PictureTVItemID, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR:"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        if (NeedToSave)
+                        {
+                            SaveSubsectorTextFile();
+                        }
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                        PictureTVItemIDListToRemove.Add((int)picture.PictureTVItemID);
+
+                        if (fiPictureToDelete.Exists)
+                        {
+                            try
+                            {
+                                fiPictureToDelete.Delete();
+                            }
+                            catch (Exception ex)
+                            {
+                                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                                string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+                                EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
+                            }
+                        }
+
+                        NeedToSave = true;
+                    }
+
+                }
+            }
+
+            foreach (int pictureTVItemIDToDelete in PictureTVItemIDListToRemove)
+            {
+                Picture picture = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == pictureTVItemIDToDelete).FirstOrDefault();
+
+                if (picture != null)
+                {
+                    CurrentPSS.PSSPictureList.Remove(picture);
+                }
+            }
+
             foreach (Picture picture in CurrentPSS.PSSPictureList)
             {
                 bool IsNew = false;
@@ -3269,7 +3375,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 #region Comment
                 X = 10;
-                DrawItemTextMultiline(X, Y, CurrentInfrastructure.Comment, CurrentInfrastructure.CommentNew, "Comment", "textBoxComment", 300);
+                DrawItemTextMultiline(X, Y, CurrentInfrastructure.Comment, CurrentInfrastructure.CommentNew, "Comment", "textBoxComment", 500);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 #endregion Comment
@@ -3286,7 +3392,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     #region TempCatchAllRemoveLater
                     X = 10;
-                    DrawItemTextMultiline(X, Y, CurrentInfrastructure.TempCatchAllRemoveLater, CurrentInfrastructure.TempCatchAllRemoveLaterNew, "Temp Catch All Remove Later", "textBoxTempCatchAllRemoveLater", 400);
+                    DrawItemTextMultiline(X, Y, CurrentInfrastructure.TempCatchAllRemoveLater, CurrentInfrastructure.TempCatchAllRemoveLaterNew, "Temp Catch All Remove Later", "textBoxTempCatchAllRemoveLater", 500);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion TempCatchAllRemoveLater
@@ -3888,7 +3994,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     foreach (Issue issue in CurrentPSS.PSSObs.IssueList)
                     {
-                        if (issue.PolSourceObsInfoIntListNew.Count > 0 || issue.ToRemove == true)
+                        if (issue.PolSourceObsInfoIntListNew.Count > 0 || issue.ExtraCommentNew != null || issue.ToRemove == true)
                         {
                             NeedIssuesUpdate = true;
                             break;
@@ -5705,6 +5811,43 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
+        private string SaveToCSSPWebToolsIssueExtraComment(int ObsID, int IssueID, string ExtraComment, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("ObsID", ObsID.ToString());
+                paramList.Add("IssueID", IssueID.ToString());
+                paramList.Add("ExtraComment", ExtraComment.Replace("\r\n", "|||"));
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}SavePSSObsIssueExtraCommentJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}SavePSSObsIssueExtraCommentJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+
+        }
         private string SaveToCSSPWebToolsLatLng(int TVItemID, float Lat, float Lng, string AdminEmail)
         {
             try
@@ -5833,6 +5976,42 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (Language == LanguageEnum.fr)
                     {
                         uri = new Uri($"{baseURLFR}SavePictureInfoJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+
+        }
+        private string SaveToCSSPWebToolsPictureToRemove(int TVItemID, int PictureTVItemID, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("TVItemID", TVItemID.ToString());
+                paramList.Add("PictureTVItemID", PictureTVItemID.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}RemovePictureJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}RemovePictureJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);

@@ -551,6 +551,17 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                     }
+
+                    if (!IsEditing)
+                    {
+                        #region Extra Comment
+                        X = 10;
+                        DrawItemTextMultiline(X, Y, issue.ExtraComment, issue.ExtraCommentNew, "Extra Comment", $"textBoxExtraComment_{issue.IssueID}", 500);
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                        #endregion Extra Comment
+
+                    }
                 }
             }
 
@@ -694,6 +705,13 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             int Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
             int X = 100;
+
+            #region Extra Comment
+            X = 10;
+            DrawItemTextMultiline(X, Y, issue.ExtraComment, issue.ExtraCommentNew, "Extra Comment", $"textBoxExtraComment_{issue.IssueID}", 500);
+
+            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+            #endregion Extra Comment
 
             if (issue.ToRemove == true)
             {
@@ -1053,6 +1071,25 @@ namespace CSSPPolSourceSiteInputToolHelper
                     obsEnumListNew.Add(int.Parse(((Label)control).Tag.ToString()));
                 }
                 issue.PolSourceObsInfoIntListNew = obsEnumListNew;
+
+                foreach (Control control in PanelViewAndEdit.Controls)
+                {
+                    if (control.Name.StartsWith("textBoxExtraComment_"))
+                    {
+                        int ID = int.Parse(control.Name.Replace("textBoxExtraComment_", ""));
+                        if (ID == issue.IssueID)
+                        {
+                            if (control.Text == issue.ExtraComment)
+                            {
+                                issue.ExtraCommentNew = null;
+                            }
+                            else
+                            {
+                                issue.ExtraCommentNew = control.Text;
+                            }
+                        }
+                    }
+                }
             }
 
             RecreateTVText();

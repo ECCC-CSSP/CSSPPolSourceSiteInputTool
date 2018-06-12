@@ -82,6 +82,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public bool? ToRemove { get; set; } = null;
         public bool? IsWellFormed { get; set; } = null;
         public bool? IsCompleted { get; set; } = null;
+        public string ExtraComment { get; set; } = null;
+        public string ExtraCommentNew { get; set; } = null;
     }
 
 }

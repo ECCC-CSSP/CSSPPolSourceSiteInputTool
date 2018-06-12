@@ -3390,6 +3390,38 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "EXTRACOMMENT":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Issue lastIssue = lastPSS.PSSObs.IssueList[lastPSS.PSSObs.IssueList.Count - 1];
+
+                                lastIssue.ExtraComment = LineTxt.Substring(pos + 1, pos2 - pos - 1).Replace("|||", "\r\n");
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "EXTRACOMMENTNEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Issue lastIssue = lastPSS.PSSObs.IssueList[lastPSS.PSSObs.IssueList.Count - 1];
+
+                                lastIssue.ExtraCommentNew = LineTxt.Substring(pos + 1, pos2 - pos - 1).Replace("|||", "\r\n");
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
                     default:
                         {
                             string lineTxt = LineTxt.Substring(0, LineTxt.IndexOf("\t"));

@@ -559,6 +559,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         sb.AppendLine($"ISSUETOREMOVE\t");
                     }
+                    sb.AppendLine($"EXTRACOMMENT\t{issue.ExtraComment.Replace("\r\n", "|||").Replace("\t", "    ")}\t");
+                    if (issue.ExtraCommentNew != null)
+                    {
+                        sb.AppendLine($"EXTRACOMMENTNEW\t{issue.ExtraCommentNew.Replace("\r\n", "|||").Replace("\t", "    ")}\t");
+                    }
                 }
             }
 
