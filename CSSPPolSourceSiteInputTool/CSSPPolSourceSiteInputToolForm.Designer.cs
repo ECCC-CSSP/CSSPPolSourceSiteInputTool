@@ -135,7 +135,6 @@
             this.panelShowInfrastructure.Name = "panelShowInfrastructure";
             this.panelShowInfrastructure.Size = new System.Drawing.Size(95, 34);
             this.panelShowInfrastructure.TabIndex = 12;
-            this.panelShowInfrastructure.Visible = false;
             // 
             // checkBoxShowInfrastructure
             // 
