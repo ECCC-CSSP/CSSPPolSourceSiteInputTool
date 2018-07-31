@@ -29,6 +29,10 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int IssueID = 0;
         public bool IsEditing = false;
         public bool MoreInfo = false;
+        public bool WrittenDescription = true;
+        public bool OldIssueText = true;
+        public bool OldIssue = true;
+        public bool NewIssue = true;
         public bool IsDirty = false;
         public bool IsReading = false;
         public bool IsAdmin = false;

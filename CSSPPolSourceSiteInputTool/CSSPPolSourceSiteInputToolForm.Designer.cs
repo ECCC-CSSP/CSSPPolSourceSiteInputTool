@@ -34,6 +34,7 @@
             this.panelShowInfrastructure = new System.Windows.Forms.Panel();
             this.checkBoxShowInfrastructure = new System.Windows.Forms.CheckBox();
             this.panelSubsectorOrMunicipality = new System.Windows.Forms.Panel();
+            this.butFix = new System.Windows.Forms.Button();
             this.comboBoxSubsectorOrMunicipality = new System.Windows.Forms.ComboBox();
             this.panelProvinces = new System.Windows.Forms.Panel();
             this.comboBoxProvince = new System.Windows.Forms.ComboBox();
@@ -62,11 +63,15 @@
             this.panelShowInputOptions = new System.Windows.Forms.Panel();
             this.checkBoxMoreInfo = new System.Windows.Forms.CheckBox();
             this.radioButtonShowMap = new System.Windows.Forms.RadioButton();
-            this.radioButtonOnlyPictures = new System.Windows.Forms.RadioButton();
-            this.radioButtonOnlyIssues = new System.Windows.Forms.RadioButton();
+            this.radioButtonPictures = new System.Windows.Forms.RadioButton();
+            this.radioButtonIssues = new System.Windows.Forms.RadioButton();
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
+            this.checkBoxWrittenDescription = new System.Windows.Forms.CheckBox();
+            this.checkBoxOldIssueText = new System.Windows.Forms.CheckBox();
+            this.checkBoxOldIssue = new System.Windows.Forms.CheckBox();
+            this.checkBoxNewIssue = new System.Windows.Forms.CheckBox();
             this.panelButtonBar.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
             this.panelShowInfrastructure.SuspendLayout();
@@ -111,9 +116,9 @@
             // 
             this.panelShowAdmin.Controls.Add(this.checkBoxShowAdmin);
             this.panelShowAdmin.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelShowAdmin.Location = new System.Drawing.Point(796, 0);
+            this.panelShowAdmin.Location = new System.Drawing.Point(791, 0);
             this.panelShowAdmin.Name = "panelShowAdmin";
-            this.panelShowAdmin.Size = new System.Drawing.Size(68, 34);
+            this.panelShowAdmin.Size = new System.Drawing.Size(73, 34);
             this.panelShowAdmin.TabIndex = 16;
             // 
             // checkBoxShowAdmin
@@ -149,12 +154,24 @@
             // 
             // panelSubsectorOrMunicipality
             // 
+            this.panelSubsectorOrMunicipality.Controls.Add(this.butFix);
             this.panelSubsectorOrMunicipality.Controls.Add(this.comboBoxSubsectorOrMunicipality);
             this.panelSubsectorOrMunicipality.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSubsectorOrMunicipality.Location = new System.Drawing.Point(211, 0);
+            this.panelSubsectorOrMunicipality.Location = new System.Drawing.Point(208, 0);
             this.panelSubsectorOrMunicipality.Name = "panelSubsectorOrMunicipality";
-            this.panelSubsectorOrMunicipality.Size = new System.Drawing.Size(445, 34);
+            this.panelSubsectorOrMunicipality.Size = new System.Drawing.Size(549, 34);
             this.panelSubsectorOrMunicipality.TabIndex = 13;
+            // 
+            // butFix
+            // 
+            this.butFix.Location = new System.Drawing.Point(448, 6);
+            this.butFix.Name = "butFix";
+            this.butFix.Size = new System.Drawing.Size(87, 23);
+            this.butFix.TabIndex = 12;
+            this.butFix.Text = "Fix";
+            this.butFix.UseVisualStyleBackColor = true;
+            this.butFix.Visible = false;
+            this.butFix.Click += new System.EventHandler(this.butFix_Click);
             // 
             // comboBoxSubsectorOrMunicipality
             // 
@@ -172,7 +189,7 @@
             this.panelProvinces.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelProvinces.Location = new System.Drawing.Point(2, 0);
             this.panelProvinces.Name = "panelProvinces";
-            this.panelProvinces.Size = new System.Drawing.Size(209, 34);
+            this.panelProvinces.Size = new System.Drawing.Size(206, 34);
             this.panelProvinces.TabIndex = 18;
             // 
             // comboBoxProvince
@@ -424,10 +441,14 @@
             // panelShowInputOptions
             // 
             this.panelShowInputOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelShowInputOptions.Controls.Add(this.checkBoxNewIssue);
+            this.panelShowInputOptions.Controls.Add(this.checkBoxOldIssue);
+            this.panelShowInputOptions.Controls.Add(this.checkBoxOldIssueText);
+            this.panelShowInputOptions.Controls.Add(this.checkBoxWrittenDescription);
             this.panelShowInputOptions.Controls.Add(this.checkBoxMoreInfo);
             this.panelShowInputOptions.Controls.Add(this.radioButtonShowMap);
-            this.panelShowInputOptions.Controls.Add(this.radioButtonOnlyPictures);
-            this.panelShowInputOptions.Controls.Add(this.radioButtonOnlyIssues);
+            this.panelShowInputOptions.Controls.Add(this.radioButtonPictures);
+            this.panelShowInputOptions.Controls.Add(this.radioButtonIssues);
             this.panelShowInputOptions.Controls.Add(this.radioButtonDetails);
             this.panelShowInputOptions.Controls.Add(this.checkBoxEditing);
             this.panelShowInputOptions.Dock = System.Windows.Forms.DockStyle.Top;
@@ -439,7 +460,7 @@
             // checkBoxMoreInfo
             // 
             this.checkBoxMoreInfo.AutoSize = true;
-            this.checkBoxMoreInfo.Location = new System.Drawing.Point(77, 6);
+            this.checkBoxMoreInfo.Location = new System.Drawing.Point(66, 6);
             this.checkBoxMoreInfo.Name = "checkBoxMoreInfo";
             this.checkBoxMoreInfo.Size = new System.Drawing.Size(71, 17);
             this.checkBoxMoreInfo.TabIndex = 7;
@@ -450,7 +471,7 @@
             // radioButtonShowMap
             // 
             this.radioButtonShowMap.AutoSize = true;
-            this.radioButtonShowMap.Location = new System.Drawing.Point(536, 6);
+            this.radioButtonShowMap.Location = new System.Drawing.Point(596, 6);
             this.radioButtonShowMap.Name = "radioButtonShowMap";
             this.radioButtonShowMap.Size = new System.Drawing.Size(46, 17);
             this.radioButtonShowMap.TabIndex = 6;
@@ -458,33 +479,33 @@
             this.radioButtonShowMap.UseVisualStyleBackColor = true;
             this.radioButtonShowMap.CheckedChanged += new System.EventHandler(this.radioButtonShowMap_CheckedChanged);
             // 
-            // radioButtonOnlyPictures
+            // radioButtonPictures
             // 
-            this.radioButtonOnlyPictures.AutoSize = true;
-            this.radioButtonOnlyPictures.Location = new System.Drawing.Point(404, 6);
-            this.radioButtonOnlyPictures.Name = "radioButtonOnlyPictures";
-            this.radioButtonOnlyPictures.Size = new System.Drawing.Size(86, 17);
-            this.radioButtonOnlyPictures.TabIndex = 5;
-            this.radioButtonOnlyPictures.Text = "Only pictures";
-            this.radioButtonOnlyPictures.UseVisualStyleBackColor = true;
-            this.radioButtonOnlyPictures.CheckedChanged += new System.EventHandler(this.radioButtonOnlyPictures_CheckedChanged);
+            this.radioButtonPictures.AutoSize = true;
+            this.radioButtonPictures.Location = new System.Drawing.Point(525, 5);
+            this.radioButtonPictures.Name = "radioButtonPictures";
+            this.radioButtonPictures.Size = new System.Drawing.Size(63, 17);
+            this.radioButtonPictures.TabIndex = 5;
+            this.radioButtonPictures.Text = "Pictures";
+            this.radioButtonPictures.UseVisualStyleBackColor = true;
+            this.radioButtonPictures.CheckedChanged += new System.EventHandler(this.radioButtonPictures_CheckedChanged);
             // 
-            // radioButtonOnlyIssues
+            // radioButtonIssues
             // 
-            this.radioButtonOnlyIssues.AutoSize = true;
-            this.radioButtonOnlyIssues.Location = new System.Drawing.Point(302, 6);
-            this.radioButtonOnlyIssues.Name = "radioButtonOnlyIssues";
-            this.radioButtonOnlyIssues.Size = new System.Drawing.Size(78, 17);
-            this.radioButtonOnlyIssues.TabIndex = 4;
-            this.radioButtonOnlyIssues.Text = "Only issues";
-            this.radioButtonOnlyIssues.UseVisualStyleBackColor = true;
-            this.radioButtonOnlyIssues.CheckedChanged += new System.EventHandler(this.radioButtonOnlyIssues_CheckedChanged);
+            this.radioButtonIssues.AutoSize = true;
+            this.radioButtonIssues.Location = new System.Drawing.Point(464, 5);
+            this.radioButtonIssues.Name = "radioButtonIssues";
+            this.radioButtonIssues.Size = new System.Drawing.Size(55, 17);
+            this.radioButtonIssues.TabIndex = 4;
+            this.radioButtonIssues.Text = "Issues";
+            this.radioButtonIssues.UseVisualStyleBackColor = true;
+            this.radioButtonIssues.CheckedChanged += new System.EventHandler(this.radioButtonIssues_CheckedChanged);
             // 
             // radioButtonDetails
             // 
             this.radioButtonDetails.AutoSize = true;
             this.radioButtonDetails.Checked = true;
-            this.radioButtonDetails.Location = new System.Drawing.Point(230, 6);
+            this.radioButtonDetails.Location = new System.Drawing.Point(401, 5);
             this.radioButtonDetails.Name = "radioButtonDetails";
             this.radioButtonDetails.Size = new System.Drawing.Size(57, 17);
             this.radioButtonDetails.TabIndex = 3;
@@ -496,7 +517,7 @@
             // checkBoxEditing
             // 
             this.checkBoxEditing.AutoSize = true;
-            this.checkBoxEditing.Location = new System.Drawing.Point(13, 6);
+            this.checkBoxEditing.Location = new System.Drawing.Point(7, 6);
             this.checkBoxEditing.Name = "checkBoxEditing";
             this.checkBoxEditing.Size = new System.Drawing.Size(58, 17);
             this.checkBoxEditing.TabIndex = 2;
@@ -507,6 +528,58 @@
             // openFileDialogCSSP
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
+            // 
+            // checkBoxWrittenDescription
+            // 
+            this.checkBoxWrittenDescription.AutoSize = true;
+            this.checkBoxWrittenDescription.Checked = true;
+            this.checkBoxWrittenDescription.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxWrittenDescription.Location = new System.Drawing.Point(169, 6);
+            this.checkBoxWrittenDescription.Name = "checkBoxWrittenDescription";
+            this.checkBoxWrittenDescription.Size = new System.Drawing.Size(51, 17);
+            this.checkBoxWrittenDescription.TabIndex = 8;
+            this.checkBoxWrittenDescription.Text = "Desc";
+            this.checkBoxWrittenDescription.UseVisualStyleBackColor = true;
+            this.checkBoxWrittenDescription.CheckedChanged += new System.EventHandler(this.checkBoxWrittenDescription_CheckedChanged);
+            // 
+            // checkBoxOldIssueText
+            // 
+            this.checkBoxOldIssueText.AutoSize = true;
+            this.checkBoxOldIssueText.Checked = true;
+            this.checkBoxOldIssueText.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOldIssueText.Location = new System.Drawing.Point(219, 6);
+            this.checkBoxOldIssueText.Name = "checkBoxOldIssueText";
+            this.checkBoxOldIssueText.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxOldIssueText.TabIndex = 9;
+            this.checkBoxOldIssueText.Text = "Text";
+            this.checkBoxOldIssueText.UseVisualStyleBackColor = true;
+            this.checkBoxOldIssueText.CheckedChanged += new System.EventHandler(this.checkBoxOldIssueText_CheckedChanged);
+            // 
+            // checkBoxOldIssue
+            // 
+            this.checkBoxOldIssue.AutoSize = true;
+            this.checkBoxOldIssue.Checked = true;
+            this.checkBoxOldIssue.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOldIssue.Location = new System.Drawing.Point(266, 6);
+            this.checkBoxOldIssue.Name = "checkBoxOldIssue";
+            this.checkBoxOldIssue.Size = new System.Drawing.Size(42, 17);
+            this.checkBoxOldIssue.TabIndex = 10;
+            this.checkBoxOldIssue.Text = "Old";
+            this.checkBoxOldIssue.UseVisualStyleBackColor = true;
+            this.checkBoxOldIssue.CheckedChanged += new System.EventHandler(this.checkBoxOldIssue_CheckedChanged);
+            // 
+            // checkBoxNewIssue
+            // 
+            this.checkBoxNewIssue.AutoSize = true;
+            this.checkBoxNewIssue.Checked = true;
+            this.checkBoxNewIssue.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxNewIssue.Location = new System.Drawing.Point(308, 6);
+            this.checkBoxNewIssue.Name = "checkBoxNewIssue";
+            this.checkBoxNewIssue.Size = new System.Drawing.Size(48, 17);
+            this.checkBoxNewIssue.TabIndex = 11;
+            this.checkBoxNewIssue.Text = "New";
+            this.checkBoxNewIssue.UseVisualStyleBackColor = true;
+            this.checkBoxNewIssue.CheckedChanged += new System.EventHandler(this.checkBoxNewIssue_CheckedChanged);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
@@ -565,8 +638,8 @@
         private System.Windows.Forms.CheckBox checkBoxLanguage;
         private System.Windows.Forms.TextBox textBoxEmpty;
         private System.Windows.Forms.CheckBox checkBoxEditing;
-        private System.Windows.Forms.RadioButton radioButtonOnlyPictures;
-        private System.Windows.Forms.RadioButton radioButtonOnlyIssues;
+        private System.Windows.Forms.RadioButton radioButtonPictures;
+        private System.Windows.Forms.RadioButton radioButtonIssues;
         private System.Windows.Forms.RadioButton radioButtonDetails;
         private System.Windows.Forms.RadioButton radioButtonShowMap;
         private System.Windows.Forms.Button butViewKMLFile;
@@ -591,6 +664,11 @@
         private System.Windows.Forms.Panel panelCreateSubsectorDirectory;
         private System.Windows.Forms.Panel panelAddNewInfrastructure;
         private System.Windows.Forms.Button butInfrastructureAdd;
+        private System.Windows.Forms.Button butFix;
+        private System.Windows.Forms.CheckBox checkBoxWrittenDescription;
+        private System.Windows.Forms.CheckBox checkBoxOldIssueText;
+        private System.Windows.Forms.CheckBox checkBoxOldIssue;
+        private System.Windows.Forms.CheckBox checkBoxNewIssue;
     }
 }
 

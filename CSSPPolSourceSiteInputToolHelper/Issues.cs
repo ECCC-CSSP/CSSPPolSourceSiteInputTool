@@ -201,94 +201,100 @@ namespace CSSPPolSourceSiteInputToolHelper
             Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
             X = 10;
 
-            Label lblWrittenDesc = new Label();
-            lblWrittenDesc.AutoSize = true;
-            lblWrittenDesc.Location = new Point(X, Y);
-            lblWrittenDesc.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-            lblWrittenDesc.Font = new Font(new FontFamily(lblWrittenDesc.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-            lblWrittenDesc.Text = $"Written Description: ";
-
-            PanelViewAndEdit.Controls.Add(lblWrittenDesc);
-
-            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 8;
-            X = 30;
-
-            Label lblWrittenDesc2 = new Label();
-            lblWrittenDesc2.AutoSize = true;
-            lblWrittenDesc2.Location = new Point(X, Y);
-            lblWrittenDesc2.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-            lblWrittenDesc2.Font = new Font(new FontFamily(lblWrittenDesc2.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-            if (string.IsNullOrWhiteSpace(CurrentPSS.PSSObs.OldWrittenDescription))
+            if (WrittenDescription)
             {
-                lblWrittenDesc2.Text = $"No written description";
-            }
-            else
-            {
-                lblWrittenDesc2.Text = $"{CurrentPSS.PSSObs.OldWrittenDescription}";
-            }
+                Label lblWrittenDesc = new Label();
+                lblWrittenDesc.AutoSize = true;
+                lblWrittenDesc.Location = new Point(X, Y);
+                lblWrittenDesc.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                lblWrittenDesc.Font = new Font(new FontFamily(lblWrittenDesc.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                lblWrittenDesc.Text = $"Written Description: ";
 
-            PanelViewAndEdit.Controls.Add(lblWrittenDesc2);
+                PanelViewAndEdit.Controls.Add(lblWrittenDesc);
 
-            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-
-            if (CurrentPSS.OldIssueTextList.Count > 0)
-            {
-                X = 10;
-
-                Label lblOldIssue = new Label();
-                lblOldIssue.AutoSize = true;
-                lblOldIssue.Location = new Point(X, Y);
-                lblOldIssue.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                lblOldIssue.Font = new Font(new FontFamily(lblOldIssue.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblOldIssue.Text = $"Old Issue Text:";
-
-                PanelViewAndEdit.Controls.Add(lblOldIssue);
-
-                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 6;
-
-                foreach (string OldIssueText in CurrentPSS.OldIssueTextList)
-                {
-
-                    X = 30;
-
-                    Label lblOldIssueCount = new Label();
-                    lblOldIssueCount.AutoSize = true;
-                    lblOldIssueCount.Location = new Point(X, Y);
-                    lblOldIssueCount.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblOldIssueCount.Font = new Font(new FontFamily(lblOldIssueCount.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                    lblOldIssueCount.Text = $" --- ";
-
-                    PanelViewAndEdit.Controls.Add(lblOldIssueCount);
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 0;
-
-                    Label lblOldIssueText = new Label();
-                    lblOldIssueText.AutoSize = true;
-                    lblOldIssueText.Location = new Point(X, Y);
-                    lblOldIssueText.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblOldIssueText.Font = new Font(new FontFamily(lblOldIssueText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblOldIssueText.Text = $"{OldIssueText}";
-
-                    PanelViewAndEdit.Controls.Add(lblOldIssueText);
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                }
-            }
-            else
-            {
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 8;
                 X = 30;
 
-                Label lblOldIssue = new Label();
-                lblOldIssue.AutoSize = true;
-                lblOldIssue.Location = new Point(X, Y);
-                lblOldIssue.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                lblOldIssue.Font = new Font(new FontFamily(lblOldIssue.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblOldIssue.Text = $"No Old Issue Text:";
+                Label lblWrittenDesc2 = new Label();
+                lblWrittenDesc2.AutoSize = true;
+                lblWrittenDesc2.Location = new Point(X, Y);
+                lblWrittenDesc2.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                lblWrittenDesc2.Font = new Font(new FontFamily(lblWrittenDesc2.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                if (string.IsNullOrWhiteSpace(CurrentPSS.PSSObs.OldWrittenDescription))
+                {
+                    lblWrittenDesc2.Text = $"No written description";
+                }
+                else
+                {
+                    lblWrittenDesc2.Text = $"{CurrentPSS.PSSObs.OldWrittenDescription}";
+                }
 
-                PanelViewAndEdit.Controls.Add(lblOldIssue);
+                PanelViewAndEdit.Controls.Add(lblWrittenDesc2);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
             }
 
-            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+            if (OldIssueText)
+            {
+                if (CurrentPSS.OldIssueTextList.Count > 0)
+                {
+                    X = 10;
+
+                    Label lblOldIssue = new Label();
+                    lblOldIssue.AutoSize = true;
+                    lblOldIssue.Location = new Point(X, Y);
+                    lblOldIssue.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblOldIssue.Font = new Font(new FontFamily(lblOldIssue.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    lblOldIssue.Text = $"Old Issue Text:";
+
+                    PanelViewAndEdit.Controls.Add(lblOldIssue);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 6;
+
+                    foreach (string OldIssueText in CurrentPSS.OldIssueTextList)
+                    {
+
+                        X = 30;
+
+                        Label lblOldIssueCount = new Label();
+                        lblOldIssueCount.AutoSize = true;
+                        lblOldIssueCount.Location = new Point(X, Y);
+                        lblOldIssueCount.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        lblOldIssueCount.Font = new Font(new FontFamily(lblOldIssueCount.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblOldIssueCount.Text = $" --- ";
+
+                        PanelViewAndEdit.Controls.Add(lblOldIssueCount);
+
+                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 0;
+
+                        Label lblOldIssueText = new Label();
+                        lblOldIssueText.AutoSize = true;
+                        lblOldIssueText.Location = new Point(X, Y);
+                        lblOldIssueText.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        lblOldIssueText.Font = new Font(new FontFamily(lblOldIssueText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblOldIssueText.Text = $"{OldIssueText}";
+
+                        PanelViewAndEdit.Controls.Add(lblOldIssueText);
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    }
+                }
+                else
+                {
+                    X = 30;
+
+                    Label lblOldIssue = new Label();
+                    lblOldIssue.AutoSize = true;
+                    lblOldIssue.Location = new Point(X, Y);
+                    lblOldIssue.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblOldIssue.Font = new Font(new FontFamily(lblOldIssue.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    lblOldIssue.Text = $"No Old Issue Text:";
+
+                    PanelViewAndEdit.Controls.Add(lblOldIssue);
+                }
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+            }
 
             if (CurrentPSS.PSSObs.IssueList.Count > 0)
             {
@@ -324,134 +330,13 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
 
-                    string TVText = "";
-                    for (int i = 0, count = issue.PolSourceObsInfoIntList.Count; i < count; i++)
+                    if (OldIssue)
                     {
-                        string Temp = _BaseEnumService.GetEnumText_PolSourceObsInfoReportEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntList[i]);
-                        switch ((issue.PolSourceObsInfoIntList[i].ToString()).Substring(0, 3))
+                        string TVText = "";
+                        for (int i = 0, count = issue.PolSourceObsInfoIntList.Count; i < count; i++)
                         {
-                            case "101":
-                                {
-                                    Temp = Temp.Replace("Source", "     Source");
-                                }
-                                break;
-                            case "250":
-                                {
-                                    Temp = Temp.Replace("Pathway", "\r\n     Pathway");
-                                }
-                                break;
-                            case "900":
-                                {
-                                    Temp = Temp.Replace("Status", "\r\n     Status");
-                                }
-                                break;
-                            case "910":
-                                {
-                                    Temp = Temp.Replace("Risk", "\r\n     Risk");
-                                }
-                                break;
-                            case "110":
-                            case "120":
-                            case "122":
-                            case "151":
-                            case "152":
-                            case "153":
-                            case "155":
-                            case "156":
-                            case "157":
-                            case "163":
-                            case "166":
-                            case "167":
-                            case "170":
-                            case "171":
-                            case "172":
-                            case "173":
-                            case "176":
-                            case "178":
-                            case "181":
-                            case "182":
-                            case "183":
-                            case "185":
-                            case "186":
-                            case "187":
-                            case "190":
-                            case "191":
-                            case "192":
-                            case "193":
-                            case "194":
-                            case "196":
-                            case "198":
-                            case "199":
-                            case "220":
-                            case "930":
-                                {
-                                    //Temp = Temp;
-                                }
-                                break;
-                            default:
-                                break;
-                        }
-                        TVText = TVText + Temp;
-                    }
-
-                    X = 20;
-
-                    Label lblSelected = new Label();
-                    lblSelected.AutoSize = true;
-                    lblSelected.Location = new Point(X, Y);
-                    lblSelected.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    if (issue.ToRemove == true)
-                    {
-                        lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                    }
-                    else
-                    {
-                        lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    }
-
-                    if (!IsWellFormed)
-                    {
-                        lblSelected.BackColor = BackColorNotWellFormed;
-                    }
-                    else
-                    {
-                        if (!IsCompleted)
-                        {
-                            lblSelected.BackColor = BackColorNotCompleted;
-                        }
-                    }
-
-                    lblSelected.Text = $"{TVText}";
-
-                    PanelViewAndEdit.Controls.Add(lblSelected);
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-
-                    if (issue.PolSourceObsInfoIntListNew.Count > 0)
-                    {
-                        IsWellFormed = IssueWellFormed(issue, true);
-                        IsCompleted = IssueCompleted(issue, true);
-
-                        X = 20;
-
-                        Label lblChangedOrNew = new Label();
-                        lblChangedOrNew.AutoSize = true;
-                        lblChangedOrNew.Location = new Point(X, Y);
-                        lblChangedOrNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                        lblChangedOrNew.Font = new Font(new FontFamily(lblChangedOrNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        lblChangedOrNew.Text = $"----------------------- Changed to ----------------------------------------------------";
-
-                        PanelViewAndEdit.Controls.Add(lblChangedOrNew);
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-
-                        X = 30;
-
-                        TVText = "";
-                        for (int i = 0, count = issue.PolSourceObsInfoIntListNew.Count; i < count; i++)
-                        {
-                            string Temp = _BaseEnumService.GetEnumText_PolSourceObsInfoReportEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntListNew[i]);
-                            switch ((issue.PolSourceObsInfoIntListNew[i].ToString()).Substring(0, 3))
+                            string Temp = _BaseEnumService.GetEnumText_PolSourceObsInfoReportEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntList[i]);
+                            switch ((issue.PolSourceObsInfoIntList[i].ToString()).Substring(0, 3))
                             {
                                 case "101":
                                     {
@@ -519,48 +404,175 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                         X = 20;
 
-                        Label lblSelectedNew = new Label();
-                        lblSelectedNew.AutoSize = true;
-                        lblSelectedNew.Location = new Point(X, Y);
-                        lblSelectedNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        Label lblSelected = new Label();
+                        lblSelected.AutoSize = true;
+                        lblSelected.Location = new Point(X, Y);
+                        lblSelected.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                         if (issue.ToRemove == true)
                         {
-                            lblSelectedNew.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                            lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                         }
                         else
                         {
-                            lblSelectedNew.Font = new Font(new FontFamily(lblSelectedNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                            lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                         }
-                        lblSelectedNew.ForeColor = ForeColorChangedOrNew;
 
                         if (!IsWellFormed)
                         {
-                            lblSelectedNew.BackColor = BackColorNotWellFormed;
+                            lblSelected.BackColor = BackColorNotWellFormed;
                         }
                         else
                         {
                             if (!IsCompleted)
                             {
-                                lblSelectedNew.BackColor = BackColorNotCompleted;
+                                lblSelected.BackColor = BackColorNotCompleted;
                             }
                         }
 
-                        lblSelectedNew.Text = $"{TVText}";
+                        lblSelected.Text = $"{TVText}";
 
-                        PanelViewAndEdit.Controls.Add(lblSelectedNew);
+                        PanelViewAndEdit.Controls.Add(lblSelected);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                     }
 
-                    if (!IsEditing)
+                    if (NewIssue)
                     {
-                        #region Extra Comment
-                        X = 10;
-                        DrawItemTextMultiline(X, Y, issue.ExtraComment, issue.ExtraCommentNew, "Extra Comment", $"textBoxExtraComment_{issue.IssueID}", 500);
+                        if (issue.PolSourceObsInfoIntListNew.Count > 0)
+                        {
+                            IsWellFormed = IssueWellFormed(issue, true);
+                            IsCompleted = IssueCompleted(issue, true);
 
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion Extra Comment
+                            X = 20;
 
+                            Label lblChangedOrNew = new Label();
+                            lblChangedOrNew.AutoSize = true;
+                            lblChangedOrNew.Location = new Point(X, Y);
+                            lblChangedOrNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                            lblChangedOrNew.Font = new Font(new FontFamily(lblChangedOrNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                            lblChangedOrNew.Text = $"----------------------- Changed to ----------------------------------------------------";
+
+                            PanelViewAndEdit.Controls.Add(lblChangedOrNew);
+
+                            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                            X = 30;
+
+                            string TVText = "";
+                            for (int i = 0, count = issue.PolSourceObsInfoIntListNew.Count; i < count; i++)
+                            {
+                                string Temp = _BaseEnumService.GetEnumText_PolSourceObsInfoReportEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntListNew[i]);
+                                switch ((issue.PolSourceObsInfoIntListNew[i].ToString()).Substring(0, 3))
+                                {
+                                    case "101":
+                                        {
+                                            Temp = Temp.Replace("Source", "     Source");
+                                        }
+                                        break;
+                                    case "250":
+                                        {
+                                            Temp = Temp.Replace("Pathway", "\r\n     Pathway");
+                                        }
+                                        break;
+                                    case "900":
+                                        {
+                                            Temp = Temp.Replace("Status", "\r\n     Status");
+                                        }
+                                        break;
+                                    case "910":
+                                        {
+                                            Temp = Temp.Replace("Risk", "\r\n     Risk");
+                                        }
+                                        break;
+                                    case "110":
+                                    case "120":
+                                    case "122":
+                                    case "151":
+                                    case "152":
+                                    case "153":
+                                    case "155":
+                                    case "156":
+                                    case "157":
+                                    case "163":
+                                    case "166":
+                                    case "167":
+                                    case "170":
+                                    case "171":
+                                    case "172":
+                                    case "173":
+                                    case "176":
+                                    case "178":
+                                    case "181":
+                                    case "182":
+                                    case "183":
+                                    case "185":
+                                    case "186":
+                                    case "187":
+                                    case "190":
+                                    case "191":
+                                    case "192":
+                                    case "193":
+                                    case "194":
+                                    case "196":
+                                    case "198":
+                                    case "199":
+                                    case "220":
+                                    case "930":
+                                        {
+                                            //Temp = Temp;
+                                        }
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                TVText = TVText + Temp;
+                            }
+
+                            X = 20;
+
+                            Label lblSelectedNew = new Label();
+                            lblSelectedNew.AutoSize = true;
+                            lblSelectedNew.Location = new Point(X, Y);
+                            lblSelectedNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                            if (issue.ToRemove == true)
+                            {
+                                lblSelectedNew.Font = new Font(new FontFamily(lblSelectedNew.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                            }
+                            else
+                            {
+                                lblSelectedNew.Font = new Font(new FontFamily(lblSelectedNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                            }
+                            lblSelectedNew.ForeColor = ForeColorChangedOrNew;
+
+                            if (!IsWellFormed)
+                            {
+                                lblSelectedNew.BackColor = BackColorNotWellFormed;
+                            }
+                            else
+                            {
+                                if (!IsCompleted)
+                                {
+                                    lblSelectedNew.BackColor = BackColorNotCompleted;
+                                }
+                            }
+
+                            lblSelectedNew.Text = $"{TVText}";
+
+                            PanelViewAndEdit.Controls.Add(lblSelectedNew);
+
+                            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                        }
+
+                        if (!IsEditing)
+                        {
+                            #region Extra Comment
+                            X = 10;
+                            DrawItemTextMultiline(X, Y, issue.ExtraComment, issue.ExtraCommentNew, "Extra Comment", $"textBoxExtraComment_{issue.IssueID}", 500);
+
+                            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                            #endregion Extra Comment
+
+                        }
                     }
                 }
             }
@@ -647,9 +659,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     butIssueMoveRight.Click += butIssueMoveRight_Click;
 
                     PanelViewAndEdit.Controls.Add(butIssueMoveRight);
-
                 }
-
             }
 
             int MaxIssueID = 10000000;
@@ -1049,7 +1059,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             if (issue != null)
             {
-                List<Control> controlLabelGreenList = new List<Control>();
+                List<Label> controlLabelGreenList = new List<Label>();
                 foreach (Control control in PanelViewAndEdit.Controls)
                 {
                     if (control.GetType().Name == "Panel")
@@ -1066,10 +1076,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
                     }
                 }
-                foreach (Control control in controlLabelGreenList.OrderBy(c => c.Top))
-                {
-                    obsEnumListNew.Add(int.Parse(((Label)control).Tag.ToString()));
-                }
+
+                obsEnumListNew = (from c in controlLabelGreenList
+                                  let top = c.Top + c.Parent.Top
+                                  let tagID = int.Parse(c.Tag.ToString())
+                                  orderby top
+                                  select tagID).ToList();
+
                 issue.PolSourceObsInfoIntListNew = obsEnumListNew;
 
                 foreach (Control control in PanelViewAndEdit.Controls)

@@ -178,7 +178,7 @@ namespace CSSPPolSourceSiteInputTool
             if (checkBoxShowInfrastructure.Checked)
             {
                 checkBoxMoreInfo.Visible = false;
-                if (radioButtonOnlyIssues.Checked)
+                if (radioButtonIssues.Checked)
                 {
                     radioButtonDetails.Checked = true;
                 }
@@ -215,7 +215,94 @@ namespace CSSPPolSourceSiteInputTool
             {
                 polSourceSiteInputToolHelper.ReDrawInfrastructure();
             }
+        }
+        private void checkBoxNewIssue_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxNewIssue.Checked)
+            {
+                polSourceSiteInputToolHelper.NewIssue = true;
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.NewIssue = false;
+            }
 
+            textBoxEmpty.Focus();
+
+            if (polSourceSiteInputToolHelper.IsPolSourceSite)
+            {
+                polSourceSiteInputToolHelper.ReDrawPolSourceSite();
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.ReDrawInfrastructure();
+            }
+        }
+        private void checkBoxOldIssueText_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxOldIssueText.Checked)
+            {
+                polSourceSiteInputToolHelper.OldIssueText = true;
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.OldIssueText = false;
+            }
+
+            textBoxEmpty.Focus();
+
+            if (polSourceSiteInputToolHelper.IsPolSourceSite)
+            {
+                polSourceSiteInputToolHelper.ReDrawPolSourceSite();
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.ReDrawInfrastructure();
+            }
+        }
+        private void checkBoxOldIssue_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxOldIssue.Checked)
+            {
+                polSourceSiteInputToolHelper.OldIssue = true;
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.OldIssue = false;
+            }
+
+            textBoxEmpty.Focus();
+
+            if (polSourceSiteInputToolHelper.IsPolSourceSite)
+            {
+                polSourceSiteInputToolHelper.ReDrawPolSourceSite();
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.ReDrawInfrastructure();
+            }
+        }
+        private void checkBoxWrittenDescription_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxWrittenDescription.Checked)
+            {
+                polSourceSiteInputToolHelper.WrittenDescription = true;
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.WrittenDescription = false;
+            }
+
+            textBoxEmpty.Focus();
+
+            if (polSourceSiteInputToolHelper.IsPolSourceSite)
+            {
+                polSourceSiteInputToolHelper.ReDrawPolSourceSite();
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.ReDrawInfrastructure();
+            }
         }
         private void comboBoxProvince_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -283,14 +370,14 @@ namespace CSSPPolSourceSiteInputTool
             }
         }
 
-        private void radioButtonOnlyIssues_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonIssues_CheckedChanged(object sender, EventArgs e)
         {
             polSourceSiteInputToolHelper.ShowPolSourceSiteDetails = false;
             polSourceSiteInputToolHelper.ShowOnlyIssues = true;
             polSourceSiteInputToolHelper.ShowOnlyPictures = false;
             polSourceSiteInputToolHelper.ShowOnlyMap = false;
 
-            if (polSourceSiteInputToolHelper.IsEditing && radioButtonOnlyIssues.Checked)
+            if (polSourceSiteInputToolHelper.IsEditing && radioButtonIssues.Checked)
             {
                 checkBoxMoreInfo.Visible = true;
             }
@@ -327,7 +414,7 @@ namespace CSSPPolSourceSiteInputTool
                 polSourceSiteInputToolHelper.ReDrawInfrastructure();
             }
         }
-        private void radioButtonOnlyPictures_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonPictures_CheckedChanged(object sender, EventArgs e)
         {
             polSourceSiteInputToolHelper.ShowPolSourceSiteDetails = false;
             polSourceSiteInputToolHelper.ShowOnlyIssues = false;
@@ -480,7 +567,7 @@ namespace CSSPPolSourceSiteInputTool
                 if (polSourceSiteInputToolHelper.IsPolSourceSite)
                 {
                     panelCreateSubsectorDirectory.Visible = true;
-                    radioButtonOnlyIssues.Visible = true;
+                    radioButtonIssues.Visible = true;
 
                     TVItemModel tvItemModelSS = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
                     if (tvItemModelSS != null && tvItemModelSS.TVItemID != 0)
@@ -511,7 +598,7 @@ namespace CSSPPolSourceSiteInputTool
                 else
                 {
                     panelCreateMunicipalityDirectory.Visible = true;
-                    radioButtonOnlyIssues.Visible = false;
+                    radioButtonIssues.Visible = false;
 
                     TVItemModel tvItemModelMuni = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
                     if (tvItemModelMuni != null && tvItemModelMuni.TVItemID != 0)
@@ -538,7 +625,7 @@ namespace CSSPPolSourceSiteInputTool
                 if (polSourceSiteInputToolHelper.IsPolSourceSite)
                 {
                     panelAddNewPollutionSourceSite.Visible = true;
-                    radioButtonOnlyIssues.Visible = true;
+                    radioButtonIssues.Visible = true;
 
                     polSourceSiteInputToolHelper.CurrentMunicipalityName = null;
                     polSourceSiteInputToolHelper.CurrentSubsectorName = (string)comboBoxSubsectorOrMunicipality.SelectedItem;
@@ -549,7 +636,7 @@ namespace CSSPPolSourceSiteInputTool
                 else
                 {
                     panelAddNewInfrastructure.Visible = true;
-                    radioButtonOnlyIssues.Visible = false;
+                    radioButtonIssues.Visible = false;
 
                     polSourceSiteInputToolHelper.CurrentSubsectorName = null;
                     polSourceSiteInputToolHelper.CurrentMunicipalityName = (string)comboBoxSubsectorOrMunicipality.SelectedItem;
@@ -1354,7 +1441,7 @@ namespace CSSPPolSourceSiteInputTool
         private void Setup()
         {
             panelShowAdmin.Visible = false;
-            if (Environment.UserName.ToLower() == "charles" || 
+            if (Environment.UserName.ToLower() == "charles" ||
                 Environment.UserName.ToLower() == "leblancc" ||
                 Environment.UserName.ToLower() == "pomeroyj" ||
                 Environment.UserName.ToLower() == "thibodeaume" ||
@@ -1530,6 +1617,15 @@ namespace CSSPPolSourceSiteInputTool
         }
 
         #endregion Functions private
+
+        private void butFix_Click(object sender, EventArgs e)
+        {
+            butFix.Text = "Working ...";
+            butFix.Refresh();
+            Application.DoEvents();
+            polSourceSiteInputToolHelper.Fix();
+            butFix.Text = "Fix";
+        }
 
     }
 }

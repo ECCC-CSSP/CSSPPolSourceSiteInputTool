@@ -1,5 +1,6 @@
 ﻿using CSSPEnumsDLL.Enums;
 using CSSPEnumsDLL.Services;
+using CSSPModelsDLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -433,6 +434,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public void SaveSubsectorTextFile()
         {
             StringBuilder sb = new StringBuilder();
+            StringBuilder sb2 = new StringBuilder();
 
             sb.AppendLine($"VERSION\t{subsectorDoc.Version}\t");
             sb.AppendLine($"DOCDATE\t{((DateTime)subsectorDoc.DocDate).Year}|{((DateTime)subsectorDoc.DocDate).Month.ToString("0#")}|{((DateTime)subsectorDoc.DocDate).Day.ToString("0#")}|{((DateTime)subsectorDoc.DocDate).Hour.ToString("0#")}|{((DateTime)subsectorDoc.DocDate).Minute.ToString("0#")}|{((DateTime)subsectorDoc.DocDate).Second.ToString("0#")}\t");
@@ -589,6 +591,85 @@ namespace CSSPPolSourceSiteInputToolHelper
             StreamWriter sw = fi.CreateText();
             sw.Write(sb.ToString());
             sw.Close();
+        }
+
+        public void Fix()
+        {
+            foreach (PSS pss in subsectorDoc.Subsector.PSSList)
+            {
+                foreach (Issue issue in pss.PSSObs.IssueList.OrderBy(c => c.Ordinal))
+                {
+                    if (issue.PolSourceObsInfoIntListNew.Count > 0)
+                    {
+                        List<int> TempPolSourceObsInfoIntList = new List<int>();
+                        foreach (int i in issue.PolSourceObsInfoIntListNew)
+                        {
+                            TempPolSourceObsInfoIntList.Add(i);
+                        }
+
+                        List<int> NewTempPolSourceObsInfoIntList = new List<int>();
+                        DoFix(TempPolSourceObsInfoIntList, NewTempPolSourceObsInfoIntList, new List<string>() { "101" });
+
+                        issue.PolSourceObsInfoIntListNew = new List<int>();
+
+                        foreach (int NewTempPolSourceObsInfoInt in NewTempPolSourceObsInfoIntList)
+                        {
+                            issue.PolSourceObsInfoIntListNew.Add(NewTempPolSourceObsInfoInt);
+                        }
+                    }
+                }
+            }
+
+            SaveSubsectorTextFile();
+        }
+
+        private void DoFix(List<int> TempPolSourceObsInfoIntList, List<int> NewTempPolSourceObsInfoIntList, List<string> ChildList)
+        {
+            List<PolSourceObsInfoChild> PolSourceObsInfoChildList = new List<PolSourceObsInfoChild>();
+            foreach (string ChildStart3Char in ChildList)
+            {
+                bool ShouldExistForEach = false;
+                for (int i = 0, count = TempPolSourceObsInfoIntList.Count; i < count; i++)
+                {
+                    string obsEnum3Char = TempPolSourceObsInfoIntList[i].ToString().Substring(0, 3);
+
+                    if (obsEnum3Char == ChildStart3Char)
+                    {
+                        NewTempPolSourceObsInfoIntList.Add(TempPolSourceObsInfoIntList[i]);
+                        PolSourceObsInfoChildList = polSourceObsInfoChildList.Where(c => c.PolSourceObsInfo == ((PolSourceObsInfoEnum)TempPolSourceObsInfoIntList[i])).ToList();
+
+                        TempPolSourceObsInfoIntList.RemoveAt(i);
+                        ShouldExistForEach = true;
+                        break;
+                    }
+                }
+
+                if (ShouldExistForEach)
+                {
+                    break;
+                }
+            }
+
+            List<string> ChildList2 = new List<string>();
+            if (PolSourceObsInfoChildList.Count == 0)
+            {
+                if (TempPolSourceObsInfoIntList.Count > 0)
+                {
+                    ChildList2.Add(((int)TempPolSourceObsInfoIntList[0]).ToString().Substring(0, 3));
+                }
+            }
+            else
+            {
+                foreach (PolSourceObsInfoChild polSourceObsInfoChild in PolSourceObsInfoChildList)
+                {
+                    ChildList2.Add(((int)polSourceObsInfoChild.PolSourceObsInfoChildStart).ToString().Substring(0, 3));
+                }
+            }
+
+            if (ChildList2.Count > 0)
+            {
+                DoFix(TempPolSourceObsInfoIntList, NewTempPolSourceObsInfoIntList, ChildList2);
+            }
         }
     }
 }
