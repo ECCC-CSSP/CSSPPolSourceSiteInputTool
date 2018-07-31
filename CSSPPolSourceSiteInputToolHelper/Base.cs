@@ -33,6 +33,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public bool OldIssueText = true;
         public bool OldIssue = true;
         public bool NewIssue = true;
+        public bool DeletedIssue = true;
         public bool IsDirty = false;
         public bool IsReading = false;
         public bool IsAdmin = false;

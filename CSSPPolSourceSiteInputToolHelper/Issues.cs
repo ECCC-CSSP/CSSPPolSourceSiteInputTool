@@ -308,161 +308,37 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     X = 10;
 
-                    Label lblIssue = new Label();
-                    lblIssue.AutoSize = true;
-                    lblIssue.Location = new Point(X, Y);
-                    lblIssue.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblIssue.Font = new Font(new FontFamily(lblIssue.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
-                    string Deleted = issue.ToRemove == true ? " --- (Deleted) " : "";
-                    lblIssue.Text = $"Issue ({IssueCount}) {Deleted}--- Last Update (UTC): ";
-
-                    PanelViewAndEdit.Controls.Add(lblIssue);
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 0;
-                    Label lblIssueLastUpdate = new Label();
-                    lblIssueLastUpdate.AutoSize = true;
-                    lblIssueLastUpdate.Location = new Point(X, Y);
-                    lblIssueLastUpdate.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblIssueLastUpdate.Font = new Font(new FontFamily(lblIssueLastUpdate.Font.FontFamily.Name).Name, 14f, FontStyle.Regular);
-                    lblIssueLastUpdate.Text = $"{((DateTime)issue.LastUpdated_UTC).ToString("yyyy MMMM dd HH:mm:ss")}";
-
-                    PanelViewAndEdit.Controls.Add(lblIssueLastUpdate);
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
-
-                    if (OldIssue)
+                    if (DeletedIssue || (DeletedIssue == false && issue.ToRemove == false))
                     {
-                        string TVText = "";
-                        for (int i = 0, count = issue.PolSourceObsInfoIntList.Count; i < count; i++)
+                        Label lblIssue = new Label();
+                        lblIssue.AutoSize = true;
+                        lblIssue.Location = new Point(X, Y);
+                        lblIssue.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        lblIssue.Font = new Font(new FontFamily(lblIssue.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                        string Deleted = issue.ToRemove == true ? " --- (Deleted) " : "";
+                        lblIssue.Text = $"Issue ({IssueCount}) {Deleted}--- Last Update (UTC): ";
+
+                        PanelViewAndEdit.Controls.Add(lblIssue);
+
+                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 0;
+                        Label lblIssueLastUpdate = new Label();
+                        lblIssueLastUpdate.AutoSize = true;
+                        lblIssueLastUpdate.Location = new Point(X, Y);
+                        lblIssueLastUpdate.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        lblIssueLastUpdate.Font = new Font(new FontFamily(lblIssueLastUpdate.Font.FontFamily.Name).Name, 14f, FontStyle.Regular);
+                        lblIssueLastUpdate.Text = $"{((DateTime)issue.LastUpdated_UTC).ToString("yyyy MMMM dd HH:mm:ss")}";
+
+                        PanelViewAndEdit.Controls.Add(lblIssueLastUpdate);
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
+
+                        if (OldIssue)
                         {
-                            string Temp = _BaseEnumService.GetEnumText_PolSourceObsInfoReportEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntList[i]);
-                            switch ((issue.PolSourceObsInfoIntList[i].ToString()).Substring(0, 3))
-                            {
-                                case "101":
-                                    {
-                                        Temp = Temp.Replace("Source", "     Source");
-                                    }
-                                    break;
-                                case "250":
-                                    {
-                                        Temp = Temp.Replace("Pathway", "\r\n     Pathway");
-                                    }
-                                    break;
-                                case "900":
-                                    {
-                                        Temp = Temp.Replace("Status", "\r\n     Status");
-                                    }
-                                    break;
-                                case "910":
-                                    {
-                                        Temp = Temp.Replace("Risk", "\r\n     Risk");
-                                    }
-                                    break;
-                                case "110":
-                                case "120":
-                                case "122":
-                                case "151":
-                                case "152":
-                                case "153":
-                                case "155":
-                                case "156":
-                                case "157":
-                                case "163":
-                                case "166":
-                                case "167":
-                                case "170":
-                                case "171":
-                                case "172":
-                                case "173":
-                                case "176":
-                                case "178":
-                                case "181":
-                                case "182":
-                                case "183":
-                                case "185":
-                                case "186":
-                                case "187":
-                                case "190":
-                                case "191":
-                                case "192":
-                                case "193":
-                                case "194":
-                                case "196":
-                                case "198":
-                                case "199":
-                                case "220":
-                                case "930":
-                                    {
-                                        //Temp = Temp;
-                                    }
-                                    break;
-                                default:
-                                    break;
-                            }
-                            TVText = TVText + Temp;
-                        }
-
-                        X = 20;
-
-                        Label lblSelected = new Label();
-                        lblSelected.AutoSize = true;
-                        lblSelected.Location = new Point(X, Y);
-                        lblSelected.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                        if (issue.ToRemove == true)
-                        {
-                            lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-                        }
-                        else
-                        {
-                            lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        }
-
-                        if (!IsWellFormed)
-                        {
-                            lblSelected.BackColor = BackColorNotWellFormed;
-                        }
-                        else
-                        {
-                            if (!IsCompleted)
-                            {
-                                lblSelected.BackColor = BackColorNotCompleted;
-                            }
-                        }
-
-                        lblSelected.Text = $"{TVText}";
-
-                        PanelViewAndEdit.Controls.Add(lblSelected);
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                    }
-
-                    if (NewIssue)
-                    {
-                        if (issue.PolSourceObsInfoIntListNew.Count > 0)
-                        {
-                            IsWellFormed = IssueWellFormed(issue, true);
-                            IsCompleted = IssueCompleted(issue, true);
-
-                            X = 20;
-
-                            Label lblChangedOrNew = new Label();
-                            lblChangedOrNew.AutoSize = true;
-                            lblChangedOrNew.Location = new Point(X, Y);
-                            lblChangedOrNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                            lblChangedOrNew.Font = new Font(new FontFamily(lblChangedOrNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                            lblChangedOrNew.Text = $"----------------------- Changed to ----------------------------------------------------";
-
-                            PanelViewAndEdit.Controls.Add(lblChangedOrNew);
-
-                            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-
-                            X = 30;
-
                             string TVText = "";
-                            for (int i = 0, count = issue.PolSourceObsInfoIntListNew.Count; i < count; i++)
+                            for (int i = 0, count = issue.PolSourceObsInfoIntList.Count; i < count; i++)
                             {
-                                string Temp = _BaseEnumService.GetEnumText_PolSourceObsInfoReportEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntListNew[i]);
-                                switch ((issue.PolSourceObsInfoIntListNew[i].ToString()).Substring(0, 3))
+                                string Temp = _BaseEnumService.GetEnumText_PolSourceObsInfoReportEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntList[i]);
+                                switch ((issue.PolSourceObsInfoIntList[i].ToString()).Substring(0, 3))
                                 {
                                     case "101":
                                         {
@@ -530,48 +406,175 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                             X = 20;
 
-                            Label lblSelectedNew = new Label();
-                            lblSelectedNew.AutoSize = true;
-                            lblSelectedNew.Location = new Point(X, Y);
-                            lblSelectedNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                            Label lblSelected = new Label();
+                            lblSelected.AutoSize = true;
+                            lblSelected.Location = new Point(X, Y);
+                            lblSelected.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                             if (issue.ToRemove == true)
                             {
-                                lblSelectedNew.Font = new Font(new FontFamily(lblSelectedNew.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                                lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
                             }
                             else
                             {
-                                lblSelectedNew.Font = new Font(new FontFamily(lblSelectedNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                                lblSelected.Font = new Font(new FontFamily(lblSelected.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                             }
-                            lblSelectedNew.ForeColor = ForeColorChangedOrNew;
 
                             if (!IsWellFormed)
                             {
-                                lblSelectedNew.BackColor = BackColorNotWellFormed;
+                                lblSelected.BackColor = BackColorNotWellFormed;
                             }
                             else
                             {
                                 if (!IsCompleted)
                                 {
-                                    lblSelectedNew.BackColor = BackColorNotCompleted;
+                                    lblSelected.BackColor = BackColorNotCompleted;
                                 }
                             }
 
-                            lblSelectedNew.Text = $"{TVText}";
+                            lblSelected.Text = $"{TVText}";
 
-                            PanelViewAndEdit.Controls.Add(lblSelectedNew);
+                            PanelViewAndEdit.Controls.Add(lblSelected);
 
                             Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                         }
 
-                        if (!IsEditing)
+                        if (NewIssue)
                         {
-                            #region Extra Comment
-                            X = 10;
-                            DrawItemTextMultiline(X, Y, issue.ExtraComment, issue.ExtraCommentNew, "Extra Comment", $"textBoxExtraComment_{issue.IssueID}", 500);
+                            if (issue.PolSourceObsInfoIntListNew.Count > 0)
+                            {
+                                IsWellFormed = IssueWellFormed(issue, true);
+                                IsCompleted = IssueCompleted(issue, true);
 
-                            Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                            #endregion Extra Comment
+                                X = 20;
 
+                                Label lblChangedOrNew = new Label();
+                                lblChangedOrNew.AutoSize = true;
+                                lblChangedOrNew.Location = new Point(X, Y);
+                                lblChangedOrNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                                lblChangedOrNew.Font = new Font(new FontFamily(lblChangedOrNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                                lblChangedOrNew.Text = $"----------------------- Changed to ----------------------------------------------------";
+
+                                PanelViewAndEdit.Controls.Add(lblChangedOrNew);
+
+                                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                                X = 30;
+
+                                string TVText = "";
+                                for (int i = 0, count = issue.PolSourceObsInfoIntListNew.Count; i < count; i++)
+                                {
+                                    string Temp = _BaseEnumService.GetEnumText_PolSourceObsInfoReportEnum((PolSourceObsInfoEnum)issue.PolSourceObsInfoIntListNew[i]);
+                                    switch ((issue.PolSourceObsInfoIntListNew[i].ToString()).Substring(0, 3))
+                                    {
+                                        case "101":
+                                            {
+                                                Temp = Temp.Replace("Source", "     Source");
+                                            }
+                                            break;
+                                        case "250":
+                                            {
+                                                Temp = Temp.Replace("Pathway", "\r\n     Pathway");
+                                            }
+                                            break;
+                                        case "900":
+                                            {
+                                                Temp = Temp.Replace("Status", "\r\n     Status");
+                                            }
+                                            break;
+                                        case "910":
+                                            {
+                                                Temp = Temp.Replace("Risk", "\r\n     Risk");
+                                            }
+                                            break;
+                                        case "110":
+                                        case "120":
+                                        case "122":
+                                        case "151":
+                                        case "152":
+                                        case "153":
+                                        case "155":
+                                        case "156":
+                                        case "157":
+                                        case "163":
+                                        case "166":
+                                        case "167":
+                                        case "170":
+                                        case "171":
+                                        case "172":
+                                        case "173":
+                                        case "176":
+                                        case "178":
+                                        case "181":
+                                        case "182":
+                                        case "183":
+                                        case "185":
+                                        case "186":
+                                        case "187":
+                                        case "190":
+                                        case "191":
+                                        case "192":
+                                        case "193":
+                                        case "194":
+                                        case "196":
+                                        case "198":
+                                        case "199":
+                                        case "220":
+                                        case "930":
+                                            {
+                                                //Temp = Temp;
+                                            }
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                    TVText = TVText + Temp;
+                                }
+
+                                X = 20;
+
+                                Label lblSelectedNew = new Label();
+                                lblSelectedNew.AutoSize = true;
+                                lblSelectedNew.Location = new Point(X, Y);
+                                lblSelectedNew.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                                if (issue.ToRemove == true)
+                                {
+                                    lblSelectedNew.Font = new Font(new FontFamily(lblSelectedNew.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+                                }
+                                else
+                                {
+                                    lblSelectedNew.Font = new Font(new FontFamily(lblSelectedNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                                }
+                                lblSelectedNew.ForeColor = ForeColorChangedOrNew;
+
+                                if (!IsWellFormed)
+                                {
+                                    lblSelectedNew.BackColor = BackColorNotWellFormed;
+                                }
+                                else
+                                {
+                                    if (!IsCompleted)
+                                    {
+                                        lblSelectedNew.BackColor = BackColorNotCompleted;
+                                    }
+                                }
+
+                                lblSelectedNew.Text = $"{TVText}";
+
+                                PanelViewAndEdit.Controls.Add(lblSelectedNew);
+
+                                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                            }
+
+                            if (!IsEditing)
+                            {
+                                #region Extra Comment
+                                X = 10;
+                                DrawItemTextMultiline(X, Y, issue.ExtraComment, issue.ExtraCommentNew, "Extra Comment", $"textBoxExtraComment_{issue.IssueID}", 500);
+
+                                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                                #endregion Extra Comment
+
+                            }
                         }
                     }
                 }
@@ -610,55 +613,59 @@ namespace CSSPPolSourceSiteInputToolHelper
                         IssueID = (int)issue.IssueID;
                     }
                 }
-                countIssue += 1;
-                Button butIssue = new Button();
-                butIssue.AutoSize = true;
-                butIssue.Location = new Point(X, Y);
-                butIssue.Font = new Font(new FontFamily(butIssue.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                string Deleted = issue.ToRemove == true ? "   (Deleted)" : "";
-                butIssue.Text = $"Issue {countIssue}{Deleted}";
-                butIssue.Tag = $"{issue.IssueID}";
-                butIssue.Padding = new Padding(5);
 
-                if (issue.IssueID == IssueID)
+                if (DeletedIssue || (DeletedIssue == false && issue.ToRemove == false))
                 {
-                    butIssue.BackColor = BackColorEditing;
-                }
+                    countIssue += 1;
+                    Button butIssue = new Button();
+                    butIssue.AutoSize = true;
+                    butIssue.Location = new Point(X, Y);
+                    butIssue.Font = new Font(new FontFamily(butIssue.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    string Deleted = issue.ToRemove == true ? "   (Deleted)" : "";
+                    butIssue.Text = $"Issue {countIssue}{Deleted}";
+                    butIssue.Tag = $"{issue.IssueID}";
+                    butIssue.Padding = new Padding(5);
 
-                butIssue.Click += butIssueSet_Click;
+                    if (issue.IssueID == IssueID)
+                    {
+                        butIssue.BackColor = BackColorEditing;
+                    }
 
-                PanelViewAndEdit.Controls.Add(butIssue);
+                    butIssue.Click += butIssueSet_Click;
 
-                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
+                    PanelViewAndEdit.Controls.Add(butIssue);
 
-                if (countIssue > 1)
-                {
-                    Button butIssueMoveLeft = new Button();
-                    //butIssueMoveLeft.AutoSize = true;
-                    butIssueMoveLeft.Location = new Point(butIssue.Left, butIssue.Top - 30);
-                    butIssueMoveLeft.Size = new Size(butIssue.Width / 2, 30);
-                    butIssueMoveLeft.Font = new Font(new FontFamily(butIssueMoveLeft.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    butIssueMoveLeft.Text = $"←";
-                    butIssueMoveLeft.Tag = $"{issue.IssueID}";
-                    //butIssueMoveLeft.Padding = new Padding(5);
-                    butIssueMoveLeft.Click += butIssueMoveLeft_Click;
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
 
-                    PanelViewAndEdit.Controls.Add(butIssueMoveLeft);
+                    if (countIssue > 1)
+                    {
+                        Button butIssueMoveLeft = new Button();
+                        //butIssueMoveLeft.AutoSize = true;
+                        butIssueMoveLeft.Location = new Point(butIssue.Left, butIssue.Top - 30);
+                        butIssueMoveLeft.Size = new Size(butIssue.Width / 2, 30);
+                        butIssueMoveLeft.Font = new Font(new FontFamily(butIssueMoveLeft.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butIssueMoveLeft.Text = $"←";
+                        butIssueMoveLeft.Tag = $"{issue.IssueID}";
+                        //butIssueMoveLeft.Padding = new Padding(5);
+                        butIssueMoveLeft.Click += butIssueMoveLeft_Click;
 
-                }
-                if (countIssue < CurrentPSS.PSSObs.IssueList.Count)
-                {
-                    Button butIssueMoveRight = new Button();
-                    //butIssueMoveRight.AutoSize = true;
-                    butIssueMoveRight.Location = new Point((butIssue.Right + butIssue.Left) / 2, butIssue.Top - 30);
-                    butIssueMoveRight.Size = new Size(butIssue.Width / 2, 30);
-                    butIssueMoveRight.Font = new Font(new FontFamily(butIssueMoveRight.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    butIssueMoveRight.Text = $"→";
-                    butIssueMoveRight.Tag = $"{issue.IssueID}";
-                    //butIssueMoveRight.Padding = new Padding(5);
-                    butIssueMoveRight.Click += butIssueMoveRight_Click;
+                        PanelViewAndEdit.Controls.Add(butIssueMoveLeft);
 
-                    PanelViewAndEdit.Controls.Add(butIssueMoveRight);
+                    }
+                    if (countIssue < CurrentPSS.PSSObs.IssueList.Count)
+                    {
+                        Button butIssueMoveRight = new Button();
+                        //butIssueMoveRight.AutoSize = true;
+                        butIssueMoveRight.Location = new Point((butIssue.Right + butIssue.Left) / 2, butIssue.Top - 30);
+                        butIssueMoveRight.Size = new Size(butIssue.Width / 2, 30);
+                        butIssueMoveRight.Font = new Font(new FontFamily(butIssueMoveRight.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butIssueMoveRight.Text = $"→";
+                        butIssueMoveRight.Tag = $"{issue.IssueID}";
+                        //butIssueMoveRight.Padding = new Padding(5);
+                        butIssueMoveRight.Click += butIssueMoveRight_Click;
+
+                        PanelViewAndEdit.Controls.Add(butIssueMoveRight);
+                    }
                 }
             }
 

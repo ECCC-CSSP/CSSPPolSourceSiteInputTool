@@ -61,6 +61,10 @@
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
             this.richTextBoxStatus = new System.Windows.Forms.RichTextBox();
             this.panelShowInputOptions = new System.Windows.Forms.Panel();
+            this.checkBoxNewIssue = new System.Windows.Forms.CheckBox();
+            this.checkBoxOldIssue = new System.Windows.Forms.CheckBox();
+            this.checkBoxOldIssueText = new System.Windows.Forms.CheckBox();
+            this.checkBoxWrittenDescription = new System.Windows.Forms.CheckBox();
             this.checkBoxMoreInfo = new System.Windows.Forms.CheckBox();
             this.radioButtonShowMap = new System.Windows.Forms.RadioButton();
             this.radioButtonPictures = new System.Windows.Forms.RadioButton();
@@ -68,10 +72,7 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.checkBoxWrittenDescription = new System.Windows.Forms.CheckBox();
-            this.checkBoxOldIssueText = new System.Windows.Forms.CheckBox();
-            this.checkBoxOldIssue = new System.Windows.Forms.CheckBox();
-            this.checkBoxNewIssue = new System.Windows.Forms.CheckBox();
+            this.checkBoxDeletedIssue = new System.Windows.Forms.CheckBox();
             this.panelButtonBar.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
             this.panelShowInfrastructure.SuspendLayout();
@@ -170,7 +171,6 @@
             this.butFix.TabIndex = 12;
             this.butFix.Text = "Fix";
             this.butFix.UseVisualStyleBackColor = true;
-            this.butFix.Visible = false;
             this.butFix.Click += new System.EventHandler(this.butFix_Click);
             // 
             // comboBoxSubsectorOrMunicipality
@@ -441,6 +441,7 @@
             // panelShowInputOptions
             // 
             this.panelShowInputOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelShowInputOptions.Controls.Add(this.checkBoxDeletedIssue);
             this.panelShowInputOptions.Controls.Add(this.checkBoxNewIssue);
             this.panelShowInputOptions.Controls.Add(this.checkBoxOldIssue);
             this.panelShowInputOptions.Controls.Add(this.checkBoxOldIssueText);
@@ -456,6 +457,58 @@
             this.panelShowInputOptions.Name = "panelShowInputOptions";
             this.panelShowInputOptions.Size = new System.Drawing.Size(695, 33);
             this.panelShowInputOptions.TabIndex = 0;
+            // 
+            // checkBoxNewIssue
+            // 
+            this.checkBoxNewIssue.AutoSize = true;
+            this.checkBoxNewIssue.Checked = true;
+            this.checkBoxNewIssue.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxNewIssue.Location = new System.Drawing.Point(290, 6);
+            this.checkBoxNewIssue.Name = "checkBoxNewIssue";
+            this.checkBoxNewIssue.Size = new System.Drawing.Size(48, 17);
+            this.checkBoxNewIssue.TabIndex = 11;
+            this.checkBoxNewIssue.Text = "New";
+            this.checkBoxNewIssue.UseVisualStyleBackColor = true;
+            this.checkBoxNewIssue.CheckedChanged += new System.EventHandler(this.checkBoxNewIssue_CheckedChanged);
+            // 
+            // checkBoxOldIssue
+            // 
+            this.checkBoxOldIssue.AutoSize = true;
+            this.checkBoxOldIssue.Checked = true;
+            this.checkBoxOldIssue.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOldIssue.Location = new System.Drawing.Point(248, 6);
+            this.checkBoxOldIssue.Name = "checkBoxOldIssue";
+            this.checkBoxOldIssue.Size = new System.Drawing.Size(42, 17);
+            this.checkBoxOldIssue.TabIndex = 10;
+            this.checkBoxOldIssue.Text = "Old";
+            this.checkBoxOldIssue.UseVisualStyleBackColor = true;
+            this.checkBoxOldIssue.CheckedChanged += new System.EventHandler(this.checkBoxOldIssue_CheckedChanged);
+            // 
+            // checkBoxOldIssueText
+            // 
+            this.checkBoxOldIssueText.AutoSize = true;
+            this.checkBoxOldIssueText.Checked = true;
+            this.checkBoxOldIssueText.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxOldIssueText.Location = new System.Drawing.Point(201, 6);
+            this.checkBoxOldIssueText.Name = "checkBoxOldIssueText";
+            this.checkBoxOldIssueText.Size = new System.Drawing.Size(47, 17);
+            this.checkBoxOldIssueText.TabIndex = 9;
+            this.checkBoxOldIssueText.Text = "Text";
+            this.checkBoxOldIssueText.UseVisualStyleBackColor = true;
+            this.checkBoxOldIssueText.CheckedChanged += new System.EventHandler(this.checkBoxOldIssueText_CheckedChanged);
+            // 
+            // checkBoxWrittenDescription
+            // 
+            this.checkBoxWrittenDescription.AutoSize = true;
+            this.checkBoxWrittenDescription.Checked = true;
+            this.checkBoxWrittenDescription.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxWrittenDescription.Location = new System.Drawing.Point(151, 6);
+            this.checkBoxWrittenDescription.Name = "checkBoxWrittenDescription";
+            this.checkBoxWrittenDescription.Size = new System.Drawing.Size(51, 17);
+            this.checkBoxWrittenDescription.TabIndex = 8;
+            this.checkBoxWrittenDescription.Text = "Desc";
+            this.checkBoxWrittenDescription.UseVisualStyleBackColor = true;
+            this.checkBoxWrittenDescription.CheckedChanged += new System.EventHandler(this.checkBoxWrittenDescription_CheckedChanged);
             // 
             // checkBoxMoreInfo
             // 
@@ -529,57 +582,18 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
-            // checkBoxWrittenDescription
+            // checkBoxDeletedIssue
             // 
-            this.checkBoxWrittenDescription.AutoSize = true;
-            this.checkBoxWrittenDescription.Checked = true;
-            this.checkBoxWrittenDescription.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxWrittenDescription.Location = new System.Drawing.Point(169, 6);
-            this.checkBoxWrittenDescription.Name = "checkBoxWrittenDescription";
-            this.checkBoxWrittenDescription.Size = new System.Drawing.Size(51, 17);
-            this.checkBoxWrittenDescription.TabIndex = 8;
-            this.checkBoxWrittenDescription.Text = "Desc";
-            this.checkBoxWrittenDescription.UseVisualStyleBackColor = true;
-            this.checkBoxWrittenDescription.CheckedChanged += new System.EventHandler(this.checkBoxWrittenDescription_CheckedChanged);
-            // 
-            // checkBoxOldIssueText
-            // 
-            this.checkBoxOldIssueText.AutoSize = true;
-            this.checkBoxOldIssueText.Checked = true;
-            this.checkBoxOldIssueText.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxOldIssueText.Location = new System.Drawing.Point(219, 6);
-            this.checkBoxOldIssueText.Name = "checkBoxOldIssueText";
-            this.checkBoxOldIssueText.Size = new System.Drawing.Size(47, 17);
-            this.checkBoxOldIssueText.TabIndex = 9;
-            this.checkBoxOldIssueText.Text = "Text";
-            this.checkBoxOldIssueText.UseVisualStyleBackColor = true;
-            this.checkBoxOldIssueText.CheckedChanged += new System.EventHandler(this.checkBoxOldIssueText_CheckedChanged);
-            // 
-            // checkBoxOldIssue
-            // 
-            this.checkBoxOldIssue.AutoSize = true;
-            this.checkBoxOldIssue.Checked = true;
-            this.checkBoxOldIssue.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxOldIssue.Location = new System.Drawing.Point(266, 6);
-            this.checkBoxOldIssue.Name = "checkBoxOldIssue";
-            this.checkBoxOldIssue.Size = new System.Drawing.Size(42, 17);
-            this.checkBoxOldIssue.TabIndex = 10;
-            this.checkBoxOldIssue.Text = "Old";
-            this.checkBoxOldIssue.UseVisualStyleBackColor = true;
-            this.checkBoxOldIssue.CheckedChanged += new System.EventHandler(this.checkBoxOldIssue_CheckedChanged);
-            // 
-            // checkBoxNewIssue
-            // 
-            this.checkBoxNewIssue.AutoSize = true;
-            this.checkBoxNewIssue.Checked = true;
-            this.checkBoxNewIssue.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxNewIssue.Location = new System.Drawing.Point(308, 6);
-            this.checkBoxNewIssue.Name = "checkBoxNewIssue";
-            this.checkBoxNewIssue.Size = new System.Drawing.Size(48, 17);
-            this.checkBoxNewIssue.TabIndex = 11;
-            this.checkBoxNewIssue.Text = "New";
-            this.checkBoxNewIssue.UseVisualStyleBackColor = true;
-            this.checkBoxNewIssue.CheckedChanged += new System.EventHandler(this.checkBoxNewIssue_CheckedChanged);
+            this.checkBoxDeletedIssue.AutoSize = true;
+            this.checkBoxDeletedIssue.Checked = true;
+            this.checkBoxDeletedIssue.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxDeletedIssue.Location = new System.Drawing.Point(335, 6);
+            this.checkBoxDeletedIssue.Name = "checkBoxDeletedIssue";
+            this.checkBoxDeletedIssue.Size = new System.Drawing.Size(42, 17);
+            this.checkBoxDeletedIssue.TabIndex = 12;
+            this.checkBoxDeletedIssue.Text = "Del";
+            this.checkBoxDeletedIssue.UseVisualStyleBackColor = true;
+            this.checkBoxDeletedIssue.CheckedChanged += new System.EventHandler(this.checkBoxDeletedIssue_CheckedChanged);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
@@ -669,6 +683,7 @@
         private System.Windows.Forms.CheckBox checkBoxOldIssueText;
         private System.Windows.Forms.CheckBox checkBoxOldIssue;
         private System.Windows.Forms.CheckBox checkBoxNewIssue;
+        private System.Windows.Forms.CheckBox checkBoxDeletedIssue;
     }
 }
 

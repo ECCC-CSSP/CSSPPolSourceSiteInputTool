@@ -942,7 +942,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 sbKML.AppendLine($@"            </description>");
                 sbKML.AppendLine($@"			<styleUrl>#m_ylw-pushpin</styleUrl>");
                 sbKML.AppendLine($@"			<Point>");
-                sbKML.AppendLine($@"				<coordinates>{pss.Lng},{pss.Lat},0</coordinates>");
+                if (pss.LatNew != null && pss.LngNew != null)
+                {
+                    sbKML.AppendLine($@"				<coordinates>{pss.LngNew},{pss.LatNew},0</coordinates>");
+                }
+                else
+                {
+                    sbKML.AppendLine($@"				<coordinates>{pss.Lng},{pss.Lat},0</coordinates>");
+                }
                 sbKML.AppendLine($@"			</Point>");
                 sbKML.AppendLine($@"		</Placemark>");
 

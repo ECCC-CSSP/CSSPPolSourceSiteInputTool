@@ -142,6 +142,28 @@ namespace CSSPPolSourceSiteInputTool
                 ShowInputParts();
             }
         }
+        private void checkBoxDeletedIssue_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxDeletedIssue.Checked)
+            {
+                polSourceSiteInputToolHelper.DeletedIssue = true;
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.DeletedIssue = false;
+            }
+
+            textBoxEmpty.Focus();
+
+            if (polSourceSiteInputToolHelper.IsPolSourceSite)
+            {
+                polSourceSiteInputToolHelper.ReDrawPolSourceSite();
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.ReDrawInfrastructure();
+            }
+        }
         private void checkBoxEditing_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxEditing.Checked)
