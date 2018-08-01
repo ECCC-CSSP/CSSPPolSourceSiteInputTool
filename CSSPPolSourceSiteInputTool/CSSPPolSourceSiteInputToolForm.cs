@@ -608,10 +608,12 @@ namespace CSSPPolSourceSiteInputTool
                         if (fi.Exists)
                         {
                             butViewKMLFile.Enabled = true;
+                            butCreateSubsectorDirectory.Enabled = false;
                         }
                         else
                         {
                             butViewKMLFile.Enabled = false;
+                            butCreateSubsectorDirectory.Enabled = true;
                         }
                     }
                     polSourceSiteInputToolHelper.RedrawPolSourceSiteList();
@@ -632,10 +634,12 @@ namespace CSSPPolSourceSiteInputTool
                         if (fi.Exists)
                         {
                             butViewKMLFile.Enabled = true;
+                            butCreateMunicipalityDirectory.Enabled = false;
                         }
                         else
                         {
                             butViewKMLFile.Enabled = false;
+                            butCreateMunicipalityDirectory.Enabled = true;
                         }
                     }
                     polSourceSiteInputToolHelper.RedrawInfrastructureList();

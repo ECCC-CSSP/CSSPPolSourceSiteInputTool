@@ -61,6 +61,7 @@
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
             this.richTextBoxStatus = new System.Windows.Forms.RichTextBox();
             this.panelShowInputOptions = new System.Windows.Forms.Panel();
+            this.checkBoxDeletedIssue = new System.Windows.Forms.CheckBox();
             this.checkBoxNewIssue = new System.Windows.Forms.CheckBox();
             this.checkBoxOldIssue = new System.Windows.Forms.CheckBox();
             this.checkBoxOldIssueText = new System.Windows.Forms.CheckBox();
@@ -72,7 +73,6 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.checkBoxDeletedIssue = new System.Windows.Forms.CheckBox();
             this.panelButtonBar.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
             this.panelShowInfrastructure.SuspendLayout();
@@ -458,6 +458,19 @@
             this.panelShowInputOptions.Size = new System.Drawing.Size(695, 33);
             this.panelShowInputOptions.TabIndex = 0;
             // 
+            // checkBoxDeletedIssue
+            // 
+            this.checkBoxDeletedIssue.AutoSize = true;
+            this.checkBoxDeletedIssue.Checked = true;
+            this.checkBoxDeletedIssue.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxDeletedIssue.Location = new System.Drawing.Point(335, 6);
+            this.checkBoxDeletedIssue.Name = "checkBoxDeletedIssue";
+            this.checkBoxDeletedIssue.Size = new System.Drawing.Size(42, 17);
+            this.checkBoxDeletedIssue.TabIndex = 12;
+            this.checkBoxDeletedIssue.Text = "Del";
+            this.checkBoxDeletedIssue.UseVisualStyleBackColor = true;
+            this.checkBoxDeletedIssue.CheckedChanged += new System.EventHandler(this.checkBoxDeletedIssue_CheckedChanged);
+            // 
             // checkBoxNewIssue
             // 
             this.checkBoxNewIssue.AutoSize = true;
@@ -581,19 +594,6 @@
             // openFileDialogCSSP
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
-            // 
-            // checkBoxDeletedIssue
-            // 
-            this.checkBoxDeletedIssue.AutoSize = true;
-            this.checkBoxDeletedIssue.Checked = true;
-            this.checkBoxDeletedIssue.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDeletedIssue.Location = new System.Drawing.Point(335, 6);
-            this.checkBoxDeletedIssue.Name = "checkBoxDeletedIssue";
-            this.checkBoxDeletedIssue.Size = new System.Drawing.Size(42, 17);
-            this.checkBoxDeletedIssue.TabIndex = 12;
-            this.checkBoxDeletedIssue.Text = "Del";
-            this.checkBoxDeletedIssue.UseVisualStyleBackColor = true;
-            this.checkBoxDeletedIssue.CheckedChanged += new System.EventHandler(this.checkBoxDeletedIssue_CheckedChanged);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
