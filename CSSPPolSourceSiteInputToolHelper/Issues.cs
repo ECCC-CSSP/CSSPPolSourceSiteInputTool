@@ -1170,13 +1170,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                         TVText = TVText.Replace("  ", " ");
                     }
 
-                    TVText = TVText + " - " + "000000".Substring(0, "000000".Length - CurrentPSS.SiteNumber.ToString().Length) + CurrentPSS.SiteNumber.ToString();
+                    TVText = "P00000".Substring(0, "P00000".Length - CurrentPSS.SiteNumber.ToString().Length) + CurrentPSS.SiteNumber.ToString() + " - " + TVText;
 
                     CurrentPSS.TVTextNew = TVText;
                 }
                 else
                 {
-                    string TVText = "PSS Empty - " + "000000".Substring(0, "000000".Length - CurrentPSS.SiteNumber.ToString().Length) + CurrentPSS.SiteNumber.ToString();
+                    string TVText = "PSS Empty - " + "P00000".Substring(0, "P00000".Length - CurrentPSS.SiteNumber.ToString().Length) + CurrentPSS.SiteNumber.ToString();
 
                     CurrentPSS.TVTextNew = TVText;
                 }
