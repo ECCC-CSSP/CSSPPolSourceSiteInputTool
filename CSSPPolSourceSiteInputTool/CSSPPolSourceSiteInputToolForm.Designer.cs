@@ -605,6 +605,7 @@
             this.Controls.Add(this.panelButtonBar);
             this.Name = "CSSPPolSourceSiteInputToolForm";
             this.Text = "CSSP Pollution Source Site Input Tool";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panelButtonBar.ResumeLayout(false);
             this.panelShowAdmin.ResumeLayout(false);
             this.panelShowAdmin.PerformLayout();
