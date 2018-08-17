@@ -308,7 +308,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     X = 10;
 
-                    if (DeletedIssue || (DeletedIssue == false && issue.ToRemove == false))
+                    if (DeletedIssueAndPicture || (DeletedIssueAndPicture == false && issue.ToRemove == false))
                     {
                         Label lblIssue = new Label();
                         lblIssue.AutoSize = true;
@@ -614,7 +614,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                 }
 
-                if (DeletedIssue || (DeletedIssue == false && issue.ToRemove == false))
+                if (DeletedIssueAndPicture || (DeletedIssueAndPicture == false && issue.ToRemove == false))
                 {
                     countIssue += 1;
                     Button butIssue = new Button();

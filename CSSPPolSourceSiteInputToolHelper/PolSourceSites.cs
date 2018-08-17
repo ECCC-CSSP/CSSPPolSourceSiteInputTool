@@ -316,9 +316,10 @@ namespace CSSPPolSourceSiteInputToolHelper
             Label lblMunicipalityText = new Label();
             lblMunicipalityText.AutoSize = true;
             lblMunicipalityText.Location = new Point(x, lblStreetNumberText.Top);
-            lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-            lblMunicipalityText.ForeColor = string.IsNullOrWhiteSpace(addressNew.Municipality) ? ForeColorNormal : ForeColorChangedOrNew;
+            lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold | FontStyle.Underline);
+            lblMunicipalityText.ForeColor = Color.Blue;
             lblMunicipalityText.Text = $@"Municipality        ";
+            lblMunicipalityText.Click += lblMunicipalityText_Click;
 
             PanelViewAndEdit.Controls.Add(lblMunicipalityText);
 
@@ -505,33 +506,35 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             y = MaxY + 20;
-            if (!MunicipalityExist)
-            {
-                string TheMunicipality = addressNew.Municipality == null ? address.Municipality : addressNew.Municipality;
+            //if (!MunicipalityExist)
+            //{
+            //    string TheMunicipality = addressNew.Municipality == null ? address.Municipality : addressNew.Municipality;
 
-                Label lblCreateMunicipality = new Label();
-                lblCreateMunicipality.AutoSize = true;
-                lblCreateMunicipality.Location = new Point(20, y);
-                lblCreateMunicipality.Font = new Font(new FontFamily(lblCreateMunicipality.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblCreateMunicipality.Text = $@"Municipality [{TheMunicipality}] does not exist. Create Municipality ?";
+            //    Label lblCreateMunicipality = new Label();
+            //    lblCreateMunicipality.AutoSize = true;
+            //    lblCreateMunicipality.Location = new Point(20, y);
+            //    lblCreateMunicipality.Font = new Font(new FontFamily(lblCreateMunicipality.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+            //    lblCreateMunicipality.Text = $@"Municipality [{TheMunicipality}] does not exist. Create Municipality ?";
 
-                PanelViewAndEdit.Controls.Add(lblCreateMunicipality);
+            //    PanelViewAndEdit.Controls.Add(lblCreateMunicipality);
 
-                CheckBox checkBoxCreateMunicipality = new CheckBox();
-                checkBoxCreateMunicipality.AutoSize = true;
-                checkBoxCreateMunicipality.Location = new Point(lblCreateMunicipality.Right + 5, y);
-                checkBoxCreateMunicipality.Name = "checkBoxCreateMunicipality";
-                checkBoxCreateMunicipality.Font = new Font(new FontFamily(lblPostalCodeText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                checkBoxCreateMunicipality.CheckedChanged += checkBoxCreateMunicipality_CheckedChanged;
-                checkBoxCreateMunicipality.Checked = CreateMunicipality;
+            //    CheckBox checkBoxCreateMunicipality = new CheckBox();
+            //    checkBoxCreateMunicipality.AutoSize = true;
+            //    checkBoxCreateMunicipality.Location = new Point(lblCreateMunicipality.Right + 5, y);
+            //    checkBoxCreateMunicipality.Name = "checkBoxCreateMunicipality";
+            //    checkBoxCreateMunicipality.Font = new Font(new FontFamily(lblPostalCodeText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+            //    checkBoxCreateMunicipality.CheckedChanged += checkBoxCreateMunicipality_CheckedChanged;
+            //    checkBoxCreateMunicipality.Checked = CreateMunicipality;
 
-                PanelViewAndEdit.Controls.Add(checkBoxCreateMunicipality);
+            //    PanelViewAndEdit.Controls.Add(checkBoxCreateMunicipality);
 
-                y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-            }
+            //    y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+            //}
 
             #endregion Address
         }
+
+
         private void DrawItemBool(int x, int y, bool? val, bool? valNew, string lblTxt, string checkBoxName)
         {
             Label lblItem = new Label();
@@ -1803,7 +1806,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             else
             {
                 int countPSS = 0;
-                foreach (PSS pss in subsectorDoc.Subsector.PSSList.OrderBy(c => c.SiteNumber))
+                foreach (PSS pss in subsectorDoc.Subsector.PSSList.OrderByDescending(c => c.SiteNumber))
                 {
                     Panel panelpss = new Panel();
 
@@ -1817,7 +1820,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     Label lblTVText = new Label();
 
                     lblTVText.AutoSize = true;
-                    lblTVText.Location = new Point(10, 4);
+                    lblTVText.Location = new Point(5, 4);
                     lblTVText.TabIndex = 0;
                     lblTVText.Tag = pss.PSSTVItemID;
                     if (pss.IsActive == false)
@@ -1830,11 +1833,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                     if (!string.IsNullOrWhiteSpace(pss.TVTextNew))
                     {
-                        lblTVText.Text = $"{pss.SiteNumber}    {pss.TVTextNew}";
+                        lblTVText.Text = $"{pss.TVTextNew}";
                     }
                     else
                     {
-                        lblTVText.Text = $"{pss.SiteNumber}    {pss.TVText}";
+                        lblTVText.Text = $"{pss.TVText}";
                     }
                     lblTVText.Click += ShowPolSourceSite_Click;
 
@@ -1886,7 +1889,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
 
                         lblPSSStatus.AutoSize = true;
-                        lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                        lblPSSStatus.Location = new Point(5, lblTVText.Bottom + 4);
                         lblPSSStatus.TabIndex = 0;
                         lblPSSStatus.Tag = pss.PSSTVItemID;
                         if (pss.IsActive == false)
@@ -1918,7 +1921,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
 
                         lblPSSStatus.AutoSize = true;
-                        lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                        lblPSSStatus.Location = new Point(5, lblTVText.Bottom + 4);
                         lblPSSStatus.TabIndex = 0;
                         lblPSSStatus.Tag = pss.PSSTVItemID;
                         if (pss.IsActive == false)
@@ -2060,7 +2063,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 pss.Lng = LastLng + 0.1f;
                 pss.IsActive = true;
                 pss.IsPointSource = false;
-                pss.TVText = "New PSS";
+                pss.TVText = $"P{ pss.SiteNumberText } - New PSS";
 
                 subsectorDoc.Subsector.PSSList.Add(pss);
 
@@ -2083,6 +2086,11 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
         }
         public void InfrastructureSaveToCSSPWebTools()
+        {
+            //MessageBox.Show("PSSSaveToCSSPWebTools " + CurrentPSS.PSSTVItemID.ToString(), PolSourceSiteTVItemID.ToString());
+            MessageBox.Show("This functionality has not been implemented yet.");
+        }
+        public void InfrastructureSaveAllToCSSPWebTools()
         {
             //MessageBox.Show("PSSSaveToCSSPWebTools " + CurrentPSS.PSSTVItemID.ToString(), PolSourceSiteTVItemID.ToString());
             MessageBox.Show("This functionality has not been implemented yet.");
@@ -2287,6 +2295,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string MessageText = $"Checking if municipality exist [{MunicipalityNewText}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
+                    bool MunicipalityExist = false;
                     ret = MunicipalityExistUnderSubsectorInCSSPWebTools((int)subsectorDoc.Subsector.SubsectorTVItemID, MunicipalityNewText, AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR"))
@@ -2303,42 +2312,39 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     if (!MunicipalityExist)
                     {
-                        if (CreateMunicipality)
+                        MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, AdminEmail);
+                        ret = ret.Replace("\"", "");
+                        if (ret.StartsWith("ERROR"))
                         {
-                            MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
-                            EmitRTBMessage(new RTBMessageEventArgs(MessageText));
-
-                            ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, CreateMunicipality, AdminEmail);
-                            ret = ret.Replace("\"", "");
-                            if (ret.StartsWith("ERROR"))
+                            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                            if (NeedToSave)
                             {
-                                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                                EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
-                                if (NeedToSave)
-                                {
-                                    SaveSubsectorTextFile();
-                                }
+                                SaveSubsectorTextFile();
                             }
-                            else
-                            {
-                                EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+                        }
+                        else
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
-                                CurrentPSS.PSSAddress.AddressType = (int)AddressTypeEnum.Civic;
-                                CurrentPSS.PSSAddress.AddressTVItemID = int.Parse(ret);
-                                CurrentPSS.PSSAddress.StreetNumber = CurrentPSS.PSSAddressNew.StreetNumber;
-                                CurrentPSS.PSSAddress.StreetName = CurrentPSS.PSSAddressNew.StreetName;
-                                CurrentPSS.PSSAddress.StreetType = CurrentPSS.PSSAddressNew.StreetType;
-                                CurrentPSS.PSSAddress.Municipality = CurrentPSS.PSSAddressNew.Municipality;
-                                CurrentPSS.PSSAddress.PostalCode = CurrentPSS.PSSAddressNew.PostalCode;
-                                CurrentPSS.PSSAddressNew.StreetNumber = null;
-                                CurrentPSS.PSSAddressNew.StreetName = null;
-                                CurrentPSS.PSSAddressNew.StreetType = null;
-                                CurrentPSS.PSSAddressNew.Municipality = null;
-                                CurrentPSS.PSSAddressNew.PostalCode = null;
-                                CurrentPSS.PSSAddressNew.AddressTVItemID = null;
-                                CurrentPSS.PSSAddressNew.AddressType = null;
-                                NeedToSave = true;
-                            }
+                            CurrentPSS.PSSAddress.AddressType = (int)AddressTypeEnum.Civic;
+                            CurrentPSS.PSSAddress.AddressTVItemID = int.Parse(ret);
+                            CurrentPSS.PSSAddress.StreetNumber = CurrentPSS.PSSAddressNew.StreetNumber;
+                            CurrentPSS.PSSAddress.StreetName = CurrentPSS.PSSAddressNew.StreetName;
+                            CurrentPSS.PSSAddress.StreetType = CurrentPSS.PSSAddressNew.StreetType;
+                            CurrentPSS.PSSAddress.Municipality = CurrentPSS.PSSAddressNew.Municipality;
+                            CurrentPSS.PSSAddress.PostalCode = CurrentPSS.PSSAddressNew.PostalCode;
+                            CurrentPSS.PSSAddressNew.StreetNumber = null;
+                            CurrentPSS.PSSAddressNew.StreetName = null;
+                            CurrentPSS.PSSAddressNew.StreetType = null;
+                            CurrentPSS.PSSAddressNew.Municipality = null;
+                            CurrentPSS.PSSAddressNew.PostalCode = null;
+                            CurrentPSS.PSSAddressNew.AddressTVItemID = null;
+                            CurrentPSS.PSSAddressNew.AddressType = null;
+                            NeedToSave = true;
                         }
                     }
                     else
@@ -2346,7 +2352,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, CreateMunicipality, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -2703,6 +2709,16 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
+        public void PSSSaveAllToCSSPWebTools()
+        {
+            // should show all municipality names to the admin for verification
+            // should also verify that all pictures server file name is unique
+            foreach (PSS pss in subsectorDoc.Subsector.PSSList)
+            {
+                CurrentPSS = pss;
+                PSSSaveToCSSPWebTools();
+            }
+        }
         public void RedrawSinglePanelPSS()
         {
             Panel panel = new Panel();
@@ -2728,7 +2744,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Label lblTVText = new Label();
 
                 lblTVText.AutoSize = true;
-                lblTVText.Location = new Point(10, 4);
+                lblTVText.Location = new Point(5, 4);
                 lblTVText.TabIndex = 0;
                 lblTVText.Tag = pss.PSSTVItemID;
                 if (pss.IsActive == false)
@@ -2741,11 +2757,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 if (!string.IsNullOrWhiteSpace(pss.TVTextNew))
                 {
-                    lblTVText.Text = $"{pss.SiteNumber}    {pss.TVTextNew}";
+                    lblTVText.Text = $"{pss.TVTextNew}";
                 }
                 else
                 {
-                    lblTVText.Text = $"{pss.SiteNumber}    {pss.TVText}";
+                    lblTVText.Text = $"{pss.TVText}";
                 }
                 lblTVText.Click += ShowPolSourceSite_Click;
 
@@ -2796,7 +2812,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
 
                     lblPSSStatus.AutoSize = true;
-                    lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                    lblPSSStatus.Location = new Point(5, lblTVText.Bottom + 4);
                     lblPSSStatus.TabIndex = 0;
                     lblPSSStatus.Tag = pss.PSSTVItemID;
                     if (pss.IsActive == false)
@@ -2825,7 +2841,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 else
                 {
                     lblPSSStatus.AutoSize = true;
-                    lblPSSStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                    lblPSSStatus.Location = new Point(5, lblTVText.Bottom + 4);
                     lblPSSStatus.TabIndex = 0;
                     lblPSSStatus.Tag = pss.PSSTVItemID;
                     if (pss.IsActive == false)
@@ -3736,7 +3752,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                 }
                 //lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
-                lblTVText.Text = $"{CurrentPSS.SiteNumber} {(CurrentPSS.TVTextNew != null ? CurrentPSS.TVTextNew : CurrentPSS.TVText)}";
+                lblTVText.Text = $"{(CurrentPSS.TVTextNew != null ? CurrentPSS.TVTextNew : CurrentPSS.TVText)}";
 
                 PanelViewAndEdit.Controls.Add(lblTVText);
 
@@ -4024,13 +4040,27 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Button butPSSSaveToCSSPWebTools = new Button();
                         butPSSSaveToCSSPWebTools.AutoSize = true;
                         butPSSSaveToCSSPWebTools.Location = new Point(20, Y);
-                        butPSSSaveToCSSPWebTools.Text = "Update All Pollution Source Site Related Information To CSSPWebTools";
+                        butPSSSaveToCSSPWebTools.Text = "Update this Pollution Source Site Related Information To CSSPWebTools";
                         butPSSSaveToCSSPWebTools.Tag = $"{CurrentPSS.PSSTVItemID}";
                         butPSSSaveToCSSPWebTools.Font = new Font(new FontFamily(butPSSSaveToCSSPWebTools.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
                         butPSSSaveToCSSPWebTools.Padding = new Padding(5);
                         butPSSSaveToCSSPWebTools.Click += butSaveToCSSPWebTools_Click;
 
                         PanelViewAndEdit.Controls.Add(butPSSSaveToCSSPWebTools);
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                        X = 20;
+
+                        Button butPSSSaveAllToCSSPWebTools = new Button();
+                        butPSSSaveAllToCSSPWebTools.AutoSize = true;
+                        butPSSSaveAllToCSSPWebTools.Location = new Point(20, Y);
+                        butPSSSaveAllToCSSPWebTools.Text = "Update All Pollution Source Site Related Information To CSSPWebTools";
+                        butPSSSaveAllToCSSPWebTools.Tag = $"{CurrentPSS.PSSTVItemID}";
+                        butPSSSaveAllToCSSPWebTools.Font = new Font(new FontFamily(butPSSSaveToCSSPWebTools.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+                        butPSSSaveAllToCSSPWebTools.Padding = new Padding(5);
+                        butPSSSaveAllToCSSPWebTools.Click += butSaveAllToCSSPWebTools_Click;
+
+                        PanelViewAndEdit.Controls.Add(butPSSSaveAllToCSSPWebTools);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                         X = 20;

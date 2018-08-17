@@ -61,7 +61,7 @@
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
             this.richTextBoxStatus = new System.Windows.Forms.RichTextBox();
             this.panelShowInputOptions = new System.Windows.Forms.Panel();
-            this.checkBoxDeletedIssue = new System.Windows.Forms.CheckBox();
+            this.checkBoxDeletedIssueAndPicture = new System.Windows.Forms.CheckBox();
             this.checkBoxNewIssue = new System.Windows.Forms.CheckBox();
             this.checkBoxOldIssue = new System.Windows.Forms.CheckBox();
             this.checkBoxOldIssueText = new System.Windows.Forms.CheckBox();
@@ -73,6 +73,11 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
+            this.panelMunicipalities = new System.Windows.Forms.Panel();
+            this.comboBoxMunicipalities = new System.Windows.Forms.ComboBox();
+            this.lblMunicipalities = new System.Windows.Forms.Label();
+            this.butMunicipalitySelect = new System.Windows.Forms.Button();
+            this.butMunicipalityCancel = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
             this.panelShowInfrastructure.SuspendLayout();
@@ -95,6 +100,7 @@
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.panelShowInputOptions.SuspendLayout();
+            this.panelMunicipalities.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelButtonBar
@@ -158,16 +164,16 @@
             this.panelSubsectorOrMunicipality.Controls.Add(this.butFix);
             this.panelSubsectorOrMunicipality.Controls.Add(this.comboBoxSubsectorOrMunicipality);
             this.panelSubsectorOrMunicipality.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSubsectorOrMunicipality.Location = new System.Drawing.Point(208, 0);
+            this.panelSubsectorOrMunicipality.Location = new System.Drawing.Point(177, 0);
             this.panelSubsectorOrMunicipality.Name = "panelSubsectorOrMunicipality";
-            this.panelSubsectorOrMunicipality.Size = new System.Drawing.Size(549, 34);
+            this.panelSubsectorOrMunicipality.Size = new System.Drawing.Size(331, 34);
             this.panelSubsectorOrMunicipality.TabIndex = 13;
             // 
             // butFix
             // 
-            this.butFix.Location = new System.Drawing.Point(448, 6);
+            this.butFix.Location = new System.Drawing.Point(282, 6);
             this.butFix.Name = "butFix";
-            this.butFix.Size = new System.Drawing.Size(87, 23);
+            this.butFix.Size = new System.Drawing.Size(38, 23);
             this.butFix.TabIndex = 12;
             this.butFix.Text = "Fix";
             this.butFix.UseVisualStyleBackColor = true;
@@ -177,9 +183,9 @@
             // 
             this.comboBoxSubsectorOrMunicipality.DropDownWidth = 500;
             this.comboBoxSubsectorOrMunicipality.FormattingEnabled = true;
-            this.comboBoxSubsectorOrMunicipality.Location = new System.Drawing.Point(11, 7);
+            this.comboBoxSubsectorOrMunicipality.Location = new System.Drawing.Point(7, 7);
             this.comboBoxSubsectorOrMunicipality.Name = "comboBoxSubsectorOrMunicipality";
-            this.comboBoxSubsectorOrMunicipality.Size = new System.Drawing.Size(431, 21);
+            this.comboBoxSubsectorOrMunicipality.Size = new System.Drawing.Size(268, 21);
             this.comboBoxSubsectorOrMunicipality.TabIndex = 10;
             this.comboBoxSubsectorOrMunicipality.SelectedIndexChanged += new System.EventHandler(this.comboBoxSubsectorOrMunicipality_SelectedIndexChanged);
             // 
@@ -189,7 +195,7 @@
             this.panelProvinces.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelProvinces.Location = new System.Drawing.Point(2, 0);
             this.panelProvinces.Name = "panelProvinces";
-            this.panelProvinces.Size = new System.Drawing.Size(206, 34);
+            this.panelProvinces.Size = new System.Drawing.Size(175, 34);
             this.panelProvinces.TabIndex = 18;
             // 
             // comboBoxProvince
@@ -198,7 +204,7 @@
             this.comboBoxProvince.FormattingEnabled = true;
             this.comboBoxProvince.Location = new System.Drawing.Point(3, 6);
             this.comboBoxProvince.Name = "comboBoxProvince";
-            this.comboBoxProvince.Size = new System.Drawing.Size(196, 21);
+            this.comboBoxProvince.Size = new System.Drawing.Size(165, 21);
             this.comboBoxProvince.TabIndex = 13;
             this.comboBoxProvince.SelectedIndexChanged += new System.EventHandler(this.comboBoxProvince_SelectedIndexChanged);
             // 
@@ -413,6 +419,7 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.panelMunicipalities);
             this.splitContainer2.Panel1.Controls.Add(this.panelViewAndEdit);
             // 
             // splitContainer2.Panel2
@@ -425,9 +432,9 @@
             // panelViewAndEdit
             // 
             this.panelViewAndEdit.AutoScroll = true;
-            this.panelViewAndEdit.Location = new System.Drawing.Point(87, 16);
+            this.panelViewAndEdit.Location = new System.Drawing.Point(211, 16);
             this.panelViewAndEdit.Name = "panelViewAndEdit";
-            this.panelViewAndEdit.Size = new System.Drawing.Size(426, 308);
+            this.panelViewAndEdit.Size = new System.Drawing.Size(302, 138);
             this.panelViewAndEdit.TabIndex = 1;
             // 
             // richTextBoxStatus
@@ -441,7 +448,7 @@
             // panelShowInputOptions
             // 
             this.panelShowInputOptions.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelShowInputOptions.Controls.Add(this.checkBoxDeletedIssue);
+            this.panelShowInputOptions.Controls.Add(this.checkBoxDeletedIssueAndPicture);
             this.panelShowInputOptions.Controls.Add(this.checkBoxNewIssue);
             this.panelShowInputOptions.Controls.Add(this.checkBoxOldIssue);
             this.panelShowInputOptions.Controls.Add(this.checkBoxOldIssueText);
@@ -458,18 +465,18 @@
             this.panelShowInputOptions.Size = new System.Drawing.Size(695, 33);
             this.panelShowInputOptions.TabIndex = 0;
             // 
-            // checkBoxDeletedIssue
+            // checkBoxDeletedIssueAndPicture
             // 
-            this.checkBoxDeletedIssue.AutoSize = true;
-            this.checkBoxDeletedIssue.Checked = true;
-            this.checkBoxDeletedIssue.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxDeletedIssue.Location = new System.Drawing.Point(335, 6);
-            this.checkBoxDeletedIssue.Name = "checkBoxDeletedIssue";
-            this.checkBoxDeletedIssue.Size = new System.Drawing.Size(42, 17);
-            this.checkBoxDeletedIssue.TabIndex = 12;
-            this.checkBoxDeletedIssue.Text = "Del";
-            this.checkBoxDeletedIssue.UseVisualStyleBackColor = true;
-            this.checkBoxDeletedIssue.CheckedChanged += new System.EventHandler(this.checkBoxDeletedIssue_CheckedChanged);
+            this.checkBoxDeletedIssueAndPicture.AutoSize = true;
+            this.checkBoxDeletedIssueAndPicture.Checked = true;
+            this.checkBoxDeletedIssueAndPicture.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxDeletedIssueAndPicture.Location = new System.Drawing.Point(335, 6);
+            this.checkBoxDeletedIssueAndPicture.Name = "checkBoxDeletedIssueAndPicture";
+            this.checkBoxDeletedIssueAndPicture.Size = new System.Drawing.Size(42, 17);
+            this.checkBoxDeletedIssueAndPicture.TabIndex = 12;
+            this.checkBoxDeletedIssueAndPicture.Text = "Del";
+            this.checkBoxDeletedIssueAndPicture.UseVisualStyleBackColor = true;
+            this.checkBoxDeletedIssueAndPicture.CheckedChanged += new System.EventHandler(this.checkBoxDeletedIssueAndPicture_CheckedChanged);
             // 
             // checkBoxNewIssue
             // 
@@ -595,6 +602,56 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
+            // panelMunicipalities
+            // 
+            this.panelMunicipalities.AutoScroll = true;
+            this.panelMunicipalities.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMunicipalities.Controls.Add(this.butMunicipalityCancel);
+            this.panelMunicipalities.Controls.Add(this.butMunicipalitySelect);
+            this.panelMunicipalities.Controls.Add(this.lblMunicipalities);
+            this.panelMunicipalities.Controls.Add(this.comboBoxMunicipalities);
+            this.panelMunicipalities.Location = new System.Drawing.Point(169, 193);
+            this.panelMunicipalities.Name = "panelMunicipalities";
+            this.panelMunicipalities.Size = new System.Drawing.Size(277, 134);
+            this.panelMunicipalities.TabIndex = 2;
+            // 
+            // comboBoxMunicipalities
+            // 
+            this.comboBoxMunicipalities.FormattingEnabled = true;
+            this.comboBoxMunicipalities.Location = new System.Drawing.Point(42, 40);
+            this.comboBoxMunicipalities.Name = "comboBoxMunicipalities";
+            this.comboBoxMunicipalities.Size = new System.Drawing.Size(199, 21);
+            this.comboBoxMunicipalities.TabIndex = 0;
+            // 
+            // lblMunicipalities
+            // 
+            this.lblMunicipalities.AutoSize = true;
+            this.lblMunicipalities.Location = new System.Drawing.Point(42, 21);
+            this.lblMunicipalities.Name = "lblMunicipalities";
+            this.lblMunicipalities.Size = new System.Drawing.Size(70, 13);
+            this.lblMunicipalities.TabIndex = 1;
+            this.lblMunicipalities.Text = "Municipalities";
+            // 
+            // butMunicipalitySelect
+            // 
+            this.butMunicipalitySelect.Location = new System.Drawing.Point(45, 82);
+            this.butMunicipalitySelect.Name = "butMunicipalitySelect";
+            this.butMunicipalitySelect.Size = new System.Drawing.Size(75, 23);
+            this.butMunicipalitySelect.TabIndex = 2;
+            this.butMunicipalitySelect.Text = "Select";
+            this.butMunicipalitySelect.UseVisualStyleBackColor = true;
+            this.butMunicipalitySelect.Click += new System.EventHandler(this.butMunicipalitySelect_Click);
+            // 
+            // butMunicipalityCancel
+            // 
+            this.butMunicipalityCancel.Location = new System.Drawing.Point(147, 82);
+            this.butMunicipalityCancel.Name = "butMunicipalityCancel";
+            this.butMunicipalityCancel.Size = new System.Drawing.Size(75, 23);
+            this.butMunicipalityCancel.TabIndex = 2;
+            this.butMunicipalityCancel.Text = "Cancel";
+            this.butMunicipalityCancel.UseVisualStyleBackColor = true;
+            this.butMunicipalityCancel.Click += new System.EventHandler(this.butMunicipalityCancel_Click);
+            // 
             // CSSPPolSourceSiteInputToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -634,6 +691,8 @@
             this.splitContainer2.ResumeLayout(false);
             this.panelShowInputOptions.ResumeLayout(false);
             this.panelShowInputOptions.PerformLayout();
+            this.panelMunicipalities.ResumeLayout(false);
+            this.panelMunicipalities.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -684,7 +743,12 @@
         private System.Windows.Forms.CheckBox checkBoxOldIssueText;
         private System.Windows.Forms.CheckBox checkBoxOldIssue;
         private System.Windows.Forms.CheckBox checkBoxNewIssue;
-        private System.Windows.Forms.CheckBox checkBoxDeletedIssue;
+        private System.Windows.Forms.CheckBox checkBoxDeletedIssueAndPicture;
+        private System.Windows.Forms.Panel panelMunicipalities;
+        private System.Windows.Forms.Button butMunicipalityCancel;
+        private System.Windows.Forms.Button butMunicipalitySelect;
+        private System.Windows.Forms.Label lblMunicipalities;
+        private System.Windows.Forms.ComboBox comboBoxMunicipalities;
     }
 }
 

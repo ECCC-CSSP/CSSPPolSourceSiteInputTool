@@ -33,7 +33,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public bool OldIssueText = true;
         public bool OldIssue = true;
         public bool NewIssue = true;
-        public bool DeletedIssue = true;
+        public bool DeletedIssueAndPicture = true;
         public bool IsDirty = false;
         public bool IsReading = false;
         public bool IsAdmin = false;
@@ -58,10 +58,12 @@ namespace CSSPPolSourceSiteInputToolHelper
         public List<PolSourceObsInfoEnumHideAndID> polSourceObsInfoEnumHideAndIDList = new List<PolSourceObsInfoEnumHideAndID>();
         public List<PolSourceObsInfoEnumTextAndID> polSourceObsInfoEnumDescTextAndIDList = new List<PolSourceObsInfoEnumTextAndID>();
         public List<PolSourceObsInfoChild> polSourceObsInfoChildList = new List<PolSourceObsInfoChild>();
-        public bool CreateMunicipality = false;
+        //public bool CreateMunicipality = false;
         public string AdminEmail = "";
-        public bool MunicipalityExist = false;
-        public bool AutoCreateMunicipality = false;
+        //public bool MunicipalityExist = false;
+        //public bool AutoCreateMunicipality = false;
+        public string InitialDirectorySubsectorPictures = $@"C:\";
+        public string InitialDirectoryInfrastructurePictures = $@"C:\";
         #endregion Variables
 
         #region Properties
@@ -72,15 +74,17 @@ namespace CSSPPolSourceSiteInputToolHelper
         public BaseEnumService _BaseEnumService { get; set; }
         public BaseModelService _BaseModelService { get; set; }
         public Panel PanelViewAndEdit { get; set; }
+        public Panel PanelMunicipalities { get; set; }
         public Panel PanelPolSourceSite { get; set; }
         public LanguageEnum Language { get; set; }
         #endregion Properties
 
         #region Constructors
-        public PolSourceSiteInputToolHelper(Panel panelViewAndEdit, Panel panelPolSourceSite, LanguageEnum language)
+        public PolSourceSiteInputToolHelper(Panel panelViewAndEdit, Panel panelPolSourceSite, Panel panelMunicipalities, LanguageEnum language)
         {
             PanelViewAndEdit = panelViewAndEdit;
             PanelPolSourceSite = panelPolSourceSite;
+            PanelMunicipalities = panelMunicipalities;
             Language = language;
             subsectorDoc = new SubsectorDoc();
             municipalityDoc = new MunicipalityDoc();
@@ -112,6 +116,56 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             _BaseModelService.FillPolSourceObsInfoChild(polSourceObsInfoChildList);
+        }
+        #endregion Constructors
+
+        #region Functions private
+        private List<MunicipalityIDNumber> GetMunicipalitiesAndIDNumber()
+        {
+            List<MunicipalityIDNumber> MunicipalityIDNumberList = new List<MunicipalityIDNumber>();
+
+            if (IsPolSourceSite)
+            {
+                foreach (PSS pss in subsectorDoc.Subsector.PSSList)
+                {
+                    if (pss.PSSAddressNew != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(pss.PSSAddressNew.Municipality))
+                        {
+                            MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = pss.PSSAddressNew.Municipality, IDNumber = pss.SiteNumberText });
+                        }
+                    }
+                    if (pss.PSSAddress != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(pss.PSSAddress.Municipality))
+                        {
+                            MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = pss.PSSAddress.Municipality, IDNumber = pss.SiteNumberText });
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
+                {
+                    if (infrastructure.InfrastructureAddressNew != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(infrastructure.InfrastructureAddressNew.Municipality))
+                        {
+                            MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = infrastructure.InfrastructureAddressNew.Municipality, IDNumber = infrastructure.InfrastructureTVItemID.ToString() });
+                        }
+                    }
+                    if (infrastructure.InfrastructureAddress != null)
+                    {
+                        if (!string.IsNullOrWhiteSpace(infrastructure.InfrastructureAddress.Municipality))
+                        {
+                            MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = infrastructure.InfrastructureAddress.Municipality, IDNumber = infrastructure.InfrastructureTVItemID.ToString() });
+                        }
+                    }
+                }
+            }
+
+            return MunicipalityIDNumberList;
         }
         public void ReDrawInfrastructure()
         {
@@ -184,9 +238,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
             }
         }
-        #endregion Constructors
-
-        #region Functions private
         #endregion Functions private
+
+        private class MunicipalityIDNumber
+        {
+            public MunicipalityIDNumber()
+            {
+
+            }
+
+            public string Municipality { get; set; }
+            public string IDNumber { get; set; }
+        }
     }
 }

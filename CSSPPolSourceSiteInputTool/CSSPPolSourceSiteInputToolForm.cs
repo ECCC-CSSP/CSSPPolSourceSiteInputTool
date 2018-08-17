@@ -49,6 +49,31 @@ namespace CSSPPolSourceSiteInputTool
         {
             CreateMunicipalityDirectoryWithInfo();
         }
+        private void butFix_Click(object sender, EventArgs e)
+        {
+            butFix.Text = "Working ...";
+            butFix.Refresh();
+            Application.DoEvents();
+            polSourceSiteInputToolHelper.Fix();
+            butFix.Text = "Fix";
+        }
+
+        private void butMunicipalitySelect_Click(object sender, EventArgs e)
+        {
+            foreach (Control control in panelViewAndEdit.Controls)
+            {
+                if (control.Name == "textBoxMunicipality")
+                {
+                    ((TextBox)control).Text = (string)comboBoxMunicipalities.SelectedItem;
+                }
+            }
+            panelMunicipalities.SendToBack();
+        }
+
+        private void butMunicipalityCancel_Click(object sender, EventArgs e)
+        {
+            panelMunicipalities.SendToBack();
+        }
         private void butPSSAdd_Click(object sender, EventArgs e)
         {
             polSourceSiteInputToolHelper.PSSAdd();
@@ -142,15 +167,15 @@ namespace CSSPPolSourceSiteInputTool
                 ShowInputParts();
             }
         }
-        private void checkBoxDeletedIssue_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxDeletedIssueAndPicture_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBoxDeletedIssue.Checked)
+            if (checkBoxDeletedIssueAndPicture.Checked)
             {
-                polSourceSiteInputToolHelper.DeletedIssue = true;
+                polSourceSiteInputToolHelper.DeletedIssueAndPicture = true;
             }
             else
             {
-                polSourceSiteInputToolHelper.DeletedIssue = false;
+                polSourceSiteInputToolHelper.DeletedIssueAndPicture = false;
             }
 
             textBoxEmpty.Focus();
@@ -1501,7 +1526,7 @@ namespace CSSPPolSourceSiteInputTool
             checkBoxMoreInfo.Visible = false;
 
 
-            polSourceSiteInputToolHelper = new PolSourceSiteInputToolHelper(panelViewAndEdit, panelPolSourceSite, LanguageEnum.en);
+            polSourceSiteInputToolHelper = new PolSourceSiteInputToolHelper(panelViewAndEdit, panelPolSourceSite, panelMunicipalities, LanguageEnum.en);
             polSourceSiteInputToolHelper.UpdateStatus += polSourceSiteInputToolHelper_UpdateStatus;
             polSourceSiteInputToolHelper.UpdateRTBClear += polSourceSiteInputToolHelper_UpdateRTBClear;
             polSourceSiteInputToolHelper.UpdateRTBMessage += polSourceSiteInputToolHelper_UpdateRTBMessage;
@@ -1643,15 +1668,6 @@ namespace CSSPPolSourceSiteInputTool
         }
 
         #endregion Functions private
-
-        private void butFix_Click(object sender, EventArgs e)
-        {
-            butFix.Text = "Working ...";
-            butFix.Refresh();
-            Application.DoEvents();
-            polSourceSiteInputToolHelper.Fix();
-            butFix.Text = "Fix";
-        }
 
     }
 }

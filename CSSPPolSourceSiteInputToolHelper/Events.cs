@@ -138,17 +138,140 @@ namespace CSSPPolSourceSiteInputToolHelper
             RedrawSinglePanelPSS();
             ReDrawPolSourceSite();
         }
+        private void lblMunicipalityText_Click(object sender, EventArgs e)
+        {
+            List<MunicipalityIDNumber> MunicipalityIDNumberList = new List<MunicipalityIDNumber>();
+
+            foreach (Control control in PanelMunicipalities.Controls)
+            {
+                if (control.Name == "comboBoxMunicipalities")
+                {
+                    ComboBox comboBoxMuni = ((ComboBox)control);
+                    MunicipalityIDNumberList = GetMunicipalitiesAndIDNumber();
+
+                    comboBoxMuni.Items.Clear();
+                    foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList.OrderBy(c => c))
+                    {
+                        comboBoxMuni.Items.Add(muniIDNumber.Municipality);
+                    }
+
+                    if (comboBoxMuni.Items.Count > 0)
+                    {
+                        comboBoxMuni.SelectedIndex = 0;
+                    }
+
+                    break;
+                }
+            }
+            PanelMunicipalities.BringToFront();
+        }
         private void butSaveToCSSPWebTools_Click(object sender, EventArgs e)
         {
             EmitRTBClear(new RTBClearEventArgs());
 
             if (IsPolSourceSite)
             {
-                PSSSaveToCSSPWebTools();
+
+                string MunicipalitiesText = "";
+                if (CurrentPSS.PSSAddressNew != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(CurrentPSS.PSSAddressNew.Municipality))
+                    {
+                        MunicipalitiesText = CurrentPSS.PSSAddressNew.Municipality;
+                    }
+                }
+                if (CurrentPSS.PSSAddress != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(CurrentPSS.PSSAddress.Municipality))
+                    {
+                        MunicipalitiesText = CurrentPSS.PSSAddress.Municipality;
+                    }
+                }
+
+                if (DialogResult.OK == MessageBox.Show($"The municipality\r\n\r\n {MunicipalitiesText}\r\n\r\n will be created in CSSPWebTools", "Warning: Will Create municipality", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
+                {
+                    PSSSaveToCSSPWebTools();
+                }
             }
             else
             {
-                InfrastructureSaveToCSSPWebTools();
+                string MunicipalitiesText = "";
+                if (CurrentInfrastructure.InfrastructureAddressNew != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(CurrentInfrastructure.InfrastructureAddressNew.Municipality))
+                    {
+                        MunicipalitiesText = CurrentInfrastructure.InfrastructureAddressNew.Municipality;
+                    }
+                }
+                if (CurrentInfrastructure.InfrastructureAddress != null)
+                {
+                    if (!string.IsNullOrWhiteSpace(CurrentInfrastructure.InfrastructureAddress.Municipality))
+                    {
+                        MunicipalitiesText = CurrentInfrastructure.InfrastructureAddress.Municipality;
+                    }
+                }
+
+                if (DialogResult.OK == MessageBox.Show($"The municipality\r\n\r\n {MunicipalitiesText}\r\n\r\n will be created in CSSPWebTools", "Warning: Will Create municipality", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
+                {
+                    InfrastructureSaveToCSSPWebTools();
+                }
+            }
+        }
+        private void butSaveAllToCSSPWebTools_Click(object sender, EventArgs e)
+        {
+            EmitRTBClear(new RTBClearEventArgs());
+
+            if (IsPolSourceSite)
+            {
+                List<MunicipalityIDNumber> MunicipalityIDNumberList = GetMunicipalitiesAndIDNumber();
+
+                string MunicipalitiesText = "";
+                foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList)
+                {
+                    EmitStatus(new StatusEventArgs($"Checking if { muniIDNumber.Municipality } already exist in CSSPWebTools"));
+
+                    string ret = MunicipalityExistUnderSubsectorInCSSPWebTools((int)subsectorDoc.Subsector.SubsectorTVItemID, muniIDNumber.Municipality, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR"))
+                    {
+                        MunicipalitiesText = $"{ MunicipalitiesText }{ muniIDNumber.Municipality } -- (P{ muniIDNumber.IDNumber }) \r\n";
+                    }
+                }
+
+                EmitStatus(new StatusEventArgs($"Please make sure that all municipalities do not have typos"));
+
+                if (DialogResult.OK == MessageBox.Show($"The municipalities\r\n\r\n {MunicipalitiesText}\r\n\r\n will be created in CSSPWebTools", "Warning: Will Create municipalities", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
+                {
+                    EmitStatus(new StatusEventArgs("Saving all Pollution Source Sites to CSSPWebTools"));
+
+                    PSSSaveAllToCSSPWebTools();
+                }
+            }
+            else
+            {
+                List<MunicipalityIDNumber> MunicipalityIDNumberList = GetMunicipalitiesAndIDNumber();
+
+                string MunicipalitiesText = "";
+                foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList)
+                {
+                    EmitStatus(new StatusEventArgs($"Checking if { muniIDNumber.Municipality } already exist in CSSPWebTools"));
+
+                    string ret = MunicipalityExistUnderSubsectorInCSSPWebTools((int)subsectorDoc.Subsector.SubsectorTVItemID, muniIDNumber.Municipality, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR"))
+                    {
+                        MunicipalitiesText = $"{ MunicipalitiesText }{ muniIDNumber.Municipality } -- (P{ muniIDNumber.IDNumber }) \r\n";
+                    }
+                }
+
+                EmitStatus(new StatusEventArgs($"Please make sure that all municipalities do not have typos"));
+
+                if (DialogResult.OK == MessageBox.Show($"The municipalities\r\n\r\n {MunicipalitiesText}\r\n\r\n will be created in CSSPWebTools", "Warning: Will Create municipalities", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
+                {
+                    EmitStatus(new StatusEventArgs("Saving all Infrastructures to CSSPWebTools"));
+
+                    InfrastructureSaveAllToCSSPWebTools();
+                }
             }
         }
         private void butRemovePicture_Click(object sender, EventArgs e)
@@ -265,18 +388,18 @@ namespace CSSPPolSourceSiteInputToolHelper
             IssueID = int.Parse(((Button)sender).Tag.ToString());
             ReDrawPolSourceSite();
         }
-        private void checkBoxCreateMunicipality_CheckedChanged(object sender, EventArgs e)
-        {
-            CheckBox checkBoxCreateMun = (CheckBox)sender;
-            if (checkBoxCreateMun.Checked)
-            {
-                CreateMunicipality = true;
-            }
-            else
-            {
-                CreateMunicipality = false;
-            }
-        }
+        //private void checkBoxCreateMunicipality_CheckedChanged(object sender, EventArgs e)
+        //{
+        //    CheckBox checkBoxCreateMun = (CheckBox)sender;
+        //    if (checkBoxCreateMun.Checked)
+        //    {
+        //        CreateMunicipality = true;
+        //    }
+        //    else
+        //    {
+        //        CreateMunicipality = false;
+        //    }
+        //}
         private void SaveAndRedraw(object sender, EventArgs e)
         {
             if (!IsReading)
@@ -297,8 +420,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             PolSourceSiteTVItemID = int.Parse(((Control)sender).Tag.ToString());
             IssueID = 0;
             CurrentPSS = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
-            MunicipalityExist = true;
-            CreateMunicipality = false;
+            //MunicipalityExist = true;
+            //CreateMunicipality = false;
             ReDrawPolSourceSite();
         }
         private void ShowMunicipality_Click(object sender, EventArgs e)

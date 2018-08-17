@@ -18,69 +18,98 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (IsPolSourceSite)
             {
                 OpenFileDialog openFileDialogPictures = new OpenFileDialog();
-                openFileDialogPictures.InitialDirectory = $@"C:\";
+                openFileDialogPictures.InitialDirectory = InitialDirectorySubsectorPictures;
                 openFileDialogPictures.Title = "Browse Pictures Files";
                 openFileDialogPictures.DefaultExt = @"jpg";
                 openFileDialogPictures.Filter = @"jpg files (*.jpg)|*.jpg";
+                openFileDialogPictures.Multiselect = true;
                 if (openFileDialogPictures.ShowDialog() == DialogResult.OK)
                 {
-                    PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
-
-                    Picture pictureNew = new Picture();
-
-                    pictureNew.PictureTVItemID = 10000000;
-                    pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
-                    pss.PSSPictureList.Add(pictureNew);
-
-                    FileInfo fi = new FileInfo(openFileDialogPictures.FileName);
-
-                    FileInfo fiCheck = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
-                    pictureNew.Extension = fi.Extension;
-                    pictureNew.Description = "Insert Required Description";
-                    while (fiCheck.Exists)
+                    if (openFileDialogPictures.FileNames.Count() > 0)
                     {
-                        pictureNew.PictureTVItemID += 1;
-                        pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
-                        fiCheck = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                        string FirstFileName = openFileDialogPictures.FileNames.FirstOrDefault();
+                        if (!string.IsNullOrWhiteSpace(FirstFileName))
+                        {
+                            DirectoryInfo di = new DirectoryInfo(FirstFileName);
+
+                            InitialDirectorySubsectorPictures = $@"{ di.FullName }\";
+                        }
+
+                        foreach (string FullFileName in openFileDialogPictures.FileNames)
+                        {
+                            PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == PolSourceSiteTVItemID).FirstOrDefault();
+
+                            Picture pictureNew = new Picture();
+
+                            pictureNew.PictureTVItemID = 10000000;
+                            pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
+                            pss.PSSPictureList.Add(pictureNew);
+
+                            FileInfo fi = new FileInfo(FullFileName);
+
+                            FileInfo fiCheck = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                            pictureNew.Extension = fi.Extension;
+                            pictureNew.Description = "Insert Required Description";
+                            while (fiCheck.Exists)
+                            {
+                                pictureNew.PictureTVItemID += 1;
+                                pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
+                                fiCheck = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                            }
+
+                            File.Copy(FullFileName, $@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                        }
                     }
 
-                    File.Copy(openFileDialogPictures.FileName, $@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{pss.SiteNumberText}_{pictureNew.PictureTVItemID}{fi.Extension}");
-
                     SaveSubsectorTextFile();
-
                     ShowPictures();
                 }
             }
             else
             {
                 OpenFileDialog openFileDialogPictures = new OpenFileDialog();
-                openFileDialogPictures.InitialDirectory = $@"C:\";
+                openFileDialogPictures.InitialDirectory = InitialDirectoryInfrastructurePictures;
                 openFileDialogPictures.Title = "Browse Pictures Files";
                 openFileDialogPictures.DefaultExt = @"jpg";
                 openFileDialogPictures.Filter = @"jpg files (*.jpg)|*.jpg";
+                openFileDialogPictures.Multiselect = true;
                 if (openFileDialogPictures.ShowDialog() == DialogResult.OK)
                 {
-                    Infrastructure infrastructure = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == InfrastructureTVItemID).FirstOrDefault();
-
-                    Picture pictureNew = new Picture();
-
-                    pictureNew.PictureTVItemID = 10000000;
-                    pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
-                    infrastructure.InfrastructurePictureList.Add(pictureNew);
-
-                    FileInfo fi = new FileInfo(openFileDialogPictures.FileName);
-
-                    FileInfo fiCheck = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
-                    pictureNew.Extension = fi.Extension;
-                    pictureNew.Description = "Insert Required Description";
-                    while (fiCheck.Exists)
+                    if (openFileDialogPictures.FileNames.Count() > 0)
                     {
-                        pictureNew.PictureTVItemID += 1;
-                        pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
-                        fiCheck = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
-                    }
+                        string FirstFileName = openFileDialogPictures.FileNames.FirstOrDefault();
+                        if (!string.IsNullOrWhiteSpace(FirstFileName))
+                        {
+                            DirectoryInfo di = new DirectoryInfo(FirstFileName);
 
-                    File.Copy(openFileDialogPictures.FileName, $@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                            InitialDirectorySubsectorPictures = $@"{ di.FullName }\";
+                        }
+
+                        foreach (string FullFileName in openFileDialogPictures.FileNames)
+                        {
+                            Infrastructure infrastructure = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == InfrastructureTVItemID).FirstOrDefault();
+
+                            Picture pictureNew = new Picture();
+
+                            pictureNew.PictureTVItemID = 10000000;
+                            pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
+                            infrastructure.InfrastructurePictureList.Add(pictureNew);
+
+                            FileInfo fi = new FileInfo(FullFileName);
+
+                            FileInfo fiCheck = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                            pictureNew.Extension = fi.Extension;
+                            pictureNew.Description = "Insert Required Description";
+                            while (fiCheck.Exists)
+                            {
+                                pictureNew.PictureTVItemID += 1;
+                                pictureNew.FileName = "Change File Name " + pictureNew.PictureTVItemID.ToString();
+                                fiCheck = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                            }
+
+                            File.Copy(FullFileName, $@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{pictureNew.PictureTVItemID}{fi.Extension}");
+                        }
+                    }
 
                     SaveMunicipalityTextFile();
                     RedrawInfrastructureList();
@@ -334,6 +363,11 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 foreach (Picture picture in pictureList)
                 {
+                    if (DeletedIssueAndPicture == false && picture.ToRemove == true)
+                    {
+                        continue;
+                    }
+
                     X = 10;
 
                     Panel panelPicture = new Panel();
