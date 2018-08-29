@@ -2417,6 +2417,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                     CurrentPSS.PSSObs.ObsID = int.Parse(ret);
                     CurrentPSS.PSSObs.ObsDate = CurrentPSS.PSSObs.ObsDateNew;
                     CurrentPSS.PSSObs.ObsDateNew = null;
+                    foreach (Issue issue in CurrentPSS.PSSObs.IssueList)
+                    {
+                        if (issue.PolSourceObsInfoIntListNew == null || issue.PolSourceObsInfoIntListNew.Count == 0)
+                        {
+                            issue.PolSourceObsInfoIntListNew = issue.PolSourceObsInfoIntList;
+                        }
+                    }
                     NeedToSave = true;
                 }
             }

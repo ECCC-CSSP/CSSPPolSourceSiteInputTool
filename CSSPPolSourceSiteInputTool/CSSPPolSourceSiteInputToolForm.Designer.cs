@@ -58,6 +58,11 @@
             this.butPSSAdd = new System.Windows.Forms.Button();
             this.panelPolSourceSite = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.panelMunicipalities = new System.Windows.Forms.Panel();
+            this.butMunicipalityCancel = new System.Windows.Forms.Button();
+            this.butMunicipalitySelect = new System.Windows.Forms.Button();
+            this.lblMunicipalities = new System.Windows.Forms.Label();
+            this.comboBoxMunicipalities = new System.Windows.Forms.ComboBox();
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
             this.richTextBoxStatus = new System.Windows.Forms.RichTextBox();
             this.panelShowInputOptions = new System.Windows.Forms.Panel();
@@ -73,11 +78,6 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.panelMunicipalities = new System.Windows.Forms.Panel();
-            this.comboBoxMunicipalities = new System.Windows.Forms.ComboBox();
-            this.lblMunicipalities = new System.Windows.Forms.Label();
-            this.butMunicipalitySelect = new System.Windows.Forms.Button();
-            this.butMunicipalityCancel = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
             this.panelShowInfrastructure.SuspendLayout();
@@ -99,8 +99,8 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
-            this.panelShowInputOptions.SuspendLayout();
             this.panelMunicipalities.SuspendLayout();
+            this.panelShowInputOptions.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelButtonBar
@@ -429,6 +429,56 @@
             this.splitContainer2.SplitterDistance = 384;
             this.splitContainer2.TabIndex = 2;
             // 
+            // panelMunicipalities
+            // 
+            this.panelMunicipalities.AutoScroll = true;
+            this.panelMunicipalities.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMunicipalities.Controls.Add(this.butMunicipalityCancel);
+            this.panelMunicipalities.Controls.Add(this.butMunicipalitySelect);
+            this.panelMunicipalities.Controls.Add(this.lblMunicipalities);
+            this.panelMunicipalities.Controls.Add(this.comboBoxMunicipalities);
+            this.panelMunicipalities.Location = new System.Drawing.Point(169, 193);
+            this.panelMunicipalities.Name = "panelMunicipalities";
+            this.panelMunicipalities.Size = new System.Drawing.Size(277, 134);
+            this.panelMunicipalities.TabIndex = 2;
+            // 
+            // butMunicipalityCancel
+            // 
+            this.butMunicipalityCancel.Location = new System.Drawing.Point(147, 82);
+            this.butMunicipalityCancel.Name = "butMunicipalityCancel";
+            this.butMunicipalityCancel.Size = new System.Drawing.Size(75, 23);
+            this.butMunicipalityCancel.TabIndex = 2;
+            this.butMunicipalityCancel.Text = "Cancel";
+            this.butMunicipalityCancel.UseVisualStyleBackColor = true;
+            this.butMunicipalityCancel.Click += new System.EventHandler(this.butMunicipalityCancel_Click);
+            // 
+            // butMunicipalitySelect
+            // 
+            this.butMunicipalitySelect.Location = new System.Drawing.Point(45, 82);
+            this.butMunicipalitySelect.Name = "butMunicipalitySelect";
+            this.butMunicipalitySelect.Size = new System.Drawing.Size(75, 23);
+            this.butMunicipalitySelect.TabIndex = 2;
+            this.butMunicipalitySelect.Text = "Select";
+            this.butMunicipalitySelect.UseVisualStyleBackColor = true;
+            this.butMunicipalitySelect.Click += new System.EventHandler(this.butMunicipalitySelect_Click);
+            // 
+            // lblMunicipalities
+            // 
+            this.lblMunicipalities.AutoSize = true;
+            this.lblMunicipalities.Location = new System.Drawing.Point(42, 21);
+            this.lblMunicipalities.Name = "lblMunicipalities";
+            this.lblMunicipalities.Size = new System.Drawing.Size(70, 13);
+            this.lblMunicipalities.TabIndex = 1;
+            this.lblMunicipalities.Text = "Municipalities";
+            // 
+            // comboBoxMunicipalities
+            // 
+            this.comboBoxMunicipalities.FormattingEnabled = true;
+            this.comboBoxMunicipalities.Location = new System.Drawing.Point(42, 40);
+            this.comboBoxMunicipalities.Name = "comboBoxMunicipalities";
+            this.comboBoxMunicipalities.Size = new System.Drawing.Size(199, 21);
+            this.comboBoxMunicipalities.TabIndex = 0;
+            // 
             // panelViewAndEdit
             // 
             this.panelViewAndEdit.AutoScroll = true;
@@ -602,56 +652,6 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
-            // panelMunicipalities
-            // 
-            this.panelMunicipalities.AutoScroll = true;
-            this.panelMunicipalities.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelMunicipalities.Controls.Add(this.butMunicipalityCancel);
-            this.panelMunicipalities.Controls.Add(this.butMunicipalitySelect);
-            this.panelMunicipalities.Controls.Add(this.lblMunicipalities);
-            this.panelMunicipalities.Controls.Add(this.comboBoxMunicipalities);
-            this.panelMunicipalities.Location = new System.Drawing.Point(169, 193);
-            this.panelMunicipalities.Name = "panelMunicipalities";
-            this.panelMunicipalities.Size = new System.Drawing.Size(277, 134);
-            this.panelMunicipalities.TabIndex = 2;
-            // 
-            // comboBoxMunicipalities
-            // 
-            this.comboBoxMunicipalities.FormattingEnabled = true;
-            this.comboBoxMunicipalities.Location = new System.Drawing.Point(42, 40);
-            this.comboBoxMunicipalities.Name = "comboBoxMunicipalities";
-            this.comboBoxMunicipalities.Size = new System.Drawing.Size(199, 21);
-            this.comboBoxMunicipalities.TabIndex = 0;
-            // 
-            // lblMunicipalities
-            // 
-            this.lblMunicipalities.AutoSize = true;
-            this.lblMunicipalities.Location = new System.Drawing.Point(42, 21);
-            this.lblMunicipalities.Name = "lblMunicipalities";
-            this.lblMunicipalities.Size = new System.Drawing.Size(70, 13);
-            this.lblMunicipalities.TabIndex = 1;
-            this.lblMunicipalities.Text = "Municipalities";
-            // 
-            // butMunicipalitySelect
-            // 
-            this.butMunicipalitySelect.Location = new System.Drawing.Point(45, 82);
-            this.butMunicipalitySelect.Name = "butMunicipalitySelect";
-            this.butMunicipalitySelect.Size = new System.Drawing.Size(75, 23);
-            this.butMunicipalitySelect.TabIndex = 2;
-            this.butMunicipalitySelect.Text = "Select";
-            this.butMunicipalitySelect.UseVisualStyleBackColor = true;
-            this.butMunicipalitySelect.Click += new System.EventHandler(this.butMunicipalitySelect_Click);
-            // 
-            // butMunicipalityCancel
-            // 
-            this.butMunicipalityCancel.Location = new System.Drawing.Point(147, 82);
-            this.butMunicipalityCancel.Name = "butMunicipalityCancel";
-            this.butMunicipalityCancel.Size = new System.Drawing.Size(75, 23);
-            this.butMunicipalityCancel.TabIndex = 2;
-            this.butMunicipalityCancel.Text = "Cancel";
-            this.butMunicipalityCancel.UseVisualStyleBackColor = true;
-            this.butMunicipalityCancel.Click += new System.EventHandler(this.butMunicipalityCancel_Click);
-            // 
             // CSSPPolSourceSiteInputToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -689,10 +689,10 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
-            this.panelShowInputOptions.ResumeLayout(false);
-            this.panelShowInputOptions.PerformLayout();
             this.panelMunicipalities.ResumeLayout(false);
             this.panelMunicipalities.PerformLayout();
+            this.panelShowInputOptions.ResumeLayout(false);
+            this.panelShowInputOptions.PerformLayout();
             this.ResumeLayout(false);
 
         }

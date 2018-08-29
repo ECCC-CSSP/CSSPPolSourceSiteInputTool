@@ -167,6 +167,20 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             return MunicipalityIDNumberList;
         }
+        private List<ObsDateIDNumber> GetObsDateAndIDNumber()
+        {
+            List<ObsDateIDNumber> ObsDateIDNumberList = new List<ObsDateIDNumber>();
+
+            foreach (PSS pss in subsectorDoc.Subsector.PSSList)
+            {
+                if (pss.PSSObs.ObsDateNew == null)
+                {
+                    ObsDateIDNumberList.Add(new ObsDateIDNumber { ObsDate = (DateTime)pss.PSSObs.ObsDate, IDNumber = pss.SiteNumberText });
+                }
+            }
+
+            return ObsDateIDNumberList;
+        }
         public void ReDrawInfrastructure()
         {
             IsReading = true;
@@ -248,6 +262,16 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             public string Municipality { get; set; }
+            public string IDNumber { get; set; }
+        }
+        private class ObsDateIDNumber
+        {
+            public ObsDateIDNumber()
+            {
+
+            }
+
+            public DateTime ObsDate { get; set; }
             public string IDNumber { get; set; }
         }
     }

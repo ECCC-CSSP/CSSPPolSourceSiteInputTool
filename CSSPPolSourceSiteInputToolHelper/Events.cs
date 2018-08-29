@@ -190,7 +190,17 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (DialogResult.OK == MessageBox.Show($"The municipality\r\n\r\n {MunicipalitiesText}\r\n\r\n will be created in CSSPWebTools", "Warning: Will Create municipality", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
                 {
-                    PSSSaveToCSSPWebTools();
+                    if (CurrentPSS.PSSObs.ObsDateNew == null)
+                    {
+                        if (DialogResult.OK == MessageBox.Show($"Observation date was not changed.\r\n\r\n { CurrentPSS.PSSObs.ObsDate }\r\n\r\nThis will replace the current observation of [{ CurrentPSS.PSSObs.ObsDate }] with the changes you made.", "Warning: Will Replace Existing Observation", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
+                        {
+                            PSSSaveToCSSPWebTools();
+                        }
+                    }
+                    else
+                    {
+                        PSSSaveToCSSPWebTools();
+                    }
                 }
             }
             else
@@ -238,13 +248,35 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                 }
 
+                List<ObsDateIDNumber> ObsDateIDNumberList = GetObsDateAndIDNumber();
+
+                string ObsDateText = "";
+                foreach (ObsDateIDNumber obsDateIDNumber in ObsDateIDNumberList)
+                {
+                    ObsDateText = $"{ ObsDateText }{ obsDateIDNumber.ObsDate.ToString("yyyy MMMM dd") } -- (P{ obsDateIDNumber.IDNumber }) \r\n";
+                }
+
                 EmitStatus(new StatusEventArgs($"Please make sure that all municipalities do not have typos"));
 
                 if (DialogResult.OK == MessageBox.Show($"The municipalities\r\n\r\n {MunicipalitiesText}\r\n\r\n will be created in CSSPWebTools", "Warning: Will Create municipalities", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
                 {
-                    EmitStatus(new StatusEventArgs("Saving all Pollution Source Sites to CSSPWebTools"));
+                    if (ObsDateIDNumberList.Count > 0)
+                    {
+                        EmitStatus(new StatusEventArgs($"Please make sure that all observation date has been changed if you want to create new observations."));
 
-                    PSSSaveAllToCSSPWebTools();
+                        if (DialogResult.OK == MessageBox.Show($"Observation date was not changed.\r\n\r\n { CurrentPSS.PSSObs.ObsDate }\r\n\r\nThis will replace the current observation of [{ CurrentPSS.PSSObs.ObsDate }] with the changes you made.", "Warning: Will Replace Existing Observation", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
+                        {
+                            EmitStatus(new StatusEventArgs("Saving all Pollution Source Sites to CSSPWebTools"));
+
+                            PSSSaveAllToCSSPWebTools();
+                        }
+                    }
+                    else
+                    {
+                        EmitStatus(new StatusEventArgs("Saving all Pollution Source Sites to CSSPWebTools"));
+
+                        PSSSaveAllToCSSPWebTools();
+                    }
                 }
             }
             else
