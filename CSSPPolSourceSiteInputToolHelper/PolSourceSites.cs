@@ -2236,6 +2236,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Lng = (float)CurrentPSS.LngNew;
                     }
 
+
                     string LatText = CurrentPSS.Lat == null ? "(empty)" : ((float)CurrentPSS.Lat).ToString("F5");
                     string LngText = CurrentPSS.Lng == null ? "(empty)" : ((float)CurrentPSS.Lng).ToString("F5");
 
