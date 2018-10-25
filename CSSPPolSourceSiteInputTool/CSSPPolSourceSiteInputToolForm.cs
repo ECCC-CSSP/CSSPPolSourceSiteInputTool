@@ -147,6 +147,11 @@ namespace CSSPPolSourceSiteInputTool
                             polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@canada.ca";
                         }
                         break;
+                    case "martellk":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Karyne.Martell2@canada.ca";
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -703,7 +708,7 @@ namespace CSSPPolSourceSiteInputTool
             ret = ret.Replace("\"", "");
             if (ret.StartsWith("ERROR:"))
             {
-                MessageBox.Show("Admin users list [pomeroyj, thibodeaume or perchardg]\r\n\r\nPlease contact Joe Pomeroy if you think you should have admin rights", "Invalid user for admin rights");
+                MessageBox.Show("Admin users list [pomeroyj, thibodeaume, perchardg, martellk]\r\n\r\nPlease contact Joe Pomeroy if you think you should have admin rights", "Invalid user for admin rights");
             }
             else
             {
@@ -1496,7 +1501,8 @@ namespace CSSPPolSourceSiteInputTool
                 Environment.UserName.ToLower() == "leblancc" ||
                 Environment.UserName.ToLower() == "pomeroyj" ||
                 Environment.UserName.ToLower() == "thibodeaume" ||
-                Environment.UserName.ToLower() == "perchardg")
+                Environment.UserName.ToLower() == "perchardg" ||
+                Environment.UserName.ToLower() == "martellk")
             {
                 panelShowAdmin.Visible = true;
             }
