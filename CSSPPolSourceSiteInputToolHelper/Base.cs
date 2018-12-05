@@ -77,6 +77,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Panel PanelMunicipalities { get; set; }
         public Panel PanelPolSourceSite { get; set; }
         public LanguageEnum Language { get; set; }
+
         #endregion Properties
 
         #region Constructors
@@ -274,5 +275,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             public DateTime ObsDate { get; set; }
             public string IDNumber { get; set; }
         }
+
     }
 }

@@ -19,6 +19,9 @@ namespace CSSPPolSourceSiteInputTool
 {
     public partial class CSSPPolSourceSiteInputToolForm : Form
     {
+        #region Variables
+        #endregion Variables
+
         #region Properties
         private CultureInfo currentCulture { get; set; }
         private CultureInfo currentUICulture { get; set; }
@@ -363,6 +366,7 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void comboBoxSubsectorOrMunicipality_SelectedIndexChanged(object sender, EventArgs e)
         {
+            textBoxEmpty.Focus();
             ComboBoxSubsectorOrMunicipalitySelectedIndexChanged();
         }
         private void polSourceSiteInputToolHelper_UpdateStatus(object sender, PolSourceSiteInputToolHelper.StatusEventArgs e)
@@ -1612,6 +1616,7 @@ namespace CSSPPolSourceSiteInputTool
 
             RefreshComboBoxSubsectorOrMunicipality();
         }
+
         private bool TryToCreateTheInfrastructureDirectory()
         {
             TVItemModel tvItemModelInfrastructure = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
@@ -1672,6 +1677,7 @@ namespace CSSPPolSourceSiteInputTool
 
             return true;
         }
+
 
         #endregion Functions private
 

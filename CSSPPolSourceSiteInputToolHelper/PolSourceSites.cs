@@ -3781,6 +3781,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                 #region IsActive and IsPointSource
                 if (IsEditing)
                 {
+                    Label lblWGS84Decimal = new Label();
+                    lblWGS84Decimal.AutoSize = true;
+                    lblWGS84Decimal.Location = new Point(10, Y);
+                    lblWGS84Decimal.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblWGS84Decimal.Font = new Font(new FontFamily(lblWGS84Decimal.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                    lblWGS84Decimal.ForeColor = Color.Red;
+                    lblWGS84Decimal.Text = $"Lat and Lng should be entered as WGS84 decimal degrees";
+
+                    PanelViewAndEdit.Controls.Add(lblWGS84Decimal);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
                     if ((bool)CurrentPSS.IsActive)
                     {
                         Button butChangeToIsNotActive = new Button();
@@ -3934,6 +3946,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                     dateTimePickerObsDate.Tag = CurrentPSS.PSSObs.ObsID.ToString();
 
                     PanelViewAndEdit.Controls.Add(dateTimePickerObsDate);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
+                    Label lblObsMakeChange = new Label();
+                    lblObsMakeChange.AutoSize = true;
+                    lblObsMakeChange.Location = new Point(10, Y);
+                    lblObsMakeChange.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblObsMakeChange.Font = new Font(new FontFamily(lblObsMakeChange.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                    lblObsMakeChange.ForeColor = Color.Red;
+                    lblObsMakeChange.Text = $"Observation date should be changed for new observation and issues";
+
+                    PanelViewAndEdit.Controls.Add(lblObsMakeChange);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
                 }
                 else
                 {

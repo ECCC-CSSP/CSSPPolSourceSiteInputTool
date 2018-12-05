@@ -412,18 +412,8 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
 
+
                     X = 20;
-                    Label lblFileName = new Label();
-                    lblFileName.AutoSize = true;
-                    lblFileName.Location = new Point(X, Y);
-                    lblFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                    lblFileName.Tag = $"{picture.PictureTVItemID}";
-                    lblFileName.Text = $@"Server File Name: ";
-
-                    panelPicture.Controls.Add(lblFileName);
-
-                    X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
-
                     if (picture.FileNameNew != null)
                     {
                         Label lblFileNameOld = new Label();
@@ -440,6 +430,27 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     if (IsEditing)
                     {
+                        Label lblDescriptiveFileName = new Label();
+                        lblDescriptiveFileName.AutoSize = true;
+                        lblDescriptiveFileName.Location = new Point(X, Y);
+                        lblDescriptiveFileName.Font = new Font(new FontFamily(lblDescriptiveFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblDescriptiveFileName.Text = $@"Please enter a descriptive file name (no extension)";
+                        lblDescriptiveFileName.ForeColor = Color.Red;
+
+                        panelPicture.Controls.Add(lblDescriptiveFileName);
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+
+                        Label lblFileName = new Label();
+                        lblFileName.AutoSize = true;
+                        lblFileName.Location = new Point(X, Y);
+                        lblFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblFileName.Tag = $"{picture.PictureTVItemID}";
+                        lblFileName.Text = $@"Server File Name: ";
+
+                        panelPicture.Controls.Add(lblFileName);
+
+                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
 
                         TextBox textBoxFileName = new TextBox();
                         textBoxFileName.Location = new Point(X, Y);
@@ -460,6 +471,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                     else
                     {
+                        Label lblFileName = new Label();
+                        lblFileName.AutoSize = true;
+                        lblFileName.Location = new Point(X, Y);
+                        lblFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblFileName.Tag = $"{picture.PictureTVItemID}";
+                        lblFileName.Text = $@"Server File Name: ";
+
+                        panelPicture.Controls.Add(lblFileName);
+
+                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
+
                         Label lblFileName2 = new Label();
                         lblFileName2.Location = new Point(X, Y);
                         lblFileName2.Font = new Font(new FontFamily(lblFileName2.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
@@ -480,19 +502,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                     Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
                     X = 20;
 
-                    Label lblDescription = new Label();
-                    lblDescription.AutoSize = true;
-                    lblDescription.Location = new Point(20, Y);
-                    lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                    lblDescription.Tag = $"{picture.PictureTVItemID}";
-                    lblDescription.Text = $@"Description: ";
-
-                    panelPicture.Controls.Add(lblDescription);
-
-                    X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
-
                     if (picture.DescriptionNew != null)
                     {
+                        Label lblDescription = new Label();
+                        lblDescription.AutoSize = true;
+                        lblDescription.Location = new Point(20, Y);
+                        lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblDescription.Tag = $"{picture.PictureTVItemID}";
+                        lblDescription.Text = $@"Description old: ";
+
+                        panelPicture.Controls.Add(lblDescription);
+
+                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
+
                         Label lblDescriptionOld = new Label();
                         lblDescriptionOld.AutoSize = true;
                         lblDescriptionOld.Location = new Point(X, Y);
@@ -507,6 +529,29 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     if (IsEditing)
                     {
+                        Label lblDescHelp = new Label();
+                        lblDescHelp.AutoSize = true;
+                        lblDescHelp.Location = new Point(20, Y);
+                        lblDescHelp.Font = new Font(new FontFamily(lblDescHelp.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblDescHelp.Text = $@"Textually describe the picture";
+                        lblDescHelp.ForeColor = Color.Red;
+
+                        panelPicture.Controls.Add(lblDescHelp);
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+
+                        Label lblDescription = new Label();
+                        lblDescription.AutoSize = true;
+                        lblDescription.Location = new Point(20, Y);
+                        lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblDescription.Tag = $"{picture.PictureTVItemID}";
+                        lblDescription.Text = $@"Description: ";
+
+                        panelPicture.Controls.Add(lblDescription);
+
+                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
+
+
                         TextBox textBoxDescription = new TextBox();
                         textBoxDescription.Location = new Point(X, Y);
                         textBoxDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
@@ -528,10 +573,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                     else
                     {
+                        Label lblDescription = new Label();
+                        lblDescription.AutoSize = true;
+                        lblDescription.Location = new Point(20, Y);
+                        lblDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblDescription.Tag = $"{picture.PictureTVItemID}";
+                        lblDescription.Text = $@"Description: ";
+
+                        panelPicture.Controls.Add(lblDescription);
+
+                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
+
                         Label lblDescription2 = new Label();
                         lblDescription2.AutoSize = true;
                         lblDescription2.Location = new Point(X, Y);
-                        lblDescription2.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblDescription2.Font = new Font(new FontFamily(lblDescription2.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                         lblDescription2.Width = 300;
                         lblDescription2.Height = 100;
                         lblDescription2.Tag = $"{picture.PictureTVItemID}";
@@ -590,8 +646,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                         }
                     }
-
-                    //Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 50;
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 }

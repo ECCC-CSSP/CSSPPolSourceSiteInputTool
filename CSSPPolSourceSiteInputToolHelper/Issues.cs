@@ -316,19 +316,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblIssue.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                         lblIssue.Font = new Font(new FontFamily(lblIssue.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
                         string Deleted = issue.ToRemove == true ? " --- (Deleted) " : "";
-                        lblIssue.Text = $"Issue ({IssueCount}) {Deleted}--- Last Update (UTC): ";
+                        lblIssue.Text = $"Issue ({IssueCount}) {Deleted}";
 
                         PanelViewAndEdit.Controls.Add(lblIssue);
 
-                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 0;
-                        Label lblIssueLastUpdate = new Label();
-                        lblIssueLastUpdate.AutoSize = true;
-                        lblIssueLastUpdate.Location = new Point(X, Y);
-                        lblIssueLastUpdate.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                        lblIssueLastUpdate.Font = new Font(new FontFamily(lblIssueLastUpdate.Font.FontFamily.Name).Name, 14f, FontStyle.Regular);
-                        lblIssueLastUpdate.Text = $"{((DateTime)issue.LastUpdated_UTC).ToString("yyyy MMMM dd HH:mm:ss")}";
+                        //X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 0;
+                        //Label lblIssueLastUpdate = new Label();
+                        //lblIssueLastUpdate.AutoSize = true;
+                        //lblIssueLastUpdate.Location = new Point(X, Y);
+                        //lblIssueLastUpdate.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        //lblIssueLastUpdate.Font = new Font(new FontFamily(lblIssueLastUpdate.Font.FontFamily.Name).Name, 14f, FontStyle.Regular);
+                        //lblIssueLastUpdate.Text = $"{((DateTime)issue.LastUpdated_UTC).ToString("yyyy MMMM dd HH:mm:ss")}";
 
-                        PanelViewAndEdit.Controls.Add(lblIssueLastUpdate);
+                        //PanelViewAndEdit.Controls.Add(lblIssueLastUpdate);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
 
@@ -582,6 +582,18 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             if (IsEditing)
             {
+                Label lblWarning = new Label();
+                lblWarning.AutoSize = true;
+                lblWarning.Location = new Point(X, Y);
+                lblWarning.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                lblWarning.Font = new Font(new FontFamily(lblWarning.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                lblWarning.ForeColor = Color.Red;
+                lblWarning.Text = "Please make sure the observation date is correct";
+
+                PanelViewAndEdit.Controls.Add(lblWarning);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
+
                 DrawIssueButtonsEditing();
                 DrawCurrentIssueEditing();
             }
@@ -710,13 +722,16 @@ namespace CSSPPolSourceSiteInputToolHelper
                 PanelViewAndEdit.Controls.Add(lblNoIssue);
             }
 
-            if (issue.PolSourceObsInfoIntList.Count == 0)
+            if (issue != null && issue.PolSourceObsInfoIntList.Count == 0)
             {
                 issue.PolSourceObsInfoIntList.Add(10101); /* Humand resource as default */
             }
 
-            DrawCurrentIssueEditingOptions(issue);
-            DrawCurrentIssueEditingButtons(issue);
+            if (issue != null)
+            {
+                DrawCurrentIssueEditingOptions(issue);
+                DrawCurrentIssueEditingButtons(issue);
+            }
         }
         public void DrawCurrentIssueEditingButtons(Issue issue)
         {
