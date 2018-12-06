@@ -379,6 +379,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 Municipality municipality = new Municipality();
                                 municipality.MunicipalityTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
                                 municipality.MunicipalityName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                if (string.IsNullOrWhiteSpace(municipality.MunicipalityName))
+                                {
+                                    municipality.MunicipalityName = municipality.MunicipalityName.Trim();
+                                }
                                 municipalityDoc.Municipality = municipality;
                             }
                             catch (Exception)
@@ -2512,6 +2516,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     address.AddressTVItemID = null;
                                 }
                                 address.Municipality = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                if (!string.IsNullOrWhiteSpace(address.Municipality))
+                                {
+                                    address.Municipality = address.Municipality.Trim();
+                                }
                                 if (int.TryParse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1), out temp))
                                 {
                                     address.AddressType = temp;
@@ -3056,6 +3064,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     address.AddressTVItemID = null;
                                 }
                                 address.Municipality = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                if (!string.IsNullOrWhiteSpace(address.Municipality))
+                                {
+                                    address.Municipality = address.Municipality.Trim();
+                                }
+                                else
+                                {
+                                    address.Municipality = null;
+                                }
                                 if (int.TryParse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1), out temp))
                                 {
                                     address.AddressType = temp;
@@ -3102,6 +3118,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     address.AddressTVItemID = null;
                                 }
                                 address.Municipality = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                if (!string.IsNullOrWhiteSpace(address.Municipality))
+                                {
+                                    address.Municipality = address.Municipality.Trim();
+                                }
+                                else
+                                {
+                                    address.Municipality = null;
+                                }
                                 if (int.TryParse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1), out temp))
                                 {
                                     address.AddressType = temp;

@@ -150,7 +150,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     MunicipalityIDNumberList = GetMunicipalitiesAndIDNumber();
 
                     comboBoxMuni.Items.Clear();
-                    foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList.OrderBy(c => c))
+                    foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList.OrderBy(c => c.Municipality))
                     {
                         comboBoxMuni.Items.Add(muniIDNumber.Municipality);
                     }

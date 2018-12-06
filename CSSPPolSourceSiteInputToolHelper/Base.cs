@@ -133,14 +133,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         if (!string.IsNullOrWhiteSpace(pss.PSSAddressNew.Municipality))
                         {
-                            MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = pss.PSSAddressNew.Municipality, IDNumber = pss.SiteNumberText });
+                            if (!MunicipalityIDNumberList.Where(c => c.Municipality.Trim() == pss.PSSAddressNew.Municipality.Trim()).Any())
+                            {
+                                MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = pss.PSSAddressNew.Municipality, IDNumber = pss.SiteNumberText });
+                            }
                         }
                     }
                     if (pss.PSSAddress != null)
                     {
                         if (!string.IsNullOrWhiteSpace(pss.PSSAddress.Municipality))
                         {
-                            MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = pss.PSSAddress.Municipality, IDNumber = pss.SiteNumberText });
+                            if (!MunicipalityIDNumberList.Where(c => c.Municipality.Trim() == pss.PSSAddress.Municipality.Trim()).Any())
+                            {
+                                MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = pss.PSSAddress.Municipality, IDNumber = pss.SiteNumberText });
+                            }
                         }
                     }
                 }
@@ -153,14 +159,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         if (!string.IsNullOrWhiteSpace(infrastructure.InfrastructureAddressNew.Municipality))
                         {
-                            MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = infrastructure.InfrastructureAddressNew.Municipality, IDNumber = infrastructure.InfrastructureTVItemID.ToString() });
+                            if (!MunicipalityIDNumberList.Where(c => c.Municipality.Trim() == infrastructure.InfrastructureAddressNew.Municipality.Trim()).Any())
+                            {
+                                MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = infrastructure.InfrastructureAddressNew.Municipality, IDNumber = infrastructure.InfrastructureTVItemID.ToString() });
+                            }
                         }
                     }
                     if (infrastructure.InfrastructureAddress != null)
                     {
                         if (!string.IsNullOrWhiteSpace(infrastructure.InfrastructureAddress.Municipality))
                         {
-                            MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = infrastructure.InfrastructureAddress.Municipality, IDNumber = infrastructure.InfrastructureTVItemID.ToString() });
+                            if (!MunicipalityIDNumberList.Where(c => c.Municipality.Trim() == infrastructure.InfrastructureAddress.Municipality.Trim()).Any())
+                            {
+                                MunicipalityIDNumberList.Add(new MunicipalityIDNumber { Municipality = infrastructure.InfrastructureAddress.Municipality, IDNumber = infrastructure.InfrastructureTVItemID.ToString() });
+                            }
                         }
                     }
                 }

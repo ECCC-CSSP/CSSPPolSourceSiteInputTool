@@ -2292,6 +2292,22 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string MunicipalityNewText = CurrentPSS.PSSAddressNew.Municipality == null ? "" : CurrentPSS.PSSAddressNew.Municipality;
                     string PostalCodeNewText = CurrentPSS.PSSAddressNew.PostalCode == null ? "" : CurrentPSS.PSSAddressNew.PostalCode;
 
+                    if (!string.IsNullOrWhiteSpace(MunicipalityText))
+                    {
+                        MunicipalityText = MunicipalityText.Trim();
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(MunicipalityNewText))
+                    {
+                        MunicipalityNewText = MunicipalityNewText.Trim();
+                    }
+
+                    if (string.IsNullOrWhiteSpace(MunicipalityNewText))
+                    {
+                        string NoMunicipality = $"ERROR: To add an address you need to have a municipality name\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs(NoMunicipality));
+                        return;
+                    }
 
                     string MessageText = $"Checking if municipality exist [{MunicipalityNewText}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs(MessageText));
@@ -2715,6 +2731,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 RedrawSinglePanelPSS();
                 ReDrawPolSourceSite();
             }
+
+            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: completed"));
 
         }
         public void PSSSaveAllToCSSPWebTools()
