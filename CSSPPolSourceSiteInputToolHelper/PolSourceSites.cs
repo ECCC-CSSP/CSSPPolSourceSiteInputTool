@@ -2158,7 +2158,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 if (ret.StartsWith("ERROR:"))
                 {
                     EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                     if (NeedToSave)
                     {
                         SaveSubsectorTextFile();
@@ -2188,12 +2188,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string MessageText = $"Trying To change PSS Name --- old [{CurrentPSS.TVText}] --- new [{CurrentPSS.TVTextNew}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-                    ret = SaveToCSSPWebToolsTVText((int)CurrentPSS.PSSTVItemID, CurrentPSS.TVTextNew, AdminEmail);
+                    ret = SaveToCSSPWebToolsTVText((int)CurrentPSS.PSSTVItemID, CurrentPSS.TVTextNew, (bool)CurrentPSS.IsActive, AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR:"))
                     {
                         EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
@@ -2248,7 +2248,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (ret.StartsWith("ERROR:"))
                     {
                         EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
@@ -2337,7 +2337,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         if (ret.StartsWith("ERROR"))
                         {
                             EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                             if (NeedToSave)
                             {
                                 SaveSubsectorTextFile();
@@ -2374,7 +2374,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         if (ret.StartsWith("ERROR"))
                         {
                             EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                             if (NeedToSave)
                             {
                                 SaveSubsectorTextFile();
@@ -2421,7 +2421,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 if (ret.StartsWith("ERROR"))
                 {
                     EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                     if (NeedToSave)
                     {
                         SaveSubsectorTextFile();
@@ -2462,7 +2462,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (ret.StartsWith("ERROR:"))
                     {
                         EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
@@ -2503,7 +2503,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (ret.StartsWith("ERROR:"))
                     {
                         EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
@@ -2536,7 +2536,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (ret.StartsWith("ERROR:"))
                     {
                         EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
@@ -2587,7 +2587,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (ret.StartsWith("ERROR:"))
                     {
                         EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
@@ -2652,7 +2652,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (ret.StartsWith("ERROR:"))
                     {
                         EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
@@ -2703,7 +2703,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (ret.StartsWith("ERROR:"))
                     {
                         EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}"));
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
                         if (NeedToSave)
                         {
                             SaveSubsectorTextFile();
@@ -5968,7 +5968,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
-        private string SaveToCSSPWebToolsTVText(int TVItemID, string TVText, string AdminEmail)
+        private string SaveToCSSPWebToolsTVText(int TVItemID, string TVText, bool IsActive, string AdminEmail)
         {
             try
             {
@@ -5977,6 +5977,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 NameValueCollection paramList = new NameValueCollection();
                 paramList.Add("TVItemID", TVItemID.ToString());
                 paramList.Add("TVText", TVText);
+                paramList.Add("IsActive", IsActive.ToString());
                 paramList.Add("AdminEmail", AdminEmail);
 
                 using (WebClient webClient = new WebClient())
@@ -5985,10 +5986,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     webClient.Proxy = webProxy;
 
                     webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    Uri uri = new Uri($"{baseURLEN}SavePSSTVTextJSON");
+                    Uri uri = new Uri($"{baseURLEN}SavePSSTVTextAndIsActiveJSON");
                     if (Language == LanguageEnum.fr)
                     {
-                        uri = new Uri($"{baseURLFR}SavePSSTVTextJSON");
+                        uri = new Uri($"{baseURLFR}SavePSSTVTextAndIsActiveJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);

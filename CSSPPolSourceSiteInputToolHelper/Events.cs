@@ -409,6 +409,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             IssueID = int.Parse(((Button)sender).Tag.ToString());
             UnDeleteIssue(IssueID);
+            SaveIssue(IssueID);
         }
         private void butIssueSave_Click(object sender, EventArgs e)
         {
