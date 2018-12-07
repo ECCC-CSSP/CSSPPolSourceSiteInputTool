@@ -2183,7 +2183,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (!IsNewPSS)
             {
 
-                if (CurrentPSS.TVTextNew != null)
+                if (CurrentPSS.TVTextNew != null || CurrentPSS.IsActiveNew != null)
                 {
                     string MessageText = $"Trying To change PSS Name --- old [{CurrentPSS.TVText}] --- new [{CurrentPSS.TVTextNew}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
