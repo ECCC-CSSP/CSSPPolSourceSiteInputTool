@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CSSPPolSourceSiteInputToolHelper.PolSourceSiteInputToolHelper;
 
 namespace CSSPPolSourceSiteInputToolHelper
 {
@@ -12,6 +13,8 @@ namespace CSSPPolSourceSiteInputToolHelper
     {
         public int? Version { get; set; } = null;
         public DateTime? DocDate { get; set; } = null;
+        public int ProvinceTVItemID { get; set; } = 0;
+        public List<MunicipalityIDNumber> MunicipalityIDNumberList { get; set; } = new List<MunicipalityIDNumber>();
         public Subsector Subsector { get; set; } = null;
     }
     public class Subsector

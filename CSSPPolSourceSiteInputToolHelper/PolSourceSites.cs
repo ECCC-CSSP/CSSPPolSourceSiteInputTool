@@ -2313,7 +2313,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
                     bool MunicipalityExist = false;
-                    ret = MunicipalityExistUnderSubsectorInCSSPWebTools((int)subsectorDoc.Subsector.SubsectorTVItemID, MunicipalityNewText, AdminEmail);
+                    ret = MunicipalityExistUnderProvinceInCSSPWebTools((int)subsectorDoc.ProvinceTVItemID, MunicipalityNewText, AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR"))
                     {
@@ -2332,7 +2332,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -2369,7 +2369,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.Subsector.SubsectorTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -5739,14 +5739,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 CurrentPSS.PSSAddressNew.PostalCode = CurrentPSS.PSSAddress.PostalCode;
             }
         }
-        private string SaveToCSSPWebToolsAddress(int SubsectorTVItemID, int TVItemID, string StreetNumber, string StreetName, int StreetType, string Municipality, string PostalCode, bool CreateMunicipality, string AdminEmail)
+        private string SaveToCSSPWebToolsAddress(int ProvinceTVItemID, int TVItemID, string StreetNumber, string StreetName, int StreetType, string Municipality, string PostalCode, bool CreateMunicipality, string AdminEmail)
         {
             try
             {
                 string retStr = "";
 
                 NameValueCollection paramList = new NameValueCollection();
-                paramList.Add("SubsectorTVItemID", SubsectorTVItemID.ToString());
+                paramList.Add("ProvinceTVItemID", ProvinceTVItemID.ToString());
                 paramList.Add("TVItemID", TVItemID.ToString());
                 paramList.Add("StreetNumber", StreetNumber);
                 paramList.Add("StreetName", StreetName);
@@ -6198,14 +6198,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
             }
         }
-        public string MunicipalityExistUnderSubsectorInCSSPWebTools(int SubsectorTVItemID, string Municipality, string AdminEmail)
+        public string MunicipalityExistUnderProvinceInCSSPWebTools(int ProvinceTVItemID, string Municipality, string AdminEmail)
         {
             try
             {
                 string retStr = "";
 
                 NameValueCollection paramList = new NameValueCollection();
-                paramList.Add("SubsectorTVItemID", SubsectorTVItemID.ToString());
+                paramList.Add("ProvinceTVItemID", ProvinceTVItemID.ToString());
                 paramList.Add("Municipality", Municipality);
                 paramList.Add("AdminEmail", AdminEmail);
 

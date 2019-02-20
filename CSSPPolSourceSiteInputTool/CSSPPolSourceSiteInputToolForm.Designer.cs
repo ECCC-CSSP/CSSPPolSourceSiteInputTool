@@ -59,10 +59,13 @@
             this.panelPolSourceSite = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.panelMunicipalities = new System.Windows.Forms.Panel();
+            this.butProvinceMunicipalitySelect = new System.Windows.Forms.Button();
+            this.lblProvinceMunicipalities = new System.Windows.Forms.Label();
+            this.comboBoxProvinceMunicipalities = new System.Windows.Forms.ComboBox();
             this.butMunicipalityCancel = new System.Windows.Forms.Button();
-            this.butMunicipalitySelect = new System.Windows.Forms.Button();
-            this.lblMunicipalities = new System.Windows.Forms.Label();
-            this.comboBoxMunicipalities = new System.Windows.Forms.ComboBox();
+            this.butUsedMunicipalitySelect = new System.Windows.Forms.Button();
+            this.lblUsedMunicipalities = new System.Windows.Forms.Label();
+            this.comboBoxUsedMunicipalities = new System.Windows.Forms.ComboBox();
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
             this.richTextBoxStatus = new System.Windows.Forms.RichTextBox();
             this.panelShowInputOptions = new System.Windows.Forms.Panel();
@@ -433,18 +436,48 @@
             // 
             this.panelMunicipalities.AutoScroll = true;
             this.panelMunicipalities.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelMunicipalities.Controls.Add(this.butProvinceMunicipalitySelect);
+            this.panelMunicipalities.Controls.Add(this.lblProvinceMunicipalities);
+            this.panelMunicipalities.Controls.Add(this.comboBoxProvinceMunicipalities);
             this.panelMunicipalities.Controls.Add(this.butMunicipalityCancel);
-            this.panelMunicipalities.Controls.Add(this.butMunicipalitySelect);
-            this.panelMunicipalities.Controls.Add(this.lblMunicipalities);
-            this.panelMunicipalities.Controls.Add(this.comboBoxMunicipalities);
-            this.panelMunicipalities.Location = new System.Drawing.Point(169, 193);
+            this.panelMunicipalities.Controls.Add(this.butUsedMunicipalitySelect);
+            this.panelMunicipalities.Controls.Add(this.lblUsedMunicipalities);
+            this.panelMunicipalities.Controls.Add(this.comboBoxUsedMunicipalities);
+            this.panelMunicipalities.Location = new System.Drawing.Point(-13, 193);
             this.panelMunicipalities.Name = "panelMunicipalities";
-            this.panelMunicipalities.Size = new System.Drawing.Size(277, 134);
+            this.panelMunicipalities.Size = new System.Drawing.Size(501, 141);
             this.panelMunicipalities.TabIndex = 2;
+            // 
+            // butProvinceMunicipalitySelect
+            // 
+            this.butProvinceMunicipalitySelect.Location = new System.Drawing.Point(328, 67);
+            this.butProvinceMunicipalitySelect.Name = "butProvinceMunicipalitySelect";
+            this.butProvinceMunicipalitySelect.Size = new System.Drawing.Size(75, 23);
+            this.butProvinceMunicipalitySelect.TabIndex = 6;
+            this.butProvinceMunicipalitySelect.Text = "Select";
+            this.butProvinceMunicipalitySelect.UseVisualStyleBackColor = true;
+            this.butProvinceMunicipalitySelect.Click += new System.EventHandler(this.butProvinceMunicipalitySelect_Click);
+            // 
+            // lblProvinceMunicipalities
+            // 
+            this.lblProvinceMunicipalities.AutoSize = true;
+            this.lblProvinceMunicipalities.Location = new System.Drawing.Point(268, 21);
+            this.lblProvinceMunicipalities.Name = "lblProvinceMunicipalities";
+            this.lblProvinceMunicipalities.Size = new System.Drawing.Size(115, 13);
+            this.lblProvinceMunicipalities.TabIndex = 4;
+            this.lblProvinceMunicipalities.Text = "Province Municipalities";
+            // 
+            // comboBoxProvinceMunicipalities
+            // 
+            this.comboBoxProvinceMunicipalities.FormattingEnabled = true;
+            this.comboBoxProvinceMunicipalities.Location = new System.Drawing.Point(268, 40);
+            this.comboBoxProvinceMunicipalities.Name = "comboBoxProvinceMunicipalities";
+            this.comboBoxProvinceMunicipalities.Size = new System.Drawing.Size(199, 21);
+            this.comboBoxProvinceMunicipalities.TabIndex = 3;
             // 
             // butMunicipalityCancel
             // 
-            this.butMunicipalityCancel.Location = new System.Drawing.Point(147, 82);
+            this.butMunicipalityCancel.Location = new System.Drawing.Point(212, 107);
             this.butMunicipalityCancel.Name = "butMunicipalityCancel";
             this.butMunicipalityCancel.Size = new System.Drawing.Size(75, 23);
             this.butMunicipalityCancel.TabIndex = 2;
@@ -452,32 +485,32 @@
             this.butMunicipalityCancel.UseVisualStyleBackColor = true;
             this.butMunicipalityCancel.Click += new System.EventHandler(this.butMunicipalityCancel_Click);
             // 
-            // butMunicipalitySelect
+            // butUsedMunicipalitySelect
             // 
-            this.butMunicipalitySelect.Location = new System.Drawing.Point(45, 82);
-            this.butMunicipalitySelect.Name = "butMunicipalitySelect";
-            this.butMunicipalitySelect.Size = new System.Drawing.Size(75, 23);
-            this.butMunicipalitySelect.TabIndex = 2;
-            this.butMunicipalitySelect.Text = "Select";
-            this.butMunicipalitySelect.UseVisualStyleBackColor = true;
-            this.butMunicipalitySelect.Click += new System.EventHandler(this.butMunicipalitySelect_Click);
+            this.butUsedMunicipalitySelect.Location = new System.Drawing.Point(84, 67);
+            this.butUsedMunicipalitySelect.Name = "butUsedMunicipalitySelect";
+            this.butUsedMunicipalitySelect.Size = new System.Drawing.Size(75, 23);
+            this.butUsedMunicipalitySelect.TabIndex = 2;
+            this.butUsedMunicipalitySelect.Text = "Select";
+            this.butUsedMunicipalitySelect.UseVisualStyleBackColor = true;
+            this.butUsedMunicipalitySelect.Click += new System.EventHandler(this.butUsedMunicipalitySelect_Click);
             // 
-            // lblMunicipalities
+            // lblUsedMunicipalities
             // 
-            this.lblMunicipalities.AutoSize = true;
-            this.lblMunicipalities.Location = new System.Drawing.Point(42, 21);
-            this.lblMunicipalities.Name = "lblMunicipalities";
-            this.lblMunicipalities.Size = new System.Drawing.Size(70, 13);
-            this.lblMunicipalities.TabIndex = 1;
-            this.lblMunicipalities.Text = "Municipalities";
+            this.lblUsedMunicipalities.AutoSize = true;
+            this.lblUsedMunicipalities.Location = new System.Drawing.Point(42, 21);
+            this.lblUsedMunicipalities.Name = "lblUsedMunicipalities";
+            this.lblUsedMunicipalities.Size = new System.Drawing.Size(98, 13);
+            this.lblUsedMunicipalities.TabIndex = 1;
+            this.lblUsedMunicipalities.Text = "Used Municipalities";
             // 
-            // comboBoxMunicipalities
+            // comboBoxUsedMunicipalities
             // 
-            this.comboBoxMunicipalities.FormattingEnabled = true;
-            this.comboBoxMunicipalities.Location = new System.Drawing.Point(42, 40);
-            this.comboBoxMunicipalities.Name = "comboBoxMunicipalities";
-            this.comboBoxMunicipalities.Size = new System.Drawing.Size(199, 21);
-            this.comboBoxMunicipalities.TabIndex = 0;
+            this.comboBoxUsedMunicipalities.FormattingEnabled = true;
+            this.comboBoxUsedMunicipalities.Location = new System.Drawing.Point(42, 40);
+            this.comboBoxUsedMunicipalities.Name = "comboBoxUsedMunicipalities";
+            this.comboBoxUsedMunicipalities.Size = new System.Drawing.Size(199, 21);
+            this.comboBoxUsedMunicipalities.TabIndex = 0;
             // 
             // panelViewAndEdit
             // 
@@ -746,9 +779,12 @@
         private System.Windows.Forms.CheckBox checkBoxDeletedIssueAndPicture;
         private System.Windows.Forms.Panel panelMunicipalities;
         private System.Windows.Forms.Button butMunicipalityCancel;
-        private System.Windows.Forms.Button butMunicipalitySelect;
-        private System.Windows.Forms.Label lblMunicipalities;
-        private System.Windows.Forms.ComboBox comboBoxMunicipalities;
+        private System.Windows.Forms.Button butUsedMunicipalitySelect;
+        private System.Windows.Forms.Label lblUsedMunicipalities;
+        private System.Windows.Forms.ComboBox comboBoxUsedMunicipalities;
+        private System.Windows.Forms.Button butProvinceMunicipalitySelect;
+        private System.Windows.Forms.Label lblProvinceMunicipalities;
+        private System.Windows.Forms.ComboBox comboBoxProvinceMunicipalities;
     }
 }
 

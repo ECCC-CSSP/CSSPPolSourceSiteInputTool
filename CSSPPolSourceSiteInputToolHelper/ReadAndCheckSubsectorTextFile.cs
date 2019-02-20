@@ -12,6 +12,8 @@ namespace CSSPPolSourceSiteInputToolHelper
 {
     public partial class PolSourceSiteInputToolHelper
     {
+        public object MunicipalityAndIDText { get; private set; }
+
         public bool CheckAllReadDataMunicipalityOK()
         {
             if (municipalityDoc.Version == null)
@@ -2884,6 +2886,61 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 int Minute = int.Parse(TempStr.Substring(14, 2));
                                 int Second = int.Parse(TempStr.Substring(17, 2));
                                 subsectorDoc.DocDate = new DateTime(Year, Month, Day, Hour, Minute, Second);
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "PROVINCETVITEMID":
+                        {
+                            try
+                            {
+                                subsectorDoc.ProvinceTVItemID = int.Parse(LineTxt.Substring("PROVINCETVITEMID\t".Length));
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "PROVINCEMUNICIPALITIES":
+                        {
+                            try
+                            {
+                                List<MunicipalityIDNumber> MunicipalityAndIDList = new List<MunicipalityIDNumber>();
+                                string TempStr = LineTxt.Substring("PROVINCEMUNICIPALITIES\t".Length).Trim();
+                                List<string> MunicipalityAndIDTextList = TempStr.Split("|".ToCharArray(), StringSplitOptions.None).Select(c => c.Trim()).ToList();
+                                foreach (string s in MunicipalityAndIDTextList)
+                                {
+                                    if (string.IsNullOrWhiteSpace(s.Trim()))
+                                    {
+                                        continue;
+                                    }
+                                    string Municipality = s.Substring(0, s.IndexOf("[")).Trim();
+                                    if (string.IsNullOrWhiteSpace(Municipality))
+                                    {
+                                        EmitStatus(new StatusEventArgs($"Could not read and parse { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                        return false;
+                                    }
+                                    string IDNumber = s.Substring(s.IndexOf("[") + 1);
+                                    if (string.IsNullOrWhiteSpace(IDNumber))
+                                    {
+                                        EmitStatus(new StatusEventArgs($"Could not read and parse { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                        return false;
+                                    }
+                                    IDNumber = IDNumber.Replace("]", "");
+                                    if (string.IsNullOrWhiteSpace(IDNumber))
+                                    {
+                                        EmitStatus(new StatusEventArgs($"Could not read and parse { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                        return false;
+                                    }
+                                    MunicipalityAndIDList.Add(new MunicipalityIDNumber() { Municipality = Municipality, IDNumber = IDNumber });
+                                }
+                                subsectorDoc.MunicipalityIDNumberList = MunicipalityAndIDList;
                             }
                             catch (Exception)
                             {

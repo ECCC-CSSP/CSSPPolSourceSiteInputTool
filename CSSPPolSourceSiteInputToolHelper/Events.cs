@@ -144,7 +144,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             foreach (Control control in PanelMunicipalities.Controls)
             {
-                if (control.Name == "comboBoxMunicipalities")
+                if (control.Name == "comboBoxUsedMunicipalities")
                 {
                     ComboBox comboBoxMuni = ((ComboBox)control);
                     MunicipalityIDNumberList = GetMunicipalitiesAndIDNumber();
@@ -159,8 +159,22 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         comboBoxMuni.SelectedIndex = 0;
                     }
+                }
 
-                    break;
+                if (control.Name == "comboBoxProvinceMunicipalities")
+                {
+                    ComboBox comboBoxMuni = ((ComboBox)control);
+
+                    comboBoxMuni.Items.Clear();
+                    foreach (MunicipalityIDNumber muniIDNumber in subsectorDoc.MunicipalityIDNumberList.OrderBy(c => c.Municipality))
+                    {
+                        comboBoxMuni.Items.Add(muniIDNumber.Municipality);
+                    }
+
+                    if (comboBoxMuni.Items.Count > 0)
+                    {
+                        comboBoxMuni.SelectedIndex = 0;
+                    }
                 }
             }
             PanelMunicipalities.BringToFront();
@@ -240,7 +254,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     EmitStatus(new StatusEventArgs($"Checking if { muniIDNumber.Municipality } already exist in CSSPWebTools"));
 
-                    string ret = MunicipalityExistUnderSubsectorInCSSPWebTools((int)subsectorDoc.Subsector.SubsectorTVItemID, muniIDNumber.Municipality, AdminEmail);
+                    string ret = MunicipalityExistUnderProvinceInCSSPWebTools((int)subsectorDoc.ProvinceTVItemID, muniIDNumber.Municipality, AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR"))
                     {
@@ -288,7 +302,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     EmitStatus(new StatusEventArgs($"Checking if { muniIDNumber.Municipality } already exist in CSSPWebTools"));
 
-                    string ret = MunicipalityExistUnderSubsectorInCSSPWebTools((int)subsectorDoc.Subsector.SubsectorTVItemID, muniIDNumber.Municipality, AdminEmail);
+                    string ret = MunicipalityExistUnderProvinceInCSSPWebTools((int)subsectorDoc.ProvinceTVItemID, muniIDNumber.Municipality, AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR"))
                     {

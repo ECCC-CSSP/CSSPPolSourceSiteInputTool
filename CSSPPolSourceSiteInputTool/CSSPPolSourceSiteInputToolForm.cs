@@ -61,13 +61,25 @@ namespace CSSPPolSourceSiteInputTool
             butFix.Text = "Fix";
         }
 
-        private void butMunicipalitySelect_Click(object sender, EventArgs e)
+        private void butUsedMunicipalitySelect_Click(object sender, EventArgs e)
         {
             foreach (Control control in panelViewAndEdit.Controls)
             {
                 if (control.Name == "textBoxMunicipality")
                 {
-                    ((TextBox)control).Text = (string)comboBoxMunicipalities.SelectedItem;
+                    ((TextBox)control).Text = (string)comboBoxUsedMunicipalities.SelectedItem;
+                }
+            }
+            panelMunicipalities.SendToBack();
+        }
+
+        private void butProvinceMunicipalitySelect_Click(object sender, EventArgs e)
+        {
+            foreach (Control control in panelViewAndEdit.Controls)
+            {
+                if (control.Name == "textBoxMunicipality")
+                {
+                    ((TextBox)control).Text = (string)comboBoxProvinceMunicipalities.SelectedItem;
                 }
             }
             panelMunicipalities.SendToBack();
