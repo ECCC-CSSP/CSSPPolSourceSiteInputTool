@@ -120,8 +120,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int? ReceivingWater_MPN_per_100mlNew { get; set; } = null;
         public float? DistanceFromShore_m { get; set; } = null;
         public float? DistanceFromShore_mNew { get; set; } = null;
-        public int? SeeOtherTVItemID { get; set; } = null;
-        public int? SeeOtherTVItemIDNew { get; set; } = null;
+        public int? SeeOtherMunicipalityTVItemID { get; set; } = null;
+        public int? SeeOtherMunicipalityTVItemIDNew { get; set; } = null;
         public Address InfrastructureAddress { get; set; } = new Address();
         public Address InfrastructureAddressNew { get; set; } = new Address();
         public DateTime? LastUpdateDate_UTC { get; set; } = null;

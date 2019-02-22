@@ -2456,7 +2456,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    case "SEEOTHERTVITEMID":
+                    case "SEEOTHERMUNICIPALITYTVITEMID":
                         {
                             try
                             {
@@ -2464,11 +2464,11 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
-                                    lastInfrastructure.SeeOtherTVItemID = null;
+                                    lastInfrastructure.SeeOtherMunicipalityTVItemID = null;
                                 }
                                 else
                                 {
-                                    lastInfrastructure.SeeOtherTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    lastInfrastructure.SeeOtherMunicipalityTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
                                 }
                             }
                             catch (Exception)
@@ -2478,7 +2478,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    case "SEEOTHERTVITEMIDNEW":
+                    case "SEEOTHERMUNICIPALITYTVITEMIDNEW":
                         {
                             try
                             {
@@ -2486,11 +2486,11 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
-                                    lastInfrastructure.SeeOtherTVItemIDNew = null;
+                                    lastInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
                                 }
                                 else
                                 {
-                                    lastInfrastructure.SeeOtherTVItemIDNew = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    lastInfrastructure.SeeOtherMunicipalityTVItemIDNew = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
                                 }
                             }
                             catch (Exception)

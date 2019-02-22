@@ -1678,7 +1678,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || infrastructure.ReceivingWaterTemperature_CNew != null
                             || infrastructure.ReceivingWater_MPN_per_100mlNew != null
                             || infrastructure.SecondaryTreatmentTypeNew != null
-                            || infrastructure.SeeOtherTVItemIDNew != null
+                            || infrastructure.SeeOtherMunicipalityTVItemIDNew != null
                             || infrastructure.SiteIDNew != null
                             || infrastructure.SiteNew != null
                             || infrastructure.TempCatchAllRemoveLaterNew != null
@@ -3576,12 +3576,12 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (false)
                 {
-                    #region SeeOtherTVItemID
+                    #region SeeOtherMunicipalityTVItemID
                     X = 10;
-                    DrawItemInt(X, Y, CurrentInfrastructure.SeeOtherTVItemID, CurrentInfrastructure.SeeOtherTVItemIDNew, "See Other TVItemID", "textBoxSeeOtherTVItemID");
+                    DrawItemInt(X, Y, CurrentInfrastructure.SeeOtherMunicipalityTVItemID, CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew, "See Other TVItemID", "textBoxSeeOtherMunicipalityTVItemID");
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion SeeOtherTVItemID
+                    #endregion SeeOtherMunicipalityTVItemID
                 }
 
                 #region Save button
@@ -3667,7 +3667,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || CurrentInfrastructure.ReceivingWaterTemperature_CNew != null
                             || CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew != null
                             || CurrentInfrastructure.SecondaryTreatmentTypeNew != null
-                            || CurrentInfrastructure.SeeOtherTVItemIDNew != null
+                            || CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew != null
                             || CurrentInfrastructure.SiteIDNew != null
                             || CurrentInfrastructure.SiteNew != null
                             || CurrentInfrastructure.TempCatchAllRemoveLaterNew != null
@@ -5446,26 +5446,26 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    case "textBoxSeeOtherTVItemID":
+                    case "textBoxSeeOtherMunicipalityTVItemID":
                         {
                             TextBox tb = (TextBox)control;
 
                             if (int.TryParse(tb.Text, out int TempInt))
                             {
-                                if (TempInt == CurrentInfrastructure.SeeOtherTVItemID)
+                                if (TempInt == CurrentInfrastructure.SeeOtherMunicipalityTVItemID)
                                 {
-                                    CurrentInfrastructure.SeeOtherTVItemIDNew = null;
+                                    CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.SeeOtherTVItemIDNew = TempInt;
+                                    CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = TempInt;
                                     IsDirty = true;
                                 }
                             }
                             else
                             {
-                                CurrentInfrastructure.SeeOtherTVItemIDNew = null;
-                                tb.Text = CurrentInfrastructure.SeeOtherTVItemID.ToString();
+                                CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
+                                tb.Text = CurrentInfrastructure.SeeOtherMunicipalityTVItemID.ToString();
                                 EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
                             }
                         }

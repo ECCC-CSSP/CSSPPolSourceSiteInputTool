@@ -642,13 +642,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 sbKML.AppendLine($@"</p>");
 
-                // doing SeeOtherTVItemID
-                string SeeOtherTVItemIDText = infrastructure.SeeOtherTVItemID != null ? ((int)infrastructure.SeeOtherTVItemID).ToString() : "---";
-                sbKML.Append($@"                <p><b>SeeOtherTVItemID:</b> {SeeOtherTVItemIDText}");
-                if (infrastructure.SeeOtherTVItemIDNew != null)
+                // doing SeeOtherMunicipalityTVItemID
+                string SeeOtherMunicipalityTVItemIDText = infrastructure.SeeOtherMunicipalityTVItemID != null ? ((int)infrastructure.SeeOtherMunicipalityTVItemID).ToString() : "---";
+                sbKML.Append($@"                <p><b>SeeOtherMunicipalityTVItemID:</b> {SeeOtherMunicipalityTVItemIDText}");
+                if (infrastructure.SeeOtherMunicipalityTVItemIDNew != null)
                 {
-                    string SeeOtherTVItemIDNewText = infrastructure.SeeOtherTVItemIDNew != null ? ((int)infrastructure.SeeOtherTVItemIDNew).ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>SeeOtherTVItemID New:</b> {SeeOtherTVItemIDNewText}");
+                    string SeeOtherMunicipalityTVItemIDNewText = infrastructure.SeeOtherMunicipalityTVItemIDNew != null ? ((int)infrastructure.SeeOtherMunicipalityTVItemIDNew).ToString() : "---";
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>SeeOtherMunicipalityTVItemID New:</b> {SeeOtherMunicipalityTVItemIDNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 

@@ -20,6 +20,18 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             sb.AppendLine($"VERSION\t{municipalityDoc.Version}\t");
             sb.AppendLine($"DOCDATE\t{((DateTime)municipalityDoc.DocDate).Year}|{((DateTime)municipalityDoc.DocDate).Month.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Day.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Hour.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Minute.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Second.ToString("0#")}\t");
+
+            List<MunicipalityIDNumber> municipalityIDNumberList = subsectorDoc.MunicipalityIDNumberList;
+
+            string MunicipalityListText = "";
+            foreach (MunicipalityIDNumber municipalityIDNumber in municipalityIDNumberList)
+            {
+                MunicipalityListText = MunicipalityListText + municipalityIDNumber.Municipality.Replace("\t", "_").Replace("|", "_").Replace("[", "_").Replace("]", "_") + "[" + municipalityIDNumber.IDNumber + "]" + "|";
+            }
+
+            sb.AppendLine($"PROVINCETVITEMID\t{ subsectorDoc.ProvinceTVItemID }");
+            sb.AppendLine($"PROVINCEMUNICIPALITIES\t{ MunicipalityListText }");
+
             sb.AppendLine($"MUNICIPALITY\t{municipalityDoc.Municipality.MunicipalityTVItemID}\t{municipalityDoc.Municipality.MunicipalityName}\t");
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
             {
@@ -330,12 +342,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string DistanceFromShore_mNew = infrastructure.DistanceFromShore_mNew != null ? ((float)infrastructure.DistanceFromShore_mNew).ToString("F1") : "";
                     sb.AppendLine($"DISTANCEFROMSHORE_MNEW\t{DistanceFromShore_mNew}\t");
                 }
-                string SeeOtherTVItemID = infrastructure.SeeOtherTVItemID != null ? ((int)infrastructure.SeeOtherTVItemID).ToString() : "";
-                sb.AppendLine($"SEEOTHERTVITEMID\t{SeeOtherTVItemID}\t");
-                if (infrastructure.SeeOtherTVItemIDNew != null)
+                string SeeOtherMunicipalityTVItemID = infrastructure.SeeOtherMunicipalityTVItemID != null ? ((int)infrastructure.SeeOtherMunicipalityTVItemID).ToString() : "";
+                sb.AppendLine($"SEEOTHERMUNICIPALITYTVITEMID\t{SeeOtherMunicipalityTVItemID}\t");
+                if (infrastructure.SeeOtherMunicipalityTVItemIDNew != null)
                 {
-                    string SeeOtherTVItemIDNew = infrastructure.SeeOtherTVItemIDNew != null ? ((float)infrastructure.SeeOtherTVItemIDNew).ToString() : "";
-                    sb.AppendLine($"SEEOTHERTVITEMIDNEW\t{SeeOtherTVItemIDNew}\t");
+                    string SeeOtherMunicipalityTVItemIDNew = infrastructure.SeeOtherMunicipalityTVItemIDNew != null ? ((float)infrastructure.SeeOtherMunicipalityTVItemIDNew).ToString() : "";
+                    sb.AppendLine($"SEEOTHERMUNICIPALITYTVITEMIDNEW\t{SeeOtherMunicipalityTVItemIDNew}\t");
                 }
                 string PumpsToTVItemID = infrastructure.PumpsToTVItemID != null ? ((int)infrastructure.PumpsToTVItemID).ToString() : "";
                 sb.AppendLine($"PUMPSTOTVITEMID\t{PumpsToTVItemID}\t");
@@ -438,6 +450,19 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             sb.AppendLine($"VERSION\t{subsectorDoc.Version}\t");
             sb.AppendLine($"DOCDATE\t{((DateTime)subsectorDoc.DocDate).Year}|{((DateTime)subsectorDoc.DocDate).Month.ToString("0#")}|{((DateTime)subsectorDoc.DocDate).Day.ToString("0#")}|{((DateTime)subsectorDoc.DocDate).Hour.ToString("0#")}|{((DateTime)subsectorDoc.DocDate).Minute.ToString("0#")}|{((DateTime)subsectorDoc.DocDate).Second.ToString("0#")}\t");
+
+            List<MunicipalityIDNumber> municipalityIDNumberList = subsectorDoc.MunicipalityIDNumberList;
+
+            string MunicipalityListText = "";
+            foreach (MunicipalityIDNumber municipalityIDNumber in municipalityIDNumberList)
+            {
+                MunicipalityListText = MunicipalityListText + municipalityIDNumber.Municipality.Replace("\t", "_").Replace("|", "_").Replace("[", "_").Replace("]", "_") + "[" + municipalityIDNumber.IDNumber + "]" + "|";
+            }
+
+            sb.AppendLine($"PROVINCETVITEMID\t{ subsectorDoc.ProvinceTVItemID }");
+            sb.AppendLine($"PROVINCEMUNICIPALITIES\t{ MunicipalityListText }");
+
+
             sb.AppendLine($"SUBSECTOR\t{subsectorDoc.Subsector.SubsectorTVItemID}\t{subsectorDoc.Subsector.SubsectorName}\t");
             foreach (PSS pss in subsectorDoc.Subsector.PSSList)
             {
