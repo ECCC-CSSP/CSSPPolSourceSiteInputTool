@@ -15,7 +15,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 {
     public partial class PolSourceSiteInputToolHelper
     {
-        private void DrawItemAddress(int x, int y, Address address, Address addressNew)
+        private void DrawItemAddress(int x, int y, Address address, Address addressNew, bool IsMunicipality)
         {
             #region Address
             x = 10;
@@ -317,9 +317,19 @@ namespace CSSPPolSourceSiteInputToolHelper
             lblMunicipalityText.AutoSize = true;
             lblMunicipalityText.Location = new Point(x, lblStreetNumberText.Top);
             lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold | FontStyle.Underline);
-            lblMunicipalityText.ForeColor = Color.Blue;
-            lblMunicipalityText.Text = $@"Municipality        ";
-            lblMunicipalityText.Click += lblMunicipalityText_Click;
+            if (IsMunicipality)
+            {
+                lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                lblMunicipalityText.ForeColor = Color.Black;
+                lblMunicipalityText.Text = $@"Municipality        ";
+            }
+            else
+            {
+                lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold | FontStyle.Underline);
+                lblMunicipalityText.ForeColor = Color.Blue;
+                lblMunicipalityText.Text = $@"Municipality        ";
+                lblMunicipalityText.Click += lblMunicipalityText_Click;
+            }
 
             PanelViewAndEdit.Controls.Add(lblMunicipalityText);
 
@@ -329,19 +339,22 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 int currentTop = lblMunicipalityText.Bottom + 4;
 
-                if (!string.IsNullOrWhiteSpace(addressNew.Municipality))
+                if (!IsMunicipality)
                 {
-                    Label lblMunicipalityOld = new Label();
-                    lblMunicipalityOld.AutoSize = true;
-                    lblMunicipalityOld.Location = new Point(lblMunicipalityText.Left, currentTop);
-                    lblMunicipalityOld.Font = new Font(new FontFamily(lblMunicipalityOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblMunicipalityOld.ForeColor = string.IsNullOrWhiteSpace(addressNew.Municipality) ? ForeColorNormal : ForeColorChangedOrNew;
-                    lblMunicipalityOld.Text = string.IsNullOrWhiteSpace(address.Municipality) ? "(empty)" : $"({address.Municipality})";
+                    if (!string.IsNullOrWhiteSpace(addressNew.Municipality))
+                    {
+                        Label lblMunicipalityOld = new Label();
+                        lblMunicipalityOld.AutoSize = true;
+                        lblMunicipalityOld.Location = new Point(lblMunicipalityText.Left, currentTop);
+                        lblMunicipalityOld.Font = new Font(new FontFamily(lblMunicipalityOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblMunicipalityOld.ForeColor = string.IsNullOrWhiteSpace(addressNew.Municipality) ? ForeColorNormal : ForeColorChangedOrNew;
+                        lblMunicipalityOld.Text = string.IsNullOrWhiteSpace(address.Municipality) ? "(empty)" : $"({address.Municipality})";
 
-                    PanelViewAndEdit.Controls.Add(lblMunicipalityOld);
+                        PanelViewAndEdit.Controls.Add(lblMunicipalityOld);
 
-                    currentTop = lblMunicipalityOld.Bottom + 4;
+                        currentTop = lblMunicipalityOld.Bottom + 4;
 
+                    }
                 }
 
                 TextBox textBoxMunicipality = new TextBox();
@@ -349,13 +362,22 @@ namespace CSSPPolSourceSiteInputToolHelper
                 textBoxMunicipality.Name = "textBoxMunicipality";
                 textBoxMunicipality.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 textBoxMunicipality.Width = lblMunicipalityText.Width;
-                if (string.IsNullOrWhiteSpace(addressNew.Municipality))
+                textBoxMunicipality.Enabled = true;
+                if (IsMunicipality)
                 {
-                    textBoxMunicipality.Text = address.Municipality;
+                    textBoxMunicipality.Text = municipalityDoc.Municipality.MunicipalityName;
+                    textBoxMunicipality.Enabled = false;
                 }
                 else
                 {
-                    textBoxMunicipality.Text = addressNew.Municipality;
+                    if (string.IsNullOrWhiteSpace(addressNew.Municipality))
+                    {
+                        textBoxMunicipality.Text = address.Municipality;
+                    }
+                    else
+                    {
+                        textBoxMunicipality.Text = addressNew.Municipality;
+                    }
                 }
 
                 PanelViewAndEdit.Controls.Add(textBoxMunicipality);
@@ -371,26 +393,36 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblMunicipality.Location = new Point(lblMunicipalityText.Left, lblMunicipalityText.Bottom + 4);
                 lblMunicipality.Font = new Font(new FontFamily(lblMunicipality.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 lblMunicipality.ForeColor = string.IsNullOrWhiteSpace(addressNew.Municipality) ? ForeColorNormal : ForeColorChangedOrNew;
-                lblMunicipality.Text = string.IsNullOrWhiteSpace(address.Municipality) ? "(empty)" : $"({address.Municipality})";
+                if (IsMunicipality)
+                {
+                    lblMunicipality.Text = string.IsNullOrWhiteSpace(municipalityDoc.Municipality.MunicipalityName) ? "(empty)" : $"({municipalityDoc.Municipality.MunicipalityName})";
+                }
+                else
+                {
+                    lblMunicipality.Text = string.IsNullOrWhiteSpace(address.Municipality) ? "(empty)" : $"({address.Municipality})";
+                }
 
                 PanelViewAndEdit.Controls.Add(lblMunicipality);
 
                 //y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
 
-                if (!string.IsNullOrWhiteSpace(addressNew.Municipality))
+                if (!IsMunicipality)
                 {
-                    currentTop = lblMunicipality.Bottom + 4;
+                    if (!string.IsNullOrWhiteSpace(addressNew.Municipality))
+                    {
+                        currentTop = lblMunicipality.Bottom + 4;
 
-                    Label lblMunicipalityNew = new Label();
-                    lblMunicipalityNew.AutoSize = true;
-                    lblMunicipalityNew.Location = new Point(lblMunicipalityText.Left, lblMunicipality.Bottom + 4);
-                    lblMunicipalityNew.Font = new Font(new FontFamily(lblMunicipalityNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblMunicipalityNew.ForeColor = addressNew.Municipality != null ? ForeColorChangedOrNew : ForeColorNormal;
-                    lblMunicipalityNew.Text = string.IsNullOrWhiteSpace(addressNew.Municipality) ? "empty" : addressNew.Municipality;
+                        Label lblMunicipalityNew = new Label();
+                        lblMunicipalityNew.AutoSize = true;
+                        lblMunicipalityNew.Location = new Point(lblMunicipalityText.Left, lblMunicipality.Bottom + 4);
+                        lblMunicipalityNew.Font = new Font(new FontFamily(lblMunicipalityNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblMunicipalityNew.ForeColor = addressNew.Municipality != null ? ForeColorChangedOrNew : ForeColorNormal;
+                        lblMunicipalityNew.Text = string.IsNullOrWhiteSpace(addressNew.Municipality) ? "empty" : addressNew.Municipality;
 
-                    PanelViewAndEdit.Controls.Add(lblMunicipalityNew);
+                        PanelViewAndEdit.Controls.Add(lblMunicipalityNew);
 
-                    //y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
+                        //y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
+                    }
                 }
 
             }
@@ -3137,7 +3169,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 #endregion LatOutfall and LngOutfall
 
                 #region Address
-                DrawItemAddress(X, Y, CurrentInfrastructure.InfrastructureAddress, CurrentInfrastructure.InfrastructureAddressNew);
+                DrawItemAddress(X, Y, CurrentInfrastructure.InfrastructureAddress, CurrentInfrastructure.InfrastructureAddressNew, true);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 #endregion Address
@@ -3906,7 +3938,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 #endregion IsActive and IsPointSource
 
                 #region Address
-                DrawItemAddress(X, Y, CurrentPSS.PSSAddress, CurrentPSS.PSSAddressNew);
+                DrawItemAddress(X, Y, CurrentPSS.PSSAddress, CurrentPSS.PSSAddressNew, false);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 #endregion Address

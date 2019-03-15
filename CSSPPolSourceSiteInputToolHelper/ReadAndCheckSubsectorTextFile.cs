@@ -374,6 +374,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "PROVINCETVITEMID":
+                        {
+                            try
+                            {
+                                municipalityDoc.ProvinceTVItemID = int.Parse(LineTxt.Substring("PROVINCETVITEMID\t".Length));
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
                     case "MUNICIPALITY":
                         {
                             try

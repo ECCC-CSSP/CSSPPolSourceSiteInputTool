@@ -11,6 +11,7 @@ namespace CSSPPolSourceSiteInputToolHelper
     {
         public int? Version { get; set; } = null;
         public DateTime? DocDate { get; set; } = null;
+        public int ProvinceTVItemID { get; set; } = 0;
         public Municipality Municipality { get; set; } = null;
     }
     public class Municipality

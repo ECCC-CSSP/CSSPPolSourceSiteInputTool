@@ -21,16 +21,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             sb.AppendLine($"VERSION\t{municipalityDoc.Version}\t");
             sb.AppendLine($"DOCDATE\t{((DateTime)municipalityDoc.DocDate).Year}|{((DateTime)municipalityDoc.DocDate).Month.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Day.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Hour.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Minute.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Second.ToString("0#")}\t");
 
-            List<MunicipalityIDNumber> municipalityIDNumberList = subsectorDoc.MunicipalityIDNumberList;
-
-            string MunicipalityListText = "";
-            foreach (MunicipalityIDNumber municipalityIDNumber in municipalityIDNumberList)
-            {
-                MunicipalityListText = MunicipalityListText + municipalityIDNumber.Municipality.Replace("\t", "_").Replace("|", "_").Replace("[", "_").Replace("]", "_") + "[" + municipalityIDNumber.IDNumber + "]" + "|";
-            }
-
             sb.AppendLine($"PROVINCETVITEMID\t{ subsectorDoc.ProvinceTVItemID }");
-            sb.AppendLine($"PROVINCEMUNICIPALITIES\t{ MunicipalityListText }");
 
             sb.AppendLine($"MUNICIPALITY\t{municipalityDoc.Municipality.MunicipalityTVItemID}\t{municipalityDoc.Municipality.MunicipalityName}\t");
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
