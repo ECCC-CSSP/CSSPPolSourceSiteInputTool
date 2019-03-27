@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static CSSPPolSourceSiteInputToolHelper.PolSourceSiteInputToolHelper;
 
 namespace CSSPPolSourceSiteInputToolHelper
 {
@@ -13,6 +14,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public DateTime? DocDate { get; set; } = null;
         public int ProvinceTVItemID { get; set; } = 0;
         public Municipality Municipality { get; set; } = null;
+        public List<MunicipalityIDNumber> MunicipalityIDNumberList { get; set; } = new List<MunicipalityIDNumber>();
+
     }
     public class Municipality
     {
@@ -123,14 +126,18 @@ namespace CSSPPolSourceSiteInputToolHelper
         public float? DistanceFromShore_mNew { get; set; } = null;
         public int? SeeOtherMunicipalityTVItemID { get; set; } = null;
         public int? SeeOtherMunicipalityTVItemIDNew { get; set; } = null;
+        public string SeeOtherMunicipalityText { get; set; } = null;
+        public string SeeOtherMunicipalityTextNew { get; set; } = null;
         public Address InfrastructureAddress { get; set; } = new Address();
         public Address InfrastructureAddressNew { get; set; } = new Address();
         public DateTime? LastUpdateDate_UTC { get; set; } = null;
         public List<Picture> InfrastructurePictureList { get; set; } = new List<Picture>();
         public int? PumpsToTVItemID { get; set; } = null;
         public int? PumpsToTVItemIDNew { get; set; } = null;
-        public List<Coord> PathCoordList { get; set; } = new List<Coord>();
-        public List<Coord> PathCoordListNew { get; set; } = new List<Coord>();
+        public List<int?> PumpsFromTVItemIDList { get; set; } = new List<int?>();
+        public List<int?> PumpsFromTVItemIDNewList { get; set; } = new List<int?>();
+        //public List<Coord> PathCoordList { get; set; } = new List<Coord>();
+        //public List<Coord> PathCoordListNew { get; set; } = new List<Coord>();
         public bool Shown { get; set; } = false;
         public int Ordinal { get; set; } = 0;
     }

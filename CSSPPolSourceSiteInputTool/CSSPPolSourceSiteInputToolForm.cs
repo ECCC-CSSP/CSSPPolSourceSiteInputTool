@@ -130,6 +130,8 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void checkBoxAdmin_CheckedChanged(object sender, EventArgs e)
         {
+            panelPolSourceSite.Controls.Clear();
+
             polSourceSiteInputToolHelper.AdminEmail = "";
 
 
@@ -242,6 +244,8 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void checkBoxInfrastructure_CheckedChanged(object sender, EventArgs e)
         {
+            panelPolSourceSite.Controls.Clear();
+
             if (checkBoxShowInfrastructure.Checked)
             {
                 checkBoxMoreInfo.Visible = false;

@@ -597,9 +597,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                 }
             }
-            else
-            {
-            }
+
 
             Label lblItem2 = new Label();
             lblItem2.AutoSize = true;
@@ -619,11 +617,24 @@ namespace CSSPPolSourceSiteInputToolHelper
                 checkBoxItem.Name = $"{checkBoxName}";
                 checkBoxItem.Font = new Font(new FontFamily(checkBoxItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 checkBoxItem.Width = 100;
+
                 if (!(valNew == null && val == null))
                 {
-                    checkBoxItem.Checked = (valNew == null ? (bool)val : (bool)valNew);
+                    if (valNew == null)
+                    {
+                        checkBoxItem.Checked = (bool)val;
+                    }
+                    else
+                    {
+                        checkBoxItem.Checked = (bool)valNew;
+                    }
                 }
                 checkBoxItem.Text = "";
+
+                if (checkBoxItem.Name == "checkBoxIsMechanicallyAerated")
+                {
+                    checkBoxItem.CheckedChanged += SaveAndRedraw;
+                }
 
                 PanelViewAndEdit.Controls.Add(checkBoxItem);
             }
@@ -806,21 +817,40 @@ namespace CSSPPolSourceSiteInputToolHelper
                         {
                             comboBoxItem.SelectedValueChanged += SaveAndRedraw;
 
-                            for (int i = 1, count = Enum.GetNames(typeof(InfrastructureTypeEnum)).Count(); i < count; i++)
+                            for (int i = 0, count = Enum.GetNames(typeof(InfrastructureTypeEnum)).Count(); i < count; i++)
                             {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                if (i == 0)
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "Select Infrastructure Type (unknown)",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
+                                else
+                                {
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)i).ToString(),
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
                             }
 
                             if (valNew != null)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Infrastructure Type (unknown)" : _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -832,7 +862,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Infrastructure Type (unknown)" : _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -845,21 +875,40 @@ namespace CSSPPolSourceSiteInputToolHelper
                         {
                             comboBoxItem.SelectedValueChanged += SaveAndRedraw;
 
-                            for (int i = 1, count = Enum.GetNames(typeof(FacilityTypeEnum)).Count(); i < count; i++)
+                            for (int i = 0, count = Enum.GetNames(typeof(FacilityTypeEnum)).Count(); i < count; i++)
                             {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                if (i == 0)
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "Select Facility Type (unknown)",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
+                                else
+                                {
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)i).ToString(),
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
                             }
 
                             if (valNew != null)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Facility Type (unknown)" : _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -871,7 +920,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Facility Type (unknown)" : _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -882,21 +931,42 @@ namespace CSSPPolSourceSiteInputToolHelper
                         break;
                     case "AerationTypeEnum":
                         {
-                            for (int i = 1, count = Enum.GetNames(typeof(AerationTypeEnum)).Count(); i < count; i++)
+                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+
+                            for (int i = 0, count = Enum.GetNames(typeof(AerationTypeEnum)).Count(); i < count; i++)
                             {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                if (i == 0)
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "Select Aeration Type (unknown)",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
+                                else
+                                {
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)i).ToString(),
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
                             }
 
                             if (valNew != null)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Aeration Type (unknown)" : _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -908,7 +978,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Aeration Type (unknown)" : _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -919,21 +989,65 @@ namespace CSSPPolSourceSiteInputToolHelper
                         break;
                     case "PreliminaryTreatmentTypeEnum":
                         {
-                            for (int i = 1, count = Enum.GetNames(typeof(PreliminaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+
+                            for (int i = 0, count = Enum.GetNames(typeof(PreliminaryTreatmentTypeEnum)).Count(); i < count; i++)
                             {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                if (i == 0)
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "Select Preliminary Treatment Type (unknown)",
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
+                                else
+                                {
+                                    if (i != (int)PreliminaryTreatmentTypeEnum.NotApplicable)
+                                    {
+                                        EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                        {
+                                            EnumText = i == 0 ? "Select Preliminary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)i).ToString(),
+                                            EnumID = i,
+                                        };
+                                        comboBoxItem.Items.Add(enumTextAndID);
+                                    }
+                                }
+                            }
+
+                            for (int i = 0, count = Enum.GetNames(typeof(PreliminaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                if (i == (int)PreliminaryTreatmentTypeEnum.NotApplicable)
+                                {
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)i).ToString(),
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
                             }
 
                             if (valNew != null)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Preliminary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -945,7 +1059,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Preliminary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -956,21 +1070,65 @@ namespace CSSPPolSourceSiteInputToolHelper
                         break;
                     case "PrimaryTreatmentTypeEnum":
                         {
-                            for (int i = 1, count = Enum.GetNames(typeof(PrimaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+
+                            for (int i = 0, count = Enum.GetNames(typeof(PrimaryTreatmentTypeEnum)).Count(); i < count; i++)
                             {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                if (i == 0)
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "Select Primary Treatment Type (unknown)",
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
+                                else
+                                {
+                                    if (i != (int)PrimaryTreatmentTypeEnum.NotApplicable)
+                                    {
+                                        EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                        {
+                                            EnumText = i == 0 ? "Select Primary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)i).ToString(),
+                                            EnumID = i,
+                                        };
+                                        comboBoxItem.Items.Add(enumTextAndID);
+                                    }
+                                }
+                            }
+
+                            for (int i = 0, count = Enum.GetNames(typeof(PrimaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                if (i == (int)PrimaryTreatmentTypeEnum.NotApplicable)
+                                {
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)i).ToString(),
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
                             }
 
                             if (valNew != null)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Primary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -982,7 +1140,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Primary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -993,21 +1151,127 @@ namespace CSSPPolSourceSiteInputToolHelper
                         break;
                     case "SecondaryTreatmentTypeEnum":
                         {
-                            for (int i = 1, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+
+                            EnumTextAndID enumTextAndID = new EnumTextAndID()
                             {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                EnumText = "Select Secondary Treatment Type (unknown)",
+                                EnumID = 0,
+                            };
+                            comboBoxItem.Items.Add(enumTextAndID);
+
+                            enumTextAndID = new EnumTextAndID()
+                            {
+                                EnumText = "---------------------------",
+                                EnumID = 0,
+                            };
+                            comboBoxItem.Items.Add(enumTextAndID);
+
+                            enumTextAndID = new EnumTextAndID()
+                            {
+                                EnumText = "Attached Growth Group",
+                                EnumID = 0,
+                            };
+                            comboBoxItem.Items.Add(enumTextAndID);
+
+                            enumTextAndID = new EnumTextAndID()
+                            {
+                                EnumText = "",
+                                EnumID = 0,
+                            };
+                            comboBoxItem.Items.Add(enumTextAndID);
+
+                            List<SecondaryTreatmentTypeEnum> secondaryTreatmentTypeEnumList = new List<SecondaryTreatmentTypeEnum>()
+                            {
+                                SecondaryTreatmentTypeEnum.AeratedSubmergedBioFilmReactor,
+                                SecondaryTreatmentTypeEnum.BiologicalAearatedFilters,
+                                SecondaryTreatmentTypeEnum.IntegratedFixedFilmActivatedSludge,
+                                SecondaryTreatmentTypeEnum.MovingBedBioReactor,
+                                SecondaryTreatmentTypeEnum.RotatingBiologicalContactor,
+                                SecondaryTreatmentTypeEnum.TricklingFilters,
+                            };
+                            for (int i = 0, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                if (secondaryTreatmentTypeEnumList.Contains((SecondaryTreatmentTypeEnum)i))
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)i).ToString(),
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
+                            }
+
+                            enumTextAndID = new EnumTextAndID()
+                            {
+                                EnumText = "---------------------------",
+                                EnumID = 0,
+                            };
+                            comboBoxItem.Items.Add(enumTextAndID);
+
+                            enumTextAndID = new EnumTextAndID()
+                            {
+                                EnumText = "Suspended Growth Group",
+                                EnumID = 0,
+                            };
+                            comboBoxItem.Items.Add(enumTextAndID);
+
+                            enumTextAndID = new EnumTextAndID()
+                            {
+                                EnumText = "",
+                                EnumID = 0,
+                            };
+                            comboBoxItem.Items.Add(enumTextAndID);
+
+
+                            secondaryTreatmentTypeEnumList = new List<SecondaryTreatmentTypeEnum>()
+                            {
+                                SecondaryTreatmentTypeEnum.ActivatedSludge,
+                                SecondaryTreatmentTypeEnum.ContactStabilization,
+                                SecondaryTreatmentTypeEnum.ExtendedAeration,
+                                SecondaryTreatmentTypeEnum.OxidationDitch,
+                                SecondaryTreatmentTypeEnum.PhysicalChemicalProcesses,
+                                SecondaryTreatmentTypeEnum.SequencingBatchReator,
+                            };
+                            for (int i = 0, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                if (secondaryTreatmentTypeEnumList.Contains((SecondaryTreatmentTypeEnum)i))
+                                {
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)i).ToString(),
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
+                            }
+
+                            for (int i = 0, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                if (i == (int)SecondaryTreatmentTypeEnum.NotApplicable)
+                                {
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)i).ToString(),
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
                             }
 
                             if (valNew != null)
                             {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Secondary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -1017,9 +1281,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 if (val != null)
                                 {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Secondary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -1030,21 +1294,65 @@ namespace CSSPPolSourceSiteInputToolHelper
                         break;
                     case "TertiaryTreatmentTypeEnum":
                         {
-                            for (int i = 1, count = Enum.GetNames(typeof(TertiaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+
+                            for (int i = 0, count = Enum.GetNames(typeof(TertiaryTreatmentTypeEnum)).Count(); i < count; i++)
                             {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                if (i == 0)
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "Select Tertiary Treatment Type (unknown)",
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
+                                else
+                                {
+                                    if (i != (int)TertiaryTreatmentTypeEnum.NotApplicable)
+                                    {
+                                        EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                        {
+                                            EnumText = i == 0 ? "Select Tertiary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)i).ToString(),
+                                            EnumID = i,
+                                        };
+                                        comboBoxItem.Items.Add(enumTextAndID);
+                                    }
+                                }
+                            }
+
+                            for (int i = 0, count = Enum.GetNames(typeof(TertiaryTreatmentTypeEnum)).Count(); i < count; i++)
+                            {
+                                if (i == (int)TertiaryTreatmentTypeEnum.NotApplicable)
+                                {
+                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = "---------------------------",
+                                        EnumID = 0,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+
+                                    enumTextAndID = new EnumTextAndID()
+                                    {
+                                        EnumText = _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)i).ToString(),
+                                        EnumID = i,
+                                    };
+                                    comboBoxItem.Items.Add(enumTextAndID);
+                                }
                             }
 
                             if (valNew != null)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Tertiary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -1056,7 +1364,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Tertiary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -1067,11 +1375,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                         break;
                     case "TreatmentTypeEnum":
                         {
-                            for (int i = 1, count = Enum.GetNames(typeof(TreatmentTypeEnum)).Count(); i < count; i++)
+                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+
+                            for (int i = 0, count = Enum.GetNames(typeof(TreatmentTypeEnum)).Count(); i < count; i++)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)i).ToString(),
+                                    EnumText = i == 0 ? "Select Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)i).ToString(),
                                     EnumID = i,
                                 };
                                 comboBoxItem.Items.Add(enumTextAndID);
@@ -1081,7 +1391,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -1093,7 +1403,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -1104,11 +1414,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                         break;
                     case "DisinfectionTypeEnum":
                         {
-                            for (int i = 1, count = Enum.GetNames(typeof(DisinfectionTypeEnum)).Count(); i < count; i++)
+                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+
+                            for (int i = 0, count = Enum.GetNames(typeof(DisinfectionTypeEnum)).Count(); i < count; i++)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)i).ToString(),
+                                    EnumText = i == 0 ? "Select Disinfection Type (unknown)" : _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)i).ToString(),
                                     EnumID = i,
                                 };
                                 comboBoxItem.Items.Add(enumTextAndID);
@@ -1118,7 +1430,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Disinfection Type (unknown)" : _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -1130,7 +1442,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Disinfection Type (unknown)" : _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -1141,11 +1453,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                         break;
                     case "CollectionSystemTypeEnum":
                         {
-                            for (int i = 1, count = Enum.GetNames(typeof(CollectionSystemTypeEnum)).Count(); i < count; i++)
+                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+
+                            for (int i = 0, count = Enum.GetNames(typeof(CollectionSystemTypeEnum)).Count(); i < count; i++)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)i).ToString(),
+                                    EnumText = i == 0 ? "Select Collection System Type (unknown)" : _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)i).ToString(),
                                     EnumID = i,
                                 };
                                 comboBoxItem.Items.Add(enumTextAndID);
@@ -1155,7 +1469,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Collection System Type (unknown)" : _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -1167,7 +1481,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Collection System Type (unknown)" : _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -1178,11 +1492,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                         break;
                     case "AlarmSystemTypeEnum":
                         {
-                            for (int i = 1, count = Enum.GetNames(typeof(AlarmSystemTypeEnum)).Count(); i < count; i++)
+                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+
+                            for (int i = 0, count = Enum.GetNames(typeof(AlarmSystemTypeEnum)).Count(); i < count; i++)
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)i).ToString(),
+                                    EnumText = i == 0 ? "Select Alarm System Type (unknown)" : _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)i).ToString(),
                                     EnumID = i,
                                 };
                                 comboBoxItem.Items.Add(enumTextAndID);
@@ -1192,7 +1508,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)valNew).ToString(),
+                                    EnumText = valNew == 0 ? "Select Alarm System Type (unknown)" : _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -1204,7 +1520,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)val).ToString(),
+                                        EnumText = val == 0 ? "Select Alarm System Type (unknown)" : _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -1467,6 +1783,139 @@ namespace CSSPPolSourceSiteInputToolHelper
                 PanelViewAndEdit.Controls.Add(lblItemNew);
             }
 
+        }
+        private void DrawSeeOtherMunicipality(int x, int y, string comboBoxName)
+        {
+            Label lblItemEnum = new Label();
+            lblItemEnum.AutoSize = true;
+            lblItemEnum.Location = new Point(x, y);
+            lblItemEnum.Font = new Font(new FontFamily(lblItemEnum.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+            lblItemEnum.ForeColor = Color.Blue;
+            lblItemEnum.Click += ShowRTFDocument;
+            lblItemEnum.Tag = "SeeOtherMunicipality";
+            lblItemEnum.Text = $@"See Other Municipalities: ";
+
+            PanelViewAndEdit.Controls.Add(lblItemEnum);
+
+            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+            if (IsEditing)
+            {
+                if (CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew != null)
+                {
+                    Label lblItemEnumOld = new Label();
+                    lblItemEnumOld.AutoSize = true;
+                    lblItemEnumOld.Location = new Point(lblItemEnum.Right + 4, lblItemEnum.Top);
+                    lblItemEnumOld.Font = new Font(new FontFamily(lblItemEnumOld.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    lblItemEnumOld.ForeColor = CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+
+                    string Municipality = "";
+                    foreach (MunicipalityIDNumber municipalityIDNumber in municipalityDoc.MunicipalityIDNumberList)
+                    {
+                        if (CurrentInfrastructure.SeeOtherMunicipalityTVItemID.ToString() == municipalityIDNumber.IDNumber)
+                        {
+                            Municipality = municipalityIDNumber.Municipality;
+                        }
+                    }
+
+                    lblItemEnumOld.Text = CurrentInfrastructure.SeeOtherMunicipalityTVItemID == null ? "(empty)" : $"({ Municipality })";
+
+                    PanelViewAndEdit.Controls.Add(lblItemEnumOld);
+
+                    x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                }
+
+                ComboBox comboBoxItem = new ComboBox();
+                comboBoxItem.Location = new Point(x, lblItemEnum.Top);
+                comboBoxItem.Name = comboBoxName;
+                comboBoxItem.Font = new Font(new FontFamily(lblItemEnum.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                comboBoxItem.Width = 400;
+                comboBoxItem.DisplayMember = "Municipality";
+                comboBoxItem.ValueMember = "IDNumber";
+                comboBoxItem.SelectedValueChanged += SeeOtherMunicipalityChanged;
+
+                PanelViewAndEdit.Controls.Add(comboBoxItem);
+
+                MunicipalityIDNumber selectedMunicipality = new MunicipalityIDNumber();
+                foreach (MunicipalityIDNumber municipalityIDNumber in municipalityDoc.MunicipalityIDNumberList)
+                {
+                    if (CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew != null)
+                    {
+                        if (municipalityIDNumber.IDNumber == CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew.ToString())
+                        {
+                            selectedMunicipality = municipalityIDNumber;
+                        }
+                    }
+                    else
+                    {
+                        if (municipalityIDNumber.IDNumber == CurrentInfrastructure.SeeOtherMunicipalityTVItemID.ToString())
+                        {
+                            selectedMunicipality = municipalityIDNumber;
+                        }
+                    }
+                    comboBoxItem.Items.Add(municipalityIDNumber);
+                }
+
+                if (selectedMunicipality != null)
+                {
+                    comboBoxItem.SelectedItem = selectedMunicipality;
+                }
+                else
+                {
+                    if (comboBoxItem.Items.Count > 0)
+                    {
+                        comboBoxItem.SelectedIndex = 0;
+                    }
+                }
+
+                y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+            }
+            else
+            {
+                Label lblItemEnum2 = new Label();
+                lblItemEnum2.AutoSize = true;
+                lblItemEnum2.Location = new Point(lblItemEnum.Right + 4, lblItemEnum.Top);
+                lblItemEnum2.Font = new Font(new FontFamily(lblItemEnum2.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                lblItemEnum2.ForeColor = CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+
+                string Municipality = "";
+                foreach (MunicipalityIDNumber municipalityIDNumber in municipalityDoc.MunicipalityIDNumberList)
+                {
+                    if (CurrentInfrastructure.SeeOtherMunicipalityTVItemID.ToString() == municipalityIDNumber.IDNumber)
+                    {
+                        Municipality = municipalityIDNumber.Municipality;
+                    }
+                }
+
+                lblItemEnum2.Text = CurrentInfrastructure.SeeOtherMunicipalityTVItemID == null ? "(empty)" : $"({ Municipality })";
+
+                PanelViewAndEdit.Controls.Add(lblItemEnum2);
+
+                y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 4;
+
+                if (CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew != null)
+                {
+                    Label lblItemEnumNew = new Label();
+                    lblItemEnumNew.AutoSize = true;
+                    lblItemEnumNew.Location = new Point(lblItemEnum2.Right + 4, lblItemEnum2.Top);
+                    lblItemEnumNew.Font = new Font(new FontFamily(lblItemEnumNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    lblItemEnumNew.ForeColor = CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+
+                    string MunicipalityNew = "";
+                    foreach (MunicipalityIDNumber municipalityIDNumber in municipalityDoc.MunicipalityIDNumberList)
+                    {
+                        if (CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew.ToString() == municipalityIDNumber.IDNumber)
+                        {
+                            MunicipalityNew = municipalityIDNumber.Municipality;
+                        }
+                    }
+
+                    lblItemEnumNew.Text = MunicipalityNew;
+
+                    PanelViewAndEdit.Controls.Add(lblItemEnumNew);
+                }
+
+            }
         }
         private void DrawItemText(int x, int y, string val, string valNew, string lblTxt, string textBoxName, int width)
         {
@@ -2119,13 +2568,509 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public void InfrastructureSaveToCSSPWebTools()
         {
-            //MessageBox.Show("PSSSaveToCSSPWebTools " + CurrentPSS.PSSTVItemID.ToString(), PolSourceSiteTVItemID.ToString());
-            MessageBox.Show("This functionality has not been implemented yet.");
+            bool a = true;
+            if (a)
+            {
+                return;
+            }
+
+            //string ret = "";
+            //bool NeedToSave = false;
+            //bool IsNewInfrastructure = false;
+
+            //string InfrastructureName = CurrentInfrastructure.TVText;
+            //if (CurrentInfrastructure.TVTextNew != null)
+            //{
+            //    InfrastructureName = CurrentInfrastructure.TVTextNew;
+            //}
+
+            //EmitRTBMessage(new RTBMessageEventArgs($"Trying to save all information for Infrastructure [{InfrastructureName}]\r\n"));
+
+            //EmitRTBMessage(new RTBMessageEventArgs($"Checking if Infrastructure [{InfrastructureName}] already exist in CSSPWebTools\r\n"));
+
+            //ret = InfrastructureExistInCSSPWebTools((int)CurrentInfrastructure.InfrastructureTVItemID, AdminEmail);
+            //ret = ret.Replace("\"", "");
+
+            //if (ret.StartsWith("ERROR:"))
+            //{
+            //    EmitRTBMessage(new RTBMessageEventArgs($"Infrastructure [{InfrastructureName}] does not exist in CSSPWebTools\r\n"));
+            //}
+            //else
+            //{
+            //    EmitRTBMessage(new RTBMessageEventArgs($"Infrastructure [{InfrastructureName}] already exist in CSSPWebTools\r\n"));
+            //}
+
+            //if (CurrentInfrastructure.InfrastructureTVItemID >= 10000000 || ret.StartsWith("ERROR:"))
+            //{
+            //    float Lat = 0.0f;
+            //    float Lng = 0.0f;
+            //    if (CurrentInfrastructure.LatNew == null)
+            //    {
+            //        if (CurrentInfrastructure.Lat != null)
+            //        {
+            //            Lat = (float)CurrentInfrastructure.Lat;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Lat = (float)CurrentInfrastructure.LatNew;
+            //    }
+            //    if (CurrentInfrastructure.LngNew == null)
+            //    {
+            //        if (CurrentInfrastructure.Lng != null)
+            //        {
+            //            Lng = (float)CurrentInfrastructure.Lng;
+            //        }
+            //    }
+            //    else
+            //    {
+            //        Lng = (float)CurrentInfrastructure.LngNew;
+            //    }
+
+            //    string MessageText = $"Trying to creating new Infrastructure [{InfrastructureName}]\tSite Number [{(int)CurrentInfrastructure.SiteNumber}]\tLat[{Lat}]\tLong[{Lng}]\r\n";
+            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            //    ret = SaveToCSSPWebToolsCreateNewInfrastructure((int)municipalityDoc.Municipality.MunicipalityTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, InfrastructureName, (int)CurrentInfrastructure.SiteNumber, Lat, Lng, AdminEmail);
+            //    ret = ret.Replace("\"", "");
+            //    if (ret.StartsWith("ERROR:"))
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //        if (NeedToSave)
+            //        {
+            //            SaveSubsectorTextFile();
+            //        }
+            //    }
+            //    else
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+            //        CurrentInfrastructure.InfrastructureTVItemID = int.Parse(ret);
+            //        CurrentInfrastructure.TVTextNew = null;
+            //        CurrentInfrastructure.Lat = Lat;
+            //        CurrentInfrastructure.Lng = Lng;
+            //        CurrentInfrastructure.LatNew = null;
+            //        CurrentInfrastructure.LngNew = null;
+            //        InfrastructureTVItemID = (int)CurrentInfrastructure.InfrastructureTVItemID;
+            //        NeedToSave = true;
+            //        IsNewInfrastructure = true;
+            //    }
+            //}
+
+            //if (!IsNewInfrastructure)
+            //{
+
+            //    if (CurrentInfrastructure.TVTextNew != null || CurrentInfrastructure.IsActiveNew != null)
+            //    {
+            //        string MessageText = $"Trying To change Infrastructure Name --- old [{CurrentInfrastructure.TVText}] --- new [{CurrentInfrastructure.TVTextNew}]\r\n";
+            //        EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            //        ret = SaveToCSSPWebToolsTVText((int)CurrentInfrastructure.InfrastructureTVItemID, CurrentInfrastructure.TVTextNew, (bool)CurrentInfrastructure.IsActive, AdminEmail);
+            //        ret = ret.Replace("\"", "");
+            //        if (ret.StartsWith("ERROR:"))
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //            if (NeedToSave)
+            //            {
+            //                SaveSubsectorTextFile();
+            //            }
+            //        }
+            //        else
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+            //            CurrentInfrastructure.TVText = CurrentInfrastructure.TVTextNew;
+            //            CurrentInfrastructure.TVTextNew = null;
+            //            NeedToSave = true;
+            //        }
+            //    }
+
+            //    if (CurrentInfrastructure.LatNew != null || CurrentInfrastructure.LngNew != null)
+            //    {
+            //        float Lat = 0.0f;
+            //        float Lng = 0.0f;
+            //        if (CurrentInfrastructure.LatNew == null)
+            //        {
+            //            if (CurrentInfrastructure.Lat != null)
+            //            {
+            //                Lat = (float)CurrentInfrastructure.Lat;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            Lat = (float)CurrentInfrastructure.LatNew;
+            //        }
+            //        if (CurrentInfrastructure.LngNew == null)
+            //        {
+            //            if (CurrentInfrastructure.Lng != null)
+            //            {
+            //                Lng = (float)CurrentInfrastructure.Lng;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            Lng = (float)CurrentInfrastructure.LngNew;
+            //        }
+
+
+            //        string LatText = CurrentInfrastructure.Lat == null ? "(empty)" : ((float)CurrentInfrastructure.Lat).ToString("F5");
+            //        string LngText = CurrentInfrastructure.Lng == null ? "(empty)" : ((float)CurrentInfrastructure.Lng).ToString("F5");
+
+            //        string MessageText = $"Trying to Change Lat and Lng --- old [{LatText} {LngText}] --- new [{Lat.ToString("F5")} {Lng.ToString("F5")}]\r\n";
+            //        EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            //        ret = SaveToCSSPWebToolsLatLng((int)CurrentInfrastructure.InfrastructureTVItemID, Lat, Lng, AdminEmail);
+            //        ret = ret.Replace("\"", "");
+            //        if (ret.StartsWith("ERROR:"))
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //            if (NeedToSave)
+            //            {
+            //                SaveSubsectorTextFile();
+            //            }
+            //        }
+            //        else
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+            //            CurrentInfrastructure.Lat = Lat;
+            //            CurrentInfrastructure.Lng = Lng;
+            //            CurrentInfrastructure.LatNew = null;
+            //            CurrentInfrastructure.LngNew = null;
+            //            NeedToSave = true;
+            //        }
+            //    }
+            //}
+
+            //if (CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID != null || IsNewInfrastructure)
+            //{
+            //    if (!(CurrentInfrastructure.InfrastructureAddress.StreetNumber == null
+            //        && CurrentInfrastructure.InfrastructureAddress.StreetName == null
+            //        && CurrentInfrastructure.InfrastructureAddress.StreetType == null
+            //        && CurrentInfrastructure.InfrastructureAddress.Municipality == null
+            //        && CurrentInfrastructure.InfrastructureAddress.PostalCode == null
+            //        && CurrentInfrastructure.InfrastructureAddressNew.StreetNumber == null
+            //        && CurrentInfrastructure.InfrastructureAddressNew.StreetName == null
+            //        && CurrentInfrastructure.InfrastructureAddressNew.StreetType == null
+            //        && CurrentInfrastructure.InfrastructureAddressNew.Municipality == null
+            //        && CurrentInfrastructure.InfrastructureAddressNew.PostalCode == null
+            //        && CurrentInfrastructure.InfrastructureAddress.StreetName == null))
+            //    {
+            //        string StreetNumberText = CurrentInfrastructure.InfrastructureAddress.StreetNumber == null ? "" : CurrentInfrastructure.InfrastructureAddress.StreetNumber;
+            //        string StreetNameText = CurrentInfrastructure.InfrastructureAddress.StreetName == null ? "" : CurrentInfrastructure.InfrastructureAddress.StreetName;
+            //        int StreetType = CurrentInfrastructure.InfrastructureAddress.StreetType == null ? 0 : (int)CurrentInfrastructure.InfrastructureAddress.StreetType;
+            //        string MunicipalityText = CurrentInfrastructure.InfrastructureAddress.Municipality == null ? "" : CurrentInfrastructure.InfrastructureAddress.Municipality;
+            //        string PostalCodeText = CurrentInfrastructure.InfrastructureAddress.PostalCode == null ? "" : CurrentInfrastructure.InfrastructureAddress.PostalCode;
+            //        string StreetNumberNewText = CurrentInfrastructure.InfrastructureAddressNew.StreetNumber == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.StreetNumber;
+            //        string StreetNameNewText = CurrentInfrastructure.InfrastructureAddressNew.StreetName == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.StreetName;
+            //        int StreetTypeNew = CurrentInfrastructure.InfrastructureAddressNew.StreetType == null ? 0 : (int)CurrentInfrastructure.InfrastructureAddressNew.StreetType;
+            //        string MunicipalityNewText = CurrentInfrastructure.InfrastructureAddressNew.Municipality == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.Municipality;
+            //        string PostalCodeNewText = CurrentInfrastructure.InfrastructureAddressNew.PostalCode == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.PostalCode;
+
+            //        if (!string.IsNullOrWhiteSpace(MunicipalityText))
+            //        {
+            //            MunicipalityText = MunicipalityText.Trim();
+            //        }
+
+            //        if (!string.IsNullOrWhiteSpace(MunicipalityNewText))
+            //        {
+            //            MunicipalityNewText = MunicipalityNewText.Trim();
+            //        }
+
+            //        if (string.IsNullOrWhiteSpace(MunicipalityNewText))
+            //        {
+            //            string NoMunicipality = $"ERROR: To add an address you need to have a municipality name\r\n";
+            //            EmitRTBMessage(new RTBMessageEventArgs(NoMunicipality));
+            //            return;
+            //        }
+
+            //        string MessageText = $"Checking if municipality exist [{MunicipalityNewText}]\r\n";
+            //        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+            //        bool MunicipalityExist = false;
+            //        ret = MunicipalityExistUnderProvinceInCSSPWebTools((int)subsectorDoc.ProvinceTVItemID, MunicipalityNewText, AdminEmail);
+            //        ret = ret.Replace("\"", "");
+            //        if (ret.StartsWith("ERROR"))
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //            MunicipalityExist = false;
+            //            NeedToSave = true;
+            //        }
+            //        else
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+            //            MunicipalityExist = true;
+            //        }
+
+            //        if (!MunicipalityExist)
+            //        {
+            //            MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+            //            EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+            //            ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, AdminEmail);
+            //            ret = ret.Replace("\"", "");
+            //            if (ret.StartsWith("ERROR"))
+            //            {
+            //                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //                EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //                if (NeedToSave)
+            //                {
+            //                    SaveSubsectorTextFile();
+            //                }
+            //            }
+            //            else
+            //            {
+            //                EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+            //                CurrentInfrastructure.InfrastructureAddress.AddressType = (int)AddressTypeEnum.Civic;
+            //                CurrentInfrastructure.InfrastructureAddress.AddressTVItemID = int.Parse(ret);
+            //                CurrentInfrastructure.InfrastructureAddress.StreetNumber = CurrentInfrastructure.InfrastructureAddressNew.StreetNumber;
+            //                CurrentInfrastructure.InfrastructureAddress.StreetName = CurrentInfrastructure.InfrastructureAddressNew.StreetName;
+            //                CurrentInfrastructure.InfrastructureAddress.StreetType = CurrentInfrastructure.InfrastructureAddressNew.StreetType;
+            //                CurrentInfrastructure.InfrastructureAddress.Municipality = CurrentInfrastructure.InfrastructureAddressNew.Municipality;
+            //                CurrentInfrastructure.InfrastructureAddress.PostalCode = CurrentInfrastructure.InfrastructureAddressNew.PostalCode;
+            //                CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.AddressType = null;
+            //                NeedToSave = true;
+            //            }
+            //        }
+            //        else
+            //        {
+            //            MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+            //            EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+            //            ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, AdminEmail);
+            //            ret = ret.Replace("\"", "");
+            //            if (ret.StartsWith("ERROR"))
+            //            {
+            //                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //                EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //                if (NeedToSave)
+            //                {
+            //                    SaveSubsectorTextFile();
+            //                }
+            //            }
+            //            else
+            //            {
+            //                EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+            //                CurrentInfrastructure.InfrastructureAddress.AddressType = (int)AddressTypeEnum.Civic;
+            //                CurrentInfrastructure.InfrastructureAddress.AddressTVItemID = int.Parse(ret);
+            //                CurrentInfrastructure.InfrastructureAddress.StreetNumber = CurrentInfrastructure.InfrastructureAddressNew.StreetNumber;
+            //                CurrentInfrastructure.InfrastructureAddress.StreetName = CurrentInfrastructure.InfrastructureAddressNew.StreetName;
+            //                CurrentInfrastructure.InfrastructureAddress.StreetType = CurrentInfrastructure.InfrastructureAddressNew.StreetType;
+            //                CurrentInfrastructure.InfrastructureAddress.Municipality = CurrentInfrastructure.InfrastructureAddressNew.Municipality;
+            //                CurrentInfrastructure.InfrastructureAddress.PostalCode = CurrentInfrastructure.InfrastructureAddressNew.PostalCode;
+            //                CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = null;
+            //                CurrentInfrastructure.InfrastructureAddressNew.AddressType = null;
+            //                NeedToSave = true;
+            //            }
+            //        }
+            //    }
+            //}
+
+            //List<int> PictureTVItemIDListToRemove = new List<int>();
+
+            //foreach (Picture picture in CurrentInfrastructure.InfrastructurePictureList)
+            //{
+            //    FileInfo fiPictureToDelete = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentInfrastructure.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}");
+
+            //    if (picture.ToRemove == true)
+            //    {
+            //        if (picture.PictureTVItemID >= 10000000)
+            //        {
+            //            if (fiPictureToDelete.Exists)
+            //            {
+            //                try
+            //                {
+            //                    fiPictureToDelete.Delete();
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            //                    EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
+            //                }
+            //            }
+
+            //            continue;
+            //        }
+
+            //        string MessageText = $"Removing picture --- [{picture.FileNameNew}]\r\n";
+            //        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+            //        ret = SaveToCSSPWebToolsPictureToRemove((int)CurrentInfrastructure.InfrastructureTVItemID, (int)picture.PictureTVItemID, AdminEmail);
+            //        ret = ret.Replace("\"", "");
+            //        if (ret.StartsWith("ERROR:"))
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //            if (NeedToSave)
+            //            {
+            //                SaveSubsectorTextFile();
+            //            }
+            //        }
+            //        else
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+            //            PictureTVItemIDListToRemove.Add((int)picture.PictureTVItemID);
+
+            //            if (fiPictureToDelete.Exists)
+            //            {
+            //                try
+            //                {
+            //                    fiPictureToDelete.Delete();
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //                    string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            //                    EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
+            //                }
+            //            }
+
+            //            NeedToSave = true;
+            //        }
+
+            //    }
+            //}
+
+            //foreach (int pictureTVItemIDToDelete in PictureTVItemIDListToRemove)
+            //{
+            //    Picture picture = CurrentInfrastructure.InfrastructurePictureList.Where(c => c.PictureTVItemID == pictureTVItemIDToDelete).FirstOrDefault();
+
+            //    if (picture != null)
+            //    {
+            //        CurrentInfrastructure.InfrastructurePictureList.Remove(picture);
+            //    }
+            //}
+
+            //foreach (Picture picture in CurrentInfrastructure.InfrastructurePictureList)
+            //{
+            //    bool IsNew = false;
+            //    if (picture.PictureTVItemID >= 10000000)
+            //    {
+            //        IsNew = true;
+
+            //        string MessageText = $"Adding picture --- [{picture.FileNameNew}]\r\n";
+            //        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+            //        FileInfo fiPicture = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentInfrastructure.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}");
+
+            //        if (!fiPicture.Exists)
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //            continue;
+            //        }
+
+            //        ret = SaveToCSSPWebToolsPicture(fiPicture, (int)CurrentInfrastructure.InfrastructureTVItemID, AdminEmail);
+            //        ret = ret.Replace("\"", "");
+            //        if (ret.StartsWith("ERROR:"))
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //            if (NeedToSave)
+            //            {
+            //                SaveSubsectorTextFile();
+            //            }
+            //        }
+            //        else
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+            //            picture.PictureTVItemID = int.Parse(ret);
+
+            //            FileInfo fiPictureNew = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentInfrastructure.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}");
+
+            //            if (fiPicture.Exists)
+            //            {
+            //                try
+            //                {
+            //                    File.Copy(fiPicture.FullName, fiPictureNew.FullName);
+            //                    fiPicture.Delete();
+            //                }
+            //                catch (Exception ex)
+            //                {
+            //                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //                    string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            //                    EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
+            //                }
+            //            }
+
+            //            NeedToSave = true;
+            //        }
+            //    }
+
+            //    if (picture.FileNameNew != null
+            //        || picture.DescriptionNew != null
+            //        || picture.ExtensionNew != null
+            //        || IsNew)
+            //    {
+            //        string FileNameText = picture.FileNameNew != null ? picture.FileNameNew : picture.FileName;
+            //        string DescriptionText = picture.DescriptionNew != null ? picture.DescriptionNew : picture.Description;
+            //        string ExtensionText = picture.ExtensionNew != null ? picture.ExtensionNew : picture.Extension;
+
+            //        string MessageText = $"Changing properties of picture --- [{picture.FileNameNew}]\r\n";
+            //        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+
+            //        ret = SaveToCSSPWebToolsPictureInfo((int)CurrentInfrastructure.InfrastructureTVItemID, (int)picture.PictureTVItemID, FileNameText, DescriptionText, ExtensionText, AdminEmail);
+            //        ret = ret.Replace("\"", "");
+            //        if (ret.StartsWith("ERROR:"))
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //            if (NeedToSave)
+            //            {
+            //                SaveSubsectorTextFile();
+            //            }
+            //        }
+            //        else
+            //        {
+            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+            //            picture.PictureTVItemID = int.Parse(ret);
+            //            picture.FileName = FileNameText;
+            //            picture.Description = DescriptionText;
+            //            picture.Extension = ExtensionText;
+            //            picture.FileNameNew = null;
+            //            picture.DescriptionNew = null;
+            //            picture.ExtensionNew = null;
+            //            NeedToSave = true;
+            //        }
+            //    }
+            //}
+
+            //if (NeedToSave)
+            //{
+            //    SaveSubsectorTextFile();
+            //    RedrawSinglePanelPSS();
+            //    ReDrawInfrastructure();
+            //}
+
+            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: completed"));
+
         }
+
         public void InfrastructureSaveAllToCSSPWebTools()
         {
-            //MessageBox.Show("PSSSaveToCSSPWebTools " + CurrentPSS.PSSTVItemID.ToString(), PolSourceSiteTVItemID.ToString());
-            MessageBox.Show("This functionality has not been implemented yet.");
+            foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
+            {
+                CurrentInfrastructure = infrastructure;
+                InfrastructureSaveToCSSPWebTools();
+            }
         }
         public void PSSSaveToCSSPWebTools()
         {
@@ -2769,8 +3714,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public void PSSSaveAllToCSSPWebTools()
         {
-            // should show all municipality names to the admin for verification
-            // should also verify that all pictures server file name is unique
             foreach (PSS pss in subsectorDoc.Subsector.PSSList)
             {
                 CurrentPSS = pss;
@@ -3168,6 +4111,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 #endregion LatOutfall and LngOutfall
 
+                if (IsEditing)
+                {
+                    Label lblWGS84Decimal = new Label();
+                    lblWGS84Decimal.AutoSize = true;
+                    lblWGS84Decimal.Location = new Point(10, Y);
+                    lblWGS84Decimal.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblWGS84Decimal.Font = new Font(new FontFamily(lblWGS84Decimal.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                    lblWGS84Decimal.ForeColor = Color.Red;
+                    lblWGS84Decimal.Text = $"Lat and Lng should be entered as WGS84 decimal degrees";
+
+                    PanelViewAndEdit.Controls.Add(lblWGS84Decimal);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                }
+
                 #region Address
                 DrawItemAddress(X, Y, CurrentInfrastructure.InfrastructureAddress, CurrentInfrastructure.InfrastructureAddressNew, true);
 
@@ -3219,6 +4177,24 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 #endregion  PrismID, TPID, LSID etc...
 
+                #region Save button
+                if (IsEditing)
+                {
+                    Button butSaveLatLngObsAndAddress = new Button();
+                    butSaveLatLngObsAndAddress.AutoSize = true;
+                    butSaveLatLngObsAndAddress.Location = new Point(200, Y);
+                    butSaveLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    butSaveLatLngObsAndAddress.Padding = new Padding(5);
+                    butSaveLatLngObsAndAddress.Text = $"Save";
+                    butSaveLatLngObsAndAddress.Click += butSaves_Click;
+
+                    PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                }
+                #endregion Save button
+
                 #region InfrastructureType
                 X = 10;
                 DrawItemEnum(X, Y, CurrentInfrastructure.InfrastructureType, CurrentInfrastructure.InfrastructureTypeNew, "Infrastructure Type", "comboBoxInfrastructureType", typeof(InfrastructureTypeEnum));
@@ -3227,6 +4203,9 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 bool IsWWTP = false;
                 bool IsLS = false;
+                bool IsLineOverflow = false;
+                bool IsOther = false;
+                bool IsSeeOtherMunicipality = false;
                 if (CurrentInfrastructure.InfrastructureTypeNew != null)
                 {
                     if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.WWTP)
@@ -3236,6 +4215,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.LiftStation)
                     {
                         IsLS = true;
+                    }
+                    if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.LineOverflow)
+                    {
+                        IsLineOverflow = true;
+                    }
+                    if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.Other)
+                    {
+                        IsOther = true;
+                    }
+                    if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.SeeOtherMunicipality)
+                    {
+                        IsSeeOtherMunicipality = true;
                     }
                 }
                 else
@@ -3249,6 +4240,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                         if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType == InfrastructureTypeEnum.LiftStation)
                         {
                             IsLS = true;
+                        }
+                        if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType == InfrastructureTypeEnum.LineOverflow)
+                        {
+                            IsLineOverflow = true;
+                        }
+                        if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType == InfrastructureTypeEnum.Other)
+                        {
+                            IsOther = true;
+                        }
+                        if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType == InfrastructureTypeEnum.SeeOtherMunicipality)
+                        {
+                            IsSeeOtherMunicipality = true;
                         }
                     }
                 }
@@ -3292,34 +4295,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 #endregion FacilityType
 
-                if (IsLS || IsWWTP)
-                {
-                    #region PumpsToTVItemID
-                    X = 10;
-                    DrawItemInt(X, Y, CurrentInfrastructure.PumpsToTVItemID, CurrentInfrastructure.PumpsToTVItemIDNew, "Pumps To Infrastructure", "textBoxPumpsToTVItemID");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PumpsToTVItemID
-                }
 
                 if (IsWWTP)
                 {
-                    #region TreatmentType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.TreatmentType, CurrentInfrastructure.TreatmentTypeNew, "Treatment Type", "comboBoxTreatmentType", typeof(TreatmentTypeEnum));
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion TreatmentType
-
                     if (IsLagoon)
                     {
-                        #region IsMechanicallyAerated
-                        X = 10;
-                        DrawItemBool(X, Y, CurrentInfrastructure.IsMechanicallyAerated, CurrentInfrastructure.IsMechanicallyAeratedNew, "Is Mechanically Aerated", "checkBoxIsMechanicallyAerated");
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion IsMechanicallyAerated
-
                         #region NumberOfCells
                         X = 10;
                         DrawItemInt(X, Y, CurrentInfrastructure.NumberOfCells, CurrentInfrastructure.NumberOfCellsNew, "Number Of Cells", "textBoxNumberOfCells");
@@ -3334,16 +4314,63 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                         #endregion NumberOfAeratedCells
 
-                        #region AerationType
+                        #region IsMechanicallyAerated
                         X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum));
+                        DrawItemBool(X, Y, CurrentInfrastructure.IsMechanicallyAerated, CurrentInfrastructure.IsMechanicallyAeratedNew, "Is Mechanically Aerated", "checkBoxIsMechanicallyAerated");
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion AerationType
+                        #endregion IsMechanicallyAerated
+
+
+                        if (CurrentInfrastructure.IsMechanicallyAeratedNew != null)
+                        {
+                            if (CurrentInfrastructure.IsMechanicallyAeratedNew == true)
+                            {
+                                #region AerationType
+                                X = 40;
+                                DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum));
+
+                                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                                #endregion AerationType
+                            }
+                        }
+                        else
+                        {
+                            if (CurrentInfrastructure.IsMechanicallyAerated == true)
+                            {
+                                #region AerationType
+                                X = 40;
+                                DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum));
+
+                                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                                #endregion AerationType
+                            }
+                        }
+
+                        //#region TreatmentType
+                        //X = 10;
+                        //DrawItemEnum(X, Y, CurrentInfrastructure.TreatmentType, CurrentInfrastructure.TreatmentTypeNew, "Treatment Type", "comboBoxTreatmentType", typeof(TreatmentTypeEnum));
+
+                        //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                        //#endregion TreatmentType
+
+                        #region DisinfectionType
+                        X = 10;
+                        DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum));
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                        #endregion DisinfectionType
                     }
 
                     if (IsPlant)
                     {
+                        //#region TreatmentType
+                        //X = 10;
+                        //DrawItemEnum(X, Y, CurrentInfrastructure.TreatmentType, CurrentInfrastructure.TreatmentTypeNew, "Treatment Type", "comboBoxTreatmentType", typeof(TreatmentTypeEnum));
+
+                        //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                        //#endregion TreatmentType
+
                         #region PreliminaryTreatmentType
                         X = 10;
                         DrawItemEnum(X, Y, CurrentInfrastructure.PreliminaryTreatmentType, CurrentInfrastructure.PreliminaryTreatmentTypeNew, "Preliminary Treatment Type", "comboBoxPreliminaryTreatmentType", typeof(PreliminaryTreatmentTypeEnum));
@@ -3372,24 +4399,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                         #endregion TertiaryTreatmentType
 
+                        #region DisinfectionType
+                        X = 10;
+                        DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum));
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                        #endregion DisinfectionType
                     }
-
-                    #region DisinfectionType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum));
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion DisinfectionType
-                }
-
-                if (IsLS || IsWWTP)
-                {
-                    #region CollectionSystemType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.CollectionSystemType, CurrentInfrastructure.CollectionSystemTypeNew, "Collection System Type", "comboBoxCollectionSystemType", typeof(CollectionSystemTypeEnum));
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion CollectionSystemType
 
                     #region AlarmSystemType
                     X = 10;
@@ -3397,27 +4413,31 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion AlarmSystemType
-                }
 
-                if (IsWWTP)
-                {
+                    #region CollectionSystemType
+                    X = 10;
+                    DrawItemEnum(X, Y, CurrentInfrastructure.CollectionSystemType, CurrentInfrastructure.CollectionSystemTypeNew, "Collection System Type", "comboBoxCollectionSystemType", typeof(CollectionSystemTypeEnum));
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion CollectionSystemType
+
                     #region DesignFlow_m3_day
                     X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.DesignFlow_m3_day, CurrentInfrastructure.DesignFlow_m3_dayNew, "Design Flow (m3/day)", 5, "textBoxDesignFlow_m3_day");
+                    DrawItemFloat(X, Y, CurrentInfrastructure.DesignFlow_m3_day, CurrentInfrastructure.DesignFlow_m3_dayNew, "Design Flow (m3/day)", 0, "textBoxDesignFlow_m3_day");
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion DesignFlow_m3_day
 
                     #region AverageFlow_m3_day
                     X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.AverageFlow_m3_day, CurrentInfrastructure.AverageFlow_m3_dayNew, "Average Flow (m3/day)", 5, "textBoxAverageFlow_m3_day");
+                    DrawItemFloat(X, Y, CurrentInfrastructure.AverageFlow_m3_day, CurrentInfrastructure.AverageFlow_m3_dayNew, "Average Flow (m3/day)", 0, "textBoxAverageFlow_m3_day");
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion AverageFlow_m3_day
 
                     #region PeakFlow_m3_day
                     X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PeakFlow_m3_day, CurrentInfrastructure.PeakFlow_m3_dayNew, "Peak Flow (m3/day)", 5, "textBoxPeakFlow_m3_day");
+                    DrawItemFloat(X, Y, CurrentInfrastructure.PeakFlow_m3_day, CurrentInfrastructure.PeakFlow_m3_dayNew, "Peak Flow (m3/day)", 0, "textBoxPeakFlow_m3_day");
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion PeakFlow_m3_day
@@ -3428,10 +4448,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion PopServed
-                }
 
-                if (IsLS || IsWWTP)
-                {
                     #region CanOverflow
                     X = 10;
                     DrawItemBool(X, Y, CurrentInfrastructure.CanOverflow, CurrentInfrastructure.CanOverflowNew, "Can Overflow", "checkBoxCanOverflow");
@@ -3441,10 +4458,64 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     #region PercFlowOfTotal
                     X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PercFlowOfTotal, CurrentInfrastructure.PercFlowOfTotalNew, "Percentage Flow Of Total", 5, "textBoxPercFlowOfTotal");
+                    DrawItemFloat(X, Y, CurrentInfrastructure.PercFlowOfTotal, CurrentInfrastructure.PercFlowOfTotalNew, "Percentage Flow Of Total", 1, "textBoxPercFlowOfTotal");
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion PercFlowOfTotal
+
+                    #region PumpsToTVItemID
+                    X = 10;
+                    DrawItemInt(X, Y, CurrentInfrastructure.PumpsToTVItemID, CurrentInfrastructure.PumpsToTVItemIDNew, "Pumps To Infrastructure", "textBoxPumpsToTVItemID");
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion PumpsToTVItemID
+                }
+
+                if (IsLS || IsLineOverflow)
+                {
+                    #region AlarmSystemType
+                    X = 10;
+                    DrawItemEnum(X, Y, CurrentInfrastructure.AlarmSystemType, CurrentInfrastructure.AlarmSystemTypeNew, "Alarm System Type", "comboBoxAlarmSystemType", typeof(AlarmSystemTypeEnum));
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion AlarmSystemType
+
+                    #region CanOverflow
+                    X = 10;
+                    DrawItemBool(X, Y, CurrentInfrastructure.CanOverflow, CurrentInfrastructure.CanOverflowNew, "Can Overflow", "checkBoxCanOverflow");
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion CanOverflow
+
+                    #region PercFlowOfTotal
+                    X = 10;
+                    DrawItemFloat(X, Y, CurrentInfrastructure.PercFlowOfTotal, CurrentInfrastructure.PercFlowOfTotalNew, "Percentage Flow Of Total", 1, "textBoxPercFlowOfTotal");
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion PercFlowOfTotal
+
+                    #region PumpsToTVItemID
+                    X = 10;
+                    DrawItemInt(X, Y, CurrentInfrastructure.PumpsToTVItemID, CurrentInfrastructure.PumpsToTVItemIDNew, "Pumps To Infrastructure", "textBoxPumpsToTVItemID");
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion PumpsToTVItemID
+                }
+
+                if (IsOther)
+                {
+                    // nothing to draw
+                }
+
+                if (IsSeeOtherMunicipality)
+                {
+                    #region List Municipalities
+                    X = 10;
+                    DrawSeeOtherMunicipality(X, Y, "comboBoxSeeOtherMunicipality");
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion List Municipalities
+
                 }
 
                 #region Comment
@@ -3454,12 +4525,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 #endregion Comment
 
-
                 if (false)
                 {
                     #region TimeOffset_hour
                     X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.TimeOffset_hour, CurrentInfrastructure.TimeOffset_hourNew, "Time Offset (hour)", 5, "textBoxTimeOffset_hour");
+                    DrawItemFloat(X, Y, CurrentInfrastructure.TimeOffset_hour, CurrentInfrastructure.TimeOffset_hourNew, "Time Offset (hour)", 1, "textBoxTimeOffset_hour");
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion TimeOffset_hour
@@ -3474,6 +4544,24 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (IsLS || IsWWTP)
                 {
+                    #region Save button
+                    if (IsEditing)
+                    {
+                        Button butSaveLatLngObsAndAddress = new Button();
+                        butSaveLatLngObsAndAddress.AutoSize = true;
+                        butSaveLatLngObsAndAddress.Location = new Point(200, Y);
+                        butSaveLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butSaveLatLngObsAndAddress.Padding = new Padding(5);
+                        butSaveLatLngObsAndAddress.Text = $"Save";
+                        butSaveLatLngObsAndAddress.Click += butSaves_Click;
+
+                        PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                    }
+                    #endregion Save button
+
                     #region Optional values for Visual Plumes and Box Model 
                     Label lblOptional = new Label();
                     lblOptional.AutoSize = true;
@@ -3626,7 +4714,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     butSaveLatLngObsAndAddress.Padding = new Padding(5);
                     butSaveLatLngObsAndAddress.Text = $"Save";
-                    butSaveLatLngObsAndAddress.Click += butSaveLatLngAndObsAndAddress_Click;
+                    butSaveLatLngObsAndAddress.Click += butSaves_Click;
 
                     PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
 
@@ -3684,7 +4772,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || CurrentInfrastructure.NumberOfAeratedCellsNew != null
                             || CurrentInfrastructure.NumberOfCellsNew != null
                             || CurrentInfrastructure.NumberOfPortsNew != null
-                            || CurrentInfrastructure.PathCoordListNew != null
+                            //|| CurrentInfrastructure.PathCoordListNew != null
                             || CurrentInfrastructure.PeakFlow_m3_dayNew != null
                             || CurrentInfrastructure.PercFlowOfTotalNew != null
                             || CurrentInfrastructure.PopServedNew != null
@@ -4060,7 +5148,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     butSaveLatLngObsAndAddress.Padding = new Padding(5);
                     butSaveLatLngObsAndAddress.Text = $"Save";
-                    butSaveLatLngObsAndAddress.Click += butSaveLatLngAndObsAndAddress_Click;
+                    butSaveLatLngObsAndAddress.Click += butSaves_Click;
 
                     PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
 
@@ -4244,7 +5332,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.LatNew = null;
                                 tb.Text = CurrentInfrastructure.Lat.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Latitute"));
                             }
                         }
                         break;
@@ -4268,7 +5356,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.LatOutfallNew = null;
                                 tb.Text = CurrentInfrastructure.LatOutfall.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for LatOutfall"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Latitude Outfall"));
                             }
                         }
                         break;
@@ -4292,7 +5380,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.LngNew = null;
                                 tb.Text = CurrentInfrastructure.Lng.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Longitude"));
                             }
                         }
                         break;
@@ -4316,7 +5404,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.LngOutfallNew = null;
                                 tb.Text = CurrentInfrastructure.LngOutfall.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Longitude Outfall"));
                             }
                         }
                         break;
@@ -4428,7 +5516,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.PrismIDNew = null;
                                 tb.Text = CurrentInfrastructure.PrismID.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for PrismID"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Prism ID"));
                             }
                         }
                         break;
@@ -4556,7 +5644,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(InfrastructureTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(InfrastructureTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4588,7 +5676,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(FacilityTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(FacilityTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4618,7 +5706,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     if (CurrentInfrastructure.IsMechanicallyAerated == CurrentInfrastructure.IsMechanicallyAeratedNew)
                                     {
-                                        CurrentInfrastructure.IsMechanicallyAeratedNew = null;
+                                        CurrentInfrastructure.IsMechanicallyAeratedNew = true;
                                     }
                                     else
                                     {
@@ -4629,7 +5717,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     if (CurrentInfrastructure.IsMechanicallyAerated == CurrentInfrastructure.IsMechanicallyAeratedNew)
                                     {
-                                        CurrentInfrastructure.IsMechanicallyAeratedNew = null;
+                                        CurrentInfrastructure.IsMechanicallyAeratedNew = false;
                                     }
                                     else
                                     {
@@ -4650,7 +5738,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(AerationTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(AerationTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4682,7 +5770,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(PreliminaryTreatmentTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(PreliminaryTreatmentTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4714,7 +5802,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(PrimaryTreatmentTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(PrimaryTreatmentTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4746,7 +5834,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4778,7 +5866,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(TertiaryTreatmentTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(TertiaryTreatmentTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4810,7 +5898,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(TreatmentTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(TreatmentTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4842,7 +5930,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(DisinfectionTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(DisinfectionTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4874,7 +5962,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(CollectionSystemTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(CollectionSystemTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4906,7 +5994,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    for (int i = 1, count = Enum.GetNames(typeof(AlarmSystemTypeEnum)).Count(); i < count; i++)
+                                    for (int i = 0, count = Enum.GetNames(typeof(AlarmSystemTypeEnum)).Count(); i < count; i++)
                                     {
                                         if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
                                         {
@@ -4947,7 +6035,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.DesignFlow_m3_dayNew = null;
                                 tb.Text = CurrentInfrastructure.DesignFlow_m3_day.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Design Flow (m3/d)"));
                             }
                         }
                         break;
@@ -4971,7 +6059,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.AverageFlow_m3_dayNew = null;
                                 tb.Text = CurrentInfrastructure.AverageFlow_m3_day.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Average Flow (m3/d)"));
                             }
                         }
                         break;
@@ -4995,7 +6083,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.PeakFlow_m3_dayNew = null;
                                 tb.Text = CurrentInfrastructure.PeakFlow_m3_day.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Peik Flow (m3/d)"));
                             }
                         }
                         break;
@@ -5019,7 +6107,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.PopServedNew = null;
                                 tb.Text = CurrentInfrastructure.PopServed.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Population Served"));
                             }
                         }
                         break;
@@ -5032,7 +6120,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     if (CurrentInfrastructure.CanOverflow == CurrentInfrastructure.CanOverflowNew)
                                     {
-                                        CurrentInfrastructure.CanOverflowNew = null;
+                                        CurrentInfrastructure.CanOverflowNew = true;
                                     }
                                     else
                                     {
@@ -5043,7 +6131,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     if (CurrentInfrastructure.CanOverflow == CurrentInfrastructure.CanOverflowNew)
                                     {
-                                        CurrentInfrastructure.CanOverflowNew = null;
+                                        CurrentInfrastructure.CanOverflowNew = false;
                                     }
                                     else
                                     {
@@ -5053,30 +6141,30 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    case "textBoxCanOverflow":
-                        {
-                            TextBox tb = (TextBox)control;
+                    //case "textBoxCanOverflow":
+                    //    {
+                    //        TextBox tb = (TextBox)control;
 
-                            if (bool.TryParse(tb.Text, out bool TempBool))
-                            {
-                                if (TempBool == CurrentInfrastructure.CanOverflow)
-                                {
-                                    CurrentInfrastructure.CanOverflowNew = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.CanOverflowNew = TempBool;
-                                    IsDirty = true;
-                                }
-                            }
-                            else
-                            {
-                                CurrentInfrastructure.CanOverflowNew = null;
-                                tb.Text = CurrentInfrastructure.CanOverflow.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
-                            }
-                        }
-                        break;
+                    //        if (bool.TryParse(tb.Text, out bool TempBool))
+                    //        {
+                    //            if (TempBool == CurrentInfrastructure.CanOverflow)
+                    //            {
+                    //                CurrentInfrastructure.CanOverflowNew = null;
+                    //            }
+                    //            else
+                    //            {
+                    //                CurrentInfrastructure.CanOverflowNew = TempBool;
+                    //                IsDirty = true;
+                    //            }
+                    //        }
+                    //        else
+                    //        {
+                    //            CurrentInfrastructure.CanOverflowNew = null;
+                    //            tb.Text = CurrentInfrastructure.CanOverflow.ToString();
+                    //            EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                    //        }
+                    //    }
+                    //    break;
                     case "textBoxPercFlowOfTotal":
                         {
                             TextBox tb = (TextBox)control;
@@ -5097,7 +6185,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.PercFlowOfTotalNew = null;
                                 tb.Text = CurrentInfrastructure.PercFlowOfTotal.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Percent Flow of Total"));
                             }
                         }
                         break;
@@ -5121,7 +6209,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.TimeOffset_hourNew = null;
                                 tb.Text = CurrentInfrastructure.TimeOffset_hour.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Time Offset (hour)"));
                             }
                         }
                         break;
@@ -5162,7 +6250,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.AverageDepth_mNew = null;
                                 tb.Text = CurrentInfrastructure.AverageDepth_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Average Depth (m)"));
                             }
                         }
                         break;
@@ -5186,7 +6274,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.NumberOfPortsNew = null;
                                 tb.Text = CurrentInfrastructure.NumberOfPorts.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Number of Ports"));
                             }
                         }
                         break;
@@ -5210,7 +6298,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.PortDiameter_mNew = null;
                                 tb.Text = CurrentInfrastructure.PortDiameter_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Port Diameter (m)"));
                             }
                         }
                         break;
@@ -5234,7 +6322,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.PortSpacing_mNew = null;
                                 tb.Text = CurrentInfrastructure.PortSpacing_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Port Spacing (m)"));
                             }
                         }
                         break;
@@ -5258,7 +6346,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.PortElevation_mNew = null;
                                 tb.Text = CurrentInfrastructure.PortElevation_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Port Elevation (m)"));
                             }
                         }
                         break;
@@ -5282,7 +6370,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.VerticalAngle_degNew = null;
                                 tb.Text = CurrentInfrastructure.VerticalAngle_deg.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Vertical Angle (deg)"));
                             }
                         }
                         break;
@@ -5306,7 +6394,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.HorizontalAngle_degNew = null;
                                 tb.Text = CurrentInfrastructure.HorizontalAngle_deg.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Horizontal Angle (deg)"));
                             }
                         }
                         break;
@@ -5330,7 +6418,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.DecayRate_per_dayNew = null;
                                 tb.Text = CurrentInfrastructure.DecayRate_per_day.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Decay Rate (/d)"));
                             }
                         }
                         break;
@@ -5354,7 +6442,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.NearFieldVelocity_m_sNew = null;
                                 tb.Text = CurrentInfrastructure.NearFieldVelocity_m_s.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Near Field Velocity (m/s)"));
                             }
                         }
                         break;
@@ -5378,7 +6466,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.FarFieldVelocity_m_sNew = null;
                                 tb.Text = CurrentInfrastructure.FarFieldVelocity_m_s.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Far Field Velocity (m/s)"));
                             }
                         }
                         break;
@@ -5402,7 +6490,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.ReceivingWaterSalinity_PSUNew = null;
                                 tb.Text = CurrentInfrastructure.ReceivingWaterSalinity_PSU.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Receiving Water Salinity (PSU)"));
                             }
                         }
                         break;
@@ -5426,7 +6514,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.ReceivingWaterTemperature_CNew = null;
                                 tb.Text = CurrentInfrastructure.ReceivingWaterTemperature_C.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Receiving Water Temperature (˚C)"));
                             }
                         }
                         break;
@@ -5450,7 +6538,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew = null;
                                 tb.Text = CurrentInfrastructure.ReceivingWater_MPN_per_100ml.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Receiving Water (MPN / 100 mL)"));
                             }
                         }
                         break;
@@ -5474,34 +6562,34 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.DistanceFromShore_mNew = null;
                                 tb.Text = CurrentInfrastructure.DistanceFromShore_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Distance from Shore (m)"));
                             }
                         }
                         break;
-                    case "textBoxSeeOtherMunicipalityTVItemID":
-                        {
-                            TextBox tb = (TextBox)control;
+                    //case "textBoxSeeOtherMunicipalityTVItemID":
+                    //    {
+                    //        TextBox tb = (TextBox)control;
 
-                            if (int.TryParse(tb.Text, out int TempInt))
-                            {
-                                if (TempInt == CurrentInfrastructure.SeeOtherMunicipalityTVItemID)
-                                {
-                                    CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = TempInt;
-                                    IsDirty = true;
-                                }
-                            }
-                            else
-                            {
-                                CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
-                                tb.Text = CurrentInfrastructure.SeeOtherMunicipalityTVItemID.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
-                            }
-                        }
-                        break;
+                    //        if (int.TryParse(tb.Text, out int TempInt))
+                    //        {
+                    //            if (TempInt == CurrentInfrastructure.SeeOtherMunicipalityTVItemID)
+                    //            {
+                    //                CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
+                    //            }
+                    //            else
+                    //            {
+                    //                CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = TempInt;
+                    //                IsDirty = true;
+                    //            }
+                    //        }
+                    //        else
+                    //        {
+                    //            CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
+                    //            tb.Text = CurrentInfrastructure.SeeOtherMunicipalityTVItemID.ToString();
+                    //            EmitStatus(new StatusEventArgs("Please enter a valid number for See Other Municipality TVItemID"));
+                    //        }
+                    //    }
+                    //    break;
                     case "textBoxPumpsToTVItemID":
                         {
                             TextBox tb = (TextBox)control;
@@ -5514,15 +6602,58 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.PumpsToTVItemIDNew = TempInt;
-                                    IsDirty = true;
+                                    if (CurrentInfrastructure.InfrastructureTVItemID == TempInt)
+                                    {
+                                        MessageBox.Show("Cannot pump to itself", "Erorr");
+                                        return;
+                                    }
+                                    else
+                                    {
+                                        bool Exist = false;
+                                        foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
+                                        {
+                                            if (infrastructure.InfrastructureTVItemID == TempInt)
+                                            {
+                                                Exist = true;
+                                            }
+                                        }
+
+                                        if (!Exist)
+                                        {
+                                            MessageBox.Show("Cannot find the WWTP or LS that it is suppose to pump to", "Erorr");
+                                            return;
+                                        }
+
+                                        foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
+                                        {
+                                            foreach (Infrastructure infrastructure2 in municipalityDoc.Municipality.InfrastructureList)
+                                            {
+                                                if (infrastructure2.PumpsToTVItemID == infrastructure.InfrastructureTVItemID)
+                                                {
+                                                    infrastructure.PumpsFromTVItemIDList.Add(infrastructure2.InfrastructureTVItemID);
+                                                }
+                                            }
+                                        }
+
+                                        IsTryingToMoveUnderItself = false;
+                                        GetFromTVItemID(CurrentInfrastructure, TempInt);
+
+                                        if (IsTryingToMoveUnderItself)
+                                        {
+                                            MessageBox.Show("Cannot pump under itself", "Erorr");
+                                            return;
+                                        }
+
+                                        CurrentInfrastructure.PumpsToTVItemIDNew = TempInt;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.PumpsToTVItemIDNew = null;
                                 tb.Text = CurrentInfrastructure.PumpsToTVItemID.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                EmitStatus(new StatusEventArgs("Please enter a valid number for Pumps to Infrastructure ID"));
                             }
                         }
                         break;
@@ -5534,6 +6665,26 @@ namespace CSSPPolSourceSiteInputToolHelper
             SaveMunicipalityTextFile();
 
         }
+
+        private void GetFromTVItemID(Infrastructure currentInfrastructure, int OriginalTVItemID)
+        {
+            foreach (int FromTVItemID in currentInfrastructure.PumpsFromTVItemIDList)
+            {
+                if (FromTVItemID == OriginalTVItemID)
+                {
+                    IsTryingToMoveUnderItself = true;
+                }
+                foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
+                {
+                    if (infrastructure.InfrastructureTVItemID == FromTVItemID)
+                    {
+                        GetFromTVItemID(infrastructure, OriginalTVItemID);
+                    }
+                }
+
+            }
+        }
+
         public void SavePolSourceSiteInfo()
         {
             foreach (Control control in PanelViewAndEdit.Controls)
@@ -5811,6 +6962,46 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
             }
+        }
+        private string SaveToCSSPWebToolsCreateNewInfrastucture(int InfrastructureTVItemID, int TVItemID, string TVText, int SiteNumber, float Lat, float Lng, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("InfrastructureTVItemID", InfrastructureTVItemID.ToString());
+                paramList.Add("TVItemID", TVItemID.ToString());
+                paramList.Add("TVText", TVText);
+                paramList.Add("SiteNumber", SiteNumber.ToString());
+                paramList.Add("Lat", Lat.ToString());
+                paramList.Add("Lng", Lng.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}CreateNewInfrastructureJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}CreateNewInfrastructureJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+
         }
         private string SaveToCSSPWebToolsCreateNewPSS(int SubsectorTVItemID, int TVItemID, string TVText, int SiteNumber, float Lat, float Lng, string AdminEmail)
         {

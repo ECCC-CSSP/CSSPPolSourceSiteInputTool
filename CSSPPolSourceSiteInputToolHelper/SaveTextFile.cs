@@ -21,7 +21,16 @@ namespace CSSPPolSourceSiteInputToolHelper
             sb.AppendLine($"VERSION\t{municipalityDoc.Version}\t");
             sb.AppendLine($"DOCDATE\t{((DateTime)municipalityDoc.DocDate).Year}|{((DateTime)municipalityDoc.DocDate).Month.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Day.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Hour.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Minute.ToString("0#")}|{((DateTime)municipalityDoc.DocDate).Second.ToString("0#")}\t");
 
-            sb.AppendLine($"PROVINCETVITEMID\t{ subsectorDoc.ProvinceTVItemID }");
+            List<MunicipalityIDNumber> municipalityIDNumberList = municipalityDoc.MunicipalityIDNumberList;
+
+            string MunicipalityListText = "";
+            foreach (MunicipalityIDNumber municipalityIDNumber in municipalityIDNumberList)
+            {
+                MunicipalityListText = MunicipalityListText + municipalityIDNumber.Municipality.Replace("\t", "_").Replace("|", "_").Replace("[", "_").Replace("]", "_") + "[" + municipalityIDNumber.IDNumber + "]" + "|";
+            }
+
+            sb.AppendLine($"PROVINCETVITEMID\t{ municipalityDoc.ProvinceTVItemID }");
+            sb.AppendLine($"PROVINCEMUNICIPALITIES\t{ MunicipalityListText }");
 
             sb.AppendLine($"MUNICIPALITY\t{municipalityDoc.Municipality.MunicipalityTVItemID}\t{municipalityDoc.Municipality.MunicipalityName}\t");
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
@@ -64,11 +73,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                 if (infrastructure.IsActiveNew != null)
                 {
                     sb.AppendLine($"ISACTIVENEW\t{(((bool)infrastructure.IsActiveNew) ? "true" : "false")}\t");
-                }
-                sb.AppendLine($"TVTEXT\t{infrastructure.TVText}\t");
-                if (!string.IsNullOrWhiteSpace(infrastructure.TVTextNew))
-                {
-                    sb.AppendLine($"TVTEXTNEW\t{infrastructure.TVTextNew}\t");
                 }
                 string Comment = string.IsNullOrWhiteSpace(infrastructure.Comment) ? "" : infrastructure.Comment.Replace("\r\n", "|||");
                 sb.AppendLine($"COMMENT\t{Comment}\t");
@@ -334,11 +338,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                     sb.AppendLine($"DISTANCEFROMSHORE_MNEW\t{DistanceFromShore_mNew}\t");
                 }
                 string SeeOtherMunicipalityTVItemID = infrastructure.SeeOtherMunicipalityTVItemID != null ? ((int)infrastructure.SeeOtherMunicipalityTVItemID).ToString() : "";
-                sb.AppendLine($"SEEOTHERMUNICIPALITYTVITEMID\t{SeeOtherMunicipalityTVItemID}\t");
+                string SeeOtherMunicipalityText = infrastructure.SeeOtherMunicipalityText != null ? infrastructure.SeeOtherMunicipalityText : "";
+                sb.AppendLine($"SEEOTHERMUNICIPALITY\t{SeeOtherMunicipalityTVItemID}\t{SeeOtherMunicipalityText}\t");
                 if (infrastructure.SeeOtherMunicipalityTVItemIDNew != null)
                 {
                     string SeeOtherMunicipalityTVItemIDNew = infrastructure.SeeOtherMunicipalityTVItemIDNew != null ? ((float)infrastructure.SeeOtherMunicipalityTVItemIDNew).ToString() : "";
-                    sb.AppendLine($"SEEOTHERMUNICIPALITYTVITEMIDNEW\t{SeeOtherMunicipalityTVItemIDNew}\t");
+                    string SeeOtherMunicipalityTextNew = infrastructure.SeeOtherMunicipalityTextNew != null ? infrastructure.SeeOtherMunicipalityTextNew : "";
+                    sb.AppendLine($"SEEOTHERMUNICIPALITYNEW\t{SeeOtherMunicipalityTVItemIDNew}\t{SeeOtherMunicipalityTextNew}\t");
                 }
                 string PumpsToTVItemID = infrastructure.PumpsToTVItemID != null ? ((int)infrastructure.PumpsToTVItemID).ToString() : "";
                 sb.AppendLine($"PUMPSTOTVITEMID\t{PumpsToTVItemID}\t");
@@ -347,21 +353,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string PumpsToTVItemIDNew = infrastructure.PumpsToTVItemIDNew != null ? ((double)infrastructure.PumpsToTVItemIDNew).ToString("F0") : "";
                     sb.AppendLine($"PUMPSTOTVITEMIDNEW\t{PumpsToTVItemIDNew}\t");
                 }
-                string PathCoordList = "";
-                foreach (Coord coord in infrastructure.PathCoordList)
-                {
-                    PathCoordList = PathCoordList + ((float)coord.Lat).ToString("F5") + "|" + ((float)coord.Lng).ToString("F5") + " ";
-                }
-                sb.AppendLine($"PATHCOORDLIST\t{PathCoordList}\t");
-                if (infrastructure.PathCoordListNew.Count > 0)
-                {
-                    string PathCoordListNew = "";
-                    foreach (Coord coord in infrastructure.PathCoordListNew)
-                    {
-                        PathCoordListNew = PathCoordListNew + ((float)coord.Lat).ToString("F5") + "|" + ((float)coord.Lng).ToString("F5") + " ";
-                    }
-                    sb.AppendLine($"PATHCOORDLISTNEW\t{PathCoordListNew}\t");
-                }
+                //string PathCoordList = "";
+                //foreach (Coord coord in infrastructure.PathCoordList)
+                //{
+                //    PathCoordList = PathCoordList + ((float)coord.Lat).ToString("F5") + "|" + ((float)coord.Lng).ToString("F5") + " ";
+                //}
+                //sb.AppendLine($"PATHCOORDLIST\t{PathCoordList}\t");
+                //if (infrastructure.PathCoordListNew.Count > 0)
+                //{
+                //    string PathCoordListNew = "";
+                //    foreach (Coord coord in infrastructure.PathCoordListNew)
+                //    {
+                //        PathCoordListNew = PathCoordListNew + ((float)coord.Lat).ToString("F5") + "|" + ((float)coord.Lng).ToString("F5") + " ";
+                //    }
+                //    sb.AppendLine($"PATHCOORDLISTNEW\t{PathCoordListNew}\t");
+                //}
 
                 if (infrastructure.InfrastructureAddress != null)
                 {

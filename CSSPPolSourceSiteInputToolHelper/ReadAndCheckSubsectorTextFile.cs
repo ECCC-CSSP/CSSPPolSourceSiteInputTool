@@ -387,6 +387,48 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "PROVINCEMUNICIPALITIES":
+                        {
+                            try
+                            {
+                                List<MunicipalityIDNumber> MunicipalityAndIDList = new List<MunicipalityIDNumber>();
+                                string TempStr = LineTxt.Substring("PROVINCEMUNICIPALITIES\t".Length).Trim();
+                                List<string> MunicipalityAndIDTextList = TempStr.Split("|".ToCharArray(), StringSplitOptions.None).Select(c => c.Trim()).ToList();
+                                foreach (string s in MunicipalityAndIDTextList)
+                                {
+                                    if (string.IsNullOrWhiteSpace(s.Trim()))
+                                    {
+                                        continue;
+                                    }
+                                    string Municipality = s.Substring(0, s.IndexOf("[")).Trim();
+                                    if (string.IsNullOrWhiteSpace(Municipality))
+                                    {
+                                        EmitStatus(new StatusEventArgs($"Could not read and parse { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                        return false;
+                                    }
+                                    string IDNumber = s.Substring(s.IndexOf("[") + 1);
+                                    if (string.IsNullOrWhiteSpace(IDNumber))
+                                    {
+                                        EmitStatus(new StatusEventArgs($"Could not read and parse { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                        return false;
+                                    }
+                                    IDNumber = IDNumber.Replace("]", "");
+                                    if (string.IsNullOrWhiteSpace(IDNumber))
+                                    {
+                                        EmitStatus(new StatusEventArgs($"Could not read and parse { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                        return false;
+                                    }
+                                    MunicipalityAndIDList.Add(new MunicipalityIDNumber() { Municipality = Municipality, IDNumber = IDNumber });
+                                }
+                                municipalityDoc.MunicipalityIDNumberList = MunicipalityAndIDList;
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
                     case "MUNICIPALITY":
                         {
                             try
@@ -2469,7 +2511,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    case "SEEOTHERMUNICIPALITYTVITEMID":
+                    case "SEEOTHERMUNICIPALITY":
                         {
                             try
                             {
@@ -2483,6 +2525,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     lastInfrastructure.SeeOtherMunicipalityTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
                                 }
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
+                                    lastInfrastructure.SeeOtherMunicipalityText = "";
+                                }
+                                else
+                                {
+                                    lastInfrastructure.SeeOtherMunicipalityText = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                }
                             }
                             catch (Exception)
                             {
@@ -2491,7 +2542,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    case "SEEOTHERMUNICIPALITYTVITEMIDNEW":
+                    case "SEEOTHERMUNICIPALITYNEW":
                         {
                             try
                             {
@@ -2504,6 +2555,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     lastInfrastructure.SeeOtherMunicipalityTVItemIDNew = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
+                                    lastInfrastructure.SeeOtherMunicipalityTextNew = "";
+                                }
+                                else
+                                {
+                                    lastInfrastructure.SeeOtherMunicipalityTextNew = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 }
                             }
                             catch (Exception)
@@ -2759,70 +2819,70 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    case "PATHCOORDLIST":
-                        {
-                            try
-                            {
-                                Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
+                    //case "PATHCOORDLIST":
+                    //    {
+                    //        try
+                    //        {
+                    //            Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
 
-                                string tempPath = LineTxt.Substring(pos + 1, pos2 - pos - 1);
-                                List<string> pathListTextList = tempPath.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                                foreach (string s in pathListTextList)
-                                {
-                                    List<string> pathValueText = s.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+                    //            string tempPath = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                    //            List<string> pathListTextList = tempPath.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+                    //            foreach (string s in pathListTextList)
+                    //            {
+                    //                List<string> pathValueText = s.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                                    if (pathValueText.Count != 2)
-                                    {
-                                        EmitStatus(new StatusEventArgs($"Path coord does not have 2 values { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
-                                        return false;
-                                    }
+                    //                if (pathValueText.Count != 2)
+                    //                {
+                    //                    EmitStatus(new StatusEventArgs($"Path coord does not have 2 values { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                    //                    return false;
+                    //                }
 
-                                    Coord coord = new Coord();
-                                    coord.Lat = float.Parse(pathValueText[0]);
-                                    coord.Lng = float.Parse(pathValueText[1]);
+                    //                Coord coord = new Coord();
+                    //                coord.Lat = float.Parse(pathValueText[0]);
+                    //                coord.Lng = float.Parse(pathValueText[1]);
 
-                                    lastInfrastructure.PathCoordList.Add(coord);
-                                }
-                            }
-                            catch (Exception)
-                            {
-                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
-                                return false;
-                            }
-                        }
-                        break;
-                    case "PATHCOORDLISTNEW":
-                        {
-                            try
-                            {
-                                Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
+                    //                lastInfrastructure.PathCoordList.Add(coord);
+                    //            }
+                    //        }
+                    //        catch (Exception)
+                    //        {
+                    //            EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                    //            return false;
+                    //        }
+                    //    }
+                    //    break;
+                    //case "PATHCOORDLISTNEW":
+                    //    {
+                    //        try
+                    //        {
+                    //            Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
 
-                                string tempPath = LineTxt.Substring(pos + 1, pos2 - pos - 1);
-                                List<string> pathListTextList = tempPath.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                                foreach (string s in pathListTextList)
-                                {
-                                    List<string> pathValueText = s.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+                    //            string tempPath = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                    //            List<string> pathListTextList = tempPath.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+                    //            foreach (string s in pathListTextList)
+                    //            {
+                    //                List<string> pathValueText = s.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                                    if (pathValueText.Count != 2)
-                                    {
-                                        EmitStatus(new StatusEventArgs($"Path coord does not have 2 values { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
-                                        return false;
-                                    }
+                    //                if (pathValueText.Count != 2)
+                    //                {
+                    //                    EmitStatus(new StatusEventArgs($"Path coord does not have 2 values { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                    //                    return false;
+                    //                }
 
-                                    Coord coord = new Coord();
-                                    coord.Lat = float.Parse(pathValueText[0]);
-                                    coord.Lng = float.Parse(pathValueText[1]);
+                    //                Coord coord = new Coord();
+                    //                coord.Lat = float.Parse(pathValueText[0]);
+                    //                coord.Lng = float.Parse(pathValueText[1]);
 
-                                    lastInfrastructure.PathCoordList.Add(coord);
-                                }
-                            }
-                            catch (Exception)
-                            {
-                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
-                                return false;
-                            }
-                        }
-                        break;
+                    //                lastInfrastructure.PathCoordList.Add(coord);
+                    //            }
+                    //        }
+                    //        catch (Exception)
+                    //        {
+                    //            EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                    //            return false;
+                    //        }
+                    //    }
+                    //    break;
                     default:
                         {
                             string lineTxt = LineTxt.Substring(0, LineTxt.IndexOf("\t"));

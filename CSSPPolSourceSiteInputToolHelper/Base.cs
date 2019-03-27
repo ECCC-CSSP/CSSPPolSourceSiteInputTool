@@ -64,6 +64,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         //public bool AutoCreateMunicipality = false;
         public string InitialDirectorySubsectorPictures = $@"C:\";
         public string InitialDirectoryInfrastructurePictures = $@"C:\";
+        public bool IsTryingToMoveUnderItself = false;
         #endregion Variables
 
         #region Properties
@@ -211,6 +212,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             UpdatePolSourceSitePanelColor();
             IsReading = false;
+
+            PanelViewAndEdit.Focus();
         }
         public void ReDrawPolSourceSite()
         {

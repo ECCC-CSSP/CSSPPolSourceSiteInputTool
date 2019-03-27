@@ -55,7 +55,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (fiGE.Exists)
                 {
-                    Process.Start(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe", fi.FullName);
+                    Process.Start(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe", @"""" + fi.FullName + @"""");
                 }
                 else
                 {

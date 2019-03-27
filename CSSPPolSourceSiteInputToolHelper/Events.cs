@@ -219,26 +219,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
-                string MunicipalitiesText = "";
-                if (CurrentInfrastructure.InfrastructureAddressNew != null)
-                {
-                    if (!string.IsNullOrWhiteSpace(CurrentInfrastructure.InfrastructureAddressNew.Municipality))
-                    {
-                        MunicipalitiesText = CurrentInfrastructure.InfrastructureAddressNew.Municipality;
-                    }
-                }
-                if (CurrentInfrastructure.InfrastructureAddress != null)
-                {
-                    if (!string.IsNullOrWhiteSpace(CurrentInfrastructure.InfrastructureAddress.Municipality))
-                    {
-                        MunicipalitiesText = CurrentInfrastructure.InfrastructureAddress.Municipality;
-                    }
-                }
-
-                if (DialogResult.OK == MessageBox.Show($"The municipality\r\n\r\n {MunicipalitiesText}\r\n\r\n will be created in CSSPWebTools", "Warning: Will Create municipality", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
-                {
-                    InfrastructureSaveToCSSPWebTools();
-                }
+                InfrastructureSaveToCSSPWebTools();
             }
         }
         private void butSaveAllToCSSPWebTools_Click(object sender, EventArgs e)
@@ -330,7 +311,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
             UnRemovePicture(PictureTVItemID);
         }
-        private void butSaveLatLngAndObsAndAddress_Click(object sender, EventArgs e)
+        private void butSaves_Click(object sender, EventArgs e)
         {
             if (IsPolSourceSite)
             {
@@ -449,6 +430,29 @@ namespace CSSPPolSourceSiteInputToolHelper
         //}
         private void SaveAndRedraw(object sender, EventArgs e)
         {
+            if (!IsReading)
+            {
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+            }
+        }
+        private void SeeOtherMunicipalityChanged(object sender, EventArgs e)
+        {
+            MunicipalityIDNumber selectedMunicipalityIDNumber = ((MunicipalityIDNumber)((ComboBox)sender).SelectedItem);
+            foreach (MunicipalityIDNumber municipalityIDNumber in municipalityDoc.MunicipalityIDNumberList)
+            {
+                if (municipalityIDNumber.IDNumber == selectedMunicipalityIDNumber.IDNumber)
+                {
+                    if (int.TryParse(municipalityIDNumber.IDNumber, out int MunicipalityTVItemID))
+                    {
+                        CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = MunicipalityTVItemID;
+                        CurrentInfrastructure.SeeOtherMunicipalityTextNew = municipalityIDNumber.Municipality;
+                    }
+
+                }
+            }
             if (!IsReading)
             {
                 SaveInfrastructureInfo();
