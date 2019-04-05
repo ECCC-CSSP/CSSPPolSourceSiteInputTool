@@ -819,23 +819,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                             for (int i = 0, count = Enum.GetNames(typeof(InfrastructureTypeEnum)).Count(); i < count; i++)
                             {
-                                if (i == 0)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "Select Infrastructure Type (unknown)",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                                else
+                                if (i != 0)
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
@@ -850,7 +834,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 EnumTextAndID enumTextAndID = new EnumTextAndID()
                                 {
-                                    EnumText = valNew == 0 ? "Select Infrastructure Type (unknown)" : _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)valNew).ToString(),
+                                    EnumText = _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)valNew).ToString(),
                                     EnumID = (int)valNew,
                                 };
                                 comboBoxItem.SelectedItem = enumTextAndID;
@@ -862,11 +846,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
-                                        EnumText = val == 0 ? "Select Infrastructure Type (unknown)" : _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)val).ToString(),
+                                        EnumText = _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
                                     comboBoxItem.Text = enumTextAndID.EnumText;
+                                }
+                                else
+                                {
+                                    comboBoxItem.SelectedIndex = 0;
                                 }
                             }
                         }
@@ -1365,45 +1353,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     EnumTextAndID enumTextAndID = new EnumTextAndID()
                                     {
                                         EnumText = val == 0 ? "Select Tertiary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
-                        }
-                        break;
-                    case "TreatmentTypeEnum":
-                        {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
-
-                            for (int i = 0, count = Enum.GetNames(typeof(TreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = i == 0 ? "Select Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
-                            }
-
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)val).ToString(),
                                         EnumID = (int)val,
                                     };
                                     comboBoxItem.SelectedItem = enumTextAndID;
@@ -2128,7 +2077,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || infrastructure.AverageFlow_m3_dayNew != null
                             || infrastructure.CanOverflowNew != null
                             || infrastructure.CollectionSystemTypeNew != null
-                            || infrastructure.CommentNew != null
+                            || infrastructure.CommentENNew != null
+                            || infrastructure.CommentFRNew != null
                             || infrastructure.DecayRate_per_dayNew != null
                             || infrastructure.DesignFlow_m3_dayNew != null
                             || infrastructure.DisinfectionTypeNew != null
@@ -2136,11 +2086,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || infrastructure.FacilityTypeNew != null
                             || infrastructure.FarFieldVelocity_m_sNew != null
                             || infrastructure.HorizontalAngle_degNew != null
-                            || infrastructure.InfrastructureCategoryNew != null
                             || infrastructure.InfrastructureTypeNew != null
                             || infrastructure.IsActiveNew != null
                             || infrastructure.IsMechanicallyAeratedNew != null
-                            || infrastructure.LSIDNew != null
                             || infrastructure.NearFieldVelocity_m_sNew != null
                             || infrastructure.NumberOfAeratedCellsNew != null
                             || infrastructure.NumberOfCellsNew != null
@@ -2153,20 +2101,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || infrastructure.PortSpacing_mNew != null
                             || infrastructure.PreliminaryTreatmentTypeNew != null
                             || infrastructure.PrimaryTreatmentTypeNew != null
-                            || infrastructure.PrismIDNew != null
                             || infrastructure.PumpsToTVItemIDNew != null
                             || infrastructure.ReceivingWaterSalinity_PSUNew != null
                             || infrastructure.ReceivingWaterTemperature_CNew != null
                             || infrastructure.ReceivingWater_MPN_per_100mlNew != null
                             || infrastructure.SecondaryTreatmentTypeNew != null
                             || infrastructure.SeeOtherMunicipalityTVItemIDNew != null
-                            || infrastructure.SiteIDNew != null
-                            || infrastructure.SiteNew != null
-                            || infrastructure.TempCatchAllRemoveLaterNew != null
                             || infrastructure.TertiaryTreatmentTypeNew != null
-                            || infrastructure.TimeOffset_hourNew != null
-                            || infrastructure.TPIDNew != null
-                            || infrastructure.TreatmentTypeNew != null
                             || infrastructure.TVTextNew != null
                             || infrastructure.VerticalAngle_degNew != null)
                         {
@@ -2493,8 +2434,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (municipalityDoc.Municipality.MunicipalityName != null)
             {
                 Infrastructure infrastructure = new Infrastructure();
-                float LastLat = 0.0f;
-                float LastLng = 0.0f;
                 int MaxInfrastructureTVItemID = 10000000;
                 if (municipalityDoc.Municipality.InfrastructureList.Count > 0)
                 {
@@ -2503,13 +2442,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         MaxInfrastructureTVItemID = Max + 1;
                     }
-                    LastLat = ((float)municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1].Lat);
-                    LastLng = ((float)municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1].Lng);
                 }
                 infrastructure.InfrastructureTVItemID = MaxInfrastructureTVItemID;
-                infrastructure.Lat = LastLat + 0.1f;
-                infrastructure.Lng = LastLng + 0.1f;
+                infrastructure.Lat = null;
+                infrastructure.Lng = null;
                 infrastructure.IsActive = true;
+                infrastructure.InfrastructureType = (int)InfrastructureTypeEnum.WWTP;
                 infrastructure.TVText = "New Infrastructure";
                 infrastructure.LastUpdateDate_UTC = DateTime.Now;
 
@@ -2568,497 +2506,1187 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public void InfrastructureSaveToCSSPWebTools()
         {
-            bool a = true;
-            if (a)
+            string ret = "";
+            bool NeedToSave = false;
+
+            string InfrastructureName = CurrentInfrastructure.TVText;
+            if (CurrentInfrastructure.TVTextNew != null)
             {
-                return;
+                InfrastructureName = CurrentInfrastructure.TVTextNew;
             }
 
-            //string ret = "";
-            //bool NeedToSave = false;
-            //bool IsNewInfrastructure = false;
+            EmitRTBMessage(new RTBMessageEventArgs($"Checking if Infrastructure [{InfrastructureName}] already exist in CSSPWebTools\r\n"));
 
-            //string InfrastructureName = CurrentInfrastructure.TVText;
-            //if (CurrentInfrastructure.TVTextNew != null)
-            //{
-            //    InfrastructureName = CurrentInfrastructure.TVTextNew;
-            //}
+            ret = InfrastructureExistInCSSPWebTools((int)CurrentInfrastructure.InfrastructureTVItemID, AdminEmail);
+            ret = ret.Replace("\"", "");
 
-            //EmitRTBMessage(new RTBMessageEventArgs($"Trying to save all information for Infrastructure [{InfrastructureName}]\r\n"));
+            if (ret.StartsWith("ERROR:"))
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"Infrastructure [{InfrastructureName}] does not exist in CSSPWebTools\r\n"));
+            }
+            else
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"Infrastructure [{InfrastructureName}] already exist in CSSPWebTools\r\n"));
+            }
 
-            //EmitRTBMessage(new RTBMessageEventArgs($"Checking if Infrastructure [{InfrastructureName}] already exist in CSSPWebTools\r\n"));
+            #region Load Variables
+            float? Lat = null;
+            float? Lng = null;
+            float? LatOutfall = null;
+            float? LngOutfall = null;
+            string CommentEN = null;
+            string CommentFR = null;
+            InfrastructureTypeEnum? InfrastructureType = null;
+            FacilityTypeEnum? FacilityType = null;
+            bool? IsMechanicallyAerated = null;
+            int? NumberOfCells = null;
+            int? NumberOfAeratedCells = null;
+            AerationTypeEnum? AerationType = null;
+            PreliminaryTreatmentTypeEnum? PreliminaryTreatmentType = null;
+            PrimaryTreatmentTypeEnum? PrimaryTreatmentType = null;
+            SecondaryTreatmentTypeEnum? SecondaryTreatmentType = null;
+            TertiaryTreatmentTypeEnum? TertiaryTreatmentType = null;
+            DisinfectionTypeEnum? DisinfectionType = null;
+            CollectionSystemTypeEnum? CollectionSystemType = null;
+            AlarmSystemTypeEnum? AlarmSystemType = null;
+            float? DesignFlow_m3_day = null;
+            float? AverageFlow_m3_day = null;
+            float? PeakFlow_m3_day = null;
+            int? PopServed = null;
+            bool? CanOverflow = null;
+            float? PercFlowOfTotal = null;
+            float? AverageDepth_m = null;
+            int? NumberOfPorts = null;
+            float? PortDiameter_m = null;
+            float? PortSpacing_m = null;
+            float? PortElevation_m = null;
+            float? VerticalAngle_deg = null;
+            float? HorizontalAngle_deg = null;
+            float? DecayRate_per_day = null;
+            float? NearFieldVelocity_m_s = null;
+            float? FarFieldVelocity_m_s = null;
+            float? ReceivingWaterSalinity_PSU = null;
+            float? ReceivingWaterTemperature_C = null;
+            int? ReceivingWater_MPN_per_100ml = null;
+            float? DistanceFromShore_m = null;
+            int? SeeOtherMunicipalityTVItemID = null;
+            string SeeOtherMunicipalityText = null;
+            int? PumpsToTVItemID = null;
 
-            //ret = InfrastructureExistInCSSPWebTools((int)CurrentInfrastructure.InfrastructureTVItemID, AdminEmail);
-            //ret = ret.Replace("\"", "");
+            // Lat, Lng
+            if (CurrentInfrastructure.LatNew == null)
+            {
+                if (CurrentInfrastructure.Lat != null)
+                {
+                    Lat = (float)CurrentInfrastructure.Lat;
+                }
+            }
+            else
+            {
+                Lat = (float)CurrentInfrastructure.LatNew;
+            }
+            if (CurrentInfrastructure.LngNew == null)
+            {
+                if (CurrentInfrastructure.Lng != null)
+                {
+                    Lng = (float)CurrentInfrastructure.Lng;
+                }
+            }
+            else
+            {
+                Lng = (float)CurrentInfrastructure.LngNew;
+            }
 
-            //if (ret.StartsWith("ERROR:"))
-            //{
-            //    EmitRTBMessage(new RTBMessageEventArgs($"Infrastructure [{InfrastructureName}] does not exist in CSSPWebTools\r\n"));
-            //}
-            //else
-            //{
-            //    EmitRTBMessage(new RTBMessageEventArgs($"Infrastructure [{InfrastructureName}] already exist in CSSPWebTools\r\n"));
-            //}
+            // LatOutfall, LngOutfall
+            if (CurrentInfrastructure.LatOutfallNew == null)
+            {
+                if (CurrentInfrastructure.LatOutfall != null)
+                {
+                    LatOutfall = (float)CurrentInfrastructure.LatOutfall;
+                }
+            }
+            else
+            {
+                LatOutfall = (float)CurrentInfrastructure.LatOutfallNew;
+            }
+            if (CurrentInfrastructure.LngOutfallNew == null)
+            {
+                if (CurrentInfrastructure.LngOutfall != null)
+                {
+                    LngOutfall = (float)CurrentInfrastructure.LngOutfall;
+                }
+            }
+            else
+            {
+                LngOutfall = (float)CurrentInfrastructure.LngOutfallNew;
+            }
 
-            //if (CurrentInfrastructure.InfrastructureTVItemID >= 10000000 || ret.StartsWith("ERROR:"))
-            //{
-            //    float Lat = 0.0f;
-            //    float Lng = 0.0f;
-            //    if (CurrentInfrastructure.LatNew == null)
-            //    {
-            //        if (CurrentInfrastructure.Lat != null)
-            //        {
-            //            Lat = (float)CurrentInfrastructure.Lat;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        Lat = (float)CurrentInfrastructure.LatNew;
-            //    }
-            //    if (CurrentInfrastructure.LngNew == null)
-            //    {
-            //        if (CurrentInfrastructure.Lng != null)
-            //        {
-            //            Lng = (float)CurrentInfrastructure.Lng;
-            //        }
-            //    }
-            //    else
-            //    {
-            //        Lng = (float)CurrentInfrastructure.LngNew;
-            //    }
+            // CommentEN
+            if (CurrentInfrastructure.CommentENNew == null)
+            {
+                if (CurrentInfrastructure.CommentEN != null)
+                {
+                    CommentEN = CurrentInfrastructure.CommentEN;
+                }
+            }
+            else
+            {
+                CommentEN = CurrentInfrastructure.CommentENNew;
+            }
 
-            //    string MessageText = $"Trying to creating new Infrastructure [{InfrastructureName}]\tSite Number [{(int)CurrentInfrastructure.SiteNumber}]\tLat[{Lat}]\tLong[{Lng}]\r\n";
-            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+            // CommentFR
+            if (CurrentInfrastructure.CommentFRNew == null)
+            {
+                if (CurrentInfrastructure.CommentFR != null)
+                {
+                    CommentFR = CurrentInfrastructure.CommentFR;
+                }
+            }
+            else
+            {
+                CommentFR = CurrentInfrastructure.CommentFRNew;
+            }
 
-            //    ret = SaveToCSSPWebToolsCreateNewInfrastructure((int)municipalityDoc.Municipality.MunicipalityTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, InfrastructureName, (int)CurrentInfrastructure.SiteNumber, Lat, Lng, AdminEmail);
-            //    ret = ret.Replace("\"", "");
-            //    if (ret.StartsWith("ERROR:"))
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //        if (NeedToSave)
-            //        {
-            //            SaveSubsectorTextFile();
-            //        }
-            //    }
-            //    else
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+            // InfrastructureType
+            if (CurrentInfrastructure.InfrastructureTypeNew == null)
+            {
+                if (CurrentInfrastructure.InfrastructureType != null)
+                {
+                    InfrastructureType = (InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType;
+                }
+            }
+            else
+            {
+                InfrastructureType = (InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew;
+            }
 
-            //        CurrentInfrastructure.InfrastructureTVItemID = int.Parse(ret);
-            //        CurrentInfrastructure.TVTextNew = null;
-            //        CurrentInfrastructure.Lat = Lat;
-            //        CurrentInfrastructure.Lng = Lng;
-            //        CurrentInfrastructure.LatNew = null;
-            //        CurrentInfrastructure.LngNew = null;
-            //        InfrastructureTVItemID = (int)CurrentInfrastructure.InfrastructureTVItemID;
-            //        NeedToSave = true;
-            //        IsNewInfrastructure = true;
-            //    }
-            //}
+            // FacilityType
+            if (CurrentInfrastructure.FacilityTypeNew == null)
+            {
+                if (CurrentInfrastructure.FacilityType != null)
+                {
+                    FacilityType = (FacilityTypeEnum)CurrentInfrastructure.FacilityType;
+                }
+            }
+            else
+            {
+                FacilityType = (FacilityTypeEnum)CurrentInfrastructure.FacilityTypeNew;
+            }
 
-            //if (!IsNewInfrastructure)
-            //{
+            // IsMechanicallyAerated
+            if (CurrentInfrastructure.IsMechanicallyAeratedNew == null)
+            {
+                if (CurrentInfrastructure.IsMechanicallyAerated != null)
+                {
+                    IsMechanicallyAerated = (bool)CurrentInfrastructure.IsMechanicallyAerated;
+                }
+            }
+            else
+            {
+                IsMechanicallyAerated = (bool)CurrentInfrastructure.IsMechanicallyAeratedNew;
+            }
 
-            //    if (CurrentInfrastructure.TVTextNew != null || CurrentInfrastructure.IsActiveNew != null)
-            //    {
-            //        string MessageText = $"Trying To change Infrastructure Name --- old [{CurrentInfrastructure.TVText}] --- new [{CurrentInfrastructure.TVTextNew}]\r\n";
-            //        EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+            // NumberOfCells
+            if (CurrentInfrastructure.NumberOfCellsNew == null)
+            {
+                if (CurrentInfrastructure.NumberOfCells != null)
+                {
+                    NumberOfCells = (int)CurrentInfrastructure.NumberOfCells;
+                }
+            }
+            else
+            {
+                NumberOfCells = (int)CurrentInfrastructure.NumberOfCellsNew;
+            }
 
-            //        ret = SaveToCSSPWebToolsTVText((int)CurrentInfrastructure.InfrastructureTVItemID, CurrentInfrastructure.TVTextNew, (bool)CurrentInfrastructure.IsActive, AdminEmail);
-            //        ret = ret.Replace("\"", "");
-            //        if (ret.StartsWith("ERROR:"))
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //            if (NeedToSave)
-            //            {
-            //                SaveSubsectorTextFile();
-            //            }
-            //        }
-            //        else
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+            // NumberOfAeratedCells
+            if (CurrentInfrastructure.NumberOfAeratedCellsNew == null)
+            {
+                if (CurrentInfrastructure.NumberOfAeratedCells != null)
+                {
+                    NumberOfAeratedCells = (int)CurrentInfrastructure.NumberOfAeratedCells;
+                }
+            }
+            else
+            {
+                NumberOfAeratedCells = (int)CurrentInfrastructure.NumberOfAeratedCellsNew;
+            }
 
-            //            CurrentInfrastructure.TVText = CurrentInfrastructure.TVTextNew;
-            //            CurrentInfrastructure.TVTextNew = null;
-            //            NeedToSave = true;
-            //        }
-            //    }
+            // AerationType
+            if (CurrentInfrastructure.AerationTypeNew == null)
+            {
+                if (CurrentInfrastructure.AerationType != null)
+                {
+                    AerationType = (AerationTypeEnum)CurrentInfrastructure.AerationType;
+                }
+            }
+            else
+            {
+                AerationType = (AerationTypeEnum)CurrentInfrastructure.AerationTypeNew;
+            }
 
-            //    if (CurrentInfrastructure.LatNew != null || CurrentInfrastructure.LngNew != null)
-            //    {
-            //        float Lat = 0.0f;
-            //        float Lng = 0.0f;
-            //        if (CurrentInfrastructure.LatNew == null)
-            //        {
-            //            if (CurrentInfrastructure.Lat != null)
-            //            {
-            //                Lat = (float)CurrentInfrastructure.Lat;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            Lat = (float)CurrentInfrastructure.LatNew;
-            //        }
-            //        if (CurrentInfrastructure.LngNew == null)
-            //        {
-            //            if (CurrentInfrastructure.Lng != null)
-            //            {
-            //                Lng = (float)CurrentInfrastructure.Lng;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            Lng = (float)CurrentInfrastructure.LngNew;
-            //        }
+            // PreliminaryTreatmentType
+            if (CurrentInfrastructure.PreliminaryTreatmentTypeNew == null)
+            {
+                if (CurrentInfrastructure.PreliminaryTreatmentType != null)
+                {
+                    PreliminaryTreatmentType = (PreliminaryTreatmentTypeEnum)CurrentInfrastructure.PreliminaryTreatmentType;
+                }
+            }
+            else
+            {
+                PreliminaryTreatmentType = (PreliminaryTreatmentTypeEnum)CurrentInfrastructure.PreliminaryTreatmentTypeNew;
+            }
+
+            // PrimaryTreatmentType
+            if (CurrentInfrastructure.PrimaryTreatmentTypeNew == null)
+            {
+                if (CurrentInfrastructure.PrimaryTreatmentType != null)
+                {
+                    PrimaryTreatmentType = (PrimaryTreatmentTypeEnum)CurrentInfrastructure.PrimaryTreatmentType;
+                }
+            }
+            else
+            {
+                PrimaryTreatmentType = (PrimaryTreatmentTypeEnum)CurrentInfrastructure.PrimaryTreatmentTypeNew;
+            }
+
+            // SecondaryTreatmentType
+            if (CurrentInfrastructure.SecondaryTreatmentTypeNew == null)
+            {
+                if (CurrentInfrastructure.SecondaryTreatmentType != null)
+                {
+                    SecondaryTreatmentType = (SecondaryTreatmentTypeEnum)CurrentInfrastructure.SecondaryTreatmentType;
+                }
+            }
+            else
+            {
+                SecondaryTreatmentType = (SecondaryTreatmentTypeEnum)CurrentInfrastructure.SecondaryTreatmentTypeNew;
+            }
+
+            // TertiaryTreatemntType
+            if (CurrentInfrastructure.TertiaryTreatmentTypeNew == null)
+            {
+                if (CurrentInfrastructure.TertiaryTreatmentType != null)
+                {
+                    TertiaryTreatmentType = (TertiaryTreatmentTypeEnum)CurrentInfrastructure.TertiaryTreatmentType;
+                }
+            }
+            else
+            {
+                TertiaryTreatmentType = (TertiaryTreatmentTypeEnum)CurrentInfrastructure.TertiaryTreatmentTypeNew;
+            }
+
+            // DisinfectionType
+            if (CurrentInfrastructure.DisinfectionTypeNew == null)
+            {
+                if (CurrentInfrastructure.DisinfectionType != null)
+                {
+                    DisinfectionType = (DisinfectionTypeEnum)CurrentInfrastructure.DisinfectionType;
+                }
+            }
+            else
+            {
+                DisinfectionType = (DisinfectionTypeEnum)CurrentInfrastructure.DisinfectionTypeNew;
+            }
+
+            // CollectionSystemType
+            if (CurrentInfrastructure.CollectionSystemTypeNew == null)
+            {
+                if (CurrentInfrastructure.CollectionSystemType != null)
+                {
+                    CollectionSystemType = (CollectionSystemTypeEnum)CurrentInfrastructure.CollectionSystemType;
+                }
+            }
+            else
+            {
+                CollectionSystemType = (CollectionSystemTypeEnum)CurrentInfrastructure.CollectionSystemTypeNew;
+            }
+
+            // AlarmSystemType
+            if (CurrentInfrastructure.AlarmSystemTypeNew == null)
+            {
+                if (CurrentInfrastructure.AlarmSystemType != null)
+                {
+                    AlarmSystemType = (AlarmSystemTypeEnum)CurrentInfrastructure.AlarmSystemType;
+                }
+            }
+            else
+            {
+                AlarmSystemType = (AlarmSystemTypeEnum)CurrentInfrastructure.AlarmSystemTypeNew;
+            }
+
+            // DesignFlow_m3_day
+            if (CurrentInfrastructure.DesignFlow_m3_dayNew == null)
+            {
+                if (CurrentInfrastructure.DesignFlow_m3_day != null)
+                {
+                    DesignFlow_m3_day = (float)CurrentInfrastructure.DesignFlow_m3_day;
+                }
+            }
+            else
+            {
+                DesignFlow_m3_day = (float)CurrentInfrastructure.DesignFlow_m3_dayNew;
+            }
+
+            // AverageFlow_m3_day
+            if (CurrentInfrastructure.AverageFlow_m3_dayNew == null)
+            {
+                if (CurrentInfrastructure.AverageFlow_m3_day != null)
+                {
+                    AverageFlow_m3_day = (float)CurrentInfrastructure.AverageFlow_m3_day;
+                }
+            }
+            else
+            {
+                AverageFlow_m3_day = (float)CurrentInfrastructure.AverageFlow_m3_dayNew;
+            }
+
+            // PeakFlow_m3_day
+            if (CurrentInfrastructure.PeakFlow_m3_dayNew == null)
+            {
+                if (CurrentInfrastructure.PeakFlow_m3_day != null)
+                {
+                    PeakFlow_m3_day = (float)CurrentInfrastructure.PeakFlow_m3_day;
+                }
+            }
+            else
+            {
+                PeakFlow_m3_day = (float)CurrentInfrastructure.PeakFlow_m3_dayNew;
+            }
+
+            // PopServed
+            if (CurrentInfrastructure.PopServedNew == null)
+            {
+                if (CurrentInfrastructure.PopServed != null)
+                {
+                    PopServed = (int)CurrentInfrastructure.PopServed;
+                }
+            }
+            else
+            {
+                PopServed = (int)CurrentInfrastructure.PopServedNew;
+            }
+
+            // CanOverflow
+            if (CurrentInfrastructure.CanOverflowNew == null)
+            {
+                if (CurrentInfrastructure.CanOverflow != null)
+                {
+                    CanOverflow = (bool)CurrentInfrastructure.CanOverflow;
+                }
+            }
+            else
+            {
+                CanOverflow = (bool)CurrentInfrastructure.CanOverflowNew;
+            }
+
+            // PercFlowOfTotal
+            if (CurrentInfrastructure.PercFlowOfTotalNew == null)
+            {
+                if (CurrentInfrastructure.PercFlowOfTotal != null)
+                {
+                    PercFlowOfTotal = (float)CurrentInfrastructure.PercFlowOfTotal;
+                }
+            }
+            else
+            {
+                PercFlowOfTotal = (float)CurrentInfrastructure.PercFlowOfTotalNew;
+            }
+
+            // AverageDepth_m
+            if (CurrentInfrastructure.AverageDepth_mNew == null)
+            {
+                if (CurrentInfrastructure.AverageDepth_m != null)
+                {
+                    AverageDepth_m = (float)CurrentInfrastructure.AverageDepth_m;
+                }
+            }
+            else
+            {
+                AverageDepth_m = (float)CurrentInfrastructure.AverageDepth_mNew;
+            }
+
+            // NumberOfPorts
+            if (CurrentInfrastructure.NumberOfPortsNew == null)
+            {
+                if (CurrentInfrastructure.NumberOfPorts != null)
+                {
+                    NumberOfPorts = (int)CurrentInfrastructure.NumberOfPorts;
+                }
+            }
+            else
+            {
+                NumberOfPorts = (int)CurrentInfrastructure.NumberOfPortsNew;
+            }
+
+            // PortDiameter_m
+            if (CurrentInfrastructure.PortDiameter_mNew == null)
+            {
+                if (CurrentInfrastructure.PortDiameter_m != null)
+                {
+                    PortDiameter_m = (float)CurrentInfrastructure.PortDiameter_m;
+                }
+            }
+            else
+            {
+                PortDiameter_m = (float)CurrentInfrastructure.PortDiameter_mNew;
+            }
+
+            // PortSpacing_m
+            if (CurrentInfrastructure.PortSpacing_mNew == null)
+            {
+                if (CurrentInfrastructure.PortSpacing_m != null)
+                {
+                    PortSpacing_m = (float)CurrentInfrastructure.PortSpacing_m;
+                }
+            }
+            else
+            {
+                PortSpacing_m = (float)CurrentInfrastructure.PortSpacing_mNew;
+            }
+
+            // PortElevation_m
+            if (CurrentInfrastructure.PortElevation_mNew == null)
+            {
+                if (CurrentInfrastructure.PortElevation_m != null)
+                {
+                    PortElevation_m = (float)CurrentInfrastructure.PortElevation_m;
+                }
+            }
+            else
+            {
+                PortElevation_m = (float)CurrentInfrastructure.PortElevation_mNew;
+            }
+
+            // VerticalAngle_deg
+            if (CurrentInfrastructure.VerticalAngle_degNew == null)
+            {
+                if (CurrentInfrastructure.VerticalAngle_deg != null)
+                {
+                    VerticalAngle_deg = (float)CurrentInfrastructure.VerticalAngle_deg;
+                }
+            }
+            else
+            {
+                VerticalAngle_deg = (float)CurrentInfrastructure.VerticalAngle_degNew;
+            }
+
+            // HorizontalAngle_deg
+            if (CurrentInfrastructure.HorizontalAngle_degNew == null)
+            {
+                if (CurrentInfrastructure.HorizontalAngle_deg != null)
+                {
+                    HorizontalAngle_deg = (float)CurrentInfrastructure.HorizontalAngle_deg;
+                }
+            }
+            else
+            {
+                HorizontalAngle_deg = (float)CurrentInfrastructure.HorizontalAngle_degNew;
+            }
+
+            // DecayRate_per_day
+            if (CurrentInfrastructure.DecayRate_per_dayNew == null)
+            {
+                if (CurrentInfrastructure.DecayRate_per_day != null)
+                {
+                    DecayRate_per_day = (float)CurrentInfrastructure.DecayRate_per_day;
+                }
+            }
+            else
+            {
+                DecayRate_per_day = (float)CurrentInfrastructure.DecayRate_per_dayNew;
+            }
+
+            // NearFieldVelocity_m_s
+            if (CurrentInfrastructure.NearFieldVelocity_m_sNew == null)
+            {
+                if (CurrentInfrastructure.NearFieldVelocity_m_s != null)
+                {
+                    NearFieldVelocity_m_s = (float)CurrentInfrastructure.NearFieldVelocity_m_s;
+                }
+            }
+            else
+            {
+                NearFieldVelocity_m_s = (float)CurrentInfrastructure.NearFieldVelocity_m_sNew;
+            }
+
+            // FarFieldVelocity_m_s
+            if (CurrentInfrastructure.FarFieldVelocity_m_sNew == null)
+            {
+                if (CurrentInfrastructure.FarFieldVelocity_m_s != null)
+                {
+                    FarFieldVelocity_m_s = (float)CurrentInfrastructure.FarFieldVelocity_m_s;
+                }
+            }
+            else
+            {
+                FarFieldVelocity_m_s = (float)CurrentInfrastructure.FarFieldVelocity_m_sNew;
+            }
+
+            // ReceivingWaterSalinity_PSU
+            if (CurrentInfrastructure.ReceivingWaterSalinity_PSUNew == null)
+            {
+                if (CurrentInfrastructure.ReceivingWaterSalinity_PSU != null)
+                {
+                    ReceivingWaterSalinity_PSU = (float)CurrentInfrastructure.ReceivingWaterSalinity_PSU;
+                }
+            }
+            else
+            {
+                ReceivingWaterSalinity_PSU = (float)CurrentInfrastructure.ReceivingWaterSalinity_PSUNew;
+            }
+
+            // ReceivingWaterTemperature_C
+            if (CurrentInfrastructure.ReceivingWaterTemperature_CNew == null)
+            {
+                if (CurrentInfrastructure.ReceivingWaterTemperature_C != null)
+                {
+                    ReceivingWaterTemperature_C = (float)CurrentInfrastructure.ReceivingWaterTemperature_C;
+                }
+            }
+            else
+            {
+                ReceivingWaterTemperature_C = (float)CurrentInfrastructure.ReceivingWaterTemperature_CNew;
+            }
+
+            // ReceivingWater_MPN_per_100ml
+            if (CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew == null)
+            {
+                if (CurrentInfrastructure.ReceivingWater_MPN_per_100ml != null)
+                {
+                    ReceivingWater_MPN_per_100ml = (int)CurrentInfrastructure.ReceivingWater_MPN_per_100ml;
+                }
+            }
+            else
+            {
+                ReceivingWater_MPN_per_100ml = (int)CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew;
+            }
+
+            // DistanceFromShore_m
+            if (CurrentInfrastructure.DistanceFromShore_mNew == null)
+            {
+                if (CurrentInfrastructure.DistanceFromShore_m != null)
+                {
+                    DistanceFromShore_m = (float)CurrentInfrastructure.DistanceFromShore_m;
+                }
+            }
+            else
+            {
+                DistanceFromShore_m = (float)CurrentInfrastructure.DistanceFromShore_mNew;
+            }
+
+            // SeeOtherMunicipalityTVItemID
+            if (CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew == null)
+            {
+                if (CurrentInfrastructure.SeeOtherMunicipalityTVItemID != null)
+                {
+                    SeeOtherMunicipalityTVItemID = (int)CurrentInfrastructure.SeeOtherMunicipalityTVItemID;
+                }
+            }
+            else
+            {
+                SeeOtherMunicipalityTVItemID = (int)CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew;
+            }
+
+            // SeeOtherMunicipalityText
+            if (CurrentInfrastructure.SeeOtherMunicipalityTextNew == null)
+            {
+                if (CurrentInfrastructure.SeeOtherMunicipalityText != null)
+                {
+                    SeeOtherMunicipalityText = CurrentInfrastructure.SeeOtherMunicipalityText;
+                }
+            }
+            else
+            {
+                SeeOtherMunicipalityText = CurrentInfrastructure.SeeOtherMunicipalityTextNew;
+            }
+
+            // PumpsToTVItemID
+            if (CurrentInfrastructure.PumpsToTVItemIDNew == null)
+            {
+                if (CurrentInfrastructure.PumpsToTVItemID != null)
+                {
+                    PumpsToTVItemID = (int)CurrentInfrastructure.PumpsToTVItemID;
+                }
+            }
+            else
+            {
+                PumpsToTVItemID = (int)CurrentInfrastructure.PumpsToTVItemIDNew;
+            }
+
+            string MessageText = $"Trying to save all information for Infrastructure [{InfrastructureName}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tMunicipality TVItemID\t[{(int)municipalityDoc.Municipality.MunicipalityTVItemID}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tInfrastructure TVItemID\t[{(int)CurrentInfrastructure.InfrastructureTVItemID}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tInfrastructure Name\t[{InfrastructureName}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tLat[{Lat}]\tLong[{Lng}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tLat Outfall[{LatOutfall}]\tLong Outfall[{LngOutfall}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tComment (EN)\t[{CommentEN}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tComment (FR)\t[{CommentFR}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tInfrastructure Type\t[{InfrastructureType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tFacility Type\t[{FacilityType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tIs Mechanically Aerated\t[{IsMechanicallyAerated.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tNumber of Cells\t[{NumberOfCells.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tNumber of Aerated Cells\t[{NumberOfAeratedCells.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tAerationType\t[{AerationType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tAeration Type\t[{AerationType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tPreliminary Treatment Type\t[{PreliminaryTreatmentType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tPrimary Treatment Type\t[{PrimaryTreatmentType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tSecondary Treatment Type\t[{SecondaryTreatmentType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tTertiary Treatment Type\t[{TertiaryTreatmentType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tDisinfection Type\t[{DisinfectionType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tCollection System Type\t[{CollectionSystemType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tAlarm System Type\t[{AlarmSystemType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tDesignFlow (m3/day)\t[{DesignFlow_m3_day.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tAverageFlow (m3/day)\t[{AverageFlow_m3_day.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tPeakFlow (m3/day)\t[{PeakFlow_m3_day.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tPopulation Served\t[{PopServed.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tCan Overflow\t[{CanOverflow.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tPercentage of total flow (%)\t[{PercFlowOfTotal.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tAverage Depth (m)\t[{AverageDepth_m.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tNumber Of Ports\t[{NumberOfPorts.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tPort Diameter (m)\t[{PortDiameter_m.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tPort Spacing (m)\t[{PortSpacing_m.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tPort Elevation (m)\t[{PortElevation_m.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tVertical Angle (deg)\t[{VerticalAngle_deg.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tHorizontal Angle (deg)\t[{HorizontalAngle_deg.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tDecay Rate (/day)\t[{DecayRate_per_day.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tNear Field Velocity (m/s)\t[{NearFieldVelocity_m_s.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tFar Field Velocity (m/s)\t[{FarFieldVelocity_m_s.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tReceiving Water Salinity (PSU)\t[{ReceivingWaterSalinity_PSU.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tReceiving Water Temperature (C)\t[{ReceivingWaterTemperature_C.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tReceiving Water (MPN/100mL)\t[{ReceivingWater_MPN_per_100ml.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tDistance From Shore (m)\t[{DistanceFromShore_m.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tSee Other Municipality TVItemID\t[{SeeOtherMunicipalityTVItemID.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tSee Other Municipality Text\t[{SeeOtherMunicipalityText.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tPumps To TVItemID\t[{PumpsToTVItemID.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            #endregion Load Variables
+
+            ret = SaveToCSSPWebToolsCreateOrModifyInfrastructure((int)municipalityDoc.Municipality.MunicipalityTVItemID,
+                (int)CurrentInfrastructure.InfrastructureTVItemID, InfrastructureName,
+                Lat, Lng, LatOutfall, LngOutfall, CommentEN, CommentFR, InfrastructureType, FacilityType,
+                IsMechanicallyAerated, NumberOfCells, NumberOfAeratedCells, AerationType, PreliminaryTreatmentType, PrimaryTreatmentType,
+                SecondaryTreatmentType, TertiaryTreatmentType, DisinfectionType, CollectionSystemType, AlarmSystemType,
+                DesignFlow_m3_day, AverageFlow_m3_day, PeakFlow_m3_day, PopServed, CanOverflow, PercFlowOfTotal,
+                AverageDepth_m, NumberOfPorts, PortDiameter_m, PortSpacing_m, PortElevation_m, VerticalAngle_deg,
+                HorizontalAngle_deg, DecayRate_per_day, NearFieldVelocity_m_s, FarFieldVelocity_m_s,
+                ReceivingWaterSalinity_PSU, ReceivingWaterTemperature_C, ReceivingWater_MPN_per_100ml, DistanceFromShore_m,
+                SeeOtherMunicipalityTVItemID, SeeOtherMunicipalityText, PumpsToTVItemID, AdminEmail);
+            ret = ret.Replace("\"", "");
+            if (ret.StartsWith("ERROR:"))
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                if (NeedToSave)
+                {
+                    SaveMunicipalityTextFile();
+                }
+            }
+            else
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                #region reset variables
+                CurrentInfrastructure.InfrastructureTVItemID = int.Parse(ret);
+                CurrentInfrastructure.TVText = InfrastructureName;
+                CurrentInfrastructure.TVTextNew = null;
+                CurrentInfrastructure.Lat = Lat;
+                CurrentInfrastructure.Lng = Lng;
+                CurrentInfrastructure.LatNew = null;
+                CurrentInfrastructure.LngNew = null;
+                CurrentInfrastructure.LatOutfall = LatOutfall;
+                CurrentInfrastructure.LngOutfall = LngOutfall;
+                CurrentInfrastructure.LatOutfallNew = null;
+                CurrentInfrastructure.LngOutfallNew = null;
+                CurrentInfrastructure.CommentEN = CommentEN;
+                CurrentInfrastructure.CommentENNew = null;
+                CurrentInfrastructure.CommentFR = CommentFR;
+                CurrentInfrastructure.CommentFRNew = null;
+                CurrentInfrastructure.InfrastructureType = (int?)InfrastructureType;
+                CurrentInfrastructure.InfrastructureTypeNew = null;
+                CurrentInfrastructure.FacilityType = (int?)FacilityType;
+                CurrentInfrastructure.FacilityTypeNew = null;
+                CurrentInfrastructure.IsMechanicallyAerated = IsMechanicallyAerated;
+                CurrentInfrastructure.IsMechanicallyAeratedNew = null;
+                CurrentInfrastructure.NumberOfCells = NumberOfCells;
+                CurrentInfrastructure.NumberOfCellsNew = null;
+                CurrentInfrastructure.NumberOfAeratedCells = NumberOfAeratedCells;
+                CurrentInfrastructure.NumberOfAeratedCellsNew = null;
+                CurrentInfrastructure.AerationType = (int?)AerationType;
+                CurrentInfrastructure.AerationTypeNew = null;
+                CurrentInfrastructure.PreliminaryTreatmentType = (int?)PreliminaryTreatmentType;
+                CurrentInfrastructure.PreliminaryTreatmentTypeNew = null;
+                CurrentInfrastructure.PrimaryTreatmentType = (int?)PrimaryTreatmentType;
+                CurrentInfrastructure.PrimaryTreatmentTypeNew = null;
+                CurrentInfrastructure.SecondaryTreatmentType = (int?)SecondaryTreatmentType;
+                CurrentInfrastructure.SecondaryTreatmentTypeNew = null;
+                CurrentInfrastructure.TertiaryTreatmentType = (int?)TertiaryTreatmentType;
+                CurrentInfrastructure.TertiaryTreatmentTypeNew = null;
+                CurrentInfrastructure.DisinfectionType = (int?)DisinfectionType;
+                CurrentInfrastructure.DisinfectionTypeNew = null;
+                CurrentInfrastructure.CollectionSystemType = (int?)CollectionSystemType;
+                CurrentInfrastructure.CollectionSystemTypeNew = null;
+                CurrentInfrastructure.AlarmSystemType = (int?)AlarmSystemType;
+                CurrentInfrastructure.AlarmSystemTypeNew = null;
+                CurrentInfrastructure.DesignFlow_m3_day = DesignFlow_m3_day;
+                CurrentInfrastructure.DesignFlow_m3_dayNew = null;
+                CurrentInfrastructure.AverageFlow_m3_day = AverageFlow_m3_day;
+                CurrentInfrastructure.AverageFlow_m3_dayNew = null;
+                CurrentInfrastructure.PeakFlow_m3_day = PeakFlow_m3_day;
+                CurrentInfrastructure.PeakFlow_m3_dayNew = null;
+                CurrentInfrastructure.PopServed = PopServed;
+                CurrentInfrastructure.PopServedNew = null;
+                CurrentInfrastructure.CanOverflow = CanOverflow;
+                CurrentInfrastructure.CanOverflowNew = null;
+                CurrentInfrastructure.PercFlowOfTotal = PercFlowOfTotal;
+                CurrentInfrastructure.PercFlowOfTotalNew = null;
+                CurrentInfrastructure.AverageDepth_m = AverageDepth_m;
+                CurrentInfrastructure.AverageDepth_mNew = null;
+                CurrentInfrastructure.NumberOfPorts = NumberOfPorts;
+                CurrentInfrastructure.NumberOfPortsNew = null;
+                CurrentInfrastructure.PortDiameter_m = PortDiameter_m;
+                CurrentInfrastructure.PortDiameter_mNew = null;
+                CurrentInfrastructure.PortSpacing_m = PortSpacing_m;
+                CurrentInfrastructure.PortSpacing_mNew = null;
+                CurrentInfrastructure.PortElevation_m = PortElevation_m;
+                CurrentInfrastructure.PortElevation_mNew = null;
+                CurrentInfrastructure.VerticalAngle_deg = VerticalAngle_deg;
+                CurrentInfrastructure.VerticalAngle_degNew = null;
+                CurrentInfrastructure.HorizontalAngle_deg = HorizontalAngle_deg;
+                CurrentInfrastructure.HorizontalAngle_degNew = null;
+                CurrentInfrastructure.DecayRate_per_day = DecayRate_per_day;
+                CurrentInfrastructure.DecayRate_per_dayNew = null;
+                CurrentInfrastructure.NearFieldVelocity_m_s = NearFieldVelocity_m_s;
+                CurrentInfrastructure.NearFieldVelocity_m_sNew = null;
+                CurrentInfrastructure.FarFieldVelocity_m_s = FarFieldVelocity_m_s;
+                CurrentInfrastructure.FarFieldVelocity_m_sNew = null;
+                CurrentInfrastructure.ReceivingWaterSalinity_PSU = ReceivingWaterSalinity_PSU;
+                CurrentInfrastructure.ReceivingWaterSalinity_PSUNew = null;
+                CurrentInfrastructure.ReceivingWaterTemperature_C = ReceivingWaterTemperature_C;
+                CurrentInfrastructure.ReceivingWaterTemperature_CNew = null;
+                CurrentInfrastructure.ReceivingWater_MPN_per_100ml = ReceivingWater_MPN_per_100ml;
+                CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew = null;
+                CurrentInfrastructure.DistanceFromShore_m = DistanceFromShore_m;
+                CurrentInfrastructure.DistanceFromShore_mNew = null;
+                CurrentInfrastructure.SeeOtherMunicipalityTVItemID = SeeOtherMunicipalityTVItemID;
+                CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
+                CurrentInfrastructure.SeeOtherMunicipalityText = SeeOtherMunicipalityText;
+                CurrentInfrastructure.SeeOtherMunicipalityTextNew = null;
+                CurrentInfrastructure.PumpsToTVItemID = PumpsToTVItemID;
+                CurrentInfrastructure.PumpsToTVItemIDNew = null;
+                InfrastructureTVItemID = (int)CurrentInfrastructure.InfrastructureTVItemID;
+                #endregion reset variables
+
+                NeedToSave = true;
+            }
+
+            if (CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID != null)
+            {
+                if (!(CurrentInfrastructure.InfrastructureAddress.StreetNumber == null
+                    && CurrentInfrastructure.InfrastructureAddress.StreetName == null
+                    && CurrentInfrastructure.InfrastructureAddress.StreetType == null
+                    // && CurrentInfrastructure.InfrastructureAddress.Municipality == null
+                    && CurrentInfrastructure.InfrastructureAddress.PostalCode == null
+                    && CurrentInfrastructure.InfrastructureAddressNew.StreetNumber == null
+                    && CurrentInfrastructure.InfrastructureAddressNew.StreetName == null
+                    && CurrentInfrastructure.InfrastructureAddressNew.StreetType == null
+                    // && CurrentInfrastructure.InfrastructureAddressNew.Municipality == null
+                    && CurrentInfrastructure.InfrastructureAddressNew.PostalCode == null
+                    && CurrentInfrastructure.InfrastructureAddress.StreetName == null))
+                {
+                    string StreetNumberText = CurrentInfrastructure.InfrastructureAddress.StreetNumber == null ? "" : CurrentInfrastructure.InfrastructureAddress.StreetNumber;
+                    string StreetNameText = CurrentInfrastructure.InfrastructureAddress.StreetName == null ? "" : CurrentInfrastructure.InfrastructureAddress.StreetName;
+                    int StreetType = CurrentInfrastructure.InfrastructureAddress.StreetType == null ? 0 : (int)CurrentInfrastructure.InfrastructureAddress.StreetType;
+                    string MunicipalityText = CurrentInfrastructure.InfrastructureAddress.Municipality == null ? "" : CurrentInfrastructure.InfrastructureAddress.Municipality;
+                    string PostalCodeText = CurrentInfrastructure.InfrastructureAddress.PostalCode == null ? "" : CurrentInfrastructure.InfrastructureAddress.PostalCode;
+                    string StreetNumberNewText = CurrentInfrastructure.InfrastructureAddressNew.StreetNumber == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.StreetNumber;
+                    string StreetNameNewText = CurrentInfrastructure.InfrastructureAddressNew.StreetName == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.StreetName;
+                    int StreetTypeNew = CurrentInfrastructure.InfrastructureAddressNew.StreetType == null ? 0 : (int)CurrentInfrastructure.InfrastructureAddressNew.StreetType;
+                    string MunicipalityNewText = CurrentInfrastructure.InfrastructureAddressNew.Municipality == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.Municipality;
+                    string PostalCodeNewText = CurrentInfrastructure.InfrastructureAddressNew.PostalCode == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.PostalCode;
+
+                    if (!string.IsNullOrWhiteSpace(MunicipalityText))
+                    {
+                        MunicipalityText = MunicipalityText.Trim();
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(MunicipalityNewText))
+                    {
+                        MunicipalityNewText = MunicipalityNewText.Trim();
+                    }
+
+                    if (string.IsNullOrWhiteSpace(MunicipalityNewText))
+                    {
+                        string NoMunicipality = $"ERROR: To add an address you need to have a municipality name\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs(NoMunicipality));
+                        return;
+                    }
+
+                    MessageText = $"Checking if municipality exist [{MunicipalityNewText}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                    bool MunicipalityExist = false;
+                    ret = MunicipalityExistUnderProvinceInCSSPWebTools((int)subsectorDoc.ProvinceTVItemID, MunicipalityNewText, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        MunicipalityExist = false;
+                        NeedToSave = true;
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+                        MunicipalityExist = true;
+                    }
+
+                    if (!MunicipalityExist)
+                    {
+                        MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, false, true, AdminEmail);
+                        ret = ret.Replace("\"", "");
+                        if (ret.StartsWith("ERROR"))
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                            if (NeedToSave)
+                            {
+                                SaveMunicipalityTextFile();
+                            }
+                        }
+                        else
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                            CurrentInfrastructure.InfrastructureAddress.AddressType = (int)AddressTypeEnum.Civic;
+                            CurrentInfrastructure.InfrastructureAddress.AddressTVItemID = int.Parse(ret);
+                            CurrentInfrastructure.InfrastructureAddress.StreetNumber = CurrentInfrastructure.InfrastructureAddressNew.StreetNumber;
+                            CurrentInfrastructure.InfrastructureAddress.StreetName = CurrentInfrastructure.InfrastructureAddressNew.StreetName;
+                            CurrentInfrastructure.InfrastructureAddress.StreetType = CurrentInfrastructure.InfrastructureAddressNew.StreetType;
+                            CurrentInfrastructure.InfrastructureAddress.Municipality = CurrentInfrastructure.InfrastructureAddressNew.Municipality;
+                            CurrentInfrastructure.InfrastructureAddress.PostalCode = CurrentInfrastructure.InfrastructureAddressNew.PostalCode;
+                            CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.AddressType = null;
+                            NeedToSave = true;
+                        }
+                    }
+                    else
+                    {
+                        MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, false, true, AdminEmail);
+                        ret = ret.Replace("\"", "");
+                        if (ret.StartsWith("ERROR"))
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                            if (NeedToSave)
+                            {
+                                SaveMunicipalityTextFile();
+                            }
+                        }
+                        else
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                            CurrentInfrastructure.InfrastructureAddress.AddressType = (int)AddressTypeEnum.Civic;
+                            CurrentInfrastructure.InfrastructureAddress.AddressTVItemID = int.Parse(ret);
+                            CurrentInfrastructure.InfrastructureAddress.StreetNumber = CurrentInfrastructure.InfrastructureAddressNew.StreetNumber;
+                            CurrentInfrastructure.InfrastructureAddress.StreetName = CurrentInfrastructure.InfrastructureAddressNew.StreetName;
+                            CurrentInfrastructure.InfrastructureAddress.StreetType = CurrentInfrastructure.InfrastructureAddressNew.StreetType;
+                            CurrentInfrastructure.InfrastructureAddress.Municipality = CurrentInfrastructure.InfrastructureAddressNew.Municipality;
+                            CurrentInfrastructure.InfrastructureAddress.PostalCode = CurrentInfrastructure.InfrastructureAddressNew.PostalCode;
+                            CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = null;
+                            CurrentInfrastructure.InfrastructureAddressNew.AddressType = null;
+                            NeedToSave = true;
+                        }
+                    }
+                }
+                else
+                {
+                    CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
+                    CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
+                    CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+                    CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
+                    CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
+                    CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = null;
+                    CurrentInfrastructure.InfrastructureAddressNew.AddressType = null;
+                }
+            }
+
+            List<int> PictureTVItemIDListToRemove = new List<int>();
+
+            foreach (Picture picture in CurrentInfrastructure.InfrastructurePictureList)
+            {
+                FileInfo fiPictureToDelete = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{CurrentInfrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{picture.Extension}");
+
+                if (picture.ToRemove == true)
+                {
+                    if (picture.PictureTVItemID >= 10000000)
+                    {
+                        if (fiPictureToDelete.Exists)
+                        {
+                            try
+                            {
+                                fiPictureToDelete.Delete();
+                            }
+                            catch (Exception ex)
+                            {
+                                string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+                                EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
+                            }
+                        }
+
+                        continue;
+                    }
+
+                    MessageText = $"Removing picture --- [{picture.FileNameNew}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                    ret = SaveToCSSPWebToolsPictureToRemove((int)CurrentInfrastructure.InfrastructureTVItemID, (int)picture.PictureTVItemID, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR:"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                        if (NeedToSave)
+                        {
+                            SaveMunicipalityTextFile();
+                        }
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                        PictureTVItemIDListToRemove.Add((int)picture.PictureTVItemID);
+
+                        if (fiPictureToDelete.Exists)
+                        {
+                            try
+                            {
+                                fiPictureToDelete.Delete();
+                            }
+                            catch (Exception ex)
+                            {
+                                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                                string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+                                EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
+                            }
+                        }
+
+                        NeedToSave = true;
+                    }
+
+                }
+            }
+
+            foreach (int pictureTVItemIDToDelete in PictureTVItemIDListToRemove)
+            {
+                Picture picture = CurrentInfrastructure.InfrastructurePictureList.Where(c => c.PictureTVItemID == pictureTVItemIDToDelete).FirstOrDefault();
+
+                if (picture != null)
+                {
+                    CurrentInfrastructure.InfrastructurePictureList.Remove(picture);
+                }
+            }
+
+            foreach (Picture picture in CurrentInfrastructure.InfrastructurePictureList)
+            {
+                bool IsNew = false;
+                if (picture.PictureTVItemID >= 10000000)
+                {
+                    IsNew = true;
+
+                    MessageText = $"Adding picture --- [{picture.FileNameNew}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                    FileInfo fiPicture = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{CurrentInfrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{picture.Extension}");
+
+                    if (!fiPicture.Exists)
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        continue;
+                    }
+
+                    ret = SaveToCSSPWebToolsPicture(fiPicture, (int)CurrentInfrastructure.InfrastructureTVItemID, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR:"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                        if (NeedToSave)
+                        {
+                            SaveMunicipalityTextFile();
+                        }
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                        picture.PictureTVItemID = int.Parse(ret);
+
+                        FileInfo fiPictureNew = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{CurrentInfrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{picture.Extension}");
+
+                        if (fiPicture.Exists)
+                        {
+                            try
+                            {
+                                File.Copy(fiPicture.FullName, fiPictureNew.FullName);
+                                fiPicture.Delete();
+                            }
+                            catch (Exception ex)
+                            {
+                                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                                string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+                                EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
+                            }
+                        }
+
+                        NeedToSave = true;
+                    }
+                }
+
+                if (picture.FileNameNew != null
+                    || picture.DescriptionNew != null
+                    || picture.ExtensionNew != null
+                    || IsNew)
+                {
+                    string FileNameText = picture.FileNameNew != null ? picture.FileNameNew : picture.FileName;
+                    string DescriptionText = picture.DescriptionNew != null ? picture.DescriptionNew : picture.Description;
+                    string ExtensionText = picture.ExtensionNew != null ? picture.ExtensionNew : picture.Extension;
+
+                    MessageText = $"Changing properties of picture --- [{picture.FileNameNew}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
 
-            //        string LatText = CurrentInfrastructure.Lat == null ? "(empty)" : ((float)CurrentInfrastructure.Lat).ToString("F5");
-            //        string LngText = CurrentInfrastructure.Lng == null ? "(empty)" : ((float)CurrentInfrastructure.Lng).ToString("F5");
+                    ret = SaveToCSSPWebToolsPictureInfo((int)CurrentInfrastructure.InfrastructureTVItemID, (int)picture.PictureTVItemID, FileNameText, DescriptionText, ExtensionText, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR:"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                        if (NeedToSave)
+                        {
+                            SaveMunicipalityTextFile();
+                        }
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
-            //        string MessageText = $"Trying to Change Lat and Lng --- old [{LatText} {LngText}] --- new [{Lat.ToString("F5")} {Lng.ToString("F5")}]\r\n";
-            //        EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+                        picture.PictureTVItemID = int.Parse(ret);
+                        picture.FileName = FileNameText;
+                        picture.Description = DescriptionText;
+                        picture.Extension = ExtensionText;
+                        picture.FileNameNew = null;
+                        picture.DescriptionNew = null;
+                        picture.ExtensionNew = null;
+                        NeedToSave = true;
+                    }
+                }
+            }
 
-            //        ret = SaveToCSSPWebToolsLatLng((int)CurrentInfrastructure.InfrastructureTVItemID, Lat, Lng, AdminEmail);
-            //        ret = ret.Replace("\"", "");
-            //        if (ret.StartsWith("ERROR:"))
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //            if (NeedToSave)
-            //            {
-            //                SaveSubsectorTextFile();
-            //            }
-            //        }
-            //        else
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-
-            //            CurrentInfrastructure.Lat = Lat;
-            //            CurrentInfrastructure.Lng = Lng;
-            //            CurrentInfrastructure.LatNew = null;
-            //            CurrentInfrastructure.LngNew = null;
-            //            NeedToSave = true;
-            //        }
-            //    }
-            //}
-
-            //if (CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID != null || IsNewInfrastructure)
-            //{
-            //    if (!(CurrentInfrastructure.InfrastructureAddress.StreetNumber == null
-            //        && CurrentInfrastructure.InfrastructureAddress.StreetName == null
-            //        && CurrentInfrastructure.InfrastructureAddress.StreetType == null
-            //        && CurrentInfrastructure.InfrastructureAddress.Municipality == null
-            //        && CurrentInfrastructure.InfrastructureAddress.PostalCode == null
-            //        && CurrentInfrastructure.InfrastructureAddressNew.StreetNumber == null
-            //        && CurrentInfrastructure.InfrastructureAddressNew.StreetName == null
-            //        && CurrentInfrastructure.InfrastructureAddressNew.StreetType == null
-            //        && CurrentInfrastructure.InfrastructureAddressNew.Municipality == null
-            //        && CurrentInfrastructure.InfrastructureAddressNew.PostalCode == null
-            //        && CurrentInfrastructure.InfrastructureAddress.StreetName == null))
-            //    {
-            //        string StreetNumberText = CurrentInfrastructure.InfrastructureAddress.StreetNumber == null ? "" : CurrentInfrastructure.InfrastructureAddress.StreetNumber;
-            //        string StreetNameText = CurrentInfrastructure.InfrastructureAddress.StreetName == null ? "" : CurrentInfrastructure.InfrastructureAddress.StreetName;
-            //        int StreetType = CurrentInfrastructure.InfrastructureAddress.StreetType == null ? 0 : (int)CurrentInfrastructure.InfrastructureAddress.StreetType;
-            //        string MunicipalityText = CurrentInfrastructure.InfrastructureAddress.Municipality == null ? "" : CurrentInfrastructure.InfrastructureAddress.Municipality;
-            //        string PostalCodeText = CurrentInfrastructure.InfrastructureAddress.PostalCode == null ? "" : CurrentInfrastructure.InfrastructureAddress.PostalCode;
-            //        string StreetNumberNewText = CurrentInfrastructure.InfrastructureAddressNew.StreetNumber == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.StreetNumber;
-            //        string StreetNameNewText = CurrentInfrastructure.InfrastructureAddressNew.StreetName == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.StreetName;
-            //        int StreetTypeNew = CurrentInfrastructure.InfrastructureAddressNew.StreetType == null ? 0 : (int)CurrentInfrastructure.InfrastructureAddressNew.StreetType;
-            //        string MunicipalityNewText = CurrentInfrastructure.InfrastructureAddressNew.Municipality == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.Municipality;
-            //        string PostalCodeNewText = CurrentInfrastructure.InfrastructureAddressNew.PostalCode == null ? "" : CurrentInfrastructure.InfrastructureAddressNew.PostalCode;
-
-            //        if (!string.IsNullOrWhiteSpace(MunicipalityText))
-            //        {
-            //            MunicipalityText = MunicipalityText.Trim();
-            //        }
-
-            //        if (!string.IsNullOrWhiteSpace(MunicipalityNewText))
-            //        {
-            //            MunicipalityNewText = MunicipalityNewText.Trim();
-            //        }
-
-            //        if (string.IsNullOrWhiteSpace(MunicipalityNewText))
-            //        {
-            //            string NoMunicipality = $"ERROR: To add an address you need to have a municipality name\r\n";
-            //            EmitRTBMessage(new RTBMessageEventArgs(NoMunicipality));
-            //            return;
-            //        }
-
-            //        string MessageText = $"Checking if municipality exist [{MunicipalityNewText}]\r\n";
-            //        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
-
-            //        bool MunicipalityExist = false;
-            //        ret = MunicipalityExistUnderProvinceInCSSPWebTools((int)subsectorDoc.ProvinceTVItemID, MunicipalityNewText, AdminEmail);
-            //        ret = ret.Replace("\"", "");
-            //        if (ret.StartsWith("ERROR"))
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //            MunicipalityExist = false;
-            //            NeedToSave = true;
-            //        }
-            //        else
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-            //            MunicipalityExist = true;
-            //        }
-
-            //        if (!MunicipalityExist)
-            //        {
-            //            MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
-            //            EmitRTBMessage(new RTBMessageEventArgs(MessageText));
-
-            //            ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, AdminEmail);
-            //            ret = ret.Replace("\"", "");
-            //            if (ret.StartsWith("ERROR"))
-            //            {
-            //                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //                EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //                if (NeedToSave)
-            //                {
-            //                    SaveSubsectorTextFile();
-            //                }
-            //            }
-            //            else
-            //            {
-            //                EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-
-            //                CurrentInfrastructure.InfrastructureAddress.AddressType = (int)AddressTypeEnum.Civic;
-            //                CurrentInfrastructure.InfrastructureAddress.AddressTVItemID = int.Parse(ret);
-            //                CurrentInfrastructure.InfrastructureAddress.StreetNumber = CurrentInfrastructure.InfrastructureAddressNew.StreetNumber;
-            //                CurrentInfrastructure.InfrastructureAddress.StreetName = CurrentInfrastructure.InfrastructureAddressNew.StreetName;
-            //                CurrentInfrastructure.InfrastructureAddress.StreetType = CurrentInfrastructure.InfrastructureAddressNew.StreetType;
-            //                CurrentInfrastructure.InfrastructureAddress.Municipality = CurrentInfrastructure.InfrastructureAddressNew.Municipality;
-            //                CurrentInfrastructure.InfrastructureAddress.PostalCode = CurrentInfrastructure.InfrastructureAddressNew.PostalCode;
-            //                CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.AddressType = null;
-            //                NeedToSave = true;
-            //            }
-            //        }
-            //        else
-            //        {
-            //            MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
-            //            EmitRTBMessage(new RTBMessageEventArgs(MessageText));
-
-            //            ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, AdminEmail);
-            //            ret = ret.Replace("\"", "");
-            //            if (ret.StartsWith("ERROR"))
-            //            {
-            //                EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //                EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //                if (NeedToSave)
-            //                {
-            //                    SaveSubsectorTextFile();
-            //                }
-            //            }
-            //            else
-            //            {
-            //                EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-
-            //                CurrentInfrastructure.InfrastructureAddress.AddressType = (int)AddressTypeEnum.Civic;
-            //                CurrentInfrastructure.InfrastructureAddress.AddressTVItemID = int.Parse(ret);
-            //                CurrentInfrastructure.InfrastructureAddress.StreetNumber = CurrentInfrastructure.InfrastructureAddressNew.StreetNumber;
-            //                CurrentInfrastructure.InfrastructureAddress.StreetName = CurrentInfrastructure.InfrastructureAddressNew.StreetName;
-            //                CurrentInfrastructure.InfrastructureAddress.StreetType = CurrentInfrastructure.InfrastructureAddressNew.StreetType;
-            //                CurrentInfrastructure.InfrastructureAddress.Municipality = CurrentInfrastructure.InfrastructureAddressNew.Municipality;
-            //                CurrentInfrastructure.InfrastructureAddress.PostalCode = CurrentInfrastructure.InfrastructureAddressNew.PostalCode;
-            //                CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = null;
-            //                CurrentInfrastructure.InfrastructureAddressNew.AddressType = null;
-            //                NeedToSave = true;
-            //            }
-            //        }
-            //    }
-            //}
-
-            //List<int> PictureTVItemIDListToRemove = new List<int>();
-
-            //foreach (Picture picture in CurrentInfrastructure.InfrastructurePictureList)
-            //{
-            //    FileInfo fiPictureToDelete = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentInfrastructure.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}");
-
-            //    if (picture.ToRemove == true)
-            //    {
-            //        if (picture.PictureTVItemID >= 10000000)
-            //        {
-            //            if (fiPictureToDelete.Exists)
-            //            {
-            //                try
-            //                {
-            //                    fiPictureToDelete.Delete();
-            //                }
-            //                catch (Exception ex)
-            //                {
-            //                    string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
-            //                    EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
-            //                }
-            //            }
-
-            //            continue;
-            //        }
-
-            //        string MessageText = $"Removing picture --- [{picture.FileNameNew}]\r\n";
-            //        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
-
-            //        ret = SaveToCSSPWebToolsPictureToRemove((int)CurrentInfrastructure.InfrastructureTVItemID, (int)picture.PictureTVItemID, AdminEmail);
-            //        ret = ret.Replace("\"", "");
-            //        if (ret.StartsWith("ERROR:"))
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //            if (NeedToSave)
-            //            {
-            //                SaveSubsectorTextFile();
-            //            }
-            //        }
-            //        else
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-
-            //            PictureTVItemIDListToRemove.Add((int)picture.PictureTVItemID);
-
-            //            if (fiPictureToDelete.Exists)
-            //            {
-            //                try
-            //                {
-            //                    fiPictureToDelete.Delete();
-            //                }
-            //                catch (Exception ex)
-            //                {
-            //                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //                    string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
-            //                    EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
-            //                }
-            //            }
-
-            //            NeedToSave = true;
-            //        }
-
-            //    }
-            //}
-
-            //foreach (int pictureTVItemIDToDelete in PictureTVItemIDListToRemove)
-            //{
-            //    Picture picture = CurrentInfrastructure.InfrastructurePictureList.Where(c => c.PictureTVItemID == pictureTVItemIDToDelete).FirstOrDefault();
-
-            //    if (picture != null)
-            //    {
-            //        CurrentInfrastructure.InfrastructurePictureList.Remove(picture);
-            //    }
-            //}
-
-            //foreach (Picture picture in CurrentInfrastructure.InfrastructurePictureList)
-            //{
-            //    bool IsNew = false;
-            //    if (picture.PictureTVItemID >= 10000000)
-            //    {
-            //        IsNew = true;
-
-            //        string MessageText = $"Adding picture --- [{picture.FileNameNew}]\r\n";
-            //        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
-
-            //        FileInfo fiPicture = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentInfrastructure.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}");
-
-            //        if (!fiPicture.Exists)
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //            continue;
-            //        }
-
-            //        ret = SaveToCSSPWebToolsPicture(fiPicture, (int)CurrentInfrastructure.InfrastructureTVItemID, AdminEmail);
-            //        ret = ret.Replace("\"", "");
-            //        if (ret.StartsWith("ERROR:"))
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //            if (NeedToSave)
-            //            {
-            //                SaveSubsectorTextFile();
-            //            }
-            //        }
-            //        else
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-
-            //            picture.PictureTVItemID = int.Parse(ret);
-
-            //            FileInfo fiPictureNew = new FileInfo($@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentInfrastructure.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}");
-
-            //            if (fiPicture.Exists)
-            //            {
-            //                try
-            //                {
-            //                    File.Copy(fiPicture.FullName, fiPictureNew.FullName);
-            //                    fiPicture.Delete();
-            //                }
-            //                catch (Exception ex)
-            //                {
-            //                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //                    string ErrMessage = ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
-            //                    EmitRTBMessage(new RTBMessageEventArgs($"{ErrMessage}"));
-            //                }
-            //            }
-
-            //            NeedToSave = true;
-            //        }
-            //    }
-
-            //    if (picture.FileNameNew != null
-            //        || picture.DescriptionNew != null
-            //        || picture.ExtensionNew != null
-            //        || IsNew)
-            //    {
-            //        string FileNameText = picture.FileNameNew != null ? picture.FileNameNew : picture.FileName;
-            //        string DescriptionText = picture.DescriptionNew != null ? picture.DescriptionNew : picture.Description;
-            //        string ExtensionText = picture.ExtensionNew != null ? picture.ExtensionNew : picture.Extension;
-
-            //        string MessageText = $"Changing properties of picture --- [{picture.FileNameNew}]\r\n";
-            //        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
-
-
-            //        ret = SaveToCSSPWebToolsPictureInfo((int)CurrentInfrastructure.InfrastructureTVItemID, (int)picture.PictureTVItemID, FileNameText, DescriptionText, ExtensionText, AdminEmail);
-            //        ret = ret.Replace("\"", "");
-            //        if (ret.StartsWith("ERROR:"))
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-            //            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //            if (NeedToSave)
-            //            {
-            //                SaveSubsectorTextFile();
-            //            }
-            //        }
-            //        else
-            //        {
-            //            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-
-            //            picture.PictureTVItemID = int.Parse(ret);
-            //            picture.FileName = FileNameText;
-            //            picture.Description = DescriptionText;
-            //            picture.Extension = ExtensionText;
-            //            picture.FileNameNew = null;
-            //            picture.DescriptionNew = null;
-            //            picture.ExtensionNew = null;
-            //            NeedToSave = true;
-            //        }
-            //    }
-            //}
-
-            //if (NeedToSave)
-            //{
-            //    SaveSubsectorTextFile();
-            //    RedrawSinglePanelPSS();
-            //    ReDrawInfrastructure();
-            //}
+            if (NeedToSave)
+            {
+                // SaveMunicipalityTextFile();
+            }
 
             EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: completed"));
 
@@ -3070,7 +3698,14 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 CurrentInfrastructure = infrastructure;
                 InfrastructureSaveToCSSPWebTools();
+
+                int sfe = municipalityDoc.Municipality.InfrastructureList.Count;
             }
+
+            SaveMunicipalityTextFile();
+            RedrawInfrastructureList();
+            ReDrawInfrastructure();
+
         }
         public void PSSSaveToCSSPWebTools()
         {
@@ -3220,7 +3855,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string MessageText = $"Trying to Change Lat and Lng --- old [{LatText} {LngText}] --- new [{Lat.ToString("F5")} {Lng.ToString("F5")}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-                    ret = SaveToCSSPWebToolsLatLng((int)CurrentPSS.PSSTVItemID, Lat, Lng, AdminEmail);
+                    ret = SaveToCSSPWebToolsLatLng((int)CurrentPSS.PSSTVItemID, Lat, Lng, TVTypeEnum.PolSourceSite, AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR:"))
                     {
@@ -3309,7 +3944,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, true, false, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -3346,7 +3981,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, true, false, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -4347,13 +4982,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
 
-                        //#region TreatmentType
-                        //X = 10;
-                        //DrawItemEnum(X, Y, CurrentInfrastructure.TreatmentType, CurrentInfrastructure.TreatmentTypeNew, "Treatment Type", "comboBoxTreatmentType", typeof(TreatmentTypeEnum));
-
-                        //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        //#endregion TreatmentType
-
                         #region DisinfectionType
                         X = 10;
                         DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum));
@@ -4364,12 +4992,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     if (IsPlant)
                     {
-                        //#region TreatmentType
-                        //X = 10;
-                        //DrawItemEnum(X, Y, CurrentInfrastructure.TreatmentType, CurrentInfrastructure.TreatmentTypeNew, "Treatment Type", "comboBoxTreatmentType", typeof(TreatmentTypeEnum));
-
-                        //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        //#endregion TreatmentType
 
                         #region PreliminaryTreatmentType
                         X = 10;
@@ -4518,29 +5140,19 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 }
 
-                #region Comment
+                #region CommentEN
                 X = 10;
-                DrawItemTextMultiline(X, Y, CurrentInfrastructure.Comment, CurrentInfrastructure.CommentNew, "Comment", "textBoxComment", 500);
+                DrawItemTextMultiline(X, Y, CurrentInfrastructure.CommentEN, CurrentInfrastructure.CommentENNew, "Comment (EN)", "textBoxCommentEN", 500);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                #endregion Comment
+                #endregion CommentEN
 
-                if (false)
-                {
-                    #region TimeOffset_hour
-                    X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.TimeOffset_hour, CurrentInfrastructure.TimeOffset_hourNew, "Time Offset (hour)", 1, "textBoxTimeOffset_hour");
+                #region CommentFR
+                X = 10;
+                DrawItemTextMultiline(X, Y, CurrentInfrastructure.CommentFR, CurrentInfrastructure.CommentFRNew, "Comment (FR)", "textBoxCommentFR", 500);
 
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion TimeOffset_hour
-
-                    #region TempCatchAllRemoveLater
-                    X = 10;
-                    DrawItemTextMultiline(X, Y, CurrentInfrastructure.TempCatchAllRemoveLater, CurrentInfrastructure.TempCatchAllRemoveLaterNew, "Temp Catch All Remove Later", "textBoxTempCatchAllRemoveLater", 500);
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion TempCatchAllRemoveLater
-                }
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion CommentFR
 
                 if (IsLS || IsWWTP)
                 {
@@ -4737,7 +5349,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                        || CurrentInfrastructure.IsActiveNew != null
                        || CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID != null
                        || CurrentInfrastructure.InfrastructureAddressNew.AddressType != null
-                       || CurrentInfrastructure.InfrastructureAddressNew.Municipality != null
+                       // || CurrentInfrastructure.InfrastructureAddressNew.Municipality != null
                        || CurrentInfrastructure.InfrastructureAddressNew.PostalCode != null
                        || CurrentInfrastructure.InfrastructureAddressNew.StreetName != null
                        || CurrentInfrastructure.InfrastructureAddressNew.StreetNumber != null
@@ -4754,7 +5366,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || CurrentInfrastructure.AverageFlow_m3_dayNew != null
                             || CurrentInfrastructure.CanOverflowNew != null
                             || CurrentInfrastructure.CollectionSystemTypeNew != null
-                            || CurrentInfrastructure.CommentNew != null
+                            || CurrentInfrastructure.CommentENNew != null
+                            || CurrentInfrastructure.CommentFRNew != null
                             || CurrentInfrastructure.DecayRate_per_dayNew != null
                             || CurrentInfrastructure.DesignFlow_m3_dayNew != null
                             || CurrentInfrastructure.DisinfectionTypeNew != null
@@ -4762,17 +5375,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || CurrentInfrastructure.FacilityTypeNew != null
                             || CurrentInfrastructure.FarFieldVelocity_m_sNew != null
                             || CurrentInfrastructure.HorizontalAngle_degNew != null
-                            || CurrentInfrastructure.InfrastructureAddressNew != null
-                            || CurrentInfrastructure.InfrastructureCategoryNew != null
                             || CurrentInfrastructure.InfrastructureTypeNew != null
                             || CurrentInfrastructure.IsActiveNew != null
                             || CurrentInfrastructure.IsMechanicallyAeratedNew != null
-                            || CurrentInfrastructure.LSIDNew != null
                             || CurrentInfrastructure.NearFieldVelocity_m_sNew != null
                             || CurrentInfrastructure.NumberOfAeratedCellsNew != null
                             || CurrentInfrastructure.NumberOfCellsNew != null
                             || CurrentInfrastructure.NumberOfPortsNew != null
-                            //|| CurrentInfrastructure.PathCoordListNew != null
                             || CurrentInfrastructure.PeakFlow_m3_dayNew != null
                             || CurrentInfrastructure.PercFlowOfTotalNew != null
                             || CurrentInfrastructure.PopServedNew != null
@@ -4781,20 +5390,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || CurrentInfrastructure.PortSpacing_mNew != null
                             || CurrentInfrastructure.PreliminaryTreatmentTypeNew != null
                             || CurrentInfrastructure.PrimaryTreatmentTypeNew != null
-                            || CurrentInfrastructure.PrismIDNew != null
                             || CurrentInfrastructure.PumpsToTVItemIDNew != null
                             || CurrentInfrastructure.ReceivingWaterSalinity_PSUNew != null
                             || CurrentInfrastructure.ReceivingWaterTemperature_CNew != null
                             || CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew != null
                             || CurrentInfrastructure.SecondaryTreatmentTypeNew != null
                             || CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew != null
-                            || CurrentInfrastructure.SiteIDNew != null
-                            || CurrentInfrastructure.SiteNew != null
-                            || CurrentInfrastructure.TempCatchAllRemoveLaterNew != null
                             || CurrentInfrastructure.TertiaryTreatmentTypeNew != null
-                            || CurrentInfrastructure.TimeOffset_hourNew != null
-                            || CurrentInfrastructure.TPIDNew != null
-                            || CurrentInfrastructure.TreatmentTypeNew != null
                             || CurrentInfrastructure.TVTextNew != null
                             || CurrentInfrastructure.VerticalAngle_degNew != null)
                         {
@@ -4828,7 +5430,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         butInfrastructureSaveToCSSPWebTools.Tag = $"{CurrentInfrastructure.InfrastructureTVItemID}";
                         butInfrastructureSaveToCSSPWebTools.Font = new Font(new FontFamily(butInfrastructureSaveToCSSPWebTools.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
                         butInfrastructureSaveToCSSPWebTools.Padding = new Padding(5);
-                        butInfrastructureSaveToCSSPWebTools.Click += butSaveToCSSPWebTools_Click;
+                        butInfrastructureSaveToCSSPWebTools.Click += butSaveAllToCSSPWebTools_Click;
 
                         PanelViewAndEdit.Controls.Add(butInfrastructureSaveToCSSPWebTools);
 
@@ -5306,7 +5908,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                    CurrentInfrastructure.InfrastructureAddressNew.PostalCode = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 7)
+                                        {
+                                            MessageBox.Show("Postal Code maximum length is 7 characters", "Error");
+                                        }
+                                        CurrentInfrastructure.InfrastructureAddressNew.PostalCode = tb.Text;
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
+                                        CurrentInfrastructure.InfrastructureAddress.PostalCode = null;
+                                    }
                                     IsDirty = true;
                                 }
                             }
@@ -5324,15 +5938,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.LatNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < -90.0f || TempFloat > 90.0f)
+                                    {
+                                        MessageBox.Show("Latitude should be between -90 and 90", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.LatNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.LatNew = null;
-                                tb.Text = CurrentInfrastructure.Lat.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Latitute"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.Lat.ToString();
+                                    MessageBox.Show("Please enter a valid number for Latitute", "Error");
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.Lat = null;
+                                }
                             }
                         }
                         break;
@@ -5348,15 +5976,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.LatOutfallNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < -90.0f || TempFloat > 90.0f)
+                                    {
+                                        MessageBox.Show("Latitude Outfall should be between -90 and 90", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.LatOutfallNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.LatOutfallNew = null;
-                                tb.Text = CurrentInfrastructure.LatOutfall.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Latitude Outfall"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.LatOutfall.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Latitude Outfall"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.LatOutfall = null;
+                                }
                             }
                         }
                         break;
@@ -5372,15 +6014,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.LngNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < -180.0f || TempFloat > 180.0f)
+                                    {
+                                        MessageBox.Show("Longitude should be between -180 and 180", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.LngNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.LngNew = null;
-                                tb.Text = CurrentInfrastructure.Lng.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Longitude"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.Lng.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Longitude"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.Lng = null;
+                                }
                             }
                         }
                         break;
@@ -5396,15 +6052,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.LngOutfallNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < -180.0f || TempFloat > 180.0f)
+                                    {
+                                        MessageBox.Show("Longitude Outfall should be between -180 and 180", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.LngOutfallNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.LngOutfallNew = null;
-                                tb.Text = CurrentInfrastructure.LngOutfall.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Longitude Outfall"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.LngOutfall.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Longitude Outfall"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.LngOutfall = null;
+                                }
                             }
                         }
                         break;
@@ -5420,7 +6090,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                    CurrentInfrastructure.InfrastructureAddressNew.Municipality = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Municipality maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentInfrastructure.InfrastructureAddressNew.Municipality = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
+                                        CurrentInfrastructure.InfrastructureAddress.Municipality = null;
+                                    }
                                     IsDirty = true;
                                 }
                             }
@@ -5438,7 +6120,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                    CurrentInfrastructure.InfrastructureAddressNew.StreetName = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Street Name maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentInfrastructure.InfrastructureAddressNew.StreetName = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
+                                        CurrentInfrastructure.InfrastructureAddress.StreetName = null;
+                                    }
                                     IsDirty = true;
                                 }
                             }
@@ -5456,7 +6150,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                    CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Street Number maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
+                                        CurrentInfrastructure.InfrastructureAddress.StreetNumber = null;
+                                    }
                                     IsDirty = true;
                                 }
                             }
@@ -5473,161 +6179,77 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.TVTextNew = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Infrastructure Name maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentInfrastructure.TVTextNew = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.TVTextNew = null;
+                                        CurrentInfrastructure.TVText = null;
+                                    }
                                     IsDirty = true;
                                 }
                             }
                         }
                         break;
-                    case "textBoxComment":
+                    case "textBoxCommentEN":
                         {
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if ("" + CurrentInfrastructure.Comment == tb.Text)
+                                if ("" + CurrentInfrastructure.CommentEN == tb.Text)
                                 {
-                                    CurrentInfrastructure.CommentNew = null;
+                                    CurrentInfrastructure.CommentENNew = null;
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.CommentNew = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Infrastructure Name maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentInfrastructure.CommentENNew = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.CommentENNew = null;
+                                        CurrentInfrastructure.CommentEN = null;
+                                    }
                                     IsDirty = true;
                                 }
                             }
                         }
                         break;
-                    case "textBoxPrismID":
-                        {
-                            TextBox tb = (TextBox)control;
-
-                            if (int.TryParse(tb.Text, out int TempInt))
-                            {
-                                if (TempInt == CurrentInfrastructure.PrismID)
-                                {
-                                    CurrentInfrastructure.PrismIDNew = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.PrismIDNew = TempInt;
-                                    IsDirty = true;
-                                }
-                            }
-                            else
-                            {
-                                CurrentInfrastructure.PrismIDNew = null;
-                                tb.Text = CurrentInfrastructure.PrismID.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Prism ID"));
-                            }
-                        }
-                        break;
-                    case "textBoxTPID":
-                        {
-                            TextBox tb = (TextBox)control;
-
-                            if (int.TryParse(tb.Text, out int TempInt))
-                            {
-                                if (TempInt == CurrentInfrastructure.TPID)
-                                {
-                                    CurrentInfrastructure.TPIDNew = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.TPIDNew = TempInt;
-                                    IsDirty = true;
-                                }
-                            }
-                            else
-                            {
-                                CurrentInfrastructure.TPIDNew = null;
-                                tb.Text = CurrentInfrastructure.TPID.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for TPID"));
-                            }
-                        }
-                        break;
-                    case "textBoxLSID":
-                        {
-                            TextBox tb = (TextBox)control;
-
-                            if (int.TryParse(tb.Text, out int TempInt))
-                            {
-                                if (TempInt == CurrentInfrastructure.LSID)
-                                {
-                                    CurrentInfrastructure.LSIDNew = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.LSIDNew = TempInt;
-                                    IsDirty = true;
-                                }
-                            }
-                            else
-                            {
-                                CurrentInfrastructure.LSIDNew = null;
-                                tb.Text = CurrentInfrastructure.LSID.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for LSID"));
-                            }
-                        }
-                        break;
-                    case "textBoxSiteID":
-                        {
-                            TextBox tb = (TextBox)control;
-
-                            if (int.TryParse(tb.Text, out int TempInt))
-                            {
-                                if (TempInt == CurrentInfrastructure.SiteID)
-                                {
-                                    CurrentInfrastructure.SiteIDNew = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.SiteIDNew = TempInt;
-                                    IsDirty = true;
-                                }
-                            }
-                            else
-                            {
-                                CurrentInfrastructure.SiteIDNew = null;
-                                tb.Text = CurrentInfrastructure.SiteID.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for SiteID"));
-                            }
-                        }
-                        break;
-                    case "textBoxSite":
-                        {
-                            TextBox tb = (TextBox)control;
-
-                            if (int.TryParse(tb.Text, out int TempInt))
-                            {
-                                if (TempInt == CurrentInfrastructure.Site)
-                                {
-                                    CurrentInfrastructure.SiteNew = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.SiteNew = TempInt;
-                                    IsDirty = true;
-                                }
-                            }
-                            else
-                            {
-                                CurrentInfrastructure.SiteNew = null;
-                                tb.Text = CurrentInfrastructure.Site.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Site"));
-                            }
-                        }
-                        break;
-                    case "textBoxInfrastructureCategory":
+                    case "textBoxCommentFR":
                         {
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if ("" + CurrentInfrastructure.InfrastructureCategory == tb.Text)
+                                if ("" + CurrentInfrastructure.CommentFR == tb.Text)
                                 {
-                                    CurrentInfrastructure.InfrastructureCategoryNew = null;
+                                    CurrentInfrastructure.CommentFRNew = null;
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.InfrastructureCategoryNew = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Infrastructure Name maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentInfrastructure.CommentFRNew = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.CommentFRNew = null;
+                                        CurrentInfrastructure.CommentFR = null;
+                                    }
                                     IsDirty = true;
                                 }
                             }
@@ -5887,38 +6509,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    case "comboBoxTreatmentType":
-                        {
-                            ComboBox cb = (ComboBox)control;
-                            if (cb != null)
-                            {
-                                if (cb.SelectedItem == null)
-                                {
-                                    CurrentInfrastructure.TreatmentTypeNew = null;
-                                }
-                                else
-                                {
-                                    for (int i = 0, count = Enum.GetNames(typeof(TreatmentTypeEnum)).Count(); i < count; i++)
-                                    {
-                                        if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
-                                        {
-                                            if (CurrentInfrastructure.TreatmentType == i)
-                                            {
-                                                CurrentInfrastructure.TreatmentTypeNew = null;
-                                                IsDirty = true;
-                                            }
-                                            else
-                                            {
-                                                CurrentInfrastructure.TreatmentTypeNew = i;
-                                                IsDirty = true;
-                                            }
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                        break;
                     case "comboBoxDisinfectionType":
                         {
                             ComboBox cb = (ComboBox)control;
@@ -6015,6 +6605,82 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "textBoxNumberOfCells":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.NumberOfCells)
+                                {
+                                    CurrentInfrastructure.NumberOfCellsNew = null;
+                                }
+                                else
+                                {
+                                    if (TempInt < 0 || TempInt > 20)
+                                    {
+                                        MessageBox.Show("Number Of Cells should be between 0 and 20", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.NumberOfCellsNew = TempInt;
+                                        IsDirty = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.NumberOfCellsNew = null;
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.NumberOfCells.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Number of Cells"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.NumberOfCells = null;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxNumberOfAeratedCells":
+                        {
+                            TextBox tb = (TextBox)control;
+
+                            if (int.TryParse(tb.Text, out int TempInt))
+                            {
+                                if (TempInt == CurrentInfrastructure.NumberOfAeratedCells)
+                                {
+                                       CurrentInfrastructure.NumberOfAeratedCellsNew = null;
+                                }
+                                else
+                                {
+                                    if (TempInt < 0 || TempInt > 20)
+                                    {
+                                        MessageBox.Show("Number Of Aerated Cells should be between 0 and 20", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.NumberOfAeratedCellsNew = TempInt;
+                                        IsDirty = true;
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                CurrentInfrastructure.NumberOfAeratedCellsNew = null;
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.NumberOfAeratedCells.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Number of Aerated Cells"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.NumberOfAeratedCells = null;
+                                }
+                            }
+                        }
+                        break;
                     case "textBoxDesignFlow_m3_day":
                         {
                             TextBox tb = (TextBox)control;
@@ -6027,15 +6693,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.DesignFlow_m3_dayNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 10000000)
+                                    {
+                                        MessageBox.Show("Design Flow (m3/day) should be between 0 and 10000000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.DesignFlow_m3_dayNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.DesignFlow_m3_dayNew = null;
-                                tb.Text = CurrentInfrastructure.DesignFlow_m3_day.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Design Flow (m3/d)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.DesignFlow_m3_day.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Design Flow (m3/day)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.DesignFlow_m3_day = null;
+                                }
                             }
                         }
                         break;
@@ -6051,15 +6731,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.AverageFlow_m3_dayNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 10000000)
+                                    {
+                                        MessageBox.Show("Average Flow (m3/day) should be between 0 and 10000000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.AverageFlow_m3_dayNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.AverageFlow_m3_dayNew = null;
-                                tb.Text = CurrentInfrastructure.AverageFlow_m3_day.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Average Flow (m3/d)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.AverageFlow_m3_day.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Average Flow (m3/day)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.AverageFlow_m3_day = null;
+                                }
                             }
                         }
                         break;
@@ -6075,15 +6769,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.PeakFlow_m3_dayNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 10000000)
+                                    {
+                                        MessageBox.Show("Peak Flow (m3/day) should be between 0 and 10000000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.PeakFlow_m3_dayNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.PeakFlow_m3_dayNew = null;
-                                tb.Text = CurrentInfrastructure.PeakFlow_m3_day.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Peik Flow (m3/d)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.PeakFlow_m3_day.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Peak Flow (m3/day)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PeakFlow_m3_day = null;
+                                }
                             }
                         }
                         break;
@@ -6099,15 +6807,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.PopServedNew = TempInt;
-                                    IsDirty = true;
+                                    if (TempInt < 0 || TempInt > 10000000)
+                                    {
+                                        MessageBox.Show("Population Served should be between 0 and 10000000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.PopServedNew = TempInt;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.PopServedNew = null;
-                                tb.Text = CurrentInfrastructure.PopServed.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Population Served"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.PopServed.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Population Served"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PopServed = null;
+                                }
                             }
                         }
                         break;
@@ -6141,30 +6863,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    //case "textBoxCanOverflow":
-                    //    {
-                    //        TextBox tb = (TextBox)control;
-
-                    //        if (bool.TryParse(tb.Text, out bool TempBool))
-                    //        {
-                    //            if (TempBool == CurrentInfrastructure.CanOverflow)
-                    //            {
-                    //                CurrentInfrastructure.CanOverflowNew = null;
-                    //            }
-                    //            else
-                    //            {
-                    //                CurrentInfrastructure.CanOverflowNew = TempBool;
-                    //                IsDirty = true;
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            CurrentInfrastructure.CanOverflowNew = null;
-                    //            tb.Text = CurrentInfrastructure.CanOverflow.ToString();
-                    //            EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
-                    //        }
-                    //    }
-                    //    break;
                     case "textBoxPercFlowOfTotal":
                         {
                             TextBox tb = (TextBox)control;
@@ -6177,55 +6875,28 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.PercFlowOfTotalNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 100)
+                                    {
+                                        MessageBox.Show("Percent of total flow should be between 0 and 100", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.PercFlowOfTotalNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.PercFlowOfTotalNew = null;
-                                tb.Text = CurrentInfrastructure.PercFlowOfTotal.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Percent Flow of Total"));
-                            }
-                        }
-                        break;
-                    case "textBoxTimeOffset_hour":
-                        {
-                            TextBox tb = (TextBox)control;
-
-                            if (float.TryParse(tb.Text, out float TempFloat))
-                            {
-                                if (TempFloat == CurrentInfrastructure.TimeOffset_hour)
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
                                 {
-                                    CurrentInfrastructure.TimeOffset_hourNew = null;
+                                    tb.Text = CurrentInfrastructure.PercFlowOfTotal.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Percent of total flow"));
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.TimeOffset_hourNew = TempFloat;
-                                    IsDirty = true;
-                                }
-                            }
-                            else
-                            {
-                                CurrentInfrastructure.TimeOffset_hourNew = null;
-                                tb.Text = CurrentInfrastructure.TimeOffset_hour.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Time Offset (hour)"));
-                            }
-                        }
-                        break;
-                    case "textBoxTempCatchAllRemoveLater":
-                        {
-                            TextBox tb = (TextBox)control;
-                            if (tb != null)
-                            {
-                                if ("" + CurrentInfrastructure.TempCatchAllRemoveLater == tb.Text)
-                                {
-                                    CurrentInfrastructure.TempCatchAllRemoveLaterNew = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.TempCatchAllRemoveLaterNew = tb.Text;
-                                    IsDirty = true;
+                                    CurrentInfrastructure.PercFlowOfTotal = null;
                                 }
                             }
                         }
@@ -6242,15 +6913,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.AverageDepth_mNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 10000)
+                                    {
+                                        MessageBox.Show("Average Depth (m) should be between 0 and 10000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.AverageDepth_mNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.AverageDepth_mNew = null;
-                                tb.Text = CurrentInfrastructure.AverageDepth_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Average Depth (m)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.AverageDepth_m.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Average Depth (m)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.AverageDepth_m = null;
+                                }
                             }
                         }
                         break;
@@ -6266,15 +6951,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.NumberOfPortsNew = TempInt;
-                                    IsDirty = true;
+                                    if (TempInt < 0 || TempInt > 100)
+                                    {
+                                        MessageBox.Show("Number of Port should be between 0 and 10000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.NumberOfPortsNew = TempInt;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.NumberOfPortsNew = null;
-                                tb.Text = CurrentInfrastructure.NumberOfPorts.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Number of Ports"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.NumberOfPorts.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Number of Ports"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.NumberOfPorts = null;
+                                }
                             }
                         }
                         break;
@@ -6290,15 +6989,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.PortDiameter_mNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 10)
+                                    {
+                                        MessageBox.Show("Port Diameter (m) should be between 0 and 10", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.PortDiameter_mNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.PortDiameter_mNew = null;
-                                tb.Text = CurrentInfrastructure.PortDiameter_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Port Diameter (m)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.PortDiameter_m.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Port Diameter (m)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PortDiameter_m = null;
+                                }
                             }
                         }
                         break;
@@ -6314,15 +7027,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.PortSpacing_mNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 1000)
+                                    {
+                                        MessageBox.Show("Port Spacing (m) should be between 0 and 1000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.PortSpacing_mNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.PortSpacing_mNew = null;
-                                tb.Text = CurrentInfrastructure.PortSpacing_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Port Spacing (m)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.PortSpacing_m.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Port Spacing (m)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PortSpacing_m = null;
+                                }
                             }
                         }
                         break;
@@ -6338,15 +7065,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.PortElevation_mNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 10000)
+                                    {
+                                        MessageBox.Show("Port Elevation (m) should be between 0 and 10000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.PortElevation_mNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.PortElevation_mNew = null;
-                                tb.Text = CurrentInfrastructure.PortElevation_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Port Elevation (m)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.PortElevation_m.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Port Elevation (m)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PortElevation_m = null;
+                                }
                             }
                         }
                         break;
@@ -6362,15 +7103,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.VerticalAngle_degNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < -90 || TempFloat > 90)
+                                    {
+                                        MessageBox.Show("Vertical Angle (deg) should be between -90 and 90", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.VerticalAngle_degNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.VerticalAngle_degNew = null;
-                                tb.Text = CurrentInfrastructure.VerticalAngle_deg.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Vertical Angle (deg)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.VerticalAngle_deg.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Vertical Angle (deg)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.VerticalAngle_deg = null;
+                                }
                             }
                         }
                         break;
@@ -6386,15 +7141,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.HorizontalAngle_degNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < -180 || TempFloat > 180)
+                                    {
+                                        MessageBox.Show("Horizontal Angle (deg) should be between -180 and 180", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.HorizontalAngle_degNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.HorizontalAngle_degNew = null;
-                                tb.Text = CurrentInfrastructure.HorizontalAngle_deg.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Horizontal Angle (deg)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.HorizontalAngle_deg.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Horizontal Angle (deg)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.HorizontalAngle_deg = null;
+                                }
                             }
                         }
                         break;
@@ -6410,15 +7179,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.DecayRate_per_dayNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 100)
+                                    {
+                                        MessageBox.Show("Decay Rate (/day) should be between 0 and 100", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.DecayRate_per_dayNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.DecayRate_per_dayNew = null;
-                                tb.Text = CurrentInfrastructure.DecayRate_per_day.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Decay Rate (/d)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.DecayRate_per_day.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Decay Rate (/day)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.DecayRate_per_day = null;
+                                }
                             }
                         }
                         break;
@@ -6434,15 +7217,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.NearFieldVelocity_m_sNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 25)
+                                    {
+                                        MessageBox.Show("Near Field Velocity (m/s) should be between 0 and 25", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.NearFieldVelocity_m_sNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.NearFieldVelocity_m_sNew = null;
-                                tb.Text = CurrentInfrastructure.NearFieldVelocity_m_s.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Near Field Velocity (m/s)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.NearFieldVelocity_m_s.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Near Field Velocity (m/s)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.NearFieldVelocity_m_s = null;
+                                }
                             }
                         }
                         break;
@@ -6458,15 +7255,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.FarFieldVelocity_m_sNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 25)
+                                    {
+                                        MessageBox.Show("Far Field Velocity (m/s) should be between 0 and 25", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.FarFieldVelocity_m_sNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.FarFieldVelocity_m_sNew = null;
-                                tb.Text = CurrentInfrastructure.FarFieldVelocity_m_s.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Far Field Velocity (m/s)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.FarFieldVelocity_m_s.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Far Field Velocity (m/s)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.FarFieldVelocity_m_s = null;
+                                }
                             }
                         }
                         break;
@@ -6482,15 +7293,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.ReceivingWaterSalinity_PSUNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 40)
+                                    {
+                                        MessageBox.Show("Receiving Water Salinity (PSU) should be between 0 and 40", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.ReceivingWaterSalinity_PSUNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.ReceivingWaterSalinity_PSUNew = null;
-                                tb.Text = CurrentInfrastructure.ReceivingWaterSalinity_PSU.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Receiving Water Salinity (PSU)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.ReceivingWaterSalinity_PSU.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Receiving Water Salinity (PSU)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.ReceivingWaterSalinity_PSU = null;
+                                }
                             }
                         }
                         break;
@@ -6506,15 +7331,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.ReceivingWaterTemperature_CNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < -10 || TempFloat > 40)
+                                    {
+                                        MessageBox.Show("Receiving Water Temperature (˚C) should be between -10 and 40", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.ReceivingWaterTemperature_CNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.ReceivingWaterTemperature_CNew = null;
-                                tb.Text = CurrentInfrastructure.ReceivingWaterTemperature_C.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Receiving Water Temperature (˚C)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.ReceivingWaterTemperature_C.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Receiving Water Temperature (˚C)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.ReceivingWaterTemperature_C = null;
+                                }
                             }
                         }
                         break;
@@ -6530,15 +7369,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew = TempInt;
-                                    IsDirty = true;
+                                    if (TempInt < 0 || TempInt > 20000000)
+                                    {
+                                        MessageBox.Show("Receiving Water (MPN / 100 mL) should be between 0 and 20000000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew = TempInt;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew = null;
-                                tb.Text = CurrentInfrastructure.ReceivingWater_MPN_per_100ml.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Receiving Water (MPN / 100 mL)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.ReceivingWater_MPN_per_100ml.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Receiving Water (MPN / 100 mL)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.ReceivingWater_MPN_per_100ml = null;
+                                }
                             }
                         }
                         break;
@@ -6554,42 +7407,32 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentInfrastructure.DistanceFromShore_mNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < 0 || TempFloat > 2000)
+                                    {
+                                        MessageBox.Show("Distance from Shore (m) should be between 0 and 2000", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.DistanceFromShore_mNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentInfrastructure.DistanceFromShore_mNew = null;
-                                tb.Text = CurrentInfrastructure.DistanceFromShore_m.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Distance from Shore (m)"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.DistanceFromShore_m.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Distance from Shore (m)"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.DistanceFromShore_m = null;
+                                }
                             }
                         }
                         break;
-                    //case "textBoxSeeOtherMunicipalityTVItemID":
-                    //    {
-                    //        TextBox tb = (TextBox)control;
-
-                    //        if (int.TryParse(tb.Text, out int TempInt))
-                    //        {
-                    //            if (TempInt == CurrentInfrastructure.SeeOtherMunicipalityTVItemID)
-                    //            {
-                    //                CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
-                    //            }
-                    //            else
-                    //            {
-                    //                CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = TempInt;
-                    //                IsDirty = true;
-                    //            }
-                    //        }
-                    //        else
-                    //        {
-                    //            CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew = null;
-                    //            tb.Text = CurrentInfrastructure.SeeOtherMunicipalityTVItemID.ToString();
-                    //            EmitStatus(new StatusEventArgs("Please enter a valid number for See Other Municipality TVItemID"));
-                    //        }
-                    //    }
-                    //    break;
                     case "textBoxPumpsToTVItemID":
                         {
                             TextBox tb = (TextBox)control;
@@ -6652,8 +7495,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                             else
                             {
                                 CurrentInfrastructure.PumpsToTVItemIDNew = null;
-                                tb.Text = CurrentInfrastructure.PumpsToTVItemID.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Pumps to Infrastructure ID"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentInfrastructure.PumpsToTVItemID.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Pumps to TVItemID"));
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.PumpsToTVItemID = null;
+                                }
                             }
                         }
                         break;
@@ -6737,7 +7587,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
-                                    CurrentPSS.PSSAddressNew.PostalCode = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Postal Code maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentPSS.PSSAddressNew.PostalCode = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentPSS.PSSAddressNew.PostalCode = null;
+                                        CurrentPSS.PSSAddress.PostalCode = null;
+                                    }
                                     SaveRestOfAddressNew();
                                     IsDirty = true;
                                 }
@@ -6756,15 +7618,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentPSS.LatNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < -90.0f || TempFloat > 90.0f)
+                                    {
+                                        MessageBox.Show("Lat should be between -90 and 90", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentPSS.LatNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentPSS.LatNew = null;
-                                tb.Text = CurrentPSS.Lat.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentPSS.Lat.ToString();
+                                    MessageBox.Show("Please enter a valid number for Latitute", "Error");
+                                }
+                                else
+                                {
+                                    CurrentPSS.Lat = null;
+                                }
                             }
                         }
                         break;
@@ -6780,15 +7656,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentPSS.LngNew = TempFloat;
-                                    IsDirty = true;
+                                    if (TempFloat < -180.0f || TempFloat > 180.0f)
+                                    {
+                                        MessageBox.Show("Longitude should be between -180 and 180", "Error");
+                                    }
+                                    else
+                                    {
+                                        CurrentPSS.LngNew = TempFloat;
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                             else
                             {
                                 CurrentPSS.LngNew = null;
-                                tb.Text = CurrentPSS.Lng.ToString();
-                                EmitStatus(new StatusEventArgs("Please enter a valid number for Lat"));
+                                if (!string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    tb.Text = CurrentPSS.Lng.ToString();
+                                    EmitStatus(new StatusEventArgs("Please enter a valid number for Longitude"));
+                                }
+                                else
+                                {
+                                    CurrentPSS.Lng = null;
+                                }
                             }
                         }
                         break;
@@ -6804,7 +7694,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
-                                    CurrentPSS.PSSAddressNew.Municipality = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Municipality maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentPSS.PSSAddressNew.Municipality = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentPSS.PSSAddressNew.Municipality = null;
+                                        CurrentPSS.PSSAddress.Municipality = null;
+                                    }
                                     SaveRestOfAddressNew();
                                     IsDirty = true;
                                 }
@@ -6823,7 +7725,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
-                                    CurrentPSS.PSSAddressNew.StreetName = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Street Name maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentPSS.PSSAddressNew.StreetName = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentPSS.PSSAddressNew.StreetName = null;
+                                        CurrentPSS.PSSAddress.StreetName = null;
+                                    }
                                     SaveRestOfAddressNew();
                                     IsDirty = true;
                                 }
@@ -6842,7 +7756,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
-                                    CurrentPSS.PSSAddressNew.StreetNumber = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Street Number maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentPSS.PSSAddressNew.StreetNumber = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentPSS.PSSAddressNew.StreetNumber = null;
+                                        CurrentPSS.PSSAddress.StreetNumber = null;
+                                    }
                                     SaveRestOfAddressNew();
                                     IsDirty = true;
                                 }
@@ -6860,7 +7786,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                                 else
                                 {
-                                    CurrentPSS.TVTextNew = tb.Text;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Pollution Source Site Name maximum length is 200 characters", "Error");
+                                        }
+                                        CurrentPSS.TVTextNew = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentPSS.TVTextNew = null;
+                                        CurrentPSS.TVText = null;
+                                    }
                                     IsDirty = true;
                                 }
                             }
@@ -6922,7 +7860,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 CurrentPSS.PSSAddressNew.PostalCode = CurrentPSS.PSSAddress.PostalCode;
             }
         }
-        private string SaveToCSSPWebToolsAddress(int ProvinceTVItemID, int TVItemID, string StreetNumber, string StreetName, int StreetType, string Municipality, string PostalCode, bool CreateMunicipality, string AdminEmail)
+        private string SaveToCSSPWebToolsAddress(int ProvinceTVItemID, int TVItemID, string StreetNumber, string StreetName, int StreetType, string Municipality, string PostalCode, bool CreateMunicipality, bool IsPSS, bool IsInfrastructure, string AdminEmail)
         {
             try
             {
@@ -6937,6 +7875,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 paramList.Add("Municipality", Municipality);
                 paramList.Add("PostalCode", PostalCode);
                 paramList.Add("CreateMunicipality", CreateMunicipality.ToString());
+                paramList.Add("IsPSS", IsPSS.ToString());
+                paramList.Add("IsInfrastructure", IsInfrastructure.ToString());
                 paramList.Add("AdminEmail", AdminEmail);
 
                 using (WebClient webClient = new WebClient())
@@ -6945,10 +7885,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     webClient.Proxy = webProxy;
 
                     webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    Uri uri = new Uri($"{baseURLEN}SavePSSAddressJSON");
+                    Uri uri = new Uri($"{baseURLEN}SavePSSOrInfrastructureAddressJSON");
                     if (Language == LanguageEnum.fr)
                     {
-                        uri = new Uri($"{baseURLFR}SavePSSAddressJSON");
+                        uri = new Uri($"{baseURLFR}SavePSSOrInfrastructureAddressJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);
@@ -6963,19 +7903,69 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
             }
         }
-        private string SaveToCSSPWebToolsCreateNewInfrastucture(int InfrastructureTVItemID, int TVItemID, string TVText, int SiteNumber, float Lat, float Lng, string AdminEmail)
+        private string SaveToCSSPWebToolsCreateOrModifyInfrastructure(int MunicipalityTVItemID, int TVItemID, string TVText,
+            float? Lat, float? Lng, float? LatOutfall, float? LngOutfall, string CommentEN, string CommentFR, InfrastructureTypeEnum? InfrastructureType,
+            FacilityTypeEnum? FacilityType, bool? IsMechanicallyAerated, int? NumberOfCells, int? NumberOfAeratedCells, AerationTypeEnum? AerationType,
+            PreliminaryTreatmentTypeEnum? PreliminaryTreatmentType, PrimaryTreatmentTypeEnum? PrimaryTreatmentType,
+            SecondaryTreatmentTypeEnum? SecondaryTreatmentType, TertiaryTreatmentTypeEnum? TertiaryTreatmentType,
+            DisinfectionTypeEnum? DisinfectionType, CollectionSystemTypeEnum? CollectionSystemType, AlarmSystemTypeEnum? AlarmSystemType,
+            float? DesignFlow_m3_day, float? AverageFlow_m3_day, float? PeakFlow_m3_day, int? PopServed, bool? CanOverflow,
+            float? PercFlowOfTotal, float? AverageDepth_m, int? NumberOfPorts,
+            float? PortDiameter_m, float? PortSpacing_m, float? PortElevation_m, float? VerticalAngle_deg, float? HorizontalAngle_deg,
+            float? DecayRate_per_day, float? NearFieldVelocity_m_s, float? FarFieldVelocity_m_s, float? ReceivingWaterSalinity_PSU,
+            float? ReceivingWaterTemperature_C, int? ReceivingWater_MPN_per_100ml, float? DistanceFromShore_m,
+            int? SeeOtherMunicipalityTVItemID, string SeeOtherMunicipalityText, int? PumpsToTVItemID, string AdminEmail)
         {
             try
             {
                 string retStr = "";
 
                 NameValueCollection paramList = new NameValueCollection();
-                paramList.Add("InfrastructureTVItemID", InfrastructureTVItemID.ToString());
+                paramList.Add("MunicipalityTVItemID", MunicipalityTVItemID.ToString());
                 paramList.Add("TVItemID", TVItemID.ToString());
                 paramList.Add("TVText", TVText);
-                paramList.Add("SiteNumber", SiteNumber.ToString());
                 paramList.Add("Lat", Lat.ToString());
                 paramList.Add("Lng", Lng.ToString());
+                paramList.Add("LatOutfall", LatOutfall.ToString());
+                paramList.Add("LngOutfall", LngOutfall.ToString());
+                paramList.Add("CommentEN", CommentEN);
+                paramList.Add("CommentFR", CommentFR);
+                paramList.Add("InfrastructureType", ((int?)InfrastructureType).ToString());
+                paramList.Add("FacilityType", ((int?)FacilityType).ToString());
+                paramList.Add("IsMechanicallyAerated", IsMechanicallyAerated.ToString());
+                paramList.Add("NumberOfCells", NumberOfCells.ToString());
+                paramList.Add("NumberOfAeratedCells", NumberOfAeratedCells.ToString());
+                paramList.Add("AerationType", ((int?)AerationType).ToString());
+                paramList.Add("PreliminaryTreatmentType", ((int?)PreliminaryTreatmentType).ToString());
+                paramList.Add("PrimaryTreatmentType", ((int?)PrimaryTreatmentType).ToString());
+                paramList.Add("SecondaryTreatmentType", ((int?)SecondaryTreatmentType).ToString());
+                paramList.Add("TertiaryTreatmentType", ((int?)TertiaryTreatmentType).ToString());
+                paramList.Add("DisinfectionType", ((int?)DisinfectionType).ToString());
+                paramList.Add("CollectionSystemType", ((int?)CollectionSystemType).ToString());
+                paramList.Add("AlarmSystemType", ((int?)AlarmSystemType).ToString());
+                paramList.Add("DesignFlow_m3_day", DesignFlow_m3_day.ToString());
+                paramList.Add("AverageFlow_m3_day", AverageFlow_m3_day.ToString());
+                paramList.Add("PeakFlow_m3_day", PeakFlow_m3_day.ToString());
+                paramList.Add("PopServed", PopServed.ToString());
+                paramList.Add("CanOverflow", CanOverflow.ToString());
+                paramList.Add("PercFlowOfTotal", PercFlowOfTotal.ToString());
+                paramList.Add("AverageDepth_m", AverageDepth_m.ToString());
+                paramList.Add("NumberOfPorts", NumberOfPorts.ToString());
+                paramList.Add("PortDiameter_m", PortDiameter_m.ToString());
+                paramList.Add("PortSpacing_m", PortSpacing_m.ToString());
+                paramList.Add("PortElevation_m", PortElevation_m.ToString());
+                paramList.Add("VerticalAngle_deg", VerticalAngle_deg.ToString());
+                paramList.Add("HorizontalAngle_deg", HorizontalAngle_deg.ToString());
+                paramList.Add("DecayRate_per_day", DecayRate_per_day.ToString());
+                paramList.Add("NearFieldVelocity_m_s", NearFieldVelocity_m_s.ToString());
+                paramList.Add("FarFieldVelocity_m_s", FarFieldVelocity_m_s.ToString());
+                paramList.Add("ReceivingWaterSalinity_PSU", ReceivingWaterSalinity_PSU.ToString());
+                paramList.Add("ReceivingWaterTemperature_C", ReceivingWaterTemperature_C.ToString());
+                paramList.Add("ReceivingWater_MPN_per_100ml", ReceivingWater_MPN_per_100ml.ToString());
+                paramList.Add("DistanceFromShore_m", DistanceFromShore_m.ToString());
+                paramList.Add("SeeOtherMunicipalityTVItemID", SeeOtherMunicipalityTVItemID.ToString());
+                paramList.Add("SeeOtherMunicipalityText", SeeOtherMunicipalityText.ToString());
+                paramList.Add("PumpsToTVItemID", PumpsToTVItemID.ToString());
                 paramList.Add("AdminEmail", AdminEmail);
 
                 using (WebClient webClient = new WebClient())
@@ -6984,10 +7974,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     webClient.Proxy = webProxy;
 
                     webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    Uri uri = new Uri($"{baseURLEN}CreateNewInfrastructureJSON");
+                    Uri uri = new Uri($"{baseURLEN}CreateOrModifyInfrastructureJSON");
                     if (Language == LanguageEnum.fr)
                     {
-                        uri = new Uri($"{baseURLFR}CreateNewInfrastructureJSON");
+                        uri = new Uri($"{baseURLFR}CreateOrModifyInfrastructureJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);
@@ -7154,7 +8144,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
-        private string SaveToCSSPWebToolsLatLng(int TVItemID, float Lat, float Lng, string AdminEmail)
+        private string SaveToCSSPWebToolsLatLng(int TVItemID, float Lat, float Lng, TVTypeEnum TVType, string AdminEmail)
         {
             try
             {
@@ -7164,6 +8154,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 paramList.Add("TVItemID", TVItemID.ToString());
                 paramList.Add("Lat", ((float)Lat).ToString("F5"));
                 paramList.Add("Lng", ((float)Lng).ToString("F5"));
+                paramList.Add("TVType", ((int)TVType).ToString());
                 paramList.Add("AdminEmail", AdminEmail);
 
                 using (WebClient webClient = new WebClient())
@@ -7172,10 +8163,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     webClient.Proxy = webProxy;
 
                     webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    Uri uri = new Uri($"{baseURLEN}SavePSSLatLngJSON");
+                    Uri uri = new Uri($"{baseURLEN}SaveLatLngWithTVTypeJSON");
                     if (Language == LanguageEnum.fr)
                     {
-                        uri = new Uri($"{baseURLFR}SavePSSLatLngJSON");
+                        uri = new Uri($"{baseURLFR}SaveLatLngWithTVTypeJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);
@@ -7386,6 +8377,40 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
+        }
+        public string InfrastructureExistInCSSPWebTools(int TVItemID, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("TVItemID", TVItemID.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}InfrastructureExistJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}InfrastructureExistJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
         }
         public string PSSExistInCSSPWebTools(int TVItemID, string AdminEmail)
         {

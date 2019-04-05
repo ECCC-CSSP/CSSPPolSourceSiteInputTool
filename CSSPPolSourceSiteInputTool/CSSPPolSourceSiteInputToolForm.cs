@@ -154,11 +154,6 @@ namespace CSSPPolSourceSiteInputTool
                             polSourceSiteInputToolHelper.AdminEmail = "Joe.Pomeroy@canada.ca";
                         }
                         break;
-                    case "thibodeaume":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Mark.Thibodeau@canada.ca";
-                        }
-                        break;
                     case "perchardg":
                         {
                             polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@canada.ca";
@@ -728,7 +723,7 @@ namespace CSSPPolSourceSiteInputTool
             ret = ret.Replace("\"", "");
             if (ret.StartsWith("ERROR:"))
             {
-                MessageBox.Show("Admin users list [pomeroyj, thibodeaume, perchardg, martellk]\r\n\r\nPlease contact Joe Pomeroy if you think you should have admin rights", "Invalid user for admin rights");
+                MessageBox.Show("Admin users list [pomeroyj, martellk, perchardg]\r\n\r\nPlease contact Joe Pomeroy or Karyne Martell if you think you should have admin rights", "Invalid user for admin rights");
             }
             else
             {
@@ -1520,7 +1515,6 @@ namespace CSSPPolSourceSiteInputTool
             if (Environment.UserName.ToLower() == "charles" ||
                 Environment.UserName.ToLower() == "leblancc" ||
                 Environment.UserName.ToLower() == "pomeroyj" ||
-                Environment.UserName.ToLower() == "thibodeaume" ||
                 Environment.UserName.ToLower() == "perchardg" ||
                 Environment.UserName.ToLower() == "martellk")
             {
@@ -1635,16 +1629,16 @@ namespace CSSPPolSourceSiteInputTool
 
         private bool TryToCreateTheInfrastructureDirectory()
         {
-            TVItemModel tvItemModelInfrastructure = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
-            if (tvItemModelInfrastructure == null || tvItemModelInfrastructure.TVItemID == 0)
+            TVItemModel tvItemModelMunicipality = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
+            if (tvItemModelMunicipality == null || tvItemModelMunicipality.TVItemID == 0)
             {
                 richTextBoxStatus.Text = "Need to select a municipality first \r\n";
                 return false;
             }
 
-            string SubsectorText = tvItemModelInfrastructure.TVText;
+            string MunicipalityText = tvItemModelMunicipality.TVText;
 
-            DirectoryInfo di = new DirectoryInfo(@"C:\PollutionSourceSites\Infrastructures\" + SubsectorText + @"\");
+            DirectoryInfo di = new DirectoryInfo(@"C:\PollutionSourceSites\Infrastructures\" + MunicipalityText + @"\");
 
             if (!di.Exists)
             {

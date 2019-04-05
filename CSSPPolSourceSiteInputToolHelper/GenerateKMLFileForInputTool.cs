@@ -197,11 +197,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                 string LastUpdateDate_UTC = infrastructure.LastUpdateDate_UTC != null ? ((DateTime)infrastructure.LastUpdateDate_UTC).ToString("yyyy MMMM dd") : "---";
                 sbKML.AppendLine($@"                <p><b>Last Update Date:</b> {LastUpdateDate_UTC}</p>");
 
-                // doing Comment
-                sbKML.AppendLine($@"                <p><b>Comment:</b>{infrastructure.Comment.Replace("\r\n", "<br />")}</p>");
-                if (!string.IsNullOrWhiteSpace(infrastructure.CommentNew))
+                // doing CommentEN
+                sbKML.AppendLine($@"                <p><b>Comment (EN):</b>{infrastructure.CommentEN.Replace("\r\n", "<br />")}</p>");
+                if (!string.IsNullOrWhiteSpace(infrastructure.CommentENNew))
                 {
-                    sbKML.AppendLine($@"                <p><b>Comment New:</b>{infrastructure.CommentNew.Replace("\r\n", "<br />")}</p>");
+                    sbKML.AppendLine($@"                <p><b>Comment New (EN):</b>{infrastructure.CommentENNew.Replace("\r\n", "<br />")}</p>");
+                }
+
+                // doing CommentFR
+                sbKML.AppendLine($@"                <p><b>Comment (FR):</b>{infrastructure.CommentFR.Replace("\r\n", "<br />")}</p>");
+                if (!string.IsNullOrWhiteSpace(infrastructure.CommentFRNew))
+                {
+                    sbKML.AppendLine($@"                <p><b>Comment New (FR):</b>{infrastructure.CommentFRNew.Replace("\r\n", "<br />")}</p>");
                 }
 
                 // doing Lat and Lng
@@ -225,65 +232,65 @@ namespace CSSPPolSourceSiteInputToolHelper
                     sbKML.AppendLine($@"                <p><b>Lat Outfall New:</b> {LatOutfallNewText} <b>Lng Outfall New:</b> {LngOutfallNewText}</p>");
                 }
 
-                // doing Prism
-                string PrismText = infrastructure.PrismID != null ? infrastructure.PrismID.ToString() : "---";
-                sbKML.Append($@"                <p><b>Prism:</b> {PrismText}");
-                if (infrastructure.PrismIDNew != null)
-                {
-                    string PrismNewText = infrastructure.PrismIDNew != null ? infrastructure.PrismIDNew.ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Prism New:</b> {PrismNewText}");
-                }
-                sbKML.AppendLine($@"</p>");
+                //// doing Prism
+                //string PrismText = infrastructure.PrismID != null ? infrastructure.PrismID.ToString() : "---";
+                //sbKML.Append($@"                <p><b>Prism:</b> {PrismText}");
+                //if (infrastructure.PrismIDNew != null)
+                //{
+                //    string PrismNewText = infrastructure.PrismIDNew != null ? infrastructure.PrismIDNew.ToString() : "---";
+                //    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Prism New:</b> {PrismNewText}");
+                //}
+                //sbKML.AppendLine($@"</p>");
 
-                // doing TPID
-                string TPIDText = infrastructure.TPID != null ? infrastructure.TPID.ToString() : "---";
-                sbKML.Append($@"                <p><b>TPID:</b> {TPIDText}");
-                if (infrastructure.TPIDNew != null)
-                {
-                    string TPIDNewText = infrastructure.TPIDNew != null ? infrastructure.TPIDNew.ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>TPID New:</b> {TPIDNewText}");
-                }
-                sbKML.AppendLine($@"</p>");
+                //// doing TPID
+                //string TPIDText = infrastructure.TPID != null ? infrastructure.TPID.ToString() : "---";
+                //sbKML.Append($@"                <p><b>TPID:</b> {TPIDText}");
+                //if (infrastructure.TPIDNew != null)
+                //{
+                //    string TPIDNewText = infrastructure.TPIDNew != null ? infrastructure.TPIDNew.ToString() : "---";
+                //    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>TPID New:</b> {TPIDNewText}");
+                //}
+                //sbKML.AppendLine($@"</p>");
 
-                // doing LSID
-                string LSIDText = infrastructure.LSID != null ? infrastructure.LSID.ToString() : "---";
-                sbKML.Append($@"                <p><b>LSID:</b> {LSIDText}");
-                if (infrastructure.LSIDNew != null)
-                {
-                    string LSIDNewText = infrastructure.LSIDNew != null ? infrastructure.LSIDNew.ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>LSID New:</b> {LSIDNewText}");
-                }
-                sbKML.AppendLine($@"</p>");
+                //// doing LSID
+                //string LSIDText = infrastructure.LSID != null ? infrastructure.LSID.ToString() : "---";
+                //sbKML.Append($@"                <p><b>LSID:</b> {LSIDText}");
+                //if (infrastructure.LSIDNew != null)
+                //{
+                //    string LSIDNewText = infrastructure.LSIDNew != null ? infrastructure.LSIDNew.ToString() : "---";
+                //    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>LSID New:</b> {LSIDNewText}");
+                //}
+                //sbKML.AppendLine($@"</p>");
 
-                // doing SiteID
-                string SiteIDText = infrastructure.SiteID != null ? infrastructure.SiteID.ToString() : "---";
-                sbKML.Append($@"                <p><b>SiteID:</b> {SiteIDText}");
-                if (infrastructure.SiteIDNew != null)
-                {
-                    string SiteIDNewText = infrastructure.SiteIDNew != null ? infrastructure.SiteIDNew.ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>SiteID New:</b> {SiteIDNewText}");
-                }
-                sbKML.AppendLine($@"</p>");
+                //// doing SiteID
+                //string SiteIDText = infrastructure.SiteID != null ? infrastructure.SiteID.ToString() : "---";
+                //sbKML.Append($@"                <p><b>SiteID:</b> {SiteIDText}");
+                //if (infrastructure.SiteIDNew != null)
+                //{
+                //    string SiteIDNewText = infrastructure.SiteIDNew != null ? infrastructure.SiteIDNew.ToString() : "---";
+                //    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>SiteID New:</b> {SiteIDNewText}");
+                //}
+                //sbKML.AppendLine($@"</p>");
 
-                // doing Site
-                string SiteText = infrastructure.Site != null ? infrastructure.Site.ToString() : "---";
-                sbKML.Append($@"                <p><b>Site:</b> {SiteText}");
-                if (infrastructure.SiteNew != null)
-                {
-                    string SiteNewText = infrastructure.SiteNew != null ? infrastructure.SiteNew.ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Site New:</b> {SiteNewText}");
-                }
-                sbKML.AppendLine($@"</p>");
+                //// doing Site
+                //string SiteText = infrastructure.Site != null ? infrastructure.Site.ToString() : "---";
+                //sbKML.Append($@"                <p><b>Site:</b> {SiteText}");
+                //if (infrastructure.SiteNew != null)
+                //{
+                //    string SiteNewText = infrastructure.SiteNew != null ? infrastructure.SiteNew.ToString() : "---";
+                //    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Site New:</b> {SiteNewText}");
+                //}
+                //sbKML.AppendLine($@"</p>");
 
-                // doing InfrastructureCategory
-                string InfrastructureCategoryText = infrastructure.InfrastructureCategory != null ? infrastructure.InfrastructureCategory.ToString() : "---";
-                sbKML.Append($@"                <p><b>InfrastructureCategory:</b> {InfrastructureCategoryText}");
-                if (infrastructure.InfrastructureCategoryNew != null)
-                {
-                    string InfrastructureCategoryNewText = infrastructure.InfrastructureCategoryNew != null ? infrastructure.InfrastructureCategoryNew.ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>InfrastructureCategory New:</b> {InfrastructureCategoryNewText}");
-                }
-                sbKML.AppendLine($@"</p>");
+                //// doing InfrastructureCategory
+                //string InfrastructureCategoryText = infrastructure.InfrastructureCategory != null ? infrastructure.InfrastructureCategory.ToString() : "---";
+                //sbKML.Append($@"                <p><b>InfrastructureCategory:</b> {InfrastructureCategoryText}");
+                //if (infrastructure.InfrastructureCategoryNew != null)
+                //{
+                //    string InfrastructureCategoryNewText = infrastructure.InfrastructureCategoryNew != null ? infrastructure.InfrastructureCategoryNew.ToString() : "---";
+                //    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>InfrastructureCategory New:</b> {InfrastructureCategoryNewText}");
+                //}
+                //sbKML.AppendLine($@"</p>");
 
                 // doing InfrastructureType
                 string InfrastructureTypeText = infrastructure.InfrastructureType != null ? _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)infrastructure.InfrastructureType) : "---";
@@ -385,16 +392,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 sbKML.AppendLine($@"</p>");
 
-                // doing TreatmentType
-                string TreatmentTypeText = infrastructure.TreatmentType != null ? _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)infrastructure.TreatmentType) : "---";
-                sbKML.Append($@"                <p><b>TreatmentType:</b> {TreatmentTypeText}");
-                if (infrastructure.TreatmentTypeNew != null)
-                {
-                    string TreatmentTypeNewText = infrastructure.TreatmentTypeNew != null ? _BaseEnumService.GetEnumText_TreatmentTypeEnum((TreatmentTypeEnum)infrastructure.TreatmentTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>TreatmentType New:</b> {TreatmentTypeNewText}");
-                }
-                sbKML.AppendLine($@"</p>");
-
                 // doing DisinfectionType
                 string DisinfectionTypeText = infrastructure.DisinfectionType != null ? _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)infrastructure.DisinfectionType) : "---";
                 sbKML.Append($@"                <p><b>DisinfectionType:</b> {DisinfectionTypeText}");
@@ -484,23 +481,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                     sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PercFlowOfTotal New:</b> {PercFlowOfTotalNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
-
-                // doing TimeOffset_hour
-                string TimeOffset_hourText = infrastructure.TimeOffset_hour != null ? ((float)infrastructure.TimeOffset_hour).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>TimeOffset_hour:</b> {TimeOffset_hourText}");
-                if (infrastructure.TimeOffset_hourNew != null)
-                {
-                    string TimeOffset_hourNewText = infrastructure.TimeOffset_hourNew != null ? ((float)infrastructure.TimeOffset_hourNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>TimeOffset_hour New:</b> {TimeOffset_hourNewText}");
-                }
-                sbKML.AppendLine($@"</p>");
-
-                // doing TempCatchAllRemoveLater
-                sbKML.AppendLine($@"                <p><b>TempCatchAllRemoveLater:</b>{infrastructure.TempCatchAllRemoveLater.Replace("\r\n", "<br />")}</p>");
-                if (!string.IsNullOrWhiteSpace(infrastructure.TempCatchAllRemoveLaterNew))
-                {
-                    sbKML.AppendLine($@"                <p><b>TempCatchAllRemoveLater New:</b>{infrastructure.TempCatchAllRemoveLaterNew.Replace("\r\n", "<br />")}</p>");
-                }
 
                 // doing AverageDepth_m
                 string AverageDepth_mText = infrastructure.AverageDepth_m != null ? ((float)infrastructure.AverageDepth_m).ToString("F1") : "---";

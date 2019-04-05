@@ -36,17 +36,20 @@ namespace CSSPPolSourceSiteInputToolHelper
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
             {
                 sb.AppendLine($"-----\t-------------------------------------------------\t");
-                string LatText = infrastructure.Lat == null ? "" : ((float)infrastructure.Lat).ToString("F5");
-                string LngText = infrastructure.Lng == null ? "" : ((float)infrastructure.Lng).ToString("F5");
-                string LatOutfallText = infrastructure.LatOutfall == null ? "" : ((float)infrastructure.LatOutfall).ToString("F5");
-                string LngOutfallText = infrastructure.LngOutfall == null ? "" : ((float)infrastructure.LngOutfall).ToString("F5");
                 string IsActiveText = infrastructure.IsActive == null ? "false" : (((bool)infrastructure.IsActive) ? "true" : "false");
 
                 sb.AppendLine($"INFRASTRUCTURE\t{((double)infrastructure.InfrastructureTVItemID).ToString("F0")}\t{((DateTime)infrastructure.LastUpdateDate_UTC).Year}|" +
-                    $"{((DateTime)infrastructure.LastUpdateDate_UTC).Month.ToString("0#")}|" +
-                    $"{((DateTime)infrastructure.LastUpdateDate_UTC).Day.ToString("0#")}|{((DateTime)infrastructure.LastUpdateDate_UTC).Hour.ToString("0#")}|" +
-                    $"{((DateTime)infrastructure.LastUpdateDate_UTC).Minute.ToString("0#")}|{((DateTime)infrastructure.LastUpdateDate_UTC).Second.ToString("0#")}\t" +
-                    $"{LatText}\t{LngText}\t{LatOutfallText}\t{LngOutfallText}\t{IsActiveText}\t");
+                    $"{((DateTime)infrastructure.LastUpdateDate_UTC).Month.ToString("0#")}|{((DateTime)infrastructure.LastUpdateDate_UTC).Day.ToString("0#")}|" + 
+                    $"{((DateTime)infrastructure.LastUpdateDate_UTC).Hour.ToString("0#")}|{((DateTime)infrastructure.LastUpdateDate_UTC).Minute.ToString("0#")}|" +
+                    $"{((DateTime)infrastructure.LastUpdateDate_UTC).Second.ToString("0#")}\t{IsActiveText}\t");
+
+                string LatText = infrastructure.Lat == null ? "" : ((float)infrastructure.Lat).ToString("F5");
+                string LngText = infrastructure.Lng == null ? "" : ((float)infrastructure.Lng).ToString("F5");
+                sb.AppendLine($"LATLNG\t{LatText}\t{LngText}\t");
+
+                string LatOutfallText = infrastructure.LatOutfall == null ? "" : ((float)infrastructure.LatOutfall).ToString("F5");
+                string LngOutfallText = infrastructure.LngOutfall == null ? "" : ((float)infrastructure.LngOutfall).ToString("F5");
+                sb.AppendLine($"LATLNGOUTFALL\t{LatOutfallText}\t{LngOutfallText}\t");
 
                 sb.AppendLine($"TVTEXT\t{infrastructure.TVText.Replace(",", "_").Replace("\t", "_").Replace("\r", "_").Replace("\n", "_")}\t");
 
@@ -54,62 +57,35 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     sb.AppendLine($"TVTEXTNEW\t{infrastructure.TVTextNew.Replace(",", "_").Replace("\t", "_").Replace("\r", "_").Replace("\n", "_")}\t");
                 }
-                if (infrastructure.LatNew != null)
+                if (infrastructure.LatNew != null || infrastructure.LngNew != null)
                 {
-                    sb.AppendLine($"LATNEW\t{((float)infrastructure.LatNew).ToString("F5")}\t");
+                    string LatNewText = infrastructure.LatNew == null ? "" : ((float)infrastructure.LatNew).ToString("F5");
+                    string LngNewText = infrastructure.LngNew == null ? "" : ((float)infrastructure.LngNew).ToString("F5");
+                    sb.AppendLine($"LATLNGNEW\t{LatNewText}\t{LngNewText}\t");
                 }
-                if (infrastructure.LngNew != null)
+                if (infrastructure.LatOutfallNew != null || infrastructure.LngOutfallNew != null)
                 {
-                    sb.AppendLine($"LNGNEW\t{((float)infrastructure.LngNew).ToString("F5")}\t");
-                }
-                if (infrastructure.LatOutfallNew != null)
-                {
-                    sb.AppendLine($"LATOUTFALLNEW\t{((float)infrastructure.LatOutfallNew).ToString("F5")}\t");
-                }
-                if (infrastructure.LngOutfallNew != null)
-                {
-                    sb.AppendLine($"LNGOUTFALLNEW\t{((float)infrastructure.LngOutfallNew).ToString("F5")}\t");
+                    string LatOutfallNewText = infrastructure.LatOutfallNew == null ? "" : ((float)infrastructure.LatOutfallNew).ToString("F5");
+                    string LngOutfallNewText = infrastructure.LngOutfallNew == null ? "" : ((float)infrastructure.LngOutfallNew).ToString("F5");
+                    sb.AppendLine($"LATLNGOUTFALLNEW\t{LatOutfallNewText}\t{LngOutfallNewText}\t");
                 }
                 if (infrastructure.IsActiveNew != null)
                 {
                     sb.AppendLine($"ISACTIVENEW\t{(((bool)infrastructure.IsActiveNew) ? "true" : "false")}\t");
                 }
-                string Comment = string.IsNullOrWhiteSpace(infrastructure.Comment) ? "" : infrastructure.Comment.Replace("\r\n", "|||");
-                sb.AppendLine($"COMMENT\t{Comment}\t");
-                if (!string.IsNullOrWhiteSpace(infrastructure.CommentNew))
+                string CommentEN = string.IsNullOrWhiteSpace(infrastructure.CommentEN) ? "" : infrastructure.CommentEN.Replace("\r\n", "|||");
+                sb.AppendLine($"COMMENTEN\t{CommentEN}\t");
+                if (!string.IsNullOrWhiteSpace(infrastructure.CommentENNew))
                 {
-                    string CommentNew = string.IsNullOrWhiteSpace(infrastructure.CommentNew) ? "" : infrastructure.CommentNew.Replace("\r\n", "|||");
-                    sb.AppendLine($"COMMENTNEW\t{CommentNew}\t");
+                    string CommentENNew = string.IsNullOrWhiteSpace(infrastructure.CommentENNew) ? "" : infrastructure.CommentENNew.Replace("\r\n", "|||");
+                    sb.AppendLine($"COMMENTENNEW\t{CommentENNew}\t");
                 }
-                sb.AppendLine($"PRISMID\t{infrastructure.PrismID}\t");
-                if (infrastructure.PrismIDNew != null)
+                string CommentFR = string.IsNullOrWhiteSpace(infrastructure.CommentFR) ? "" : infrastructure.CommentFR.Replace("\r\n", "|||");
+                sb.AppendLine($"COMMENTFR\t{CommentFR}\t");
+                if (!string.IsNullOrWhiteSpace(infrastructure.CommentFRNew))
                 {
-                    sb.AppendLine($"PRISMIDNEW\t{infrastructure.PrismIDNew}\t");
-                }
-                sb.AppendLine($"TPID\t{infrastructure.TPID}\t");
-                if (infrastructure.TPIDNew != null)
-                {
-                    sb.AppendLine($"TPIDNEW\t{infrastructure.TPIDNew}\t");
-                }
-                sb.AppendLine($"LSID\t{infrastructure.LSID}\t");
-                if (infrastructure.LSIDNew != null)
-                {
-                    sb.AppendLine($"LSIDNEW\t{infrastructure.LSIDNew}\t");
-                }
-                sb.AppendLine($"SITEID\t{infrastructure.SiteID}\t");
-                if (infrastructure.SiteIDNew != null)
-                {
-                    sb.AppendLine($"SITEIDNEW\t{infrastructure.SiteIDNew}\t");
-                }
-                sb.AppendLine($"SITE\t{infrastructure.Site}\t");
-                if (infrastructure.SiteNew != null)
-                {
-                    sb.AppendLine($"SITENEW\t{infrastructure.SiteNew}\t");
-                }
-                sb.AppendLine($"INFRASTRUCTURECATEGORY\t{infrastructure.InfrastructureCategory}\t");
-                if (infrastructure.InfrastructureCategoryNew != null)
-                {
-                    sb.AppendLine($"INFRASTRUCTURECATEGORYNEW\t{infrastructure.InfrastructureCategoryNew}\t");
+                    string CommentFRNew = string.IsNullOrWhiteSpace(infrastructure.CommentFRNew) ? "" : infrastructure.CommentFRNew.Replace("\r\n", "|||");
+                    sb.AppendLine($"COMMENTFRNEW\t{CommentFRNew}\t");
                 }
                 sb.AppendLine($"INFRASTRUCTURETYPE\t{infrastructure.InfrastructureType}\t");
                 if (infrastructure.InfrastructureTypeNew != null)
@@ -162,11 +138,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                 if (infrastructure.TertiaryTreatmentTypeNew != null)
                 {
                     sb.AppendLine($"TERTIARYTREATMENTTYPENEW\t{infrastructure.TertiaryTreatmentTypeNew}\t");
-                }
-                sb.AppendLine($"TREATMENTTYPE\t{infrastructure.TreatmentType}\t");
-                if (infrastructure.TreatmentTypeNew != null)
-                {
-                    sb.AppendLine($"TREATMENTTYPENEW\t{infrastructure.TreatmentTypeNew}\t");
                 }
                 sb.AppendLine($"DISINFECTIONTYPE\t{infrastructure.DisinfectionType}\t");
                 if (infrastructure.DisinfectionTypeNew != null)
@@ -224,20 +195,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     string PercFlowOfTotalNew = infrastructure.PercFlowOfTotalNew != null ? ((float)infrastructure.PercFlowOfTotalNew).ToString("F1") : "";
                     sb.AppendLine($"PERCFLOWOFTOTALNEW\t{PercFlowOfTotalNew}\t");
-                }
-                string TimeOffset_hour = infrastructure.TimeOffset_hour != null ? ((float)infrastructure.TimeOffset_hour).ToString("F1") : "";
-                sb.AppendLine($"TIMEOFFSET_HOUR\t{TimeOffset_hour}\t");
-                if (infrastructure.TimeOffset_hourNew != null)
-                {
-                    string TimeOffset_hourNew = infrastructure.TimeOffset_hourNew != null ? ((float)infrastructure.TimeOffset_hourNew).ToString("F1") : "";
-                    sb.AppendLine($"TIMEOFFSET_HOURNEW\t{TimeOffset_hourNew}\t");
-                }
-                string TempCatchAllRemoveLater = string.IsNullOrWhiteSpace(infrastructure.TempCatchAllRemoveLater) ? "" : infrastructure.TempCatchAllRemoveLater.Replace("\r\n", "|||");
-                sb.AppendLine($"TEMPCATCHALLREMOVELATER\t{TempCatchAllRemoveLater}\t");
-                if (!string.IsNullOrWhiteSpace(infrastructure.TempCatchAllRemoveLaterNew))
-                {
-                    string TempCatchAllRemoveLaterNew = string.IsNullOrWhiteSpace(infrastructure.TempCatchAllRemoveLaterNew) ? "" : infrastructure.TempCatchAllRemoveLaterNew.Replace("\r\n", "|||");
-                    sb.AppendLine($"TEMPCATCHALLREMOVELATER\t{TempCatchAllRemoveLaterNew}\t");
                 }
                 string AverageDepth_m = infrastructure.AverageDepth_m != null ? ((float)infrastructure.AverageDepth_m).ToString("F1") : "";
                 sb.AppendLine($"AVERAGEDEPTH_M\t{AverageDepth_m}\t");
@@ -337,37 +294,38 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string DistanceFromShore_mNew = infrastructure.DistanceFromShore_mNew != null ? ((float)infrastructure.DistanceFromShore_mNew).ToString("F1") : "";
                     sb.AppendLine($"DISTANCEFROMSHORE_MNEW\t{DistanceFromShore_mNew}\t");
                 }
+                if (infrastructure.SeeOtherMunicipalityTVItemID == 0)
+                {
+                    infrastructure.SeeOtherMunicipalityTVItemID = null;
+                }
                 string SeeOtherMunicipalityTVItemID = infrastructure.SeeOtherMunicipalityTVItemID != null ? ((int)infrastructure.SeeOtherMunicipalityTVItemID).ToString() : "";
                 string SeeOtherMunicipalityText = infrastructure.SeeOtherMunicipalityText != null ? infrastructure.SeeOtherMunicipalityText : "";
                 sb.AppendLine($"SEEOTHERMUNICIPALITY\t{SeeOtherMunicipalityTVItemID}\t{SeeOtherMunicipalityText}\t");
                 if (infrastructure.SeeOtherMunicipalityTVItemIDNew != null)
                 {
+                    if (infrastructure.SeeOtherMunicipalityTVItemIDNew == 0)
+                    {
+                        infrastructure.SeeOtherMunicipalityTVItemIDNew = null;
+                    }
                     string SeeOtherMunicipalityTVItemIDNew = infrastructure.SeeOtherMunicipalityTVItemIDNew != null ? ((float)infrastructure.SeeOtherMunicipalityTVItemIDNew).ToString() : "";
                     string SeeOtherMunicipalityTextNew = infrastructure.SeeOtherMunicipalityTextNew != null ? infrastructure.SeeOtherMunicipalityTextNew : "";
                     sb.AppendLine($"SEEOTHERMUNICIPALITYNEW\t{SeeOtherMunicipalityTVItemIDNew}\t{SeeOtherMunicipalityTextNew}\t");
+                }
+                if (infrastructure.PumpsToTVItemID == 0)
+                {
+                    infrastructure.PumpsToTVItemID = null;
                 }
                 string PumpsToTVItemID = infrastructure.PumpsToTVItemID != null ? ((int)infrastructure.PumpsToTVItemID).ToString() : "";
                 sb.AppendLine($"PUMPSTOTVITEMID\t{PumpsToTVItemID}\t");
                 if (infrastructure.PumpsToTVItemIDNew != null)
                 {
+                    if (infrastructure.PumpsToTVItemIDNew == 0)
+                    {
+                        infrastructure.PumpsToTVItemIDNew = null;
+                    }
                     string PumpsToTVItemIDNew = infrastructure.PumpsToTVItemIDNew != null ? ((double)infrastructure.PumpsToTVItemIDNew).ToString("F0") : "";
                     sb.AppendLine($"PUMPSTOTVITEMIDNEW\t{PumpsToTVItemIDNew}\t");
                 }
-                //string PathCoordList = "";
-                //foreach (Coord coord in infrastructure.PathCoordList)
-                //{
-                //    PathCoordList = PathCoordList + ((float)coord.Lat).ToString("F5") + "|" + ((float)coord.Lng).ToString("F5") + " ";
-                //}
-                //sb.AppendLine($"PATHCOORDLIST\t{PathCoordList}\t");
-                //if (infrastructure.PathCoordListNew.Count > 0)
-                //{
-                //    string PathCoordListNew = "";
-                //    foreach (Coord coord in infrastructure.PathCoordListNew)
-                //    {
-                //        PathCoordListNew = PathCoordListNew + ((float)coord.Lat).ToString("F5") + "|" + ((float)coord.Lng).ToString("F5") + " ";
-                //    }
-                //    sb.AppendLine($"PATHCOORDLISTNEW\t{PathCoordListNew}\t");
-                //}
 
                 if (infrastructure.InfrastructureAddress != null)
                 {
@@ -387,14 +345,22 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (infrastructure.InfrastructureAddressNew.AddressTVItemID != null)
                 {
-                    string AddressTVItemID = infrastructure.InfrastructureAddressNew.AddressTVItemID.ToString();
-                    string Municipality = infrastructure.InfrastructureAddressNew.Municipality == null ? "" : infrastructure.InfrastructureAddressNew.Municipality;
-                    string AddressType = infrastructure.InfrastructureAddressNew.AddressType == null ? "" : ((int)infrastructure.InfrastructureAddressNew.AddressType).ToString();
-                    string StreetNumber = infrastructure.InfrastructureAddressNew.StreetNumber == null ? "" : infrastructure.InfrastructureAddressNew.StreetNumber;
-                    string StreetName = infrastructure.InfrastructureAddressNew.StreetName == null ? "" : infrastructure.InfrastructureAddressNew.StreetName;
-                    string StreetType = infrastructure.InfrastructureAddressNew.StreetType == null ? "" : ((int)infrastructure.InfrastructureAddressNew.StreetType).ToString();
-                    string PostalCode = infrastructure.InfrastructureAddressNew.PostalCode == null ? "" : infrastructure.InfrastructureAddressNew.PostalCode;
-                    sb.AppendLine($"ADDRESSNEW\t{AddressTVItemID}\t{Municipality}\t{AddressType}\t{StreetNumber}\t{StreetName}\t{StreetType}\t{PostalCode}\t");
+                    if (infrastructure.InfrastructureAddressNew.Municipality != null
+                        || infrastructure.InfrastructureAddressNew.AddressType != null
+                        || infrastructure.InfrastructureAddressNew.StreetNumber != null
+                        || infrastructure.InfrastructureAddressNew.StreetName != null
+                        || infrastructure.InfrastructureAddressNew.StreetType != null
+                        || infrastructure.InfrastructureAddressNew.PostalCode != null)
+                    {
+                        string AddressTVItemID = infrastructure.InfrastructureAddressNew.AddressTVItemID.ToString();
+                        string Municipality = infrastructure.InfrastructureAddressNew.Municipality == null ? "" : infrastructure.InfrastructureAddressNew.Municipality;
+                        string AddressType = infrastructure.InfrastructureAddressNew.AddressType == null ? "" : ((int)infrastructure.InfrastructureAddressNew.AddressType).ToString();
+                        string StreetNumber = infrastructure.InfrastructureAddressNew.StreetNumber == null ? "" : infrastructure.InfrastructureAddressNew.StreetNumber;
+                        string StreetName = infrastructure.InfrastructureAddressNew.StreetName == null ? "" : infrastructure.InfrastructureAddressNew.StreetName;
+                        string StreetType = infrastructure.InfrastructureAddressNew.StreetType == null ? "" : ((int)infrastructure.InfrastructureAddressNew.StreetType).ToString();
+                        string PostalCode = infrastructure.InfrastructureAddressNew.PostalCode == null ? "" : infrastructure.InfrastructureAddressNew.PostalCode;
+                        sb.AppendLine($"ADDRESSNEW\t{AddressTVItemID}\t{Municipality}\t{AddressType}\t{StreetNumber}\t{StreetName}\t{StreetType}\t{PostalCode}\t");
+                    }
                 }
 
                 foreach (Picture picture in infrastructure.InfrastructurePictureList)

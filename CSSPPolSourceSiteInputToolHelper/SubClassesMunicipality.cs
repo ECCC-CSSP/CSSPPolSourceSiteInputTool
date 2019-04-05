@@ -30,8 +30,10 @@ namespace CSSPPolSourceSiteInputToolHelper
         public bool? IsActiveNew { get; set; } = null;
         public string TVText { get; set; } = null;
         public string TVTextNew { get; set; } = null;
-        public string Comment { get; set; } = null;
-        public string CommentNew { get; set; } = null;
+        public string CommentEN { get; set; } = null;
+        public string CommentENNew { get; set; } = null;
+        public string CommentFR { get; set; } = null;
+        public string CommentFRNew { get; set; } = null;
         public float? Lat { get; set; } = null;
         public float? LatNew { get; set; } = null;
         public float? Lng { get; set; } = null;
@@ -40,18 +42,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         public float? LatOutfallNew { get; set; } = null;
         public float? LngOutfall { get; set; } = null;
         public float? LngOutfallNew { get; set; } = null;
-        public int? PrismID { get; set; } = null;
-        public int? PrismIDNew { get; set; } = null;
-        public int? TPID { get; set; } = null;
-        public int? TPIDNew { get; set; } = null;
-        public int? LSID { get; set; } = null;
-        public int? LSIDNew { get; set; } = null;
-        public int? SiteID { get; set; } = null;
-        public int? SiteIDNew { get; set; } = null;
-        public int? Site { get; set; } = null;
-        public int? SiteNew { get; set; } = null;
-        public string InfrastructureCategory { get; set; } = null;
-        public string InfrastructureCategoryNew { get; set; } = null;
         public int? InfrastructureType { get; set; } = null;
         public int? InfrastructureTypeNew { get; set; } = null;
         public int? FacilityType { get; set; } = null;
@@ -72,8 +62,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int? SecondaryTreatmentTypeNew { get; set; } = null;
         public int? TertiaryTreatmentType { get; set; } = null;
         public int? TertiaryTreatmentTypeNew { get; set; } = null;
-        public int? TreatmentType { get; set; } = null;
-        public int? TreatmentTypeNew { get; set; } = null;
         public int? DisinfectionType { get; set; } = null;
         public int? DisinfectionTypeNew { get; set; } = null;
         public int? CollectionSystemType { get; set; } = null;
@@ -92,10 +80,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         public bool? CanOverflowNew { get; set; } = null;
         public float? PercFlowOfTotal { get; set; } = null;
         public float? PercFlowOfTotalNew { get; set; } = null;
-        public float? TimeOffset_hour { get; set; } = null;
-        public float? TimeOffset_hourNew { get; set; } = null;
-        public string TempCatchAllRemoveLater { get; set; } = null;
-        public string TempCatchAllRemoveLaterNew { get; set; } = null;
         public float? AverageDepth_m { get; set; } = null;
         public float? AverageDepth_mNew { get; set; } = null;
         public int? NumberOfPorts { get; set; } = null;
@@ -136,8 +120,6 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int? PumpsToTVItemIDNew { get; set; } = null;
         public List<int?> PumpsFromTVItemIDList { get; set; } = new List<int?>();
         public List<int?> PumpsFromTVItemIDNewList { get; set; } = new List<int?>();
-        //public List<Coord> PathCoordList { get; set; } = new List<Coord>();
-        //public List<Coord> PathCoordListNew { get; set; } = new List<Coord>();
         public bool Shown { get; set; } = false;
         public int Ordinal { get; set; } = 0;
     }

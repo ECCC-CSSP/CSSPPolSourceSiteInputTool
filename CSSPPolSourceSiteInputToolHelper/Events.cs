@@ -118,6 +118,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             else
             {
                 CurrentInfrastructure.IsActive = false;
+
                 SaveInfrastructureInfo();
                 DrawPanelInfrastructures();
                 //RedrawSinglePanelInfrastructure();
@@ -276,29 +277,29 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
-                List<MunicipalityIDNumber> MunicipalityIDNumberList = GetMunicipalitiesAndIDNumber();
+                //List<MunicipalityIDNumber> MunicipalityIDNumberList = GetMunicipalitiesAndIDNumber();
 
-                string MunicipalitiesText = "";
-                foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList)
-                {
-                    EmitStatus(new StatusEventArgs($"Checking if { muniIDNumber.Municipality } already exist in CSSPWebTools"));
+                //string MunicipalitiesText = "";
+                //foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList)
+                //{
+                //    EmitStatus(new StatusEventArgs($"Checking if { muniIDNumber.Municipality } already exist in CSSPWebTools"));
 
-                    string ret = MunicipalityExistUnderProvinceInCSSPWebTools((int)subsectorDoc.ProvinceTVItemID, muniIDNumber.Municipality, AdminEmail);
-                    ret = ret.Replace("\"", "");
-                    if (ret.StartsWith("ERROR"))
-                    {
-                        MunicipalitiesText = $"{ MunicipalitiesText }{ muniIDNumber.Municipality } -- (P{ muniIDNumber.IDNumber }) \r\n";
-                    }
-                }
+                //    string ret = MunicipalityExistUnderProvinceInCSSPWebTools((int)subsectorDoc.ProvinceTVItemID, muniIDNumber.Municipality, AdminEmail);
+                //    ret = ret.Replace("\"", "");
+                //    if (ret.StartsWith("ERROR"))
+                //    {
+                //        MunicipalitiesText = $"{ MunicipalitiesText }{ muniIDNumber.Municipality } -- (P{ muniIDNumber.IDNumber }) \r\n";
+                //    }
+                //}
 
-                EmitStatus(new StatusEventArgs($"Please make sure that all municipalities do not have typos"));
+                //EmitStatus(new StatusEventArgs($"Please make sure that all municipalities do not have typos"));
 
-                if (DialogResult.OK == MessageBox.Show($"The municipalities\r\n\r\n {MunicipalitiesText}\r\n\r\n will be created in CSSPWebTools", "Warning: Will Create municipalities", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
-                {
-                    EmitStatus(new StatusEventArgs("Saving all Infrastructures to CSSPWebTools"));
+                //if (DialogResult.OK == MessageBox.Show($"The municipalities\r\n\r\n {MunicipalitiesText}\r\n\r\n will be created in CSSPWebTools", "Warning: Will Create municipalities", MessageBoxButtons.OKCancel, MessageBoxIcon.Exclamation))
+                //{
+                //    EmitStatus(new StatusEventArgs("Saving all Infrastructures to CSSPWebTools"));
 
-                    InfrastructureSaveAllToCSSPWebTools();
-                }
+                InfrastructureSaveAllToCSSPWebTools();
+                //}
             }
         }
         private void butRemovePicture_Click(object sender, EventArgs e)
@@ -349,6 +350,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
 
                 SaveInfrastructureInfo();
+
                 if (PumpsToChanged)
                 {
                     CurrentInfrastructure = null;
