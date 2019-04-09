@@ -399,7 +399,8 @@ namespace CSSPPolSourceSiteInputTool
             richTextBoxStatus.Clear();
             try
             {
-                richTextBoxStatus.LoadFile($@"C:\PollutionSourceSites\Documentations\{e.FileName}.rtf");
+                string FileName = e.FileName.Replace("(", "_").Replace(")", "_").Replace("\\", "_").Replace("/", "_").Replace(".", "_").Replace(" ", "_");
+                richTextBoxStatus.LoadFile($@"C:\PollutionSourceSites\Documentations\{FileName}.rtf");
             }
             catch (Exception ex)
             {

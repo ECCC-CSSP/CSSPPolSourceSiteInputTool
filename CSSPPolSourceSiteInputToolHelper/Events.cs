@@ -418,18 +418,16 @@ namespace CSSPPolSourceSiteInputToolHelper
             IssueID = int.Parse(((Button)sender).Tag.ToString());
             ReDrawPolSourceSite();
         }
-        //private void checkBoxCreateMunicipality_CheckedChanged(object sender, EventArgs e)
-        //{
-        //    CheckBox checkBoxCreateMun = (CheckBox)sender;
-        //    if (checkBoxCreateMun.Checked)
-        //    {
-        //        CreateMunicipality = true;
-        //    }
-        //    else
-        //    {
-        //        CreateMunicipality = false;
-        //    }
-        //}
+        private void lblIssueText_Click(object sender, EventArgs e)
+        {
+            string DialogText = ((Label)sender).Tag.ToString();
+            MessageBox.Show(DialogText, "Description", MessageBoxButtons.OK);
+        }
+        private void lblIssueText2_Click(object sender, EventArgs e)
+        {
+            Label labelSelected = ((Label)sender);
+            DrawAfterLabelSelectd(labelSelected);
+        }
         private void SaveAndRedraw(object sender, EventArgs e)
         {
             if (!IsReading)
@@ -483,15 +481,182 @@ namespace CSSPPolSourceSiteInputToolHelper
             CurrentInfrastructure = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == InfrastructureTVItemID).FirstOrDefault();
             ReDrawInfrastructure();
         }
-        private void lblIssueText_Click(object sender, EventArgs e)
+
+        // DesignFlow_Change
+        private void textBoxDesignFlow_m3_day_Changed(object sender, EventArgs e)
         {
-            string DialogText = ((Label)sender).Tag.ToString();
-            MessageBox.Show(DialogText, "Description", MessageBoxButtons.OK);
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Focused)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    if (float.TryParse(textBox.Text, out float tempFloat))
+                    {
+                        ChangeTextValue("textBoxDesignFlow_CanGal_day", (tempFloat * 219.969248f).ToString("F0"));
+                        ChangeTextValue("textBoxDesignFlow_USGal_day", (tempFloat * 264.172f).ToString("F0"));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
         }
-        private void lblIssueText2_Click(object sender, EventArgs e)
+        private void textBoxDesignFlow_CanGal_day_Changed(object sender, EventArgs e)
         {
-            Label labelSelected = ((Label)sender);
-            DrawAfterLabelSelectd(labelSelected);
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Focused)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    if (float.TryParse(textBox.Text, out float tempFloat))
+                    {
+                        ChangeTextValue("textBoxDesignFlow_m3_day", (tempFloat / 219.969248f).ToString("F0"));
+                        ChangeTextValue("textBoxDesignFlow_USGal_day", (tempFloat * (264.172f / 219.969248f)).ToString("F0"));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+        private void textBoxDesignFlow_USGal_day_Changed(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Focused)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    if (float.TryParse(textBox.Text, out float tempFloat))
+                    {
+                        ChangeTextValue("textBoxDesignFlow_m3_day", (tempFloat / 264.172f).ToString("F0"));
+                        ChangeTextValue("textBoxDesignFlow_CanGal_day", (tempFloat * (219.969248f / 264.172f)).ToString("F0"));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+
+        // AverageFlow_Change
+        private void textBoxAverageFlow_m3_day_Changed(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Focused)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    if (float.TryParse(textBox.Text, out float tempFloat))
+                    {
+                        ChangeTextValue("textBoxAverageFlow_CanGal_day", (tempFloat * 219.969248f).ToString("F0"));
+                        ChangeTextValue("textBoxAverageFlow_USGal_day", (tempFloat * 264.172f).ToString("F0"));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+        private void textBoxAverageFlow_CanGal_day_Changed(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Focused)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    if (float.TryParse(textBox.Text, out float tempFloat))
+                    {
+                        ChangeTextValue("textBoxAverageFlow_m3_day", (tempFloat / 219.969248f).ToString("F0"));
+                        ChangeTextValue("textBoxAverageFlow_USGal_day", (tempFloat * (264.172f / 219.969248f)).ToString("F0"));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+        private void textBoxAverageFlow_USGal_day_Changed(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Focused)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    if (float.TryParse(textBox.Text, out float tempFloat))
+                    {
+                        ChangeTextValue("textBoxAverageFlow_m3_day", (tempFloat / 264.172f).ToString("F0"));
+                        ChangeTextValue("textBoxAverageFlow_CanGal_day", (tempFloat * (219.969248f / 264.172f)).ToString("F0"));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+
+        // PeakFlow_Change
+        private void textBoxPeakFlow_m3_day_Changed(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Focused)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    if (float.TryParse(textBox.Text, out float tempFloat))
+                    {
+                        ChangeTextValue("textBoxPeakFlow_CanGal_day", (tempFloat * 219.969248f).ToString("F0"));
+                        ChangeTextValue("textBoxPeakFlow_USGal_day", (tempFloat * 264.172f).ToString("F0"));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+        private void textBoxPeakFlow_CanGal_day_Changed(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Focused)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    if (float.TryParse(textBox.Text, out float tempFloat))
+                    {
+                        ChangeTextValue("textBoxPeakFlow_m3_day", (tempFloat / 219.969248f).ToString("F0"));
+                        ChangeTextValue("textBoxPeakFlow_USGal_day", (tempFloat * (264.172f / 219.969248f)).ToString("F0"));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
+        }
+        private void textBoxPeakFlow_USGal_day_Changed(object sender, EventArgs e)
+        {
+            TextBox textBox = (TextBox)sender;
+            if (textBox.Focused)
+            {
+                if (!string.IsNullOrWhiteSpace(textBox.Text))
+                {
+                    if (float.TryParse(textBox.Text, out float tempFloat))
+                    {
+                        ChangeTextValue("textBoxPeakFlow_m3_day", (tempFloat / 264.172f).ToString("F0"));
+                        ChangeTextValue("textBoxPeakFlow_CanGal_day", (tempFloat * (219.969248f / 264.172f)).ToString("F0"));
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+            }
         }
     }
 }

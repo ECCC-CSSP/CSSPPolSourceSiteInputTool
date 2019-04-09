@@ -15,6 +15,16 @@ namespace CSSPPolSourceSiteInputToolHelper
 {
     public partial class PolSourceSiteInputToolHelper
     {
+        private void ChangeTextValue(string TextBoxName, string NewText)
+        {
+            foreach (Control control in PanelViewAndEdit.Controls)
+            {
+                if (control.Name == TextBoxName)
+                {
+                    control.Text = NewText;
+                }
+            }
+        }
         private void DrawItemAddress(int x, int y, Address address, Address addressNew, bool IsMunicipality)
         {
             #region Address
@@ -565,8 +575,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             #endregion Address
         }
-
-
         private void DrawItemBool(int x, int y, bool? val, bool? valNew, string lblTxt, string checkBoxName)
         {
             Label lblItem = new Label();
@@ -1662,7 +1670,57 @@ namespace CSSPPolSourceSiteInputToolHelper
                 textItem.Name = $"{textBoxName}";
                 textItem.Font = new Font(new FontFamily(textItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 textItem.Width = 100;
-                textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+
+                // DesignFlow
+                if (textBoxName == "textBoxDesignFlow_m3_day")
+                {
+                    textItem.TextChanged += textBoxDesignFlow_m3_day_Changed;
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxDesignFlow_CanGal_day")
+                {
+                    textItem.TextChanged += textBoxDesignFlow_CanGal_day_Changed;
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxDesignFlow_USGal_day")
+                {
+                    textItem.TextChanged += textBoxDesignFlow_USGal_day_Changed;
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                }
+
+                // AverageFlow
+                if (textBoxName == "textBoxAverageFlow_m3_day")
+                {
+                    textItem.TextChanged += textBoxAverageFlow_m3_day_Changed;
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxAverageFlow_CanGal_day")
+                {
+                    textItem.TextChanged += textBoxAverageFlow_CanGal_day_Changed;
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxAverageFlow_USGal_day")
+                {
+                    textItem.TextChanged += textBoxAverageFlow_USGal_day_Changed;
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                }
+
+                // PeakFlow
+                if (textBoxName == "textBoxPeakFlow_m3_day")
+                {
+                    textItem.TextChanged += textBoxPeakFlow_m3_day_Changed;
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxPeakFlow_CanGal_day")
+                {
+                    textItem.TextChanged += textBoxPeakFlow_CanGal_day_Changed;
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxPeakFlow_USGal_day")
+                {
+                    textItem.TextChanged += textBoxPeakFlow_USGal_day_Changed;
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                }
 
                 PanelViewAndEdit.Controls.Add(textItem);
 
@@ -1675,7 +1733,48 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblItemNew.Location = new Point(x, y);
                 lblItemNew.Font = new Font(new FontFamily(lblItemNew.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 lblItemNew.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
-                lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+
+                // DesignFlow
+                if (textBoxName == "textBoxDesignFlow_m3_day")
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxDesignFlow_CanGal_day")
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxDesignFlow_USGal_day")
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                }
+
+                // AverageFlow
+                if (textBoxName == "textBoxAverageFlow_m3_day")
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxAverageFlow_CanGal_day")
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxAverageFlow_USGal_day")
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                }
+
+                // PeakFlow
+                if (textBoxName == "textBoxPeakFlow_m3_day")
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxPeakFlow_CanGal_day")
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                }
+                if (textBoxName == "textBoxPeakFlow_USGal_day")
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                }
 
                 PanelViewAndEdit.Controls.Add(lblItemNew);
             }
@@ -5047,6 +5146,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     X = 10;
                     DrawItemFloat(X, Y, CurrentInfrastructure.DesignFlow_m3_day, CurrentInfrastructure.DesignFlow_m3_dayNew, "Design Flow (m3/day)", 0, "textBoxDesignFlow_m3_day");
 
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    DrawItemFloat(X, Y, CurrentInfrastructure.DesignFlow_m3_day, CurrentInfrastructure.DesignFlow_m3_dayNew, "(Can. Gal./day)", 0, "textBoxDesignFlow_CanGal_day");
+
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    DrawItemFloat(X, Y, CurrentInfrastructure.DesignFlow_m3_day, CurrentInfrastructure.DesignFlow_m3_dayNew, "(US. Gal./day)", 0, "textBoxDesignFlow_USGal_day");
+
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion DesignFlow_m3_day
 
@@ -5054,12 +5161,28 @@ namespace CSSPPolSourceSiteInputToolHelper
                     X = 10;
                     DrawItemFloat(X, Y, CurrentInfrastructure.AverageFlow_m3_day, CurrentInfrastructure.AverageFlow_m3_dayNew, "Average Flow (m3/day)", 0, "textBoxAverageFlow_m3_day");
 
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    DrawItemFloat(X, Y, CurrentInfrastructure.AverageFlow_m3_day, CurrentInfrastructure.AverageFlow_m3_dayNew, "(Can. Gal./day)", 0, "textBoxAverageFlow_CanGal_day");
+
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    DrawItemFloat(X, Y, CurrentInfrastructure.AverageFlow_m3_day, CurrentInfrastructure.AverageFlow_m3_dayNew, "(US. Gal./day)", 0, "textBoxAverageFlow_USGal_day");
+
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion AverageFlow_m3_day
 
                     #region PeakFlow_m3_day
                     X = 10;
                     DrawItemFloat(X, Y, CurrentInfrastructure.PeakFlow_m3_day, CurrentInfrastructure.PeakFlow_m3_dayNew, "Peak Flow (m3/day)", 0, "textBoxPeakFlow_m3_day");
+
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    DrawItemFloat(X, Y, CurrentInfrastructure.PeakFlow_m3_day, CurrentInfrastructure.PeakFlow_m3_dayNew, "(Can. Gal./day)", 0, "textBoxPeakFlow_CanGal_day");
+
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    DrawItemFloat(X, Y, CurrentInfrastructure.PeakFlow_m3_day, CurrentInfrastructure.PeakFlow_m3_dayNew, "(US. Gal./day)", 0, "textBoxPeakFlow_USGal_day");
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion PeakFlow_m3_day
