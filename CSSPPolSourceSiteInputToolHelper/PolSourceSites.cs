@@ -1642,10 +1642,19 @@ namespace CSSPPolSourceSiteInputToolHelper
             Label lblItem = new Label();
             lblItem.AutoSize = true;
             lblItem.Location = new Point(x, y);
-            lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-            lblItem.ForeColor = Color.Blue;
-            lblItem.Text = $@"{lblTxt}: ";
-            lblItem.Click += ShowRTFDocument;
+            if (textBoxName.Contains("CanGal_day") || textBoxName.Contains("USGal_day"))
+            {
+                lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                lblItem.ForeColor = Color.Black;
+                lblItem.Text = $@"{lblTxt}: ";
+            }
+            else
+            {
+                lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                lblItem.ForeColor = Color.Blue;
+                lblItem.Text = $@"{lblTxt}: ";
+                lblItem.Click += ShowRTFDocument;
+            }
             lblItem.Tag = lblTxt.Replace(" ", "_");
 
             PanelViewAndEdit.Controls.Add(lblItem);
