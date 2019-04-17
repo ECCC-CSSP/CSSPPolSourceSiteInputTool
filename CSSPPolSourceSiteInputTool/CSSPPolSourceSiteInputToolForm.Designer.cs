@@ -81,6 +81,8 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.butReduceHelp = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
             this.panelShowInfrastructure.SuspendLayout();
@@ -104,11 +106,13 @@
             this.splitContainer2.SuspendLayout();
             this.panelMunicipalities.SuspendLayout();
             this.panelShowInputOptions.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelButtonBar
             // 
             this.panelButtonBar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelButtonBar.Controls.Add(this.panel1);
             this.panelButtonBar.Controls.Add(this.panelShowAdmin);
             this.panelButtonBar.Controls.Add(this.panelShowInfrastructure);
             this.panelButtonBar.Controls.Add(this.panelSubsectorOrMunicipality);
@@ -685,6 +689,26 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.butReduceHelp);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(696, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(95, 34);
+            this.panel1.TabIndex = 19;
+            // 
+            // butReduceHelp
+            // 
+            this.butReduceHelp.Location = new System.Drawing.Point(5, 6);
+            this.butReduceHelp.Name = "butReduceHelp";
+            this.butReduceHelp.Size = new System.Drawing.Size(88, 23);
+            this.butReduceHelp.TabIndex = 16;
+            this.butReduceHelp.Text = "Reduce Help";
+            this.butReduceHelp.UseVisualStyleBackColor = true;
+            this.butReduceHelp.Visible = false;
+            this.butReduceHelp.Click += new System.EventHandler(this.butReduceHelp_Click);
+            // 
             // CSSPPolSourceSiteInputToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -726,6 +750,7 @@
             this.panelMunicipalities.PerformLayout();
             this.panelShowInputOptions.ResumeLayout(false);
             this.panelShowInputOptions.PerformLayout();
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -785,6 +810,8 @@
         private System.Windows.Forms.Button butProvinceMunicipalitySelect;
         private System.Windows.Forms.Label lblProvinceMunicipalities;
         private System.Windows.Forms.ComboBox comboBoxProvinceMunicipalities;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button butReduceHelp;
     }
 }
 

@@ -60,6 +60,12 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.Fix();
             butFix.Text = "Fix";
         }
+        private void butReduceHelp_Click(object sender, EventArgs e)
+        {
+            splitContainer2.SplitterDistance = splitContainer2.Height * 9 / 10;
+            butReduceHelp.Visible = false;
+
+        }
 
         private void butUsedMunicipalitySelect_Click(object sender, EventArgs e)
         {
@@ -409,6 +415,11 @@ namespace CSSPPolSourceSiteInputTool
             if (splitContainer2.Panel2.Height < panelViewAndEdit.Height * 1 / 3)
             {
                 splitContainer2.SplitterDistance = panelViewAndEdit.Height * 2 / 3;
+                butReduceHelp.Visible = true;
+            }
+            else
+            {
+                butReduceHelp.Visible = false;
             }
         }
         private void polSourceSiteInputToolHelper_UpdateRTBMessage(object sender, PolSourceSiteInputToolHelper.RTBMessageEventArgs e)
