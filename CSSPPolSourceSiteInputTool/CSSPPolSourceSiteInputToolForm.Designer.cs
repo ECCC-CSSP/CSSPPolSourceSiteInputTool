@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.panelButtonBar = new System.Windows.Forms.Panel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.butReduceHelp = new System.Windows.Forms.Button();
             this.panelShowAdmin = new System.Windows.Forms.Panel();
             this.checkBoxShowAdmin = new System.Windows.Forms.CheckBox();
             this.panelShowInfrastructure = new System.Windows.Forms.Panel();
@@ -81,9 +83,8 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.butReduceHelp = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
             this.panelShowInfrastructure.SuspendLayout();
             this.panelSubsectorOrMunicipality.SuspendLayout();
@@ -106,7 +107,6 @@
             this.splitContainer2.SuspendLayout();
             this.panelMunicipalities.SuspendLayout();
             this.panelShowInputOptions.SuspendLayout();
-            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelButtonBar
@@ -125,6 +125,26 @@
             this.panelButtonBar.Name = "panelButtonBar";
             this.panelButtonBar.Size = new System.Drawing.Size(1140, 36);
             this.panelButtonBar.TabIndex = 9;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.butReduceHelp);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel1.Location = new System.Drawing.Point(696, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(95, 34);
+            this.panel1.TabIndex = 19;
+            // 
+            // butReduceHelp
+            // 
+            this.butReduceHelp.Location = new System.Drawing.Point(5, 6);
+            this.butReduceHelp.Name = "butReduceHelp";
+            this.butReduceHelp.Size = new System.Drawing.Size(88, 23);
+            this.butReduceHelp.TabIndex = 16;
+            this.butReduceHelp.Text = "Reduce Help";
+            this.butReduceHelp.UseVisualStyleBackColor = true;
+            this.butReduceHelp.Visible = false;
+            this.butReduceHelp.Click += new System.EventHandler(this.butReduceHelp_Click);
             // 
             // panelShowAdmin
             // 
@@ -689,26 +709,6 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.butReduceHelp);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(696, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(95, 34);
-            this.panel1.TabIndex = 19;
-            // 
-            // butReduceHelp
-            // 
-            this.butReduceHelp.Location = new System.Drawing.Point(5, 6);
-            this.butReduceHelp.Name = "butReduceHelp";
-            this.butReduceHelp.Size = new System.Drawing.Size(88, 23);
-            this.butReduceHelp.TabIndex = 16;
-            this.butReduceHelp.Text = "Reduce Help";
-            this.butReduceHelp.UseVisualStyleBackColor = true;
-            this.butReduceHelp.Visible = false;
-            this.butReduceHelp.Click += new System.EventHandler(this.butReduceHelp_Click);
-            // 
             // CSSPPolSourceSiteInputToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -721,6 +721,7 @@
             this.Text = "CSSP Pollution Source Site Input Tool";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panelButtonBar.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
             this.panelShowAdmin.ResumeLayout(false);
             this.panelShowAdmin.PerformLayout();
             this.panelShowInfrastructure.ResumeLayout(false);
@@ -750,7 +751,6 @@
             this.panelMunicipalities.PerformLayout();
             this.panelShowInputOptions.ResumeLayout(false);
             this.panelShowInputOptions.PerformLayout();
-            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
