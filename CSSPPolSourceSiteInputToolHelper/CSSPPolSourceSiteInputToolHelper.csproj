@@ -55,6 +55,7 @@
     <Compile Include="Maps.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="GenerateKMLFileForInputTool.cs" />
+    <Compile Include="ReadAndCheckMunicipalityTextFile.cs" />
     <Compile Include="ReadAndCheckSubsectorTextFile.cs" />
     <Compile Include="SaveTextFile.cs" />
     <Compile Include="PolSourceSites.cs" />

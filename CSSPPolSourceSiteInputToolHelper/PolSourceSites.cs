@@ -1666,7 +1666,63 @@ namespace CSSPPolSourceSiteInputToolHelper
             lblItem2.Location = new Point(x, y);
             lblItem2.Font = new Font(new FontFamily(lblItem2.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
             lblItem2.ForeColor = valNew != null ? ForeColorChangedOrNew : ForeColorNormal;
-            lblItem2.Text = $@"{(valNew == null ? "" : $" ({(val == null ? "empty" : ((float)val).ToString("F" + fix))})")}";
+            // lblItem2.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+            // lblItem2.Text = $@"{(valNew == null ? "" : $" ({(val == null ? "empty" : ((float)val).ToString("F" + fix))})")}";
+
+            if (true)
+            {
+                bool TextCovered = false;
+
+                // Design
+                if (textBoxName == "textBoxDesignFlow_m3_day")
+                {
+                    lblItem2.Text = $@"{(valNew == null ? "" : $" ({(val == null ? "empty" : ((float)val).ToString("F" + fix))})")}";
+                    TextCovered = true;
+                }
+                if (textBoxName == "textBoxDesignFlow_CanGal_day")
+                {
+                    TextCovered = true;
+                }
+                if (textBoxName == "textBoxDesignFlow_USGal_day")
+                {
+                    TextCovered = true;
+                }
+
+                // Average 
+                if (textBoxName == "textBoxAverageFlow_m3_day")
+                {
+                    lblItem2.Text = $@"{(valNew == null ? "" : $" ({(val == null ? "empty" : ((float)val).ToString("F" + fix))})")}";
+                    TextCovered = true;
+                }
+                if (textBoxName == "textBoxAverageFlow_CanGal_day")
+                {
+                    TextCovered = true;
+                }
+                if (textBoxName == "textBoxAverageFlow_USGal_day")
+                {
+                    TextCovered = true;
+                }
+
+                // Peak
+                if (textBoxName == "textBoxPeakFlow_m3_day")
+                {
+                    lblItem2.Text = $@"{(valNew == null ? "" : $" ({(val == null ? "empty" : ((float)val).ToString("F" + fix))})")}";
+                    TextCovered = true;
+                }
+                if (textBoxName == "textBoxPeakFlow_CanGal_day")
+                {
+                    TextCovered = true;
+                }
+                if (textBoxName == "textBoxPeakFlow_USGal_day")
+                {
+                    TextCovered = true;
+                }
+
+                if (!TextCovered)
+                {
+                    lblItem2.Text = $@"{(valNew == null ? "" : $" ({(val == null ? "empty" : ((float)val).ToString("F" + fix))})")}";
+                }
+            }
 
             PanelViewAndEdit.Controls.Add(lblItem2);
 
@@ -1674,6 +1730,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             if (IsEditing)
             {
+                bool TextCovered = false;
                 TextBox textItem = new TextBox();
                 textItem.Location = new Point(x, y);
                 textItem.Name = $"{textBoxName}";
@@ -1685,16 +1742,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     textItem.TextChanged += textBoxDesignFlow_m3_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxDesignFlow_CanGal_day")
                 {
                     textItem.TextChanged += textBoxDesignFlow_CanGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxDesignFlow_USGal_day")
                 {
                     textItem.TextChanged += textBoxDesignFlow_USGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                    TextCovered = true;
                 }
 
                 // AverageFlow
@@ -1702,16 +1762,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     textItem.TextChanged += textBoxAverageFlow_m3_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxAverageFlow_CanGal_day")
                 {
                     textItem.TextChanged += textBoxAverageFlow_CanGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxAverageFlow_USGal_day")
                 {
                     textItem.TextChanged += textBoxAverageFlow_USGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                    TextCovered = true;
                 }
 
                 // PeakFlow
@@ -1719,24 +1782,31 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     textItem.TextChanged += textBoxPeakFlow_m3_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxPeakFlow_CanGal_day")
                 {
                     textItem.TextChanged += textBoxPeakFlow_CanGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxPeakFlow_USGal_day")
                 {
                     textItem.TextChanged += textBoxPeakFlow_USGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                    TextCovered = true;
+                }
+
+                if (!TextCovered)
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
                 }
 
                 PanelViewAndEdit.Controls.Add(textItem);
-
-
             }
             else
             {
+                bool TextCovered = false;
                 Label lblItemNew = new Label();
                 lblItemNew.AutoSize = true;
                 lblItemNew.Location = new Point(x, y);
@@ -1747,44 +1817,57 @@ namespace CSSPPolSourceSiteInputToolHelper
                 if (textBoxName == "textBoxDesignFlow_m3_day")
                 {
                     lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxDesignFlow_CanGal_day")
                 {
                     lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxDesignFlow_USGal_day")
                 {
                     lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                    TextCovered = true;
                 }
 
                 // AverageFlow
                 if (textBoxName == "textBoxAverageFlow_m3_day")
                 {
                     lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxAverageFlow_CanGal_day")
                 {
                     lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxAverageFlow_USGal_day")
                 {
                     lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                    TextCovered = true;
                 }
 
                 // PeakFlow
                 if (textBoxName == "textBoxPeakFlow_m3_day")
                 {
                     lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxPeakFlow_CanGal_day")
                 {
                     lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
+                    TextCovered = true;
                 }
                 if (textBoxName == "textBoxPeakFlow_USGal_day")
                 {
                     lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
+                    TextCovered = true;
                 }
 
+                if (!TextCovered)
+                {
+                    lblItemNew.Text = (valNew == null ? (val == null ? "---" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                }
                 PanelViewAndEdit.Controls.Add(lblItemNew);
             }
 
@@ -6783,7 +6866,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 if (TempInt == CurrentInfrastructure.NumberOfAeratedCells)
                                 {
-                                       CurrentInfrastructure.NumberOfAeratedCellsNew = null;
+                                    CurrentInfrastructure.NumberOfAeratedCellsNew = null;
                                 }
                                 else
                                 {
