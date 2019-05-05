@@ -6318,6 +6318,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                         CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
                                         CurrentInfrastructure.InfrastructureAddress.Municipality = null;
                                     }
+                                    SaveRestOfAddressNewInfrastructure();
                                     IsDirty = true;
                                 }
                             }
@@ -6348,6 +6349,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                         CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
                                         CurrentInfrastructure.InfrastructureAddress.StreetName = null;
                                     }
+                                    SaveRestOfAddressNewInfrastructure();
                                     IsDirty = true;
                                 }
                             }
@@ -6378,6 +6380,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                         CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
                                         CurrentInfrastructure.InfrastructureAddress.StreetNumber = null;
                                     }
+                                    SaveRestOfAddressNewInfrastructure();
                                     IsDirty = true;
                                 }
                             }
@@ -7727,6 +7730,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
+            if (CurrentInfrastructure.InfrastructureAddressNew.StreetNumber != null
+                || CurrentInfrastructure.InfrastructureAddressNew.StreetName != null
+                || CurrentInfrastructure.InfrastructureAddressNew.StreetType != null
+                || CurrentInfrastructure.InfrastructureAddressNew.Municipality != null
+                || CurrentInfrastructure.InfrastructureAddressNew.PostalCode != null)
+            {
+                SaveRestOfAddressNewInfrastructure();
+            }
+
             SaveMunicipalityTextFile();
 
         }
@@ -8073,6 +8085,29 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (CurrentPSS.PSSAddressNew.PostalCode == null)
             {
                 CurrentPSS.PSSAddressNew.PostalCode = CurrentPSS.PSSAddress.PostalCode;
+            }
+        }
+        public void SaveRestOfAddressNewInfrastructure()
+        {
+            if (CurrentInfrastructure.InfrastructureAddressNew.StreetNumber == null)
+            {
+                CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = CurrentInfrastructure.InfrastructureAddress.StreetNumber;
+            }
+            if (CurrentInfrastructure.InfrastructureAddressNew.StreetName == null)
+            {
+                CurrentInfrastructure.InfrastructureAddressNew.StreetName = CurrentInfrastructure.InfrastructureAddress.StreetName;
+            }
+            if (CurrentInfrastructure.InfrastructureAddressNew.StreetType == null)
+            {
+                CurrentInfrastructure.InfrastructureAddressNew.StreetType = CurrentInfrastructure.InfrastructureAddress.StreetType;
+            }
+            if (CurrentInfrastructure.InfrastructureAddressNew.Municipality == null)
+            {
+                CurrentInfrastructure.InfrastructureAddressNew.Municipality = CurrentInfrastructure.InfrastructureAddress.Municipality;
+            }
+            if (CurrentInfrastructure.InfrastructureAddressNew.PostalCode == null)
+            {
+                CurrentInfrastructure.InfrastructureAddressNew.PostalCode = CurrentInfrastructure.InfrastructureAddress.PostalCode;
             }
         }
         private string SaveToCSSPWebToolsAddress(int ProvinceTVItemID, int TVItemID, string StreetNumber, string StreetName, int StreetType, string Municipality, string PostalCode, bool CreateMunicipality, bool IsPSS, bool IsInfrastructure, string AdminEmail)
