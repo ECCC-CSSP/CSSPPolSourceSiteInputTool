@@ -95,6 +95,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     EmitStatus(new StatusEventArgs("Municipality File was not read properly. We found an empty line. The Municipality file should not have empty lines."));
                     return false;
                 }
+                if (LineTxt.StartsWith("COMMENTFR"))
+                {
+                    int selfj = 2;
+                }
                 int pos = LineTxt.IndexOf("\t");
                 int pos2 = LineTxt.IndexOf("\t", pos + 1);
                 int pos3 = LineTxt.IndexOf("\t", pos2 + 1);

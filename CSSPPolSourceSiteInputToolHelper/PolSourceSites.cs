@@ -5369,7 +5369,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 #endregion CommentFR
 
-                if (IsLS || IsWWTP)
+                if (IsLS || IsWWTP || IsLineOverflow)
                 {
                     #region Save button
                     if (IsEditing)
@@ -6428,9 +6428,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     if (!string.IsNullOrWhiteSpace(tb.Text))
                                     {
-                                        if (tb.Text.Trim().Length > 200)
+                                        if (tb.Text.Trim().Length > 100000)
                                         {
-                                            MessageBox.Show("Infrastructure Name maximum length is 200 characters", "Error");
+                                            MessageBox.Show("Infrastructure Comment En maximum length is 100000 characters", "Error");
                                         }
                                         CurrentInfrastructure.CommentENNew = tb.Text.Trim();
                                     }
@@ -6457,9 +6457,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     if (!string.IsNullOrWhiteSpace(tb.Text))
                                     {
-                                        if (tb.Text.Trim().Length > 200)
+                                        if (tb.Text.Trim().Length > 100000)
                                         {
-                                            MessageBox.Show("Infrastructure Name maximum length is 200 characters", "Error");
+                                            MessageBox.Show("Infrastructure Comment FR maximum length is 100000 characters", "Error");
                                         }
                                         CurrentInfrastructure.CommentFRNew = tb.Text.Trim();
                                     }
