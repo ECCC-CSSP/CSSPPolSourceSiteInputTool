@@ -2217,7 +2217,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.Location = new Point(10, 4);
                 lblTVText.TabIndex = 0;
                 lblTVText.Tag = infrastructure.InfrastructureTVItemID;
-                if (infrastructure.IsActive == false)
+
+                bool IsActive = false;
+                if (infrastructure.IsActiveNew != null)
+                {
+                    IsActive = (bool)infrastructure.IsActiveNew;
+                }
+                else
+                {
+                    IsActive = (bool)infrastructure.IsActive;
+                }
+
+                if (IsActive == false)
                 {
                     lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                 }
@@ -2242,20 +2253,27 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 bool NeedDetailsUpdate = false;
                 bool NeedPicturesUpdate = false;
+                bool NeedActiveUpdate = false;
+
                 if (IsAdmin)
                 {
+                    if (infrastructure.IsActiveNew != null && infrastructure.IsActiveNew != infrastructure.IsActive)
+                    {
+                        NeedActiveUpdate = true;
+                    }
+
                     if (infrastructure.LatNew != null
-                   || infrastructure.LngNew != null
-                   || infrastructure.LatOutfallNew != null
-                   || infrastructure.LngOutfallNew != null
-                   || infrastructure.IsActiveNew != null
-                   || infrastructure.InfrastructureAddressNew.AddressTVItemID != null
-                   || infrastructure.InfrastructureAddressNew.AddressType != null
-                   || infrastructure.InfrastructureAddressNew.Municipality != null
-                   || infrastructure.InfrastructureAddressNew.PostalCode != null
-                   || infrastructure.InfrastructureAddressNew.StreetName != null
-                   || infrastructure.InfrastructureAddressNew.StreetNumber != null
-                   || infrastructure.InfrastructureAddressNew.StreetType != null)
+                        || infrastructure.LngNew != null
+                        || infrastructure.LatOutfallNew != null
+                        || infrastructure.LngOutfallNew != null
+                        || infrastructure.IsActiveNew != null
+                        || infrastructure.InfrastructureAddressNew.AddressTVItemID != null
+                        || infrastructure.InfrastructureAddressNew.AddressType != null
+                        || infrastructure.InfrastructureAddressNew.Municipality != null
+                        || infrastructure.InfrastructureAddressNew.PostalCode != null
+                        || infrastructure.InfrastructureAddressNew.StreetName != null
+                        || infrastructure.InfrastructureAddressNew.StreetNumber != null
+                        || infrastructure.InfrastructureAddressNew.StreetType != null)
                     {
                         NeedDetailsUpdate = true;
                     }
@@ -2320,13 +2338,24 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                     string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-
+                    string NeedAcitveUpdateText = NeedActiveUpdate ? "Active" : "";
 
                     lbInfrastructureStatus.AutoSize = true;
                     lbInfrastructureStatus.Location = new Point(40, lblTVText.Bottom + 4);
                     lbInfrastructureStatus.TabIndex = 0;
                     lbInfrastructureStatus.Tag = infrastructure.InfrastructureTVItemID;
-                    if (infrastructure.IsActive == false)
+
+                    bool IsActive2 = false;
+                    if (infrastructure.IsActiveNew != null)
+                    {
+                        IsActive2 = (bool)infrastructure.IsActiveNew;
+                    }
+                    else
+                    {
+                        IsActive2 = (bool)infrastructure.IsActive;
+                    }
+
+                    if (IsActive2 == false)
                     {
                         lbInfrastructureStatus.Font = new Font(new FontFamily(lbInfrastructureStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                     }
@@ -2334,9 +2363,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         lbInfrastructureStatus.Font = new Font(new FontFamily(lbInfrastructureStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     }
-                    if (NeedDetailsUpdate || NeedPicturesUpdate)
+                    if (NeedDetailsUpdate || NeedPicturesUpdate || NeedActiveUpdate)
                     {
-                        lbInfrastructureStatus.Text = $"Needs update for      {NeedDetailsUpdateText}     {NeedPictuesUpdateText}";
+                        lbInfrastructureStatus.Text = $"Needs update for      {NeedDetailsUpdateText}     {NeedPictuesUpdateText} {NeedAcitveUpdateText}";
                     }
                     else
                     {
@@ -2355,7 +2384,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lbInfrastructureStatus.Location = new Point(40, lblTVText.Bottom + 4);
                     lbInfrastructureStatus.TabIndex = 0;
                     lbInfrastructureStatus.Tag = infrastructure.InfrastructureTVItemID;
-                    if (infrastructure.IsActive == false)
+
+                    bool IsActive2 = false;
+                    if (infrastructure.IsActiveNew != null)
+                    {
+                        IsActive2 = (bool)infrastructure.IsActiveNew;
+                    }
+                    else
+                    {
+                        IsActive2 = (bool)infrastructure.IsActive;
+                    }
+
+                    if (IsActive2 == false)
                     {
                         lbInfrastructureStatus.Font = new Font(new FontFamily(lbInfrastructureStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                     }
@@ -2436,7 +2476,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblTVText.Location = new Point(5, 4);
                     lblTVText.TabIndex = 0;
                     lblTVText.Tag = pss.PSSTVItemID;
-                    if (pss.IsActive == false)
+
+                    bool IsActive = false;
+                    if (pss.IsActiveNew != null)
+                    {
+                        IsActive = (bool)pss.IsActiveNew;
+                    }
+                    else
+                    {
+                        IsActive = (bool)pss.IsActive;
+                    }
+
+                    if (IsActive == false)
                     {
                         lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                     }
@@ -2462,8 +2513,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                     bool NeedDetailsUpdate = false;
                     bool NeedIssuesUpdate = false;
                     bool NeedPicturesUpdate = false;
+                    bool NeedActiveUpdate = false;
+                    bool NeedPointSourceUpdate = false;
                     if (IsAdmin)
                     {
+                        if (pss.IsActiveNew != null && pss.IsActiveNew != pss.IsActive)
+                        {
+                            NeedActiveUpdate = false;
+                        }
+
+                        if (pss.IsPointSourceNew != null && pss.IsPointSourceNew != pss.IsPointSource)
+                        {
+                            NeedPointSourceUpdate = false;
+                        }
+
                         if (pss.LatNew != null
                            || pss.LngNew != null
                            || pss.IsActiveNew != null
@@ -2505,7 +2568,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblPSSStatus.Location = new Point(5, lblTVText.Bottom + 4);
                         lblPSSStatus.TabIndex = 0;
                         lblPSSStatus.Tag = pss.PSSTVItemID;
-                        if (pss.IsActive == false)
+
+                        bool IsActive2 = false;
+                        if (pss.IsActiveNew != null)
+                        {
+                            IsActive2 = (bool)pss.IsActiveNew;
+                        }
+                        else
+                        {
+                            IsActive2 = (bool)pss.IsActive;
+                        }
+
+                        if (IsActive2 == false)
                         {
                             lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                         }
@@ -2516,9 +2590,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                         string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
                         string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-                        if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                        string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+                        string NeedPointSourceUpdateText = NeedPointSourceUpdate ? "Point Source" : "";
+                        if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate || NeedActiveUpdate || NeedPointSourceUpdate)
                         {
-                            lblPSSStatus.Text = $"Good --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                            lblPSSStatus.Text = $"Good --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText} {NeedActiveUpdateText} {NeedPointSourceUpdateText}";
                         }
                         else
                         {
@@ -2537,7 +2613,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblPSSStatus.Location = new Point(5, lblTVText.Bottom + 4);
                         lblPSSStatus.TabIndex = 0;
                         lblPSSStatus.Tag = pss.PSSTVItemID;
-                        if (pss.IsActive == false)
+
+                        bool IsActive2 = false;
+                        if (pss.IsActiveNew != null)
+                        {
+                            IsActive2 = (bool)pss.IsActiveNew;
+                        }
+                        else
+                        {
+                            IsActive2 = (bool)pss.IsActive;
+                        }
+
+                        if (IsActive2 == false)
                         {
                             lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                         }
@@ -2574,9 +2661,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                                 string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
                                 string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-                                if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                                string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+                                string NeedPointSourceUpdateText = NeedPointSourceUpdate ? "Point Source" : "";
+                                if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate || NeedActiveUpdate || NeedPointSourceUpdate)
                                 {
-                                    lblPSSStatus.Text = $"Not Well Formed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                                    lblPSSStatus.Text = $"Not Well Formed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText} {NeedActiveUpdateText} {NeedPointSourceUpdateText}";
                                 }
                                 else
                                 {
@@ -2597,9 +2686,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                                 string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
                                 string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-                                if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                                string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+                                string NeedPointSourceUpdateText = NeedPointSourceUpdate ? "Point Source" : "";
+                                if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate || NeedActiveUpdate || NeedPointSourceUpdate)
                                 {
-                                    lblPSSStatus.Text = $"Not Completed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                                    lblPSSStatus.Text = $"Not Completed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText} {NeedActiveUpdateText} {NeedPointSourceUpdateText}";
                                 }
                                 else
                                 {
@@ -2638,8 +2729,41 @@ namespace CSSPPolSourceSiteInputToolHelper
                 infrastructure.Lat = null;
                 infrastructure.Lng = null;
                 infrastructure.IsActive = true;
+                infrastructure.IsActiveNew = true;
                 infrastructure.InfrastructureType = (int)InfrastructureTypeEnum.WWTP;
-                infrastructure.TVText = "New Infrastructure";
+                int Count = 0;
+                string NewInfrastructureName = "";
+                while (true)
+                {
+                    Count += 1;
+                    NewInfrastructureName = "New Infrastructure " + Count;
+                    bool Exist = false;
+                    foreach (Infrastructure inf in municipalityDoc.Municipality.InfrastructureList)
+                    {
+                        if (inf.TVTextNew != null)
+                        {
+                            if (inf.TVTextNew == NewInfrastructureName)
+                            {
+                                Exist = true;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (inf.TVText == NewInfrastructureName)
+                            {
+                                Exist = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!Exist)
+                    {
+                        break;
+                    }
+                }
+                infrastructure.TVText = NewInfrastructureName;
                 infrastructure.LastUpdateDate_UTC = DateTime.Now;
 
                 municipalityDoc.Municipality.InfrastructureList.Add(infrastructure);
@@ -2721,6 +2845,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             #region Load Variables
+            bool IsActive = true;
             float? Lat = null;
             float? Lng = null;
             float? LatOutfall = null;
@@ -2764,6 +2889,19 @@ namespace CSSPPolSourceSiteInputToolHelper
             string SeeOtherMunicipalityText = null;
             int? PumpsToTVItemID = null;
 
+            // IsActive
+            if (CurrentInfrastructure.IsActiveNew == null)
+            {
+                if (CurrentInfrastructure.IsActive != null)
+                {
+                    IsActive = (bool)CurrentInfrastructure.IsActive;
+                }
+            }
+            else
+            {
+                IsActive = (bool)CurrentInfrastructure.IsActiveNew;
+            }
+
             // Lat, Lng
             if (CurrentInfrastructure.LatNew == null)
             {
@@ -2776,6 +2914,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 Lat = (float)CurrentInfrastructure.LatNew;
             }
+
             if (CurrentInfrastructure.LngNew == null)
             {
                 if (CurrentInfrastructure.Lng != null)
@@ -3318,6 +3457,9 @@ namespace CSSPPolSourceSiteInputToolHelper
             MessageText = $"\t\tInfrastructure Name\t[{InfrastructureName}]\r\n";
             EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
+            MessageText = $"\t\tIsActive[{IsActive}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
             MessageText = $"\t\tLat[{Lat}]\tLong[{Lng}]\r\n";
             EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
@@ -3444,7 +3586,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             #endregion Load Variables
 
             ret = SaveToCSSPWebToolsCreateOrModifyInfrastructure((int)municipalityDoc.Municipality.MunicipalityTVItemID,
-                (int)CurrentInfrastructure.InfrastructureTVItemID, InfrastructureName,
+                (int)CurrentInfrastructure.InfrastructureTVItemID, InfrastructureName, IsActive,
                 Lat, Lng, LatOutfall, LngOutfall, CommentEN, CommentFR, InfrastructureType, FacilityType,
                 IsMechanicallyAerated, NumberOfCells, NumberOfAeratedCells, AerationType, PreliminaryTreatmentType, PrimaryTreatmentType,
                 SecondaryTreatmentType, TertiaryTreatmentType, DisinfectionType, CollectionSystemType, AlarmSystemType,
@@ -3467,8 +3609,68 @@ namespace CSSPPolSourceSiteInputToolHelper
                 EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
                 #region reset variables
-                CurrentInfrastructure.InfrastructureTVItemID = int.Parse(ret);
+                int NewTVItemID = int.Parse(ret);
+                if (CurrentInfrastructure.InfrastructureTVItemID != NewTVItemID)
+                {
+                    // need to change the pump to from InfrastructureTVItemID to NewTVItemID
+                    // do the same for the pictures
+
+                    foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
+                    {
+                        if (infrastructure.PumpsToTVItemIDNew != null)
+                        {
+                            if (infrastructure.PumpsToTVItemIDNew == CurrentInfrastructure.InfrastructureTVItemID)
+                            {
+                                infrastructure.PumpsToTVItemIDNew = NewTVItemID;
+                            }
+                        }
+                        else
+                        {
+                            if (infrastructure.PumpsToTVItemID == CurrentInfrastructure.InfrastructureTVItemID)
+                            {
+                                infrastructure.PumpsToTVItemID = NewTVItemID;
+                            }
+                        }
+                    }
+
+                    foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
+                    {
+                        foreach (Picture picture in infrastructure.InfrastructurePictureList)
+                        {
+                            FileInfo fiPicture = new FileInfo($@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{CurrentInfrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{picture.Extension}");
+
+                            if (fiPicture.Exists)
+                            {
+                                try
+                                {
+                                    File.Copy(fiPicture.FullName, fiPicture.FullName.Replace(CurrentInfrastructure.InfrastructureTVItemID.ToString() + "_", NewTVItemID.ToString() + "_"));
+                                }
+                                catch (Exception)
+                                {
+                                    MessageText = $"Could not copy [{ fiPicture.FullName }] to [{ fiPicture.FullName.Replace(CurrentInfrastructure.InfrastructureTVItemID.ToString(), NewTVItemID.ToString()) }]\r\n";
+                                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+                                    return;
+                                }
+
+                                try
+                                {
+                                    fiPicture.Delete();
+                                }
+                                catch (Exception)
+                                {
+                                    MessageText = $"Could not remove [{ fiPicture.FullName }] after it was copied\r\n";
+                                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+                                    return;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                CurrentInfrastructure.InfrastructureTVItemID = NewTVItemID;
                 CurrentInfrastructure.TVText = InfrastructureName;
+                CurrentInfrastructure.IsActive = IsActive;
+                CurrentInfrastructure.IsActiveNew = null;
                 CurrentInfrastructure.TVTextNew = null;
                 CurrentInfrastructure.Lat = Lat;
                 CurrentInfrastructure.Lng = Lng;
@@ -3882,21 +4084,55 @@ namespace CSSPPolSourceSiteInputToolHelper
             EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: completed"));
 
         }
-
         public void InfrastructureSaveAllToCSSPWebTools()
         {
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
             {
-                CurrentInfrastructure = infrastructure;
-                InfrastructureSaveToCSSPWebTools();
-
-                int sfe = municipalityDoc.Municipality.InfrastructureList.Count;
+                int PumpToTVItemID = 0;
+                if (infrastructure.PumpsToTVItemIDNew != null)
+                {
+                    PumpToTVItemID = (int)infrastructure.PumpsToTVItemIDNew;
+                }
+                else
+                {
+                    if (infrastructure.PumpsToTVItemID != null)
+                    {
+                        PumpToTVItemID = (int)infrastructure.PumpsToTVItemID;
+                    }
+                }
+                if (PumpToTVItemID == 0)
+                {
+                    InfrastructureSaveAllToCSSPWebToolsRecursive(infrastructure);
+                }
             }
 
             SaveMunicipalityTextFile();
             RedrawInfrastructureList();
             ReDrawInfrastructure();
 
+        }
+        public void InfrastructureSaveAllToCSSPWebToolsRecursive(Infrastructure infrastructure)
+        {
+            CurrentInfrastructure = infrastructure;
+            InfrastructureSaveToCSSPWebTools();
+
+            foreach (Infrastructure infrastructureChild in municipalityDoc.Municipality.InfrastructureList)
+            {
+                if (infrastructureChild.PumpsToTVItemIDNew != null)
+                {
+                    if (infrastructureChild.PumpsToTVItemIDNew == infrastructure.InfrastructureTVItemID)
+                    {
+                        InfrastructureSaveAllToCSSPWebToolsRecursive(infrastructureChild);
+                    }
+                }
+                else
+                {
+                    if (infrastructureChild.PumpsToTVItemID == infrastructure.InfrastructureTVItemID)
+                    {
+                        InfrastructureSaveAllToCSSPWebToolsRecursive(infrastructureChild);
+                    }
+                }
+            }
         }
         public void PSSSaveToCSSPWebTools()
         {
@@ -3983,92 +4219,133 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            if (!IsNewPSS)
+            //if (!IsNewPSS)
+            //{
+
+            if (CurrentPSS.TVTextNew != null || CurrentPSS.IsActiveNew != null || CurrentPSS.IsPointSourceNew != null)
             {
+                bool IsActive = false;
+                bool IsPointSource = false;
 
-                if (CurrentPSS.TVTextNew != null || CurrentPSS.IsActiveNew != null)
+                string TVText = CurrentPSS.TVText.Trim();
+                if (CurrentPSS.TVTextNew != null)
                 {
-                    string MessageText = $"Trying To change PSS Name --- old [{CurrentPSS.TVText}] --- new [{CurrentPSS.TVTextNew}]\r\n";
-                    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
-
-                    ret = SaveToCSSPWebToolsTVText((int)CurrentPSS.PSSTVItemID, CurrentPSS.TVTextNew, (bool)CurrentPSS.IsActive, AdminEmail);
-                    ret = ret.Replace("\"", "");
-                    if (ret.StartsWith("ERROR:"))
+                    if (CurrentPSS.TVTextNew != CurrentPSS.TVText)
                     {
-                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-                        if (NeedToSave)
-                        {
-                            SaveSubsectorTextFile();
-                        }
-                    }
-                    else
-                    {
-                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-
-                        CurrentPSS.TVText = CurrentPSS.TVTextNew;
-                        CurrentPSS.TVTextNew = null;
-                        NeedToSave = true;
+                        TVText = CurrentPSS.TVTextNew.Trim();
+                        string MessageText = $"Trying To change PSS Name --- old [{CurrentPSS.TVText}] --- new [{CurrentPSS.TVTextNew}]\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
                     }
                 }
 
-                if (CurrentPSS.LatNew != null || CurrentPSS.LngNew != null)
+                if (CurrentPSS.IsActiveNew != null && CurrentPSS.IsActiveNew != CurrentPSS.IsActive)
                 {
-                    float Lat = 0.0f;
-                    float Lng = 0.0f;
-                    if (CurrentPSS.LatNew == null)
-                    {
-                        if (CurrentPSS.Lat != null)
-                        {
-                            Lat = (float)CurrentPSS.Lat;
-                        }
-                    }
-                    else
-                    {
-                        Lat = (float)CurrentPSS.LatNew;
-                    }
-                    if (CurrentPSS.LngNew == null)
-                    {
-                        if (CurrentPSS.Lng != null)
-                        {
-                            Lng = (float)CurrentPSS.Lng;
-                        }
-                    }
-                    else
-                    {
-                        Lng = (float)CurrentPSS.LngNew;
-                    }
-
-
-                    string LatText = CurrentPSS.Lat == null ? "(empty)" : ((float)CurrentPSS.Lat).ToString("F5");
-                    string LngText = CurrentPSS.Lng == null ? "(empty)" : ((float)CurrentPSS.Lng).ToString("F5");
-
-                    string MessageText = $"Trying to Change Lat and Lng --- old [{LatText} {LngText}] --- new [{Lat.ToString("F5")} {Lng.ToString("F5")}]\r\n";
+                    IsActive = (bool)CurrentPSS.IsActiveNew;
+                    string MessageText = $"Trying To change PSS IsActive --- old [{CurrentPSS.IsActive}] --- new [{CurrentPSS.IsActiveNew}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+                }
+                else
+                {
+                    IsActive = (bool)CurrentPSS.IsActive;
+                }
 
-                    ret = SaveToCSSPWebToolsLatLng((int)CurrentPSS.PSSTVItemID, Lat, Lng, TVTypeEnum.PolSourceSite, AdminEmail);
-                    ret = ret.Replace("\"", "");
-                    if (ret.StartsWith("ERROR:"))
-                    {
-                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
-                        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-                        if (NeedToSave)
-                        {
-                            SaveSubsectorTextFile();
-                        }
-                    }
-                    else
-                    {
-                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+                if (CurrentPSS.IsPointSourceNew != null && CurrentPSS.IsPointSourceNew != CurrentPSS.IsPointSource)
+                {
+                    IsPointSource = (bool)CurrentPSS.IsPointSourceNew;
+                    string MessageText = $"Trying To change PSS IsPointSource --- old [{CurrentPSS.IsPointSource}] --- new [{CurrentPSS.IsPointSource}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+                }
+                else
+                {
+                    IsPointSource = (bool)CurrentPSS.IsPointSource;
+                }
 
-                        CurrentPSS.Lat = Lat;
-                        CurrentPSS.Lng = Lng;
-                        CurrentPSS.LatNew = null;
-                        CurrentPSS.LngNew = null;
-                        NeedToSave = true;
+
+                ret = SaveToCSSPWebToolsTVText((int)CurrentPSS.PSSTVItemID, TVText, IsActive, IsPointSource, AdminEmail);
+                ret = ret.Replace("\"", "");
+                if (ret.StartsWith("ERROR:"))
+                {
+                    string MessageText = $"Trying to change PSS Name and/or IsActive and/or IsPointSource\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                    if (NeedToSave)
+                    {
+                        SaveSubsectorTextFile();
                     }
+                }
+                else
+                {
+                    string MessageText = $"Trying to change PSS Name and/or IsActive and/or IsPointSource\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                    CurrentPSS.TVText = TVText;
+                    CurrentPSS.IsActive = IsActive;
+                    CurrentPSS.IsPointSource = IsPointSource;
+
+                    CurrentPSS.TVTextNew = null;
+                    CurrentPSS.IsActiveNew = null;
+                    CurrentPSS.IsPointSourceNew = null;
+                    NeedToSave = true;
                 }
             }
+
+            if (CurrentPSS.LatNew != null || CurrentPSS.LngNew != null)
+            {
+                float Lat = 0.0f;
+                float Lng = 0.0f;
+                if (CurrentPSS.LatNew == null)
+                {
+                    if (CurrentPSS.Lat != null)
+                    {
+                        Lat = (float)CurrentPSS.Lat;
+                    }
+                }
+                else
+                {
+                    Lat = (float)CurrentPSS.LatNew;
+                }
+                if (CurrentPSS.LngNew == null)
+                {
+                    if (CurrentPSS.Lng != null)
+                    {
+                        Lng = (float)CurrentPSS.Lng;
+                    }
+                }
+                else
+                {
+                    Lng = (float)CurrentPSS.LngNew;
+                }
+
+
+                string LatText = CurrentPSS.Lat == null ? "(empty)" : ((float)CurrentPSS.Lat).ToString("F5");
+                string LngText = CurrentPSS.Lng == null ? "(empty)" : ((float)CurrentPSS.Lng).ToString("F5");
+
+                string MessageText = $"Trying to Change Lat and Lng --- old [{LatText} {LngText}] --- new [{Lat.ToString("F5")} {Lng.ToString("F5")}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                ret = SaveToCSSPWebToolsLatLng((int)CurrentPSS.PSSTVItemID, Lat, Lng, TVTypeEnum.PolSourceSite, AdminEmail);
+                ret = ret.Replace("\"", "");
+                if (ret.StartsWith("ERROR:"))
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                    if (NeedToSave)
+                    {
+                        SaveSubsectorTextFile();
+                    }
+                }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                    CurrentPSS.Lat = Lat;
+                    CurrentPSS.Lng = Lng;
+                    CurrentPSS.LatNew = null;
+                    CurrentPSS.LngNew = null;
+                    NeedToSave = true;
+                }
+            }
+            //}
 
             if (CurrentPSS.PSSAddressNew.AddressTVItemID != null || IsNewPSS)
             {
@@ -4531,7 +4808,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (NeedToSave)
             {
                 SaveSubsectorTextFile();
-                RedrawSinglePanelPSS();
+                DrawPanelPSS();
+                //RedrawSinglePanelPSS();
                 ReDrawPolSourceSite();
             }
 
@@ -4574,7 +4852,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.Location = new Point(5, 4);
                 lblTVText.TabIndex = 0;
                 lblTVText.Tag = pss.PSSTVItemID;
-                if (pss.IsActive == false)
+
+                bool IsActive = false;
+                if (pss.IsActiveNew != null)
+                {
+                    IsActive = (bool)pss.IsActiveNew;
+                }
+                else
+                {
+                    IsActive = (bool)pss.IsActive;
+                }
+
+                if (IsActive == false)
                 {
                     lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                 }
@@ -4599,8 +4888,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                 bool NeedDetailsUpdate = false;
                 bool NeedIssuesUpdate = false;
                 bool NeedPicturesUpdate = false;
+                bool NeedActiveUpdate = false;
+                bool NeedPointSourceUpdate = false;
                 if (IsAdmin)
                 {
+                    if (pss.IsActiveNew != null && pss.IsActiveNew != pss.IsActive)
+                    {
+                        NeedActiveUpdate = true;
+                    }
+
+                    if (pss.IsPointSourceNew != null && pss.IsPointSourceNew != pss.IsPointSource)
+                    {
+                        NeedPointSourceUpdate = false;
+                    }
+
                     if (pss.LatNew != null
                        || pss.LngNew != null
                        || pss.IsActiveNew != null
@@ -4642,7 +4943,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblPSSStatus.Location = new Point(5, lblTVText.Bottom + 4);
                     lblPSSStatus.TabIndex = 0;
                     lblPSSStatus.Tag = pss.PSSTVItemID;
-                    if (pss.IsActive == false)
+
+                    bool IsActive2 = false;
+                    if (pss.IsActiveNew != null)
+                    {
+                        IsActive2 = (bool)pss.IsActiveNew;
+                    }
+                    else
+                    {
+                        IsActive2 = (bool)pss.IsActive;
+                    }
+
+                    if (IsActive2 == false)
                     {
                         lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                     }
@@ -4653,9 +4965,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                     string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
                     string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-                    if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                    string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+                    string NeedPointSourceUpdateText = NeedPointSourceUpdate ? "Point Source" : "";
+                    if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate || NeedActiveUpdate || NeedPointSourceUpdate)
                     {
-                        lblPSSStatus.Text = $"Good --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                        lblPSSStatus.Text = $"Good --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText} {NeedActiveUpdateText} {NeedPointSourceUpdateText}";
                     }
                     else
                     {
@@ -4671,7 +4985,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblPSSStatus.Location = new Point(5, lblTVText.Bottom + 4);
                     lblPSSStatus.TabIndex = 0;
                     lblPSSStatus.Tag = pss.PSSTVItemID;
-                    if (pss.IsActive == false)
+
+                    bool IsActive2 = false;
+                    if (pss.IsActiveNew != null)
+                    {
+                        IsActive2 = (bool)pss.IsActiveNew;
+                    }
+                    else
+                    {
+                        IsActive2 = (bool)pss.IsActive;
+                    }
+
+                    if (IsActive2 == false)
                     {
                         lblPSSStatus.Font = new Font(new FontFamily(lblPSSStatus.Font.FontFamily.Name).Name, 10f, System.Drawing.FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                     }
@@ -4707,9 +5032,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                             string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                             string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
                             string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-                            if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                            string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+                            string NeedPointSourceUpdateText = NeedPointSourceUpdate ? "Point Source" : "";
+                            if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate || NeedActiveUpdate || NeedPointSourceUpdate)
                             {
-                                lblPSSStatus.Text = $"Not Well Formed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                                lblPSSStatus.Text = $"Not Well Formed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText} {NeedActiveUpdateText} {NeedPointSourceUpdateText}";
                             }
                             else
                             {
@@ -4730,9 +5057,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                             string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                             string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
                             string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-                            if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                            string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+                            string NeedPointSourceUpdateText = NeedPointSourceUpdate ? "Point Source" : "";
+                            if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate || NeedActiveUpdate || NeedPointSourceUpdate)
                             {
-                                lblPSSStatus.Text = $"Not Completed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText}";
+                                lblPSSStatus.Text = $"Not Completed --- Needs update for {NeedDetailsUpdateText} {NeedIssuesUpdateText} {NeedPictuesUpdateText} {NeedActiveUpdateText} {NeedPointSourceUpdateText}";
                             }
                             else
                             {
@@ -4850,7 +5179,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.AutoSize = true;
                 lblTVText.Location = new Point(10, 4);
                 lblTVText.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                if (CurrentInfrastructure.IsActive == false)
+
+                bool IsActive = false;
+                if (CurrentInfrastructure.IsActiveNew != null)
+                {
+                    IsActive = (bool)CurrentInfrastructure.IsActiveNew;
+                }
+                else
+                {
+                    IsActive = (bool)CurrentInfrastructure.IsActive;
+                }
+
+                if (IsActive == false)
                 {
                     lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                 }
@@ -4864,7 +5204,16 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (IsEditing)
                 {
-                    if ((bool)CurrentInfrastructure.IsActive)
+                    bool IsActive2 = false;
+                    if (CurrentInfrastructure.IsActiveNew != null)
+                    {
+                        IsActive2 = (bool)CurrentInfrastructure.IsActiveNew;
+                    }
+                    else
+                    {
+                        IsActive2 = (bool)CurrentInfrastructure.IsActive;
+                    }
+                    if (IsActive2)
                     {
                         Button butChangeToIsNotActive = new Button();
                         butChangeToIsNotActive.AutoSize = true;
@@ -5557,6 +5906,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     bool NeedDetailsUpdate = false;
                     bool NeedPicturesUpdate = false;
+                    bool NeedActiveUpdate = false;
+
+                    if (CurrentInfrastructure.IsActiveNew != null && CurrentInfrastructure.IsActiveNew != CurrentInfrastructure.IsActive)
+                    {
+                        NeedActiveUpdate = true;
+                    }
+
                     if (CurrentInfrastructure.LatNew != null
                        || CurrentInfrastructure.LngNew != null
                        || CurrentInfrastructure.LatOutfallNew != null
@@ -5633,7 +5989,9 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                     string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-                    if (NeedDetailsUpdate || NeedPicturesUpdate)
+                    string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+
+                    if (NeedDetailsUpdate || NeedPicturesUpdate || NeedActiveUpdate)
                     {
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                         X = 20;
@@ -5706,7 +6064,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.AutoSize = true;
                 lblTVText.Location = new Point(10, 4);
                 lblTVText.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                if (CurrentPSS.IsActive == false)
+
+                bool IsActive = false;
+                if (CurrentPSS.IsActiveNew != null)
+                {
+                    IsActive = (bool)CurrentPSS.IsActiveNew;
+                }
+                else
+                {
+                    IsActive = (bool)CurrentPSS.IsActive;
+                }
+
+                if (IsActive == false)
                 {
                     lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                 }
@@ -5748,7 +6117,17 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
-                    if ((bool)CurrentPSS.IsActive)
+                    bool IsActive2 = false;
+                    if (CurrentPSS.IsActiveNew != null)
+                    {
+                        IsActive2 = (bool)CurrentPSS.IsActiveNew;
+                    }
+                    else
+                    {
+                        IsActive2 = (bool)CurrentPSS.IsActive;
+                    }
+
+                    if (IsActive2)
                     {
                         Button butChangeToIsNotActive = new Button();
                         butChangeToIsNotActive.AutoSize = true;
@@ -5795,7 +6174,16 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 if (IsEditing)
                 {
-                    if ((bool)CurrentPSS.IsPointSource)
+                    bool IsPointSource = false;
+                    if (CurrentPSS.IsPointSourceNew != null)
+                    {
+                        IsPointSource = (bool)CurrentPSS.IsPointSourceNew;
+                    }
+                    else
+                    {
+                        IsPointSource = (bool)CurrentPSS.IsPointSource;
+                    }
+                    if (IsPointSource)
                     {
                         Button butChangeToIsNonPointSource = new Button();
                         butChangeToIsNonPointSource.AutoSize = true;
@@ -5982,6 +6370,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                     bool NeedDetailsUpdate = false;
                     bool NeedIssuesUpdate = false;
                     bool NeedPicturesUpdate = false;
+                    bool NeedActiveUpdate = false;
+                    bool NeedPointSourceUpdate = false;
+
+                    if (CurrentPSS.IsActiveNew != null && CurrentPSS.IsActiveNew != CurrentPSS.IsActive)
+                    {
+                        NeedActiveUpdate = true;
+                    }
+
+                    if (CurrentPSS.IsPointSourceNew != null && CurrentPSS.IsPointSourceNew != CurrentPSS.IsPointSource)
+                    {
+                        NeedPointSourceUpdate = true;
+                    }
+
                     if (CurrentPSS.LatNew != null
                        || CurrentPSS.LngNew != null
                        || CurrentPSS.IsActiveNew != null
@@ -6022,7 +6423,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                     string NeedIssuesUpdateText = NeedIssuesUpdate ? "Issues" : "";
                     string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-                    if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate)
+                    string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+                    string NeedPointSourceUpdateText = NeedPointSourceUpdate ? "Point Source" : "";
+                    if (NeedDetailsUpdate || NeedIssuesUpdate || NeedPicturesUpdate || NeedActiveUpdate || NeedPointSourceUpdate)
                     {
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                         X = 20;
@@ -6403,7 +6806,37 @@ namespace CSSPPolSourceSiteInputToolHelper
                                         {
                                             MessageBox.Show("Infrastructure Name maximum length is 200 characters", "Error");
                                         }
-                                        CurrentInfrastructure.TVTextNew = tb.Text.Trim();
+                                        bool Exist = false;
+                                        foreach (Infrastructure inf in municipalityDoc.Municipality.InfrastructureList)
+                                        {
+                                            if (inf.TVTextNew != null)
+                                            {
+                                                if (inf.TVTextNew == tb.Text.Trim())
+                                                {
+                                                    if (inf.InfrastructureTVItemID != CurrentInfrastructure.InfrastructureTVItemID)
+                                                    {
+                                                        Exist = true;
+                                                        MessageBox.Show("Infrastructure Name already exist", "Error");
+                                                    }
+                                                }
+                                            }
+                                            else
+                                            {
+                                                if (inf.TVText == tb.Text.Trim())
+                                                {
+                                                    if (inf.InfrastructureTVItemID != CurrentInfrastructure.InfrastructureTVItemID)
+                                                    {
+                                                        Exist = true;
+                                                        MessageBox.Show("Infrastructure Name already exist", "Error");
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                        if (!Exist)
+                                        {
+                                            CurrentInfrastructure.TVTextNew = tb.Text.Trim();
+                                        }
                                     }
                                     else
                                     {
@@ -8153,7 +8586,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
             }
         }
-        private string SaveToCSSPWebToolsCreateOrModifyInfrastructure(int MunicipalityTVItemID, int TVItemID, string TVText,
+        private string SaveToCSSPWebToolsCreateOrModifyInfrastructure(int MunicipalityTVItemID, int TVItemID, string TVText, bool IsActive,
             float? Lat, float? Lng, float? LatOutfall, float? LngOutfall, string CommentEN, string CommentFR, InfrastructureTypeEnum? InfrastructureType,
             FacilityTypeEnum? FacilityType, bool? IsMechanicallyAerated, int? NumberOfCells, int? NumberOfAeratedCells, AerationTypeEnum? AerationType,
             PreliminaryTreatmentTypeEnum? PreliminaryTreatmentType, PrimaryTreatmentTypeEnum? PrimaryTreatmentType,
@@ -8174,6 +8607,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 paramList.Add("MunicipalityTVItemID", MunicipalityTVItemID.ToString());
                 paramList.Add("TVItemID", TVItemID.ToString());
                 paramList.Add("TVText", TVText);
+                paramList.Add("IsActive", IsActive.ToString());
                 paramList.Add("Lat", Lat.ToString());
                 paramList.Add("Lng", Lng.ToString());
                 paramList.Add("LatOutfall", LatOutfall.ToString());
@@ -8432,7 +8866,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
-        private string SaveToCSSPWebToolsTVText(int TVItemID, string TVText, bool IsActive, string AdminEmail)
+        private string SaveToCSSPWebToolsTVText(int TVItemID, string TVText, bool IsActive, bool IsPointSource, string AdminEmail)
         {
             try
             {
@@ -8442,6 +8876,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 paramList.Add("TVItemID", TVItemID.ToString());
                 paramList.Add("TVText", TVText);
                 paramList.Add("IsActive", IsActive.ToString());
+                paramList.Add("IsPointSource", IsPointSource.ToString());
                 paramList.Add("AdminEmail", AdminEmail);
 
                 using (WebClient webClient = new WebClient())

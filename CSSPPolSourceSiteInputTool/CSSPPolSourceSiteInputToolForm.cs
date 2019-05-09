@@ -1326,7 +1326,21 @@ namespace CSSPPolSourceSiteInputTool
 
                     if (comboBoxSubsectorOrMunicipality.Items.Count > 0)
                     {
+                        if (checkBoxShowAdmin.Checked)
+                        {
+                            panelCreateSubsectorDirectory.Visible = true;
+                        }
+                        else
+                        {
+                            panelAddNewPollutionSourceSite.Visible = true;
+                        }
                         comboBoxSubsectorOrMunicipality.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        panelAddNewPollutionSourceSite.Visible = false;
+                        panelCreateSubsectorDirectory.Visible = false;
+                        polSourceSiteInputToolHelper.DrawPanelPSS();
                     }
                 }
                 else
@@ -1355,7 +1369,21 @@ namespace CSSPPolSourceSiteInputTool
 
                     if (comboBoxSubsectorOrMunicipality.Items.Count > 0)
                     {
+                        if (checkBoxShowAdmin.Checked)
+                        {
+                            panelCreateMunicipalityDirectory.Visible = true;
+                        }
+                        else
+                        {
+                            panelAddNewInfrastructure.Visible = true;
+                        }
                         comboBoxSubsectorOrMunicipality.SelectedIndex = 0;
+                    }
+                    else
+                    {
+                        panelCreateMunicipalityDirectory.Visible = false;
+                        panelAddNewInfrastructure.Visible = false;
+                        polSourceSiteInputToolHelper.DrawPanelInfrastructures();
                     }
                 }
             }
