@@ -83,6 +83,11 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
+            this.panelStreetType = new System.Windows.Forms.Panel();
+            this.butStreetTypeCancel = new System.Windows.Forms.Button();
+            this.butStreetTypeSelect = new System.Windows.Forms.Button();
+            this.lblStreetType = new System.Windows.Forms.Label();
+            this.comboBoxStreetType = new System.Windows.Forms.ComboBox();
             this.panelButtonBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
@@ -107,6 +112,7 @@
             this.splitContainer2.SuspendLayout();
             this.panelMunicipalities.SuspendLayout();
             this.panelShowInputOptions.SuspendLayout();
+            this.panelStreetType.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelButtonBar
@@ -446,6 +452,7 @@
             // 
             // splitContainer2.Panel1
             // 
+            this.splitContainer2.Panel1.Controls.Add(this.panelStreetType);
             this.splitContainer2.Panel1.Controls.Add(this.panelMunicipalities);
             this.splitContainer2.Panel1.Controls.Add(this.panelViewAndEdit);
             // 
@@ -709,6 +716,56 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
+            // panelStreetType
+            // 
+            this.panelStreetType.AutoScroll = true;
+            this.panelStreetType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelStreetType.Controls.Add(this.butStreetTypeCancel);
+            this.panelStreetType.Controls.Add(this.butStreetTypeSelect);
+            this.panelStreetType.Controls.Add(this.lblStreetType);
+            this.panelStreetType.Controls.Add(this.comboBoxStreetType);
+            this.panelStreetType.Location = new System.Drawing.Point(52, 120);
+            this.panelStreetType.Name = "panelStreetType";
+            this.panelStreetType.Size = new System.Drawing.Size(284, 117);
+            this.panelStreetType.TabIndex = 3;
+            // 
+            // butStreetTypeCancel
+            // 
+            this.butStreetTypeCancel.Location = new System.Drawing.Point(147, 72);
+            this.butStreetTypeCancel.Name = "butStreetTypeCancel";
+            this.butStreetTypeCancel.Size = new System.Drawing.Size(75, 23);
+            this.butStreetTypeCancel.TabIndex = 2;
+            this.butStreetTypeCancel.Text = "Cancel";
+            this.butStreetTypeCancel.UseVisualStyleBackColor = true;
+            this.butStreetTypeCancel.Click += new System.EventHandler(this.butStreetTypeCancel_Click);
+            // 
+            // butStreetTypeSelect
+            // 
+            this.butStreetTypeSelect.Location = new System.Drawing.Point(50, 72);
+            this.butStreetTypeSelect.Name = "butStreetTypeSelect";
+            this.butStreetTypeSelect.Size = new System.Drawing.Size(75, 23);
+            this.butStreetTypeSelect.TabIndex = 2;
+            this.butStreetTypeSelect.Text = "Select";
+            this.butStreetTypeSelect.UseVisualStyleBackColor = true;
+            this.butStreetTypeSelect.Click += new System.EventHandler(this.butStreetTypeSelect_Click);
+            // 
+            // lblStreetType
+            // 
+            this.lblStreetType.AutoSize = true;
+            this.lblStreetType.Location = new System.Drawing.Point(42, 21);
+            this.lblStreetType.Name = "lblStreetType";
+            this.lblStreetType.Size = new System.Drawing.Size(62, 13);
+            this.lblStreetType.TabIndex = 1;
+            this.lblStreetType.Text = "Street Type";
+            // 
+            // comboBoxStreetType
+            // 
+            this.comboBoxStreetType.FormattingEnabled = true;
+            this.comboBoxStreetType.Location = new System.Drawing.Point(42, 40);
+            this.comboBoxStreetType.Name = "comboBoxStreetType";
+            this.comboBoxStreetType.Size = new System.Drawing.Size(199, 21);
+            this.comboBoxStreetType.TabIndex = 0;
+            // 
             // CSSPPolSourceSiteInputToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -751,6 +808,8 @@
             this.panelMunicipalities.PerformLayout();
             this.panelShowInputOptions.ResumeLayout(false);
             this.panelShowInputOptions.PerformLayout();
+            this.panelStreetType.ResumeLayout(false);
+            this.panelStreetType.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -812,6 +871,11 @@
         private System.Windows.Forms.ComboBox comboBoxProvinceMunicipalities;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button butReduceHelp;
+        private System.Windows.Forms.Panel panelStreetType;
+        private System.Windows.Forms.Button butStreetTypeCancel;
+        private System.Windows.Forms.Button butStreetTypeSelect;
+        private System.Windows.Forms.Label lblStreetType;
+        private System.Windows.Forms.ComboBox comboBoxStreetType;
     }
 }
 

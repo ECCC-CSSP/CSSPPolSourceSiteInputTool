@@ -147,12 +147,23 @@ namespace CSSPPolSourceSiteInputToolHelper
                 if (control.Name == "comboBoxUsedMunicipalities")
                 {
                     ComboBox comboBoxMuni = ((ComboBox)control);
+
                     MunicipalityIDNumberList = GetMunicipalitiesAndIDNumber();
 
                     comboBoxMuni.Items.Clear();
                     foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList.OrderBy(c => c.Municipality))
                     {
-                        comboBoxMuni.Items.Add(muniIDNumber.Municipality);
+                        if (muniIDNumber.Municipality == "None")
+                        {
+                            comboBoxMuni.Items.Add(muniIDNumber.Municipality);
+                        }
+                    }
+                    foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList.OrderBy(c => c.Municipality))
+                    {
+                        if (muniIDNumber.Municipality != "None")
+                        {
+                            comboBoxMuni.Items.Add(muniIDNumber.Municipality);
+                        }
                     }
 
                     if (comboBoxMuni.Items.Count > 0)
@@ -178,6 +189,43 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
             PanelMunicipalities.BringToFront();
+        }
+        private void lblStreetTypeText_Click(object sender, EventArgs e)
+        {
+            List<StreetTypeIDNumber> StreetTypeIDNumberList = new List<StreetTypeIDNumber>();
+
+            foreach (Control control in PanelStreetType.Controls)
+            {
+                if (control.Name == "comboBoxStreetType")
+                {
+                    ComboBox comboBoxStType = ((ComboBox)control);
+
+                    StreetTypeIDNumberList = GetStreetTypeAndIDNumber();
+
+                    comboBoxStType.Items.Clear();
+                    foreach (StreetTypeIDNumber stTypeIDNumber in StreetTypeIDNumberList.OrderBy(c => c.StreetType))
+                    {
+                        if (stTypeIDNumber.StreetType == "None")
+                        {
+                            comboBoxStType.Items.Add(stTypeIDNumber.StreetType);
+
+                        }
+                    }
+                    foreach (StreetTypeIDNumber stTypeIDNumber in StreetTypeIDNumberList.OrderBy(c => c.StreetType))
+                    {
+                        if (stTypeIDNumber.StreetType != "None")
+                        {
+                            comboBoxStType.Items.Add(stTypeIDNumber.StreetType);
+                        }
+                    }
+
+                    if (comboBoxStType.Items.Count > 0)
+                    {
+                        comboBoxStType.SelectedIndex = 0;
+                    }
+                }
+            }
+            PanelStreetType.BringToFront();
         }
         private void butSaveToCSSPWebTools_Click(object sender, EventArgs e)
         {
@@ -231,7 +279,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 List<MunicipalityIDNumber> MunicipalityIDNumberList = GetMunicipalitiesAndIDNumber();
 
                 string MunicipalitiesText = "";
-                foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList)
+                foreach (MunicipalityIDNumber muniIDNumber in MunicipalityIDNumberList.Skip(1))
                 {
                     EmitStatus(new StatusEventArgs($"Checking if { muniIDNumber.Municipality } already exist in CSSPWebTools"));
 
@@ -291,6 +339,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         private void butSaves_Click(object sender, EventArgs e)
         {
+            int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
             if (IsPolSourceSite)
             {
                 SavePolSourceSiteInfo();
@@ -334,10 +384,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     InfrastructureTVItemID = 0;
                 }
                 RedrawInfrastructureList();
-                //DrawPanelInfrastructures();
-                ////RedrawSinglePanelInfrastructure();
                 ReDrawInfrastructure();
             }
+
+            PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
         }
         private void butSavePictureInfo_Click(object sender, EventArgs e)
         {

@@ -224,9 +224,18 @@ namespace CSSPPolSourceSiteInputToolHelper
             Label lblStreetTypeText = new Label();
             lblStreetTypeText.AutoSize = true;
             lblStreetTypeText.Location = new Point(x, lblStreetNumberText.Top);
-            lblStreetTypeText.Font = new Font(new FontFamily(lblStreetTypeText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-            lblStreetTypeText.ForeColor = addressNew.StreetType != null ? ForeColorChangedOrNew : ForeColorNormal;
             lblStreetTypeText.Text = $@"Street Type   ";
+            if (IsEditing)
+            {
+                lblStreetTypeText.Font = new Font(new FontFamily(lblStreetTypeText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold | FontStyle.Underline);
+                lblStreetTypeText.ForeColor = Color.Blue;
+                lblStreetTypeText.Click += lblStreetTypeText_Click;
+            }
+            else
+            {
+                lblStreetTypeText.Font = new Font(new FontFamily(lblStreetTypeText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                lblStreetTypeText.ForeColor = Color.Black;
+            }
 
             PanelViewAndEdit.Controls.Add(lblStreetTypeText);
 
@@ -251,30 +260,30 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 }
 
-                ComboBox comboBoxStreetType = new ComboBox();
-                comboBoxStreetType.Location = new Point(lblStreetTypeText.Left, currentTop);
-                comboBoxStreetType.Name = "comboBoxStreetType";
-                comboBoxStreetType.Font = new Font(new FontFamily(lblStreetNameText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                comboBoxStreetType.Width = lblStreetTypeText.Width;
-
-                PanelViewAndEdit.Controls.Add(comboBoxStreetType);
-
-                for (int i = 1, count = Enum.GetNames(typeof(StreetTypeEnum)).Count(); i < count; i++)
-                {
-                    comboBoxStreetType.Items.Add(((StreetTypeEnum)i).ToString());
-                }
+                TextBox textBoxStreetType = new TextBox();
+                textBoxStreetType.Location = new Point(lblStreetTypeText.Left, currentTop);
+                textBoxStreetType.Name = "textBoxStreetType";
+                textBoxStreetType.Font = new Font(new FontFamily(lblStreetTypeText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                textBoxStreetType.Width = lblStreetTypeText.Width;
+                textBoxStreetType.Enabled = false;
 
                 if (addressNew.StreetType != null)
                 {
-                    comboBoxStreetType.SelectedItem = ((StreetTypeEnum)addressNew.StreetType).ToString();
+                    textBoxStreetType.Text = ((StreetTypeEnum)addressNew.StreetType).ToString();
                 }
                 else
                 {
                     if (address.StreetType != null)
                     {
-                        comboBoxStreetType.SelectedItem = ((StreetTypeEnum)address.StreetType).ToString();
+                        textBoxStreetType.Text = ((StreetTypeEnum)address.StreetType).ToString();
+                    }
+                    else
+                    {
+                        textBoxStreetType.Text = "";
                     }
                 }
+
+                PanelViewAndEdit.Controls.Add(textBoxStreetType);
 
                 y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
             }
@@ -326,19 +335,25 @@ namespace CSSPPolSourceSiteInputToolHelper
             Label lblMunicipalityText = new Label();
             lblMunicipalityText.AutoSize = true;
             lblMunicipalityText.Location = new Point(x, lblStreetNumberText.Top);
-            lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold | FontStyle.Underline);
+            lblMunicipalityText.Text = $@"Municipality        ";
             if (IsMunicipality)
             {
                 lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                 lblMunicipalityText.ForeColor = Color.Black;
-                lblMunicipalityText.Text = $@"Municipality        ";
             }
             else
             {
-                lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold | FontStyle.Underline);
-                lblMunicipalityText.ForeColor = Color.Blue;
-                lblMunicipalityText.Text = $@"Municipality        ";
-                lblMunicipalityText.Click += lblMunicipalityText_Click;
+                if (IsEditing)
+                {
+                    lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold | FontStyle.Underline);
+                    lblMunicipalityText.ForeColor = Color.Blue;
+                    lblMunicipalityText.Click += lblMunicipalityText_Click;
+                }
+                else
+                {
+                    lblMunicipalityText.Font = new Font(new FontFamily(lblMunicipalityText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                    lblMunicipalityText.ForeColor = Color.Black;
+                }
             }
 
             PanelViewAndEdit.Controls.Add(lblMunicipalityText);
@@ -732,8 +747,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             PanelViewAndEdit.Controls.Add(lblItemEnum);
 
-            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-
             if (IsEditing)
             {
                 if (valNew != null)
@@ -809,681 +822,368 @@ namespace CSSPPolSourceSiteInputToolHelper
                     x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                 }
 
-                ComboBox comboBoxItem = new ComboBox();
-                comboBoxItem.Location = new Point(x, lblItemEnum.Top);
-                comboBoxItem.Name = comboBoxName;
-                comboBoxItem.Font = new Font(new FontFamily(lblItemEnum.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                comboBoxItem.Width = 400;
-                comboBoxItem.DisplayMember = "EnumText";
-                comboBoxItem.ValueMember = "EnumID";
+                x = 30;
 
-                PanelViewAndEdit.Controls.Add(comboBoxItem);
+                y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
+                string fontFamilyName = lblItemEnum.Font.FontFamily.Name;
                 switch (enumType.Name)
                 {
                     case "InfrastructureTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.WWTP), 
+                                "butInfrastructureTypeWWTP", "WWTP", fontFamilyName, "WWTP", butInfrastructureTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(InfrastructureTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i != 0)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)i).ToString(),
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.LiftStation), 
+                                "butInfrastructureTypeLiftStation", "Lift Station", fontFamilyName, "LiftStation", butInfrastructureTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                                else
-                                {
-                                    comboBoxItem.SelectedIndex = 0;
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.LineOverflow), 
+                                "butInfrastructureTypeLineOverflow", "Line Overflow", fontFamilyName, "LineOverflow", butInfrastructureTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.SeeOtherMunicipality), 
+                                "butInfrastructureTypeSeeOtherMunicipality", "See Other Municipality", fontFamilyName, "SeeOtherMunicipality", butInfrastructureTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.Other), 
+                                "butInfrastructureTypeOther", "Other", fontFamilyName, "Other", butInfrastructureTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butInfrastructureTypeNull", "None", fontFamilyName, "None", butInfrastructureTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
                         }
                         break;
                     case "FacilityTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)FacilityTypeEnum.Lagoon),
+                                "butFacilityTypeLagoon", "Lagoon", fontFamilyName, "Lagoon", butFacilityTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(FacilityTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i == 0)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "Select Facility Type (unknown)",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)FacilityTypeEnum.Plant),
+                                "butFacilityTypePlant", "Plant", fontFamilyName, "Plant", butFacilityTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                                else
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)i).ToString(),
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                            }
-
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Facility Type (unknown)" : _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Facility Type (unknown)" : _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butFacilityTypeNull", "None", fontFamilyName, "None", butFacilityTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "AerationTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AerationTypeEnum.MechanicalAirLines),
+                                "butAerationTypeMechanicalAirLines", "Mechanical Air Lines", fontFamilyName, "MechanicalAirLines", butAerationTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(AerationTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i == 0)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "Select Aeration Type (unknown)",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AerationTypeEnum.MechanicalSurfaceMixers),
+                                "butAerationTypeMechanicalSurfaceMixers", "MechanicalSurfaceMixers", fontFamilyName, "MechanicalSurfaceMixers", butAerationTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                                else
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)i).ToString(),
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                            }
-
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Aeration Type (unknown)" : _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Aeration Type (unknown)" : _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butAerationTypeNull", "None", fontFamilyName, "None", butAerationTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "PreliminaryTreatmentTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PreliminaryTreatmentTypeEnum.BarScreen),
+                                "butPreliminaryTreatmentTypeBarScreen", "Bar Screen", fontFamilyName, "BarScreen", butPreliminaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(PreliminaryTreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i == 0)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "Select Preliminary Treatment Type (unknown)",
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PreliminaryTreatmentTypeEnum.Grinder),
+                                "butPreliminaryTreatmentTypeGrinder", "Grinder", fontFamilyName, "Grinder", butPreliminaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                                else
-                                {
-                                    if (i != (int)PreliminaryTreatmentTypeEnum.NotApplicable)
-                                    {
-                                        EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                        {
-                                            EnumText = i == 0 ? "Select Preliminary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)i).ToString(),
-                                            EnumID = i,
-                                        };
-                                        comboBoxItem.Items.Add(enumTextAndID);
-                                    }
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PreliminaryTreatmentTypeEnum.MechanicalScreening),
+                                "butPreliminaryTreatmentTypeMechanicalScreening", "Mechanical Screening", fontFamilyName, "MechanicalScreening", butPreliminaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(PreliminaryTreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i == (int)PreliminaryTreatmentTypeEnum.NotApplicable)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)i).ToString(),
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                            }
-
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Preliminary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Preliminary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butPreliminaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butPreliminaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "PrimaryTreatmentTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PrimaryTreatmentTypeEnum.ChemicalCoagulation),
+                                "butPrimaryTreatmentTypeChemicalCoagulation", "Chemical Coagulation", fontFamilyName, "ChemicalCoagulation", butPrimaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(PrimaryTreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i == 0)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "Select Primary Treatment Type (unknown)",
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PrimaryTreatmentTypeEnum.Filtration),
+                                "butPrimaryTreatmentTypeFiltration", "Filtration", fontFamilyName, "Filtration", butPrimaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                                else
-                                {
-                                    if (i != (int)PrimaryTreatmentTypeEnum.NotApplicable)
-                                    {
-                                        EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                        {
-                                            EnumText = i == 0 ? "Select Primary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)i).ToString(),
-                                            EnumID = i,
-                                        };
-                                        comboBoxItem.Items.Add(enumTextAndID);
-                                    }
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PrimaryTreatmentTypeEnum.PrimaryClarification),
+                                "butPrimaryTreatmentTypePrimaryClarification", "Primary Clarification", fontFamilyName, "PrimaryClarification", butPrimaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(PrimaryTreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i == (int)PrimaryTreatmentTypeEnum.NotApplicable)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PrimaryTreatmentTypeEnum.Sedimentation),
+                                "butPrimaryTreatmentTypeSedimentation", "Sedimentation", fontFamilyName, "Sedimentation", butPrimaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)i).ToString(),
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                            }
-
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Primary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Primary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butPrimaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butPrimaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "SecondaryTreatmentTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
-                            EnumTextAndID enumTextAndID = new EnumTextAndID()
-                            {
-                                EnumText = "Select Secondary Treatment Type (unknown)",
-                                EnumID = 0,
-                            };
-                            comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butSecondaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            enumTextAndID = new EnumTextAndID()
-                            {
-                                EnumText = "---------------------------",
-                                EnumID = 0,
-                            };
-                            comboBoxItem.Items.Add(enumTextAndID);
+                            x = 20;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
-                            enumTextAndID = new EnumTextAndID()
-                            {
-                                EnumText = "Attached Growth Group",
-                                EnumID = 0,
-                            };
-                            comboBoxItem.Items.Add(enumTextAndID);
+                            Label lblAttachedGrowthGroup = new Label();
+                            lblAttachedGrowthGroup.AutoSize = true;
+                            lblAttachedGrowthGroup.Location = new Point(x, y);
+                            lblAttachedGrowthGroup.Font = new Font(new FontFamily(fontFamilyName).Name, 10f, FontStyle.Bold);
+                            lblAttachedGrowthGroup.Text = "Attached Growth Group";
+                        
+                            PanelViewAndEdit.Controls.Add(lblAttachedGrowthGroup);
 
-                            enumTextAndID = new EnumTextAndID()
-                            {
-                                EnumText = "",
-                                EnumID = 0,
-                            };
-                            comboBoxItem.Items.Add(enumTextAndID);
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
-                            List<SecondaryTreatmentTypeEnum> secondaryTreatmentTypeEnumList = new List<SecondaryTreatmentTypeEnum>()
-                            {
-                                SecondaryTreatmentTypeEnum.AeratedSubmergedBioFilmReactor,
-                                SecondaryTreatmentTypeEnum.BiologicalAearatedFilters,
-                                SecondaryTreatmentTypeEnum.IntegratedFixedFilmActivatedSludge,
-                                SecondaryTreatmentTypeEnum.MovingBedBioReactor,
-                                SecondaryTreatmentTypeEnum.RotatingBiologicalContactor,
-                                SecondaryTreatmentTypeEnum.TricklingFilters,
-                            };
-                            for (int i = 0, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (secondaryTreatmentTypeEnumList.Contains((SecondaryTreatmentTypeEnum)i))
-                                {
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)i).ToString(),
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.AeratedSubmergedBioFilmReactor),
+                                "butSecondaryTreatmentTypeAeratedSubmergedBioFilmReactor", "Aerated Submerged Bio Film Reactor", fontFamilyName, "AeratedSubmergedBioFilmReactor", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            enumTextAndID = new EnumTextAndID()
-                            {
-                                EnumText = "---------------------------",
-                                EnumID = 0,
-                            };
-                            comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.BiologicalAearatedFilters),
+                                "butSecondaryTreatmentTypeBiologicalAearatedFilters", "Biological Aearated Filters", fontFamilyName, "BiologicalAearatedFilters", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            enumTextAndID = new EnumTextAndID()
-                            {
-                                EnumText = "Suspended Growth Group",
-                                EnumID = 0,
-                            };
-                            comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.IntegratedFixedFilmActivatedSludge),
+                                "butSecondaryTreatmentTypeIntegratedFixedFilmActivatedSludge", "Integrated Fixed Film Activated Sludge", fontFamilyName, "IntegratedFixedFilmActivatedSludge", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            enumTextAndID = new EnumTextAndID()
-                            {
-                                EnumText = "",
-                                EnumID = 0,
-                            };
-                            comboBoxItem.Items.Add(enumTextAndID);
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.MovingBedBioReactor),
+                                "butSecondaryTreatmentTypeMovingBedBioReactor", "Moving Bed BioReactor", fontFamilyName, "MovingBedBioReactor", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            secondaryTreatmentTypeEnumList = new List<SecondaryTreatmentTypeEnum>()
-                            {
-                                SecondaryTreatmentTypeEnum.ActivatedSludge,
-                                SecondaryTreatmentTypeEnum.ContactStabilization,
-                                SecondaryTreatmentTypeEnum.ExtendedAeration,
-                                SecondaryTreatmentTypeEnum.OxidationDitch,
-                                SecondaryTreatmentTypeEnum.PhysicalChemicalProcesses,
-                                SecondaryTreatmentTypeEnum.SequencingBatchReator,
-                            };
-                            for (int i = 0, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (secondaryTreatmentTypeEnumList.Contains((SecondaryTreatmentTypeEnum)i))
-                                {
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)i).ToString(),
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.RotatingBiologicalContactor),
+                                "butSecondaryTreatmentTypeRotatingBiologicalContactor", "Rotating Biological Contactor (RBC)", fontFamilyName, "RotatingBiologicalContactor", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(SecondaryTreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i == (int)SecondaryTreatmentTypeEnum.NotApplicable)
-                                {
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.TricklingFilters),
+                                "butSecondaryTreatmentTypeTricklingFilters", "Trickling Filters", fontFamilyName, "TricklingFilters", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)i).ToString(),
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                            }
+                            x = 20;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
-                            if (valNew != null)
-                            {
-                                enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Secondary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Secondary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
+                            Label lblSuspendedGrowthGroup = new Label();
+                            lblSuspendedGrowthGroup.AutoSize = true;
+                            lblSuspendedGrowthGroup.Location = new Point(x, y);
+                            lblSuspendedGrowthGroup.Font = new Font(new FontFamily(fontFamilyName).Name, 10f, FontStyle.Bold);
+                            lblSuspendedGrowthGroup.Text = "Suspended Growth Group";
+
+                            PanelViewAndEdit.Controls.Add(lblSuspendedGrowthGroup);
+
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.ActivatedSludge),
+                                "butSecondaryTreatmentTypeActivatedSludge", "Activated Sludge", fontFamilyName, "ActivatedSludge", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.ContactStabilization),
+                                "butSecondaryTreatmentTypeContactStabilization", "Contact Stabilization", fontFamilyName, "ContactStabilization", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.ExtendedAeration),
+                                "butSecondaryTreatmentTypeExtendedAeration", "Extended Aeration", fontFamilyName, "ExtendedAeration", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.ExtendedActivatedSludge),
+                                "butSecondaryTreatmentTypeExtendedActivatedSludge", "Extended Activated Sludge", fontFamilyName, "ExtendedActivatedSludge", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.OxidationDitch),
+                                "butSecondaryTreatmentTypeOxidationDitch", "Oxidation Ditch", fontFamilyName, "OxidationDitch", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.PhysicalChemicalProcesses),
+                                "butSecondaryTreatmentTypePhysicalChemicalProcesses", "Physical Chemical Processes", fontFamilyName, "PhysicalChemicalProcesses", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.SequencingBatchReactor),
+                                "butSecondaryTreatmentTypeSequencingBatchReactor", "Sequencing Batch Reactor", fontFamilyName, "SequencingBatchReactor", butSecondaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
                         }
                         break;
                     case "TertiaryTreatmentTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butTertiaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butTertiaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(TertiaryTreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i == 0)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "Select Tertiary Treatment Type (unknown)",
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.Adsorption),
+                                "butTertiaryTreatmentTypeAdsorption", "Adsorption", fontFamilyName, "Adsorption", butTertiaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                                else
-                                {
-                                    if (i != (int)TertiaryTreatmentTypeEnum.NotApplicable)
-                                    {
-                                        EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                        {
-                                            EnumText = i == 0 ? "Select Tertiary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)i).ToString(),
-                                            EnumID = i,
-                                        };
-                                        comboBoxItem.Items.Add(enumTextAndID);
-                                    }
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.BiologicalNutrientRemoval),
+                                "butTertiaryTreatmentTypeBiologicalNutrientRemoval", "Biological Nutrient Removal", fontFamilyName, "BiologicalNutrientRemoval", butTertiaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(TertiaryTreatmentTypeEnum)).Count(); i < count; i++)
-                            {
-                                if (i == (int)TertiaryTreatmentTypeEnum.NotApplicable)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = "---------------------------",
-                                        EnumID = 0,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
-                                    enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)i).ToString(),
-                                        EnumID = i,
-                                    };
-                                    comboBoxItem.Items.Add(enumTextAndID);
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.Flocculation),
+                                "butTertiaryTreatmentTypeFlocculation", "Flocculation", fontFamilyName, "Flocculation", butTertiaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Tertiary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Tertiary Treatment Type (unknown)" : _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.IonExchange),
+                                "butTertiaryTreatmentTypeIonExchange", "Ion Exchange", fontFamilyName, "IonExchange", butTertiaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.MembraneFiltration),
+                                "butTertiaryTreatmentTypeMembraneFiltration", "Membrane Filtration", fontFamilyName, "MembraneFiltration", butTertiaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.ReverseOsmosis),
+                                "butTertiaryTreatmentTypeReverseOsmosis", "Reverse Osmosis", fontFamilyName, "ReverseOsmosis", butTertiaryTreatmentTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "DisinfectionTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butDisinfectionTypeNone", "None", fontFamilyName, "None", butDisinfectionTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(DisinfectionTypeEnum)).Count(); i < count; i++)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = i == 0 ? "Select Disinfection Type (unknown)" : _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.UV),
+                                "butDisinfectionTypeUV", "UV", fontFamilyName, "UV", butDisinfectionTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Disinfection Type (unknown)" : _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Disinfection Type (unknown)" : _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.UVSeasonal),
+                                "butDisinfectionTypeUVSeasonal", "UV Seasonal", fontFamilyName, "UVSeasonal", butDisinfectionTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.ChlorinationNoDechlorination),
+                                "butDisinfectionTypeChlorinationNoDechlorination", "Chlorination No Dechlorination", fontFamilyName, "ChlorinationNoDechlorination", butDisinfectionTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.ChlorinationNoDechlorinationSeasonal),
+                                "butDisinfectionTypeChlorinationNoDechlorinationSeasonal", "Chlorination No Dechlorination Seasonal", fontFamilyName, "ChlorinationNoDechlorinationSeasonal", butDisinfectionTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.ChlorinationWithDechlorination),
+                                "butDisinfectionTypeChlorinationWithDechlorination", "Chlorination With Dechlorination", fontFamilyName, "ChlorinationWithDechlorination", butDisinfectionTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.ChlorinationWithDechlorinationSeasonal),
+                                "butDisinfectionTypeChlorinationWithDechlorinationSeasonal", "Chlorination With Dechlorination Seasonal", fontFamilyName, "ChlorinationWithDechlorinationSeasonal", butDisinfectionTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
                         }
                         break;
                     case "CollectionSystemTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butCollectionSystemTypeNone", "None", fontFamilyName, "None", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(CollectionSystemTypeEnum)).Count(); i < count; i++)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = i == 0 ? "Select Collection System Type (unknown)" : _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.CompletelyCombined),
+                                "butCollectionSystemTypeCompletelyCombined", "Completely Combined", fontFamilyName, "CompletelyCombined", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Collection System Type (unknown)" : _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Collection System Type (unknown)" : _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.CompletelySeparated),
+                                "butCollectionSystemTypeCompletelySeparated", "Completely Separated", fontFamilyName, "CompletelySeparated", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined10Separated90),
+                                "butCollectionSystemTypeCombined10Separated90", "Combined 10% Separated 90%", fontFamilyName, "Combined10Separated90", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined20Separated80),
+                                "butCollectionSystemTypeCombined20Separated80", "Combined 20% Separated 80%", fontFamilyName, "Combined20Separated80", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined30Separated70),
+                                "butCollectionSystemTypeCombined20Separated80", "Combined 20% Separated 80%", fontFamilyName, "Combined20Separated80", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined30Separated70),
+                                "butCollectionSystemTypeCombined30Separated70", "Combined 30% Separated 70%", fontFamilyName, "Combined20Separated80", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined40Separated60),
+                                "butCollectionSystemTypeCombined40Separated60", "Combined 40% Separated 60%", fontFamilyName, "Combined40Separated60", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined50Separated50),
+                                "butCollectionSystemTypeCombined50Separated50", "Combined 50% Separated 50%", fontFamilyName, "Combined50Separated50", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined60Separated40),
+                                "butCollectionSystemTypeCombined60Separated40", "Combined 60% Separated 40%", fontFamilyName, "Combined60Separated40", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined70Separated30),
+                                "butCollectionSystemTypeCombined70Separated30", "Combined 70% Separated 30%", fontFamilyName, "Combined70Separated30", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined80Separated20),
+                                "butCollectionSystemTypeCombined80Separated20", "Combined 80% Separated 20%", fontFamilyName, "Combined80Separated20", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined90Separated10),
+                                "butCollectionSystemTypeCombined80Separated20", "Combined 90% Separated 10%", fontFamilyName, "Combined90Separated10", butCollectionSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
                         }
                         break;
                     case "AlarmSystemTypeEnum":
                         {
-                            comboBoxItem.SelectedValueChanged += SaveAndRedraw;
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butAlarmSystemTypeNone", "None", fontFamilyName, "None", butAlarmSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            for (int i = 0, count = Enum.GetNames(typeof(AlarmSystemTypeEnum)).Count(); i < count; i++)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = i == 0 ? "Select Alarm System Type (unknown)" : _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)i).ToString(),
-                                    EnumID = i,
-                                };
-                                comboBoxItem.Items.Add(enumTextAndID);
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AlarmSystemTypeEnum.OnlyVisualLight),
+                                "butAlarmSystemTypeOnlyVisualLight", "Only Visual Light", fontFamilyName, "OnlyVisualLight", butAlarmSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            if (valNew != null)
-                            {
-                                EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                {
-                                    EnumText = valNew == 0 ? "Select Alarm System Type (unknown)" : _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)valNew).ToString(),
-                                    EnumID = (int)valNew,
-                                };
-                                comboBoxItem.SelectedItem = enumTextAndID;
-                                comboBoxItem.Text = enumTextAndID.EnumText;
-                            }
-                            else
-                            {
-                                if (val != null)
-                                {
-                                    EnumTextAndID enumTextAndID = new EnumTextAndID()
-                                    {
-                                        EnumText = val == 0 ? "Select Alarm System Type (unknown)" : _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)val).ToString(),
-                                        EnumID = (int)val,
-                                    };
-                                    comboBoxItem.SelectedItem = enumTextAndID;
-                                    comboBoxItem.Text = enumTextAndID.EnumText;
-                                }
-                            }
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AlarmSystemTypeEnum.PagerAndLight),
+                                "butAlarmSystemTypePagerAndLight", "Pager And Light", fontFamilyName, "PagerAndLight", butAlarmSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AlarmSystemTypeEnum.SCADA),
+                                "butAlarmSystemTypeSCADA", "SCADA", fontFamilyName, "SCADA", butAlarmSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AlarmSystemTypeEnum.SCADAAndLight),
+                                "butAlarmSystemTypeSCADAAndLight", "SCADAAndLight", fontFamilyName, "SCADAAndLight", butAlarmSystemTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     default:
@@ -1637,6 +1337,877 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             }
         }
+
+        private void CreateChoiceButton(int x, int top, int? val, int? valNew, string elemName, int? elemEnumInt, string butName, string butText, string butFontFamilyName, string tag, EventHandler but_Clicked)
+        {
+            Button but = new Button();
+            but.Location = new Point(x, top);
+            but.AutoSize = true;
+
+            if (elemEnumInt == null)
+            {
+                switch (elemName)
+                {
+                    case "InfrastructureTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.InfrastructureTypeNew = null;
+                                CurrentInfrastructure.InfrastructureType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "FacilityTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.FacilityTypeNew = null;
+                                CurrentInfrastructure.FacilityType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "AerationTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.AerationTypeNew = null;
+                                CurrentInfrastructure.AerationType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "PreliminaryTreatmentTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.PreliminaryTreatmentTypeNew = null;
+                                CurrentInfrastructure.PreliminaryTreatmentType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "PrimaryTreatmentTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.PrimaryTreatmentTypeNew = null;
+                                CurrentInfrastructure.PrimaryTreatmentType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "SecondaryTreatmentTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.SecondaryTreatmentTypeNew = null;
+                                CurrentInfrastructure.SecondaryTreatmentType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "TertiaryTreatmentTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.TertiaryTreatmentTypeNew = null;
+                                CurrentInfrastructure.TertiaryTreatmentType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "DisinfectionTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.DisinfectionTypeNew = null;
+                                CurrentInfrastructure.DisinfectionType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "CollectionSystemTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.CollectionSystemTypeNew = null;
+                                CurrentInfrastructure.CollectionSystemType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "AlarmSystemTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.AlarmSystemTypeNew = null;
+                                CurrentInfrastructure.AlarmSystemType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                if (valNew != null)
+                {
+                    switch (elemName)
+                    {
+                        case "InfrastructureTypeEnum":
+                            {
+                                CurrentInfrastructure.InfrastructureTypeNew = valNew;
+                                if (CurrentInfrastructure.InfrastructureTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "FacilityTypeEnum":
+                            {
+                                CurrentInfrastructure.FacilityTypeNew = valNew;
+                                if (CurrentInfrastructure.FacilityTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "AerationTypeEnum":
+                            {
+                                CurrentInfrastructure.AerationTypeNew = valNew;
+                                if (CurrentInfrastructure.AerationTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "PreliminaryTreatmentTypeEnum":
+                            {
+                                CurrentInfrastructure.PreliminaryTreatmentTypeNew = valNew;
+                                if (CurrentInfrastructure.PreliminaryTreatmentTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "PrimaryTreatmentTypeEnum":
+                            {
+                                CurrentInfrastructure.PrimaryTreatmentTypeNew = valNew;
+                                if (CurrentInfrastructure.PrimaryTreatmentTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "SecondaryTreatmentTypeEnum":
+                            {
+                                CurrentInfrastructure.SecondaryTreatmentTypeNew = valNew;
+                                if (CurrentInfrastructure.SecondaryTreatmentTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "TertiaryTreatmentTypeEnum":
+                            {
+                                CurrentInfrastructure.TertiaryTreatmentTypeNew = valNew;
+                                if (CurrentInfrastructure.TertiaryTreatmentTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "DisinfectionTypeEnum":
+                            {
+                                CurrentInfrastructure.DisinfectionTypeNew = valNew;
+                                if (CurrentInfrastructure.DisinfectionTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "CollectionSystemTypeEnum":
+                            {
+                                CurrentInfrastructure.CollectionSystemTypeNew = valNew;
+                                if (CurrentInfrastructure.CollectionSystemTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "AlarmSystemTypeEnum":
+                            {
+                                CurrentInfrastructure.AlarmSystemTypeNew = valNew;
+                                if (CurrentInfrastructure.AlarmSystemTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    if (val != null)
+                    {
+                        switch (elemName)
+                        {
+                            case "InfrastructureTypeEnum":
+                                {
+                                    CurrentInfrastructure.InfrastructureType = val;
+                                    if (CurrentInfrastructure.InfrastructureType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "FacilityTypeEnum":
+                                {
+                                    CurrentInfrastructure.FacilityType = val;
+                                    if (CurrentInfrastructure.FacilityType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "AerationTypeEnum":
+                                {
+                                    CurrentInfrastructure.AerationType = val;
+                                    if (CurrentInfrastructure.AerationType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "PreliminaryTreatmentTypeEnum":
+                                {
+                                    CurrentInfrastructure.PreliminaryTreatmentType = val;
+                                    if (CurrentInfrastructure.PreliminaryTreatmentType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "PrimaryTreatmentTypeEnum":
+                                {
+                                    CurrentInfrastructure.PrimaryTreatmentType = val;
+                                    if (CurrentInfrastructure.PrimaryTreatmentType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "SecondaryTreatmentTypeEnum":
+                                {
+                                    CurrentInfrastructure.SecondaryTreatmentType = val;
+                                    if (CurrentInfrastructure.SecondaryTreatmentType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "TertiaryTreatmentTypeEnum":
+                                {
+                                    CurrentInfrastructure.TertiaryTreatmentType = val;
+                                    if (CurrentInfrastructure.TertiaryTreatmentType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "DisinfectionTypeEnum":
+                                {
+                                    CurrentInfrastructure.DisinfectionType = val;
+                                    if (CurrentInfrastructure.DisinfectionType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "TCollectionSystemTypeEnum":
+                                {
+                                    CurrentInfrastructure.CollectionSystemType = val;
+                                    if (CurrentInfrastructure.CollectionSystemType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "AlarmSystemTypeEnum":
+                                {
+                                    CurrentInfrastructure.AlarmSystemType = val;
+                                    if (CurrentInfrastructure.AlarmSystemType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            but.Font = new Font(new FontFamily(butFontFamilyName).Name, 10f, FontStyle.Regular);
+            but.Name = butName;
+            but.Text = butText;
+            but.Tag = tag;
+            but.Click += but_Clicked;
+
+            PanelViewAndEdit.Controls.Add(but);
+        }
+
+        private void butInfrastructureTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "None":
+                    {
+                        CurrentInfrastructure.InfrastructureTypeNew = null;
+                        CurrentInfrastructure.InfrastructureType = null;
+                    }
+                    break;
+                case "WWTP":
+                    {
+                        CurrentInfrastructure.InfrastructureTypeNew = ((int)InfrastructureTypeEnum.WWTP);
+                    }
+                    break;
+                case "LiftStation":
+                    {
+                        CurrentInfrastructure.InfrastructureTypeNew = ((int)InfrastructureTypeEnum.LiftStation);
+                    }
+                    break;
+                case "LineOverflow":
+                    {
+                        CurrentInfrastructure.InfrastructureTypeNew = ((int)InfrastructureTypeEnum.LineOverflow);
+                    }
+                    break;
+                case "SeeOtherMunicipality":
+                    {
+                        CurrentInfrastructure.InfrastructureTypeNew = ((int)InfrastructureTypeEnum.SeeOtherMunicipality);
+                    }
+                    break;
+                case "Other":
+                    {
+                        CurrentInfrastructure.InfrastructureTypeNew = ((int)InfrastructureTypeEnum.Other);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+            }
+        }
+
+        private void butFacilityTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "None":
+                    {
+                        CurrentInfrastructure.FacilityTypeNew = null;
+                        CurrentInfrastructure.FacilityType = null;
+                    }
+                    break;
+                case "Lagoon":
+                    {
+                        CurrentInfrastructure.FacilityTypeNew = ((int)FacilityTypeEnum.Lagoon);
+                    }
+                    break;
+                case "Plant":
+                    {
+                        CurrentInfrastructure.FacilityTypeNew = ((int)FacilityTypeEnum.Plant);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+            }
+        }
+
+        private void butAerationTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "None":
+                    {
+                        CurrentInfrastructure.AerationTypeNew = null;
+                        CurrentInfrastructure.AerationType = null;
+                    }
+                    break;
+                case "MechanicalAirLines":
+                    {
+                        CurrentInfrastructure.AerationTypeNew = ((int)AerationTypeEnum.MechanicalAirLines);
+                    }
+                    break;
+                case "MechanicalSurfaceMixers":
+                    {
+                        CurrentInfrastructure.AerationTypeNew = ((int)AerationTypeEnum.MechanicalSurfaceMixers);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butPreliminaryTreatmentTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "NotApplicable":
+                    {
+                        CurrentInfrastructure.PreliminaryTreatmentTypeNew = null;
+                        CurrentInfrastructure.PreliminaryTreatmentType = null;
+                    }
+                    break;
+                case "BarScreen":
+                    {
+                        CurrentInfrastructure.PreliminaryTreatmentTypeNew = ((int)PreliminaryTreatmentTypeEnum.BarScreen);
+                    }
+                    break;
+                case "Grinder":
+                    {
+                        CurrentInfrastructure.PreliminaryTreatmentTypeNew = ((int)PreliminaryTreatmentTypeEnum.Grinder);
+                    }
+                    break;
+                case "MechanicalScreening":
+                    {
+                        CurrentInfrastructure.PreliminaryTreatmentTypeNew = ((int)PreliminaryTreatmentTypeEnum.MechanicalScreening);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butPrimaryTreatmentTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "NotApplicable":
+                    {
+                        CurrentInfrastructure.PrimaryTreatmentTypeNew = null;
+                        CurrentInfrastructure.PrimaryTreatmentType = null;
+                    }
+                    break;
+                case "ChemicalCoagulation":
+                    {
+                        CurrentInfrastructure.PrimaryTreatmentTypeNew = ((int)PrimaryTreatmentTypeEnum.ChemicalCoagulation);
+                    }
+                    break;
+                case "Filtration":
+                    {
+                        CurrentInfrastructure.PrimaryTreatmentTypeNew = ((int)PrimaryTreatmentTypeEnum.Filtration);
+                    }
+                    break;
+                case "PrimaryClarification":
+                    {
+                        CurrentInfrastructure.PrimaryTreatmentTypeNew = ((int)PrimaryTreatmentTypeEnum.PrimaryClarification);
+                    }
+                    break;
+                case "Sedimentation":
+                    {
+                        CurrentInfrastructure.PrimaryTreatmentTypeNew = ((int)PrimaryTreatmentTypeEnum.Sedimentation);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                ReDrawInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butSecondaryTreatmentTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "NotApplicable":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = null;
+                        CurrentInfrastructure.SecondaryTreatmentType = null;
+                    }
+                    break;
+                case "ActivatedSludge":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.ActivatedSludge);
+                    }
+                    break;
+                case "AeratedSubmergedBioFilmReactor":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.AeratedSubmergedBioFilmReactor);
+                    }
+                    break;
+                case "BiologicalAearatedFilters":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.BiologicalAearatedFilters);
+                    }
+                    break;
+                case "ContactStabilization":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.ContactStabilization);
+                    }
+                    break;
+                case "ExtendedActivatedSludge":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.ExtendedActivatedSludge);
+                    }
+                    break;
+                case "IntegratedFixedFilmActivatedSludge":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.IntegratedFixedFilmActivatedSludge);
+                    }
+                    break;
+                case "MovingBedBioReactor":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.MovingBedBioReactor);
+                    }
+                    break;
+                case "OxidationDitch":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.OxidationDitch);
+                    }
+                    break;
+                case "PhysicalChemicalProcesses":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.PhysicalChemicalProcesses);
+                    }
+                    break;
+                case "RotatingBiologicalContactor":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.RotatingBiologicalContactor);
+                    }
+                    break;
+                case "SequencingBatchReactor":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.SequencingBatchReactor);
+                    }
+                    break;
+                case "TricklingFilters":
+                    {
+                        CurrentInfrastructure.SecondaryTreatmentTypeNew = ((int)SecondaryTreatmentTypeEnum.TricklingFilters);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                ReDrawInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butTertiaryTreatmentTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "NotApplicable":
+                    {
+                        CurrentInfrastructure.TertiaryTreatmentTypeNew = null;
+                        CurrentInfrastructure.TertiaryTreatmentType = null;
+                    }
+                    break;
+                case "Adsorption":
+                    {
+                        CurrentInfrastructure.TertiaryTreatmentTypeNew = ((int)TertiaryTreatmentTypeEnum.Adsorption);
+                    }
+                    break;
+                case "BiologicalNutrientRemoval":
+                    {
+                        CurrentInfrastructure.TertiaryTreatmentTypeNew = ((int)TertiaryTreatmentTypeEnum.BiologicalNutrientRemoval);
+                    }
+                    break;
+                case "Flocculation":
+                    {
+                        CurrentInfrastructure.TertiaryTreatmentTypeNew = ((int)TertiaryTreatmentTypeEnum.Flocculation);
+                    }
+                    break;
+                case "IonExchange":
+                    {
+                        CurrentInfrastructure.TertiaryTreatmentTypeNew = ((int)TertiaryTreatmentTypeEnum.IonExchange);
+                    }
+                    break;
+                case "MembraneFiltration":
+                    {
+                        CurrentInfrastructure.TertiaryTreatmentTypeNew = ((int)TertiaryTreatmentTypeEnum.MembraneFiltration);
+                    }
+                    break;
+                case "ReverseOsmosis":
+                    {
+                        CurrentInfrastructure.TertiaryTreatmentTypeNew = ((int)TertiaryTreatmentTypeEnum.ReverseOsmosis);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butDisinfectionTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "None":
+                    {
+                        CurrentInfrastructure.DisinfectionTypeNew = null;
+                        CurrentInfrastructure.DisinfectionType = null;
+                    }
+                    break;
+                case "ChlorinationNoDechlorination":
+                    {
+                        CurrentInfrastructure.DisinfectionTypeNew = ((int)DisinfectionTypeEnum.ChlorinationNoDechlorination);
+                    }
+                    break;
+                case "ChlorinationNoDechlorinationSeasonal":
+                    {
+                        CurrentInfrastructure.DisinfectionTypeNew = ((int)DisinfectionTypeEnum.ChlorinationNoDechlorinationSeasonal);
+                    }
+                    break;
+                case "ChlorinationWithDechlorination":
+                    {
+                        CurrentInfrastructure.DisinfectionTypeNew = ((int)DisinfectionTypeEnum.ChlorinationWithDechlorination);
+                    }
+                    break;
+                case "ChlorinationWithDechlorinationSeasonal":
+                    {
+                        CurrentInfrastructure.DisinfectionTypeNew = ((int)DisinfectionTypeEnum.ChlorinationWithDechlorinationSeasonal);
+                    }
+                    break;
+                case "UV":
+                    {
+                        CurrentInfrastructure.DisinfectionTypeNew = ((int)DisinfectionTypeEnum.UV);
+                    }
+                    break;
+                case "UVSeasonal":
+                    {
+                        CurrentInfrastructure.DisinfectionTypeNew = ((int)DisinfectionTypeEnum.UVSeasonal);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butCollectionSystemTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "None":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = null;
+                        CurrentInfrastructure.CollectionSystemType = null;
+                    }
+                    break;
+                case "Combined10Separated90":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.Combined10Separated90);
+                    }
+                    break;
+                case "Combined20Separated80":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.Combined20Separated80);
+                    }
+                    break;
+                case "Combined30Separated70":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.Combined30Separated70);
+                    }
+                    break;
+                case "Combined40Separated60":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.Combined40Separated60);
+                    }
+                    break;
+                case "Combined50Separated50":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.Combined50Separated50);
+                    }
+                    break;
+                case "Combined60Separated40":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.Combined60Separated40);
+                    }
+                    break;
+                case "Combined70Separated30":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.Combined70Separated30);
+                    }
+                    break;
+                case "Combined80Separated20":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.Combined80Separated20);
+                    }
+                    break;
+                case "Combined90Separated10":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.Combined90Separated10);
+                    }
+                    break;
+                case "CompletelyCombined":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.CompletelyCombined);
+                    }
+                    break;
+                case "CompletelySeparated":
+                    {
+                        CurrentInfrastructure.CollectionSystemTypeNew = ((int)CollectionSystemTypeEnum.CompletelySeparated);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butAlarmSystemTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "None":
+                    {
+                        CurrentInfrastructure.AlarmSystemTypeNew = null;
+                        CurrentInfrastructure.AlarmSystemType = null;
+                    }
+                    break;
+                case "OnlyVisualLight":
+                    {
+                        CurrentInfrastructure.AlarmSystemTypeNew = ((int)AlarmSystemTypeEnum.OnlyVisualLight);
+                    }
+                    break;
+                case "PagerAndLight":
+                    {
+                        CurrentInfrastructure.AlarmSystemTypeNew = ((int)AlarmSystemTypeEnum.PagerAndLight);
+                    }
+                    break;
+                case "SCADA":
+                    {
+                        CurrentInfrastructure.AlarmSystemTypeNew = ((int)AlarmSystemTypeEnum.SCADA);
+                    }
+                    break;
+                case "SCADAAndLight":
+                    {
+                        CurrentInfrastructure.AlarmSystemTypeNew = ((int)AlarmSystemTypeEnum.SCADAAndLight);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
         private void DrawItemFloat(int x, int y, float? val, float? valNew, string lblTxt, int fix, string textBoxName)
         {
             Label lblItem = new Label();
@@ -6727,6 +7298,48 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "textBoxStreetType":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                string StreetTypeText = "";
+                                StreetTypeEnum streetType = StreetTypeEnum.Error;
+
+                                if (tb.Text != null)
+                                {
+                                    StreetTypeText = tb.Text.Trim();
+                                    for (int i = 1, count = Enum.GetNames(typeof(StreetTypeEnum)).Length; i < count; i++)
+                                    {
+                                        if (StreetTypeText == ((StreetTypeEnum)i).ToString())
+                                        {
+                                            streetType = (StreetTypeEnum)i;
+                                        }
+                                    }
+                                }
+
+                                if (CurrentInfrastructure.InfrastructureAddress.StreetType != null && (StreetTypeEnum)CurrentInfrastructure.InfrastructureAddress.StreetType == streetType)
+                                {
+                                    CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+                                }
+                                else
+                                {
+                                    CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.StreetType = (int)streetType;
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+                                        CurrentInfrastructure.InfrastructureAddress.StreetType = null;
+                                    }
+                                    SaveRestOfAddressNewInfrastructure();
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
                     case "textBoxStreetName":
                         {
                             TextBox tb = (TextBox)control;
@@ -8366,6 +8979,48 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     {
                                         CurrentPSS.PSSAddressNew.Municipality = null;
                                         CurrentPSS.PSSAddress.Municipality = null;
+                                    }
+                                    SaveRestOfAddressNew();
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxStreetType":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                string StreetTypeText = "";
+                                StreetTypeEnum streetType = StreetTypeEnum.Error;
+
+                                if (tb.Text != null)
+                                {
+                                    StreetTypeText = tb.Text.Trim();
+                                    for (int i = 1, count = Enum.GetNames(typeof(StreetTypeEnum)).Length; i < count; i++)
+                                    {
+                                        if (StreetTypeText == ((StreetTypeEnum)i).ToString())
+                                        {
+                                            streetType = (StreetTypeEnum)i;
+                                        }
+                                    }
+                                }
+
+                                if (CurrentPSS.PSSAddress.StreetType != null && (StreetTypeEnum)CurrentPSS.PSSAddress.StreetType == streetType)
+                                {
+                                    CurrentPSS.PSSAddressNew.StreetType = null;
+                                }
+                                else
+                                {
+                                    CurrentPSS.PSSAddressNew.AddressTVItemID = 10000000;
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        CurrentPSS.PSSAddressNew.StreetType = (int)streetType;
+                                    }
+                                    else
+                                    {
+                                        CurrentPSS.PSSAddressNew.StreetType = null;
+                                        CurrentPSS.PSSAddress.StreetType = null;
                                     }
                                     SaveRestOfAddressNew();
                                     IsDirty = true;

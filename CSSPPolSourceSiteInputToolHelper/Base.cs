@@ -77,16 +77,18 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Panel PanelViewAndEdit { get; set; }
         public Panel PanelMunicipalities { get; set; }
         public Panel PanelPolSourceSite { get; set; }
+        public Panel PanelStreetType { get; set; }
         public LanguageEnum Language { get; set; }
 
         #endregion Properties
 
         #region Constructors
-        public PolSourceSiteInputToolHelper(Panel panelViewAndEdit, Panel panelPolSourceSite, Panel panelMunicipalities, LanguageEnum language)
+        public PolSourceSiteInputToolHelper(Panel panelViewAndEdit, Panel panelPolSourceSite, Panel panelMunicipalities, Panel panelStreetType, LanguageEnum language)
         {
             PanelViewAndEdit = panelViewAndEdit;
             PanelPolSourceSite = panelPolSourceSite;
             PanelMunicipalities = panelMunicipalities;
+            PanelStreetType = panelStreetType;
             Language = language;
             subsectorDoc = new SubsectorDoc();
             municipalityDoc = new MunicipalityDoc();
@@ -125,6 +127,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private List<MunicipalityIDNumber> GetMunicipalitiesAndIDNumber()
         {
             List<MunicipalityIDNumber> MunicipalityIDNumberList = new List<MunicipalityIDNumber>();
+            MunicipalityIDNumberList.Add(new MunicipalityIDNumber() { Municipality = "None", IDNumber = 0.ToString() });
 
             if (IsPolSourceSite)
             {
@@ -180,6 +183,37 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             return MunicipalityIDNumberList;
+        }
+        private List<StreetTypeIDNumber> GetStreetTypeAndIDNumber()
+        {
+            List<StreetTypeIDNumber> StreetTypeIDNumberList = new List<StreetTypeIDNumber>();
+
+            if (IsPolSourceSite)
+            {
+                StreetTypeIDNumberList.Add(new StreetTypeIDNumber() { StreetType = "None", IDNumber = 0.ToString() });
+
+                for (int i = 0, count = Enum.GetNames(typeof(StreetTypeEnum)).Length; i < count; i++)
+                {
+                    if (i != 0)
+                    {
+                        StreetTypeIDNumberList.Add(new StreetTypeIDNumber() { StreetType = ((StreetTypeEnum)i).ToString(), IDNumber = i.ToString() });
+                    }
+                }
+            }
+            else
+            {
+                StreetTypeIDNumberList.Add(new StreetTypeIDNumber() { StreetType = "None", IDNumber = 0.ToString() });
+
+                for (int i = 0, count = Enum.GetNames(typeof(StreetTypeEnum)).Length; i < count; i++)
+                {
+                    if (i != 0)
+                    {
+                        StreetTypeIDNumberList.Add(new StreetTypeIDNumber() { StreetType = ((StreetTypeEnum)i).ToString(), IDNumber = i.ToString() });
+                    }
+                }
+            }
+
+            return StreetTypeIDNumberList;
         }
         private List<ObsDateIDNumber> GetObsDateAndIDNumber()
         {
@@ -278,6 +312,16 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             public string Municipality { get; set; }
+            public string IDNumber { get; set; }
+        }
+        public class StreetTypeIDNumber
+        {
+            public StreetTypeIDNumber()
+            {
+
+            }
+
+            public string StreetType { get; set; }
             public string IDNumber { get; set; }
         }
         private class ObsDateIDNumber

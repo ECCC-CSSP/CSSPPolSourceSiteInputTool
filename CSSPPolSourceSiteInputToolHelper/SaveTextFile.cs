@@ -162,7 +162,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     sb.AppendLine($"DESIGNFLOW_M3_DAYNEW\t{DesignFlow_m3_dayNew}\t");
                 }
                 string AverageFlow_m3_day = infrastructure.AverageFlow_m3_day != null ? ((float)infrastructure.AverageFlow_m3_day).ToString("F1") : "";
-                sb.AppendLine($"AVERAGEFLOW_M3_DAY\t{DesignFlow_m3_day}\t");
+                sb.AppendLine($"AVERAGEFLOW_M3_DAY\t{AverageFlow_m3_day}\t");
                 if (infrastructure.AverageFlow_m3_dayNew != null)
                 {
                     string AverageFlow_m3_dayNew = infrastructure.AverageFlow_m3_dayNew != null ? ((float)infrastructure.AverageFlow_m3_dayNew).ToString("F1") : "";

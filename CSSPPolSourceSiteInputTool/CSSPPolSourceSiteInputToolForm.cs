@@ -74,11 +74,34 @@ namespace CSSPPolSourceSiteInputTool
                 if (control.Name == "textBoxMunicipality")
                 {
                     ((TextBox)control).Text = (string)comboBoxUsedMunicipalities.SelectedItem;
+                    if (((TextBox)control).Text == "None")
+                    {
+                        ((TextBox)control).Text = "";
+                    }
                 }
             }
             panelMunicipalities.SendToBack();
         }
 
+        private void butStreetTypeSelect_Click(object sender, EventArgs e)
+        {
+            foreach (Control control in panelViewAndEdit.Controls)
+            {
+                if (control.Name == "textBoxStreetType")
+                {
+                    ((TextBox)control).Text = (string)comboBoxStreetType.SelectedItem;
+                    if (((TextBox)control).Text == "None")
+                    {
+                        ((TextBox)control).Text = "";
+                    }
+                }
+            }
+            panelStreetType.SendToBack();
+        }
+        private void butStreetTypeCancel_Click(object sender, EventArgs e)
+        {
+            panelStreetType.SendToBack();
+        }
         private void butProvinceMunicipalitySelect_Click(object sender, EventArgs e)
         {
             foreach (Control control in panelViewAndEdit.Controls)
@@ -86,6 +109,10 @@ namespace CSSPPolSourceSiteInputTool
                 if (control.Name == "textBoxMunicipality")
                 {
                     ((TextBox)control).Text = (string)comboBoxProvinceMunicipalities.SelectedItem;
+                    if (((TextBox)control).Text == "None")
+                    {
+                        ((TextBox)control).Text = "";
+                    }
                 }
             }
             panelMunicipalities.SendToBack();
@@ -1586,7 +1613,7 @@ namespace CSSPPolSourceSiteInputTool
             checkBoxMoreInfo.Visible = false;
 
 
-            polSourceSiteInputToolHelper = new PolSourceSiteInputToolHelper(panelViewAndEdit, panelPolSourceSite, panelMunicipalities, LanguageEnum.en);
+            polSourceSiteInputToolHelper = new PolSourceSiteInputToolHelper(panelViewAndEdit, panelPolSourceSite, panelMunicipalities, panelStreetType, LanguageEnum.en);
             polSourceSiteInputToolHelper.UpdateStatus += polSourceSiteInputToolHelper_UpdateStatus;
             polSourceSiteInputToolHelper.UpdateRTBClear += polSourceSiteInputToolHelper_UpdateRTBClear;
             polSourceSiteInputToolHelper.UpdateRTBMessage += polSourceSiteInputToolHelper_UpdateRTBMessage;
