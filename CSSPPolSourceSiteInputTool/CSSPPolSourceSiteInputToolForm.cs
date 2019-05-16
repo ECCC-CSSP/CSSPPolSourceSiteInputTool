@@ -1758,5 +1758,18 @@ namespace CSSPPolSourceSiteInputTool
 
         #endregion Functions private
 
+        private void lblHelp_Click(object sender, EventArgs e)
+        {
+            richTextBoxStatus.LoadFile($@"C:\PollutionSourceSites\Documentations\help.rtf");
+            if (splitContainer2.Panel2.Height < panelViewAndEdit.Height * 1 / 3)
+            {
+                splitContainer2.SplitterDistance = panelViewAndEdit.Height * 2 / 3;
+                butReduceHelp.Visible = true;
+            }
+            else
+            {
+                butReduceHelp.Visible = false;
+            }
+        }
     }
 }

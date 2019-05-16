@@ -60,6 +60,11 @@
             this.butPSSAdd = new System.Windows.Forms.Button();
             this.panelPolSourceSite = new System.Windows.Forms.Panel();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.panelStreetType = new System.Windows.Forms.Panel();
+            this.butStreetTypeCancel = new System.Windows.Forms.Button();
+            this.butStreetTypeSelect = new System.Windows.Forms.Button();
+            this.lblStreetType = new System.Windows.Forms.Label();
+            this.comboBoxStreetType = new System.Windows.Forms.ComboBox();
             this.panelMunicipalities = new System.Windows.Forms.Panel();
             this.butProvinceMunicipalitySelect = new System.Windows.Forms.Button();
             this.lblProvinceMunicipalities = new System.Windows.Forms.Label();
@@ -83,11 +88,7 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.panelStreetType = new System.Windows.Forms.Panel();
-            this.butStreetTypeCancel = new System.Windows.Forms.Button();
-            this.butStreetTypeSelect = new System.Windows.Forms.Button();
-            this.lblStreetType = new System.Windows.Forms.Label();
-            this.comboBoxStreetType = new System.Windows.Forms.ComboBox();
+            this.lblHelp = new System.Windows.Forms.Label();
             this.panelButtonBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
@@ -110,9 +111,9 @@
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            this.panelStreetType.SuspendLayout();
             this.panelMunicipalities.SuspendLayout();
             this.panelShowInputOptions.SuspendLayout();
-            this.panelStreetType.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelButtonBar
@@ -136,7 +137,7 @@
             // 
             this.panel1.Controls.Add(this.butReduceHelp);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(696, 0);
+            this.panel1.Location = new System.Drawing.Point(658, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(95, 34);
             this.panel1.TabIndex = 19;
@@ -156,7 +157,7 @@
             // 
             this.panelShowAdmin.Controls.Add(this.checkBoxShowAdmin);
             this.panelShowAdmin.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelShowAdmin.Location = new System.Drawing.Point(791, 0);
+            this.panelShowAdmin.Location = new System.Drawing.Point(753, 0);
             this.panelShowAdmin.Name = "panelShowAdmin";
             this.panelShowAdmin.Size = new System.Drawing.Size(73, 34);
             this.panelShowAdmin.TabIndex = 16;
@@ -176,7 +177,7 @@
             // 
             this.panelShowInfrastructure.Controls.Add(this.checkBoxShowInfrastructure);
             this.panelShowInfrastructure.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelShowInfrastructure.Location = new System.Drawing.Point(864, 0);
+            this.panelShowInfrastructure.Location = new System.Drawing.Point(826, 0);
             this.panelShowInfrastructure.Name = "panelShowInfrastructure";
             this.panelShowInfrastructure.Size = new System.Drawing.Size(95, 34);
             this.panelShowInfrastructure.TabIndex = 12;
@@ -260,11 +261,12 @@
             // 
             // panelViewKMLFileTop
             // 
+            this.panelViewKMLFileTop.Controls.Add(this.lblHelp);
             this.panelViewKMLFileTop.Controls.Add(this.butViewKMLFile);
             this.panelViewKMLFileTop.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelViewKMLFileTop.Location = new System.Drawing.Point(959, 0);
+            this.panelViewKMLFileTop.Location = new System.Drawing.Point(921, 0);
             this.panelViewKMLFileTop.Name = "panelViewKMLFileTop";
-            this.panelViewKMLFileTop.Size = new System.Drawing.Size(103, 34);
+            this.panelViewKMLFileTop.Size = new System.Drawing.Size(142, 34);
             this.panelViewKMLFileTop.TabIndex = 10;
             // 
             // butViewKMLFile
@@ -281,9 +283,9 @@
             // 
             this.panelLanguage.Controls.Add(this.checkBoxLanguage);
             this.panelLanguage.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelLanguage.Location = new System.Drawing.Point(1062, 0);
+            this.panelLanguage.Location = new System.Drawing.Point(1063, 0);
             this.panelLanguage.Name = "panelLanguage";
-            this.panelLanguage.Size = new System.Drawing.Size(76, 34);
+            this.panelLanguage.Size = new System.Drawing.Size(75, 34);
             this.panelLanguage.TabIndex = 17;
             // 
             // checkBoxLanguage
@@ -462,6 +464,56 @@
             this.splitContainer2.Size = new System.Drawing.Size(609, 451);
             this.splitContainer2.SplitterDistance = 384;
             this.splitContainer2.TabIndex = 2;
+            // 
+            // panelStreetType
+            // 
+            this.panelStreetType.AutoScroll = true;
+            this.panelStreetType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelStreetType.Controls.Add(this.butStreetTypeCancel);
+            this.panelStreetType.Controls.Add(this.butStreetTypeSelect);
+            this.panelStreetType.Controls.Add(this.lblStreetType);
+            this.panelStreetType.Controls.Add(this.comboBoxStreetType);
+            this.panelStreetType.Location = new System.Drawing.Point(52, 120);
+            this.panelStreetType.Name = "panelStreetType";
+            this.panelStreetType.Size = new System.Drawing.Size(284, 117);
+            this.panelStreetType.TabIndex = 3;
+            // 
+            // butStreetTypeCancel
+            // 
+            this.butStreetTypeCancel.Location = new System.Drawing.Point(147, 72);
+            this.butStreetTypeCancel.Name = "butStreetTypeCancel";
+            this.butStreetTypeCancel.Size = new System.Drawing.Size(75, 23);
+            this.butStreetTypeCancel.TabIndex = 2;
+            this.butStreetTypeCancel.Text = "Cancel";
+            this.butStreetTypeCancel.UseVisualStyleBackColor = true;
+            this.butStreetTypeCancel.Click += new System.EventHandler(this.butStreetTypeCancel_Click);
+            // 
+            // butStreetTypeSelect
+            // 
+            this.butStreetTypeSelect.Location = new System.Drawing.Point(50, 72);
+            this.butStreetTypeSelect.Name = "butStreetTypeSelect";
+            this.butStreetTypeSelect.Size = new System.Drawing.Size(75, 23);
+            this.butStreetTypeSelect.TabIndex = 2;
+            this.butStreetTypeSelect.Text = "Select";
+            this.butStreetTypeSelect.UseVisualStyleBackColor = true;
+            this.butStreetTypeSelect.Click += new System.EventHandler(this.butStreetTypeSelect_Click);
+            // 
+            // lblStreetType
+            // 
+            this.lblStreetType.AutoSize = true;
+            this.lblStreetType.Location = new System.Drawing.Point(42, 21);
+            this.lblStreetType.Name = "lblStreetType";
+            this.lblStreetType.Size = new System.Drawing.Size(62, 13);
+            this.lblStreetType.TabIndex = 1;
+            this.lblStreetType.Text = "Street Type";
+            // 
+            // comboBoxStreetType
+            // 
+            this.comboBoxStreetType.FormattingEnabled = true;
+            this.comboBoxStreetType.Location = new System.Drawing.Point(42, 40);
+            this.comboBoxStreetType.Name = "comboBoxStreetType";
+            this.comboBoxStreetType.Size = new System.Drawing.Size(199, 21);
+            this.comboBoxStreetType.TabIndex = 0;
             // 
             // panelMunicipalities
             // 
@@ -716,55 +768,16 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
-            // panelStreetType
+            // lblHelp
             // 
-            this.panelStreetType.AutoScroll = true;
-            this.panelStreetType.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelStreetType.Controls.Add(this.butStreetTypeCancel);
-            this.panelStreetType.Controls.Add(this.butStreetTypeSelect);
-            this.panelStreetType.Controls.Add(this.lblStreetType);
-            this.panelStreetType.Controls.Add(this.comboBoxStreetType);
-            this.panelStreetType.Location = new System.Drawing.Point(52, 120);
-            this.panelStreetType.Name = "panelStreetType";
-            this.panelStreetType.Size = new System.Drawing.Size(284, 117);
-            this.panelStreetType.TabIndex = 3;
-            // 
-            // butStreetTypeCancel
-            // 
-            this.butStreetTypeCancel.Location = new System.Drawing.Point(147, 72);
-            this.butStreetTypeCancel.Name = "butStreetTypeCancel";
-            this.butStreetTypeCancel.Size = new System.Drawing.Size(75, 23);
-            this.butStreetTypeCancel.TabIndex = 2;
-            this.butStreetTypeCancel.Text = "Cancel";
-            this.butStreetTypeCancel.UseVisualStyleBackColor = true;
-            this.butStreetTypeCancel.Click += new System.EventHandler(this.butStreetTypeCancel_Click);
-            // 
-            // butStreetTypeSelect
-            // 
-            this.butStreetTypeSelect.Location = new System.Drawing.Point(50, 72);
-            this.butStreetTypeSelect.Name = "butStreetTypeSelect";
-            this.butStreetTypeSelect.Size = new System.Drawing.Size(75, 23);
-            this.butStreetTypeSelect.TabIndex = 2;
-            this.butStreetTypeSelect.Text = "Select";
-            this.butStreetTypeSelect.UseVisualStyleBackColor = true;
-            this.butStreetTypeSelect.Click += new System.EventHandler(this.butStreetTypeSelect_Click);
-            // 
-            // lblStreetType
-            // 
-            this.lblStreetType.AutoSize = true;
-            this.lblStreetType.Location = new System.Drawing.Point(42, 21);
-            this.lblStreetType.Name = "lblStreetType";
-            this.lblStreetType.Size = new System.Drawing.Size(62, 13);
-            this.lblStreetType.TabIndex = 1;
-            this.lblStreetType.Text = "Street Type";
-            // 
-            // comboBoxStreetType
-            // 
-            this.comboBoxStreetType.FormattingEnabled = true;
-            this.comboBoxStreetType.Location = new System.Drawing.Point(42, 40);
-            this.comboBoxStreetType.Name = "comboBoxStreetType";
-            this.comboBoxStreetType.Size = new System.Drawing.Size(199, 21);
-            this.comboBoxStreetType.TabIndex = 0;
+            this.lblHelp.AutoSize = true;
+            this.lblHelp.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lblHelp.Location = new System.Drawing.Point(107, 11);
+            this.lblHelp.Name = "lblHelp";
+            this.lblHelp.Size = new System.Drawing.Size(29, 13);
+            this.lblHelp.TabIndex = 4;
+            this.lblHelp.Text = "Help";
+            this.lblHelp.Click += new System.EventHandler(this.lblHelp_Click);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
@@ -788,6 +801,7 @@
             this.panelEmpty.ResumeLayout(false);
             this.panelEmpty.PerformLayout();
             this.panelViewKMLFileTop.ResumeLayout(false);
+            this.panelViewKMLFileTop.PerformLayout();
             this.panelLanguage.ResumeLayout(false);
             this.panelLanguage.PerformLayout();
             this.panelStatusBar.ResumeLayout(false);
@@ -804,12 +818,12 @@
             this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.panelStreetType.ResumeLayout(false);
+            this.panelStreetType.PerformLayout();
             this.panelMunicipalities.ResumeLayout(false);
             this.panelMunicipalities.PerformLayout();
             this.panelShowInputOptions.ResumeLayout(false);
             this.panelShowInputOptions.PerformLayout();
-            this.panelStreetType.ResumeLayout(false);
-            this.panelStreetType.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -876,6 +890,7 @@
         private System.Windows.Forms.Button butStreetTypeSelect;
         private System.Windows.Forms.Label lblStreetType;
         private System.Windows.Forms.ComboBox comboBoxStreetType;
+        private System.Windows.Forms.Label lblHelp;
     }
 }
 
