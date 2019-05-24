@@ -6858,6 +6858,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         dateTimePickerObsDate.Value = ((DateTime)CurrentPSS.PSSObs.ObsDate);
                     }
                     dateTimePickerObsDate.Tag = CurrentPSS.PSSObs.ObsID.ToString();
+                    dateTimePickerObsDate.ValueChanged += dateTimePickerObsDate_ValueChanged;
 
                     PanelViewAndEdit.Controls.Add(dateTimePickerObsDate);
 

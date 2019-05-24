@@ -138,6 +138,21 @@ namespace CSSPPolSourceSiteInputToolHelper
             RedrawSinglePanelPSS();
             ReDrawPolSourceSite();
         }
+        private void dateTimePickerObsDate_ValueChanged(object sender, EventArgs e)
+        {
+            DateTime currentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
+            DateTimePicker dateTimePicker = (DateTimePicker)sender;
+            if (dateTimePicker != null)
+            {
+                DateTime selectedDateTime = dateTimePicker.Value;
+
+                if (selectedDateTime > currentDate)
+                {
+                    MessageBox.Show("Can't accept an observation later than today " + currentDate.ToString("yyyy MMMM dd"), "Error Observation Date", MessageBoxButtons.OK);
+                    dateTimePicker.Value = currentDate;
+                }
+            }
+        }
         private void lblMunicipalityText_Click(object sender, EventArgs e)
         {
             List<MunicipalityIDNumber> MunicipalityIDNumberList = new List<MunicipalityIDNumber>();

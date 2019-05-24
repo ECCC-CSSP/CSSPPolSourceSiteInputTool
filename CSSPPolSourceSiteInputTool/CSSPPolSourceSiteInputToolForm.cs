@@ -421,6 +421,7 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void polSourceSiteInputToolHelper_UpdateRTBClear(object sender, PolSourceSiteInputToolHelper.RTBClearEventArgs e)
         {
+            richTextBoxStatus.BringToFront();
             richTextBoxStatus.Text = "";
         }
         private void polSourceSiteInputToolHelper_UpdateRTBFileName(object sender, PolSourceSiteInputToolHelper.RTBFileNameEventArgs e)
@@ -433,10 +434,12 @@ namespace CSSPPolSourceSiteInputTool
             try
             {
                 string FileName = e.FileName.Replace("(", "_").Replace(")", "_").Replace("\\", "_").Replace("/", "_").Replace(".", "_").Replace(" ", "_");
-                richTextBoxStatus.LoadFile($@"C:\PollutionSourceSites\Documentations\{FileName}.rtf");
+                webBrowserDocument.BringToFront();
+                webBrowserDocument.Navigate($@"C:/PollutionSourceSites/Documentations/" + $"{FileName}.html");
             }
             catch (Exception ex)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = ex.Message;
             }
             if (splitContainer2.Panel2.Height < panelViewAndEdit.Height * 1 / 3)
@@ -444,10 +447,10 @@ namespace CSSPPolSourceSiteInputTool
                 splitContainer2.SplitterDistance = panelViewAndEdit.Height * 2 / 3;
                 butReduceHelp.Visible = true;
             }
-            else
-            {
-                butReduceHelp.Visible = false;
-            }
+            //else
+            //{
+            //    butReduceHelp.Visible = false;
+            //}
         }
         private void polSourceSiteInputToolHelper_UpdateRTBMessage(object sender, PolSourceSiteInputToolHelper.RTBMessageEventArgs e)
         {
@@ -455,6 +458,7 @@ namespace CSSPPolSourceSiteInputTool
             lblStatus.Refresh();
             Application.DoEvents();
 
+            richTextBoxStatus.BringToFront();
             richTextBoxStatus.AppendText(e.Message);
         }
         private void radioButtonDetails_CheckedChanged(object sender, EventArgs e)
@@ -886,10 +890,10 @@ namespace CSSPPolSourceSiteInputTool
         }
         private bool GetInfrastructurePicturesForInputTool()
         {
-
             TVItemModel tvItemModelMunicipality = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelMunicipality == null || tvItemModelMunicipality.TVItemID == 0)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "Need to select a municipality first \r\n";
                 return false;
             }
@@ -899,6 +903,7 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.CurrentSubsectorName = MunicipalityText;
             if (!polSourceSiteInputToolHelper.ReadInfrastructuresMunicipalityFile())
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = $"Error reading {MunicipalityText}";
                 return false;
             }
@@ -915,6 +920,7 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 catch (Exception ex)
                 {
+                    richTextBoxStatus.BringToFront();
                     richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
                     return false;
                 }
@@ -963,6 +969,7 @@ namespace CSSPPolSourceSiteInputTool
                     }
                     catch (Exception ex)
                     {
+                        richTextBoxStatus.BringToFront();
                         richTextBoxStatus.Text = "";
                         richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                         richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
@@ -975,10 +982,10 @@ namespace CSSPPolSourceSiteInputTool
         }
         private bool GetPolSourceSitePicturesForInputTool()
         {
-
             TVItemModel tvItemModelSS = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelSS == null || tvItemModelSS.TVItemID == 0)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "Need to select a subsector first \r\n";
                 return false;
             }
@@ -993,6 +1000,7 @@ namespace CSSPPolSourceSiteInputTool
 
             if (!polSourceSiteInputToolHelper.ReadPollutionSourceSitesSubsectorFile())
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = $"Error reading {SubsectorText}";
                 return false;
             }
@@ -1009,6 +1017,7 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 catch (Exception ex)
                 {
+                    richTextBoxStatus.BringToFront();
                     richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
                     return false;
                 }
@@ -1059,6 +1068,7 @@ namespace CSSPPolSourceSiteInputTool
                     }
                     catch (Exception ex)
                     {
+                        richTextBoxStatus.BringToFront();
                         richTextBoxStatus.Text = "";
                         richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                         richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
@@ -1071,10 +1081,10 @@ namespace CSSPPolSourceSiteInputTool
         }
         private bool GetMunicipalitiesForInputTool()
         {
-
             TVItemModel tvItemModelMunicipality = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelMunicipality == null || tvItemModelMunicipality.TVItemID == 0)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "Need to select a subsector first \r\n";
                 return false;
             }
@@ -1118,6 +1128,7 @@ namespace CSSPPolSourceSiteInputTool
             }
             catch (Exception ex)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "";
                 richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                 richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
@@ -1130,6 +1141,7 @@ namespace CSSPPolSourceSiteInputTool
             TVItemModel tvItemModelSS = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelSS == null || tvItemModelSS.TVItemID == 0)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "Need to select a subsector first \r\n";
                 return false;
             }
@@ -1176,6 +1188,7 @@ namespace CSSPPolSourceSiteInputTool
             }
             catch (Exception ex)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "";
                 richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                 richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
@@ -1221,6 +1234,7 @@ namespace CSSPPolSourceSiteInputTool
             }
             catch (Exception ex)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "";
                 richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                 richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
@@ -1263,6 +1277,7 @@ namespace CSSPPolSourceSiteInputTool
             }
             catch (Exception ex)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "";
                 richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                 richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
@@ -1305,6 +1320,7 @@ namespace CSSPPolSourceSiteInputTool
             }
             catch (Exception ex)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "";
                 richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                 richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
@@ -1440,6 +1456,7 @@ namespace CSSPPolSourceSiteInputTool
             GetTVItemModelProvinceList();
             if (polSourceSiteInputToolHelper.tvItemModelProvinceList.Count == 0)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = $"You do not have access to {polSourceSiteInputToolHelper.baseURLEN}";
                 return;
             }
@@ -1526,6 +1543,7 @@ namespace CSSPPolSourceSiteInputTool
                 //GetTVItemModelProvinceList();
                 if (polSourceSiteInputToolHelper.tvItemModelProvinceList.Count == 0)
                 {
+                    richTextBoxStatus.BringToFront();
                     richTextBoxStatus.Text = $"You do not have access to {polSourceSiteInputToolHelper.baseURLEN}";
                     return;
                 }
@@ -1598,6 +1616,8 @@ namespace CSSPPolSourceSiteInputTool
             panelViewAndEdit.Dock = DockStyle.Fill;
             panelViewAndEdit.BringToFront();
             richTextBoxStatus.Dock = DockStyle.Fill;
+            webBrowserDocument.Dock = DockStyle.Fill;
+            webBrowserDocument.BringToFront();
             panelLanguage.Visible = false;
             panelProvinces.Visible = false;
             panelCreateMunicipalityDirectory.Visible = false;
@@ -1641,6 +1661,7 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 catch (Exception ex)
                 {
+                    richTextBoxStatus.BringToFront();
                     richTextBoxStatus.Text = ex.Message + (ex.InnerException != null ? " InnerException = " + ex.InnerException.Message : "");
                     return;
                 }
@@ -1656,6 +1677,7 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 catch (Exception ex)
                 {
+                    richTextBoxStatus.BringToFront();
                     richTextBoxStatus.Text = ex.Message + (ex.InnerException != null ? " InnerException = " + ex.InnerException.Message : "");
                     return;
                 }
@@ -1671,6 +1693,7 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 catch (Exception ex)
                 {
+                    richTextBoxStatus.BringToFront();
                     richTextBoxStatus.Text = ex.Message + (ex.InnerException != null ? " InnerException = " + ex.InnerException.Message : "");
                     return;
                 }
@@ -1686,6 +1709,7 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 catch (Exception ex)
                 {
+                    richTextBoxStatus.BringToFront();
                     richTextBoxStatus.Text = ex.Message + (ex.InnerException != null ? " InnerException = " + ex.InnerException.Message : "");
                     return;
                 }
@@ -1699,6 +1723,7 @@ namespace CSSPPolSourceSiteInputTool
             TVItemModel tvItemModelMunicipality = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelMunicipality == null || tvItemModelMunicipality.TVItemID == 0)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "Need to select a municipality first \r\n";
                 return false;
             }
@@ -1715,6 +1740,7 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 catch (Exception ex)
                 {
+                    richTextBoxStatus.BringToFront();
                     richTextBoxStatus.Text = ex.Message + (ex.InnerException != null ? " InnerException = " + ex.InnerException.Message : "");
                     return false;
                 }
@@ -1727,6 +1753,7 @@ namespace CSSPPolSourceSiteInputTool
             TVItemModel tvItemModelSS = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelSS == null || tvItemModelSS.TVItemID == 0)
             {
+                richTextBoxStatus.BringToFront();
                 richTextBoxStatus.Text = "Need to select a subsector first \r\n";
                 return false;
             }
@@ -1747,6 +1774,7 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 catch (Exception ex)
                 {
+                    richTextBoxStatus.BringToFront();
                     richTextBoxStatus.Text = ex.Message + (ex.InnerException != null ? " InnerException = " + ex.InnerException.Message : "");
                     return false;
                 }
@@ -1766,10 +1794,10 @@ namespace CSSPPolSourceSiteInputTool
                 splitContainer2.SplitterDistance = panelViewAndEdit.Height * 2 / 3;
                 butReduceHelp.Visible = true;
             }
-            else
-            {
-                butReduceHelp.Visible = false;
-            }
+            //else
+            //{
+            //    butReduceHelp.Visible = false;
+            //}
         }
     }
 }

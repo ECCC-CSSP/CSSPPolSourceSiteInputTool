@@ -43,6 +43,7 @@
             this.panelEmpty = new System.Windows.Forms.Panel();
             this.textBoxEmpty = new System.Windows.Forms.TextBox();
             this.panelViewKMLFileTop = new System.Windows.Forms.Panel();
+            this.lblHelp = new System.Windows.Forms.Label();
             this.butViewKMLFile = new System.Windows.Forms.Button();
             this.panelLanguage = new System.Windows.Forms.Panel();
             this.checkBoxLanguage = new System.Windows.Forms.CheckBox();
@@ -88,7 +89,7 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.lblHelp = new System.Windows.Forms.Label();
+            this.webBrowserDocument = new System.Windows.Forms.WebBrowser();
             this.panelButtonBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
@@ -268,6 +269,17 @@
             this.panelViewKMLFileTop.Name = "panelViewKMLFileTop";
             this.panelViewKMLFileTop.Size = new System.Drawing.Size(142, 34);
             this.panelViewKMLFileTop.TabIndex = 10;
+            // 
+            // lblHelp
+            // 
+            this.lblHelp.AutoSize = true;
+            this.lblHelp.ForeColor = System.Drawing.SystemColors.Highlight;
+            this.lblHelp.Location = new System.Drawing.Point(107, 11);
+            this.lblHelp.Name = "lblHelp";
+            this.lblHelp.Size = new System.Drawing.Size(29, 13);
+            this.lblHelp.TabIndex = 4;
+            this.lblHelp.Text = "Help";
+            this.lblHelp.Click += new System.EventHandler(this.lblHelp_Click);
             // 
             // butViewKMLFile
             // 
@@ -460,6 +472,7 @@
             // 
             // splitContainer2.Panel2
             // 
+            this.splitContainer2.Panel2.Controls.Add(this.webBrowserDocument);
             this.splitContainer2.Panel2.Controls.Add(this.richTextBoxStatus);
             this.splitContainer2.Size = new System.Drawing.Size(609, 451);
             this.splitContainer2.SplitterDistance = 384;
@@ -605,9 +618,9 @@
             // 
             // richTextBoxStatus
             // 
-            this.richTextBoxStatus.Location = new System.Drawing.Point(103, 3);
+            this.richTextBoxStatus.Location = new System.Drawing.Point(360, 3);
             this.richTextBoxStatus.Name = "richTextBoxStatus";
-            this.richTextBoxStatus.Size = new System.Drawing.Size(377, 45);
+            this.richTextBoxStatus.Size = new System.Drawing.Size(120, 45);
             this.richTextBoxStatus.TabIndex = 0;
             this.richTextBoxStatus.Text = "";
             // 
@@ -768,16 +781,14 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
-            // lblHelp
+            // webBrowserDocument
             // 
-            this.lblHelp.AutoSize = true;
-            this.lblHelp.ForeColor = System.Drawing.SystemColors.Highlight;
-            this.lblHelp.Location = new System.Drawing.Point(107, 11);
-            this.lblHelp.Name = "lblHelp";
-            this.lblHelp.Size = new System.Drawing.Size(29, 13);
-            this.lblHelp.TabIndex = 4;
-            this.lblHelp.Text = "Help";
-            this.lblHelp.Click += new System.EventHandler(this.lblHelp_Click);
+            this.webBrowserDocument.Location = new System.Drawing.Point(30, 3);
+            this.webBrowserDocument.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserDocument.Name = "webBrowserDocument";
+            this.webBrowserDocument.Size = new System.Drawing.Size(250, 45);
+            this.webBrowserDocument.TabIndex = 1;
+            this.webBrowserDocument.Url = new System.Uri("", System.UriKind.Relative);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
@@ -891,6 +902,7 @@
         private System.Windows.Forms.Label lblStreetType;
         private System.Windows.Forms.ComboBox comboBoxStreetType;
         private System.Windows.Forms.Label lblHelp;
+        private System.Windows.Forms.WebBrowser webBrowserDocument;
     }
 }
 

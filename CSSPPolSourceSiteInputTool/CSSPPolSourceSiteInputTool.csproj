@@ -140,5 +140,6 @@
   <ItemGroup>
     <Content Include="AnalysisServicesProject.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
