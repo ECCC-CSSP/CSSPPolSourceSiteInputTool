@@ -79,6 +79,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                     textBoxStreetNumber.Text = addressNew.StreetNumber;
                 }
 
+                textBoxStreetNumber.TextChanged += textBoxStreetNumber_TextChanged;
+
                 PanelViewAndEdit.Controls.Add(textBoxStreetNumber);
 
                 AddressPos = textBoxStreetNumber.Bottom + 10;
@@ -173,6 +175,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     textBoxStreetName.Text = addressNew.StreetName;
                 }
+
+                textBoxStreetName.TextChanged += textBoxStreetName_TextChanged;
 
                 PanelViewAndEdit.Controls.Add(textBoxStreetName);
 
@@ -282,6 +286,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                         textBoxStreetType.Text = "";
                     }
                 }
+
+                textBoxStreetType.TextChanged += textBoxStreetType_TextChanged;
 
                 PanelViewAndEdit.Controls.Add(textBoxStreetType);
 
@@ -405,6 +411,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                 }
 
+                textBoxMunicipality.TextChanged += textBoxMunicipality_TextChanged;
+
                 PanelViewAndEdit.Controls.Add(textBoxMunicipality);
 
                 y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
@@ -508,6 +516,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                     textBoxPostalCode.Text = addressNew.PostalCode;
                 }
 
+                textBoxPostalCode.TextChanged += textBoxPostalCode_TextChanged;
+
                 PanelViewAndEdit.Controls.Add(textBoxPostalCode);
 
                 y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
@@ -598,7 +608,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
             lblItem.ForeColor = Color.Blue;
             lblItem.Text = $@"{lblTxt}: ";
-            lblItem.Click += ShowRTFDocument;
+            lblItem.Click += ShowHelpDocument;
             lblItem.Tag = lblTxt.Replace(" ", "_");
 
             PanelViewAndEdit.Controls.Add(lblItem);
@@ -658,6 +668,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     checkBoxItem.CheckedChanged += SaveAndRedraw;
                 }
+                if (checkBoxItem.Name == "checkBoxCanOverflow")
+                {
+                    checkBoxItem.CheckedChanged += checkBoxCanOverFlow_CheckedChanged;
+                }
 
                 PanelViewAndEdit.Controls.Add(checkBoxItem);
             }
@@ -681,7 +695,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             lblItemEnum.Location = new Point(x, y);
             lblItemEnum.Font = new Font(new FontFamily(lblItemEnum.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
             lblItemEnum.ForeColor = Color.Blue;
-            lblItemEnum.Click += ShowRTFDocument;
+            lblItemEnum.Click += ShowHelpDocument;
             lblItemEnum.Tag = lblTxt.Replace(" ", "_");
 
             switch (enumType.Name)
@@ -2224,7 +2238,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                 lblItem.ForeColor = Color.Blue;
                 lblItem.Text = $@"{lblTxt}: ";
-                lblItem.Click += ShowRTFDocument;
+                lblItem.Click += ShowHelpDocument;
             }
             lblItem.Tag = lblTxt.Replace(" ", "_");
 
@@ -2311,61 +2325,205 @@ namespace CSSPPolSourceSiteInputToolHelper
                 // DesignFlow
                 if (textBoxName == "textBoxDesignFlow_m3_day")
                 {
-                    textItem.TextChanged += textBoxDesignFlow_m3_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
                     TextCovered = true;
+                    textItem.TextChanged += textBoxDesignFlow_m3_day_TextChanged;
                 }
                 if (textBoxName == "textBoxDesignFlow_CanGal_day")
                 {
-                    textItem.TextChanged += textBoxDesignFlow_CanGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
                     TextCovered = true;
+                    textItem.TextChanged += textBoxDesignFlow_CanGal_day_TextChanged;
                 }
                 if (textBoxName == "textBoxDesignFlow_USGal_day")
                 {
-                    textItem.TextChanged += textBoxDesignFlow_USGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
                     TextCovered = true;
+                    textItem.TextChanged += textBoxDesignFlow_USGal_day_TextChanged;
                 }
 
                 // AverageFlow
                 if (textBoxName == "textBoxAverageFlow_m3_day")
                 {
-                    textItem.TextChanged += textBoxAverageFlow_m3_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
                     TextCovered = true;
+                    textItem.TextChanged += textBoxAverageFlow_m3_day_TextChanged;
                 }
                 if (textBoxName == "textBoxAverageFlow_CanGal_day")
                 {
-                    textItem.TextChanged += textBoxAverageFlow_CanGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
                     TextCovered = true;
+                    textItem.TextChanged += textBoxAverageFlow_CanGal_day_TextChanged;
                 }
                 if (textBoxName == "textBoxAverageFlow_USGal_day")
                 {
-                    textItem.TextChanged += textBoxAverageFlow_USGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
                     TextCovered = true;
+                    textItem.TextChanged += textBoxAverageFlow_USGal_day_TextChanged;
                 }
 
                 // PeakFlow
                 if (textBoxName == "textBoxPeakFlow_m3_day")
                 {
-                    textItem.TextChanged += textBoxPeakFlow_m3_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
                     TextCovered = true;
+                    textItem.TextChanged += textBoxPeakFlow_m3_day_TextChanged;
                 }
                 if (textBoxName == "textBoxPeakFlow_CanGal_day")
                 {
-                    textItem.TextChanged += textBoxPeakFlow_CanGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 219.969248f).ToString("F" + fix)) : ((float)valNew * 219.969248f).ToString("F" + fix));
                     TextCovered = true;
+                    textItem.TextChanged += textBoxPeakFlow_CanGal_day_TextChanged;
                 }
                 if (textBoxName == "textBoxPeakFlow_USGal_day")
                 {
-                    textItem.TextChanged += textBoxPeakFlow_USGal_day_Changed;
                     textItem.Text = (valNew == null ? (val == null ? "" : ((float)val * 264.172f).ToString("F" + fix)) : ((float)valNew * 264.172f).ToString("F" + fix));
                     TextCovered = true;
+                    textItem.TextChanged += textBoxPeakFlow_USGal_day_TextChanged;
+                }
+
+                // Lat
+                if (textBoxName == "textBoxLat")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxLat_TextChanged;
+                }
+
+                // Lng
+                if (textBoxName == "textBoxLng")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxLng_TextChanged;
+                }
+
+                // LatOutfall
+                if (textBoxName == "textBoxLatOutfall")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxLatOutfall_TextChanged;
+                }
+
+                // LngOutfall
+                if (textBoxName == "textBoxLngOutfall")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxLngOutfall_TextChanged;
+                }
+
+                // PercFlowOfTotal
+                if (textBoxName == "textBoxPercFlowOfTotal")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxPercFlowOfTotal_TextChanged;
+                }
+
+                // PortDiameter_m
+                if (textBoxName == "textBoxPortDiameter_m")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxPortDiameter_m_TextChanged;
+                }
+
+                // PortSpacing_m
+                if (textBoxName == "textBoxPortSpacing_m")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxPortSpacing_m_TextChanged;
+                }
+
+                // PortElevation_m
+                if (textBoxName == "textBoxPortElevation_m")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxPortElevation_m_TextChanged;
+                }
+
+                // VerticalAngle_deg
+                if (textBoxName == "textBoxVerticalAngle_deg")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxVerticalAngle_deg_TextChanged;
+                }
+
+                // HorizontalAngle_deg
+                if (textBoxName == "textBoxHorizontalAngle_deg")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxHorizontalAngle_deg_TextChanged;
+                }
+
+                // DistanceFromShore_m
+                if (textBoxName == "textBoxDistanceFromShore_m")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxDistanceFromShore_m_TextChanged;
+                }
+
+                // AverageDepth_m
+                if (textBoxName == "textBoxAverageDepth_m")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxAverageDepth_m_TextChanged;
+                }
+
+                // DecayRate_per_day
+                if (textBoxName == "textBoxDecayRate_per_day")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxDecayRate_per_day_TextChanged;
+                }
+
+                // NearFieldVelocity_m_s
+                if (textBoxName == "textBoxNearFieldVelocity_m_s")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxNearFieldVelocity_m_s_TextChanged;
+                }
+
+                // FarFieldVelocity_m_s
+                if (textBoxName == "textBoxFarFieldVelocity_m_s")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxFarFieldVelocity_m_s_TextChanged;
+                }
+
+                // ReceivingWaterSalinity_PSU
+                if (textBoxName == "textBoxReceivingWaterSalinity_PSU")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxReceivingWaterSalinity_PSU_TextChanged;
+                }
+
+                // ReceivingWaterTemperature_C
+                if (textBoxName == "textBoxReceivingWaterTemperature_C")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxReceivingWaterTemperature_C_TextChanged;
+                }
+
+                // ReceivingWaterTemperature_C
+                if (textBoxName == "textBoxReceivingWaterTemperature_C")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((float)val).ToString("F" + fix)) : ((float)valNew).ToString("F" + fix));
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxReceivingWaterTemperature_C_TextChanged;
                 }
 
                 if (!TextCovered)
@@ -2451,7 +2609,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
             lblItem.ForeColor = Color.Blue;
             lblItem.Text = $@"{lblTxt}: ";
-            lblItem.Click += ShowRTFDocument;
+            lblItem.Click += ShowHelpDocument;
             lblItem.Tag = lblTxt.Replace(" ", "_");
 
             PanelViewAndEdit.Controls.Add(lblItem);
@@ -2471,16 +2629,75 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             if (IsEditing)
             {
+                bool TextCovered = false;
                 TextBox textItem = new TextBox();
                 textItem.Location = new Point(x, y);
                 textItem.Name = $"{textBoxName}";
                 textItem.Font = new Font(new FontFamily(textItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 textItem.Width = 100;
-                textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+
+                // NumberOfCells
+                if (textBoxName == "textBoxNumberOfCells")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxNumberOfCells_TextChanged;
+                }
+
+                // NumberOfAeratedCells
+                if (textBoxName == "textBoxNumberOfAeratedCells")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxNumberOfAeratedCells_TextChanged;
+                }
+
+                // PopServed
+                if (textBoxName == "textBoxPopServed")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxPopServed_TextChanged;
+                }
+
+                // PumpsToTVItemID
+                if (textBoxName == "textBoxPumpsToTVItemID")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxPumpsToTVItemID_TextChanged;
+                }
+
+                // NumberOfPorts
+                if (textBoxName == "textBoxNumberOfPorts")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxNumberOfPorts_TextChanged;
+                }
+
+                // ReceivingWater_MPN_per_100ml
+                if (textBoxName == "textBoxReceivingWater_MPN_per_100ml")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxReceivingWater_MPN_per_100ml_TextChanged;
+                }
+
+                // SeeOtherMunicipalityTVItemID
+                if (textBoxName == "textBoxSeeOtherMunicipalityTVItemID")
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+                    TextCovered = true;
+                    textItem.TextChanged += textBoxSeeOtherMunicipalityTVItemID_TextChanged;
+                }
+
+                if (!TextCovered)
+                {
+                    textItem.Text = (valNew == null ? (val == null ? "" : ((int)val).ToString()) : ((int)valNew).ToString());
+                }
 
                 PanelViewAndEdit.Controls.Add(textItem);
-
-
             }
             else
             {
@@ -2495,6 +2712,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
+
+
         private void DrawSeeOtherMunicipality(int x, int y, string comboBoxName)
         {
             Label lblItemEnum = new Label();
@@ -2502,7 +2721,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             lblItemEnum.Location = new Point(x, y);
             lblItemEnum.Font = new Font(new FontFamily(lblItemEnum.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
             lblItemEnum.ForeColor = Color.Blue;
-            lblItemEnum.Click += ShowRTFDocument;
+            lblItemEnum.Click += ShowHelpDocument;
             lblItemEnum.Tag = "SeeOtherMunicipality";
             lblItemEnum.Text = $@"See Other Municipalities: ";
 
@@ -2636,7 +2855,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
             lblItem.ForeColor = Color.Blue;
             lblItem.Text = $@"{lblTxt}: ";
-            lblItem.Click += ShowRTFDocument;
+            lblItem.Click += ShowHelpDocument;
             lblItem.Tag = lblTxt.Replace(" ", "_");
 
             PanelViewAndEdit.Controls.Add(lblItem);
@@ -2663,6 +2882,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 textItem.Font = new Font(new FontFamily(textItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 textItem.Text = (string.IsNullOrWhiteSpace(valNew) ? (string.IsNullOrWhiteSpace(val) ? "" : val) : valNew);
 
+                if (textBoxName == "textBoxTVText")
+                {
+                    textItem.TextChanged += textItemTVText_TextChanged;
+                }
                 PanelViewAndEdit.Controls.Add(textItem);
 
 
@@ -2687,7 +2910,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             lblItem.Font = new Font(new FontFamily(lblItem.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
             lblItem.ForeColor = Color.Blue;
             lblItem.Text = $@"{lblTxt}: ";
-            lblItem.Click += ShowRTFDocument;
+            lblItem.Click += ShowHelpDocument;
             lblItem.Tag = lblTxt.Replace(" ", "_");
 
             PanelViewAndEdit.Controls.Add(lblItem);
@@ -2717,6 +2940,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                 textItem.Font = new Font(new FontFamily(textItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 textItem.Text = (string.IsNullOrWhiteSpace(valNew) ? (string.IsNullOrWhiteSpace(val) ? "" : val) : valNew);
 
+                if (textBoxName.StartsWith("textBoxExtraComment_"))
+                {
+                    textItem.TextChanged += textItemExtraComment_TextChanged;
+                }
+                if (textBoxName == "textBoxCommentEN")
+                {
+                    textItem.TextChanged += textBoxCommentEN_TextChanged;
+                }
+                if (textBoxName == "textBoxCommentFR")
+                {
+                    textItem.TextChanged += textBoxCommentFR_TextChanged;
+                }
                 PanelViewAndEdit.Controls.Add(textItem);
             }
             else
@@ -2900,6 +3135,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || picture.ExtensionNew != null
                             || picture.FileNameNew != null
                             || picture.ToRemove != null
+                            || picture.FromWaterNew != null
                             || picture.PictureTVItemID >= 10000000)
                         {
                             NeedPicturesUpdate = true;
@@ -3128,6 +3364,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 || picture.ExtensionNew != null
                                 || picture.FileNameNew != null
                                 || picture.ToRemove != null
+                                || picture.FromWaterNew != null
                                 || picture.PictureTVItemID >= 10000000)
                             {
                                 NeedPicturesUpdate = true;
@@ -4616,12 +4853,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string FileNameText = picture.FileNameNew != null ? picture.FileNameNew : picture.FileName;
                     string DescriptionText = picture.DescriptionNew != null ? picture.DescriptionNew : picture.Description;
                     string ExtensionText = picture.ExtensionNew != null ? picture.ExtensionNew : picture.Extension;
+                    bool FromWater = picture.FromWaterNew != null ? (bool)picture.FromWaterNew : (picture.FromWater != null ? (bool)picture.FromWater : false);
 
                     MessageText = $"Changing properties of picture --- [{picture.FileNameNew}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
 
-                    ret = SaveToCSSPWebToolsPictureInfo((int)CurrentInfrastructure.InfrastructureTVItemID, (int)picture.PictureTVItemID, FileNameText, DescriptionText, ExtensionText, AdminEmail);
+                    ret = SaveToCSSPWebToolsPictureInfo((int)CurrentInfrastructure.InfrastructureTVItemID, (int)picture.PictureTVItemID, FileNameText, DescriptionText, ExtensionText, FromWater, AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR:"))
                     {
@@ -5339,17 +5577,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                 if (picture.FileNameNew != null
                     || picture.DescriptionNew != null
                     || picture.ExtensionNew != null
+                    || picture.FromWaterNew != null
                     || IsNew)
                 {
                     string FileNameText = picture.FileNameNew != null ? picture.FileNameNew : picture.FileName;
                     string DescriptionText = picture.DescriptionNew != null ? picture.DescriptionNew : picture.Description;
                     string ExtensionText = picture.ExtensionNew != null ? picture.ExtensionNew : picture.Extension;
+                    bool FromWater = picture.FromWaterNew != null ? (bool)picture.FromWaterNew : (picture.FromWater != null ? (bool)picture.FromWater : false);
 
                     string MessageText = $"Changing properties of picture --- [{picture.FileNameNew}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
 
-                    ret = SaveToCSSPWebToolsPictureInfo((int)CurrentPSS.PSSTVItemID, (int)picture.PictureTVItemID, FileNameText, DescriptionText, ExtensionText, AdminEmail);
+                    ret = SaveToCSSPWebToolsPictureInfo((int)CurrentPSS.PSSTVItemID, (int)picture.PictureTVItemID, FileNameText, DescriptionText, ExtensionText, FromWater, AdminEmail);
                     ret = ret.Replace("\"", "");
                     if (ret.StartsWith("ERROR:"))
                     {
@@ -5368,9 +5608,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         picture.FileName = FileNameText;
                         picture.Description = DescriptionText;
                         picture.Extension = ExtensionText;
+                        picture.FromWater = FromWater;
                         picture.FileNameNew = null;
                         picture.DescriptionNew = null;
                         picture.ExtensionNew = null;
+                        picture.FromWaterNew = null;
                         NeedToSave = true;
                     }
                 }
@@ -5503,6 +5745,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || picture.ExtensionNew != null
                             || picture.FileNameNew != null
                             || picture.ToRemove != null
+                            || picture.FromWaterNew != null
                             || picture.PictureTVItemID >= 10000000)
                         {
                             NeedPicturesUpdate = true;
@@ -5937,6 +6180,19 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
 
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
+
+                    Button butCancelLatLngObsAndAddress = new Button();
+                    butCancelLatLngObsAndAddress.AutoSize = true;
+                    butCancelLatLngObsAndAddress.Location = new Point(X, Y);
+                    butCancelLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    butCancelLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    butCancelLatLngObsAndAddress.Padding = new Padding(5);
+                    butCancelLatLngObsAndAddress.Text = $"Cancel";
+                    butCancelLatLngObsAndAddress.Click += butCancel_Click;
+
+                    PanelViewAndEdit.Controls.Add(butCancelLatLngObsAndAddress);
+
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 }
                 #endregion Save button
@@ -6305,6 +6561,19 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                         PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
 
+                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
+
+                        Button butCancelLatLngObsAndAddress = new Button();
+                        butCancelLatLngObsAndAddress.AutoSize = true;
+                        butCancelLatLngObsAndAddress.Location = new Point(X, Y);
+                        butCancelLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        butCancelLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butCancelLatLngObsAndAddress.Padding = new Padding(5);
+                        butCancelLatLngObsAndAddress.Text = $"Cancel";
+                        butCancelLatLngObsAndAddress.Click += butCancel_Click;
+
+                        PanelViewAndEdit.Controls.Add(butCancelLatLngObsAndAddress);
+
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                     }
                     #endregion Save button
@@ -6465,6 +6734,20 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
 
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
+
+                    Button butCancelLatLngObsAndAddress = new Button();
+                    butCancelLatLngObsAndAddress.AutoSize = true;
+                    butCancelLatLngObsAndAddress.Location = new Point(X, Y);
+                    butCancelLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    butCancelLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    butCancelLatLngObsAndAddress.Padding = new Padding(5);
+                    butCancelLatLngObsAndAddress.Text = $"Cancel";
+                    butCancelLatLngObsAndAddress.Click += butCancel_Click;
+
+                    PanelViewAndEdit.Controls.Add(butCancelLatLngObsAndAddress);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 }
                 #endregion Save button
 
@@ -6551,6 +6834,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || picture.ExtensionNew != null
                             || picture.FileNameNew != null
                             || picture.ToRemove != null
+                            || picture.FromWaterNew != null
                             || picture.PictureTVItemID >= 10000000)
                         {
                             NeedPicturesUpdate = true;
@@ -6929,6 +7213,18 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
 
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    Button butCancelLatLngObsAndAddress = new Button();
+                    butCancelLatLngObsAndAddress.AutoSize = true;
+                    butCancelLatLngObsAndAddress.Location = new Point(X, Y);
+                    butCancelLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    butCancelLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    butCancelLatLngObsAndAddress.Padding = new Padding(5);
+                    butCancelLatLngObsAndAddress.Text = $"Cancel";
+                    butCancelLatLngObsAndAddress.Click += butCancel_Click;
+
+                    PanelViewAndEdit.Controls.Add(butCancelLatLngObsAndAddress);
                 }
 
                 if (!IsEditing)
@@ -6985,6 +7281,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             || picture.ExtensionNew != null
                             || picture.FileNameNew != null
                             || picture.ToRemove != null
+                            || picture.FromWaterNew != null
                             || picture.PictureTVItemID >= 10000000)
                         {
                             NeedPicturesUpdate = true;
@@ -8788,6 +9085,9 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             SaveMunicipalityTextFile();
 
+            IsDirty = false;
+            PanelShowInputOptions.BackColor = BackColorDefault;
+            PanelSubsectorOrMunicipality.Enabled = true;
         }
 
         private void GetFromTVItemID(Infrastructure currentInfrastructure, int OriginalTVItemID)
@@ -9152,6 +9452,10 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             SaveSubsectorTextFile();
+
+            IsDirty = false;
+            PanelShowInputOptions.BackColor = BackColorDefault;
+            PanelSubsectorOrMunicipality.Enabled = true;
         }
         public void SaveRestOfAddressNew()
         {
@@ -9591,7 +9895,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
-        private string SaveToCSSPWebToolsPictureInfo(int TVItemID, int PictureTVItemID, string FileName, string Description, string Extension, string AdminEmail)
+        private string SaveToCSSPWebToolsPictureInfo(int TVItemID, int PictureTVItemID, string FileName, string Description, string Extension, bool FromWater, string AdminEmail)
         {
             try
             {
@@ -9603,6 +9907,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 paramList.Add("FileName", FileName);
                 paramList.Add("Description", Description);
                 paramList.Add("Extension", Extension);
+                paramList.Add("FromWater", FromWater.ToString());
                 paramList.Add("AdminEmail", AdminEmail);
 
                 using (WebClient webClient = new WebClient())

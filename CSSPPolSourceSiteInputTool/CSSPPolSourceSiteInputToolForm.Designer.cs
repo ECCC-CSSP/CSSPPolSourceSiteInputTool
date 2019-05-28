@@ -75,6 +75,7 @@
             this.lblUsedMunicipalities = new System.Windows.Forms.Label();
             this.comboBoxUsedMunicipalities = new System.Windows.Forms.ComboBox();
             this.panelViewAndEdit = new System.Windows.Forms.Panel();
+            this.webBrowserDocument = new System.Windows.Forms.WebBrowser();
             this.richTextBoxStatus = new System.Windows.Forms.RichTextBox();
             this.panelShowInputOptions = new System.Windows.Forms.Panel();
             this.checkBoxDeletedIssueAndPicture = new System.Windows.Forms.CheckBox();
@@ -89,7 +90,6 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.webBrowserDocument = new System.Windows.Forms.WebBrowser();
             this.panelButtonBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
@@ -616,6 +616,15 @@
             this.panelViewAndEdit.Size = new System.Drawing.Size(302, 138);
             this.panelViewAndEdit.TabIndex = 1;
             // 
+            // webBrowserDocument
+            // 
+            this.webBrowserDocument.Location = new System.Drawing.Point(30, 3);
+            this.webBrowserDocument.MinimumSize = new System.Drawing.Size(20, 20);
+            this.webBrowserDocument.Name = "webBrowserDocument";
+            this.webBrowserDocument.Size = new System.Drawing.Size(250, 45);
+            this.webBrowserDocument.TabIndex = 1;
+            this.webBrowserDocument.Url = new System.Uri("", System.UriKind.Relative);
+            // 
             // richTextBoxStatus
             // 
             this.richTextBoxStatus.Location = new System.Drawing.Point(360, 3);
@@ -780,15 +789,6 @@
             // openFileDialogCSSP
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
-            // 
-            // webBrowserDocument
-            // 
-            this.webBrowserDocument.Location = new System.Drawing.Point(30, 3);
-            this.webBrowserDocument.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowserDocument.Name = "webBrowserDocument";
-            this.webBrowserDocument.Size = new System.Drawing.Size(250, 45);
-            this.webBrowserDocument.TabIndex = 1;
-            this.webBrowserDocument.Url = new System.Uri("", System.UriKind.Relative);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 

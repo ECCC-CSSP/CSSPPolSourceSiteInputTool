@@ -64,6 +64,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public string Description { get; set; } = null;
         public string DescriptionNew { get; set; } = null;
         public bool? ToRemove { get; set; } = null;
+        public bool? FromWater { get; set; } = null;
+        public bool? FromWaterNew { get; set; } = null;
     }
     public class Obs
     {

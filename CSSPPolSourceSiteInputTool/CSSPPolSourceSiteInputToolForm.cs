@@ -54,6 +54,12 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void butFix_Click(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
+
             butFix.Text = "Working ...";
             butFix.Refresh();
             Application.DoEvents();
@@ -124,18 +130,36 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void butPSSAdd_Click(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
+
             polSourceSiteInputToolHelper.PSSAdd();
             polSourceSiteInputToolHelper.SaveSubsectorTextFile();
             polSourceSiteInputToolHelper.RedrawPolSourceSiteList();
         }
         private void butInfrastructureAdd_Click(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
+
             polSourceSiteInputToolHelper.InfrastructureAdd();
             polSourceSiteInputToolHelper.SaveMunicipalityTextFile();
             polSourceSiteInputToolHelper.RedrawInfrastructureList();
         }
         private void butViewKMLFile_Click(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
+
             textBoxEmpty.Focus();
             if (polSourceSiteInputToolHelper != null)
             {
@@ -163,6 +187,16 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void checkBoxAdmin_CheckedChanged(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                if (checkBoxShowAdmin.Checked)
+                {
+                    MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                    checkBoxShowAdmin.Checked = false;
+                }
+                return;
+            }
+
             panelPolSourceSite.Controls.Clear();
 
             polSourceSiteInputToolHelper.AdminEmail = "";
@@ -272,6 +306,16 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void checkBoxInfrastructure_CheckedChanged(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                if (checkBoxShowInfrastructure.Checked)
+                {
+                    MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                    checkBoxShowInfrastructure.Checked = false;
+                }
+                return;
+            }
+
             panelPolSourceSite.Controls.Clear();
 
             if (checkBoxShowInfrastructure.Checked)
@@ -405,11 +449,23 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void comboBoxProvince_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
+
             textBoxEmpty.Focus();
             ComboBoxProvinceNamesSelectedIndexChanged();
         }
         private void comboBoxSubsectorOrMunicipality_SelectedIndexChanged(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
+
             textBoxEmpty.Focus();
             ComboBoxSubsectorOrMunicipalitySelectedIndexChanged();
         }
@@ -431,26 +487,25 @@ namespace CSSPPolSourceSiteInputTool
             Application.DoEvents();
 
             richTextBoxStatus.Clear();
-            try
+            string FileName = e.FileName.Replace("(", "_").Replace(")", "_").Replace("\\", "_").Replace("/", "_").Replace(".", "_").Replace(" ", "_");
+
+            FileInfo fi = new FileInfo(FileName);
+            if (fi.Exists)
             {
-                string FileName = e.FileName.Replace("(", "_").Replace(")", "_").Replace("\\", "_").Replace("/", "_").Replace(".", "_").Replace(" ", "_");
                 webBrowserDocument.BringToFront();
                 webBrowserDocument.Navigate($@"C:/PollutionSourceSites/Documentations/" + $"{FileName}.html");
             }
-            catch (Exception ex)
+            else
             {
                 richTextBoxStatus.BringToFront();
-                richTextBoxStatus.Text = ex.Message;
+                richTextBoxStatus.Text = "Could not find " + $@"C:/PollutionSourceSites/Documentations/" + $"{FileName}.html";
             }
+
             if (splitContainer2.Panel2.Height < panelViewAndEdit.Height * 1 / 3)
             {
                 splitContainer2.SplitterDistance = panelViewAndEdit.Height * 2 / 3;
                 butReduceHelp.Visible = true;
             }
-            //else
-            //{
-            //    butReduceHelp.Visible = false;
-            //}
         }
         private void polSourceSiteInputToolHelper_UpdateRTBMessage(object sender, PolSourceSiteInputToolHelper.RTBMessageEventArgs e)
         {
@@ -463,6 +518,42 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void radioButtonDetails_CheckedChanged(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                if (radioButtonDetails.Checked)
+                {
+                    if (polSourceSiteInputToolHelper.OnIssuePage || polSourceSiteInputToolHelper.OnMapPage || polSourceSiteInputToolHelper.OnPicturePage)
+                    {
+                        if (polSourceSiteInputToolHelper.OnIssuePage)
+                        {
+                            radioButtonIssues.Checked = true;
+                        }
+                        if (polSourceSiteInputToolHelper.OnMapPage)
+                        {
+                            radioButtonShowMap.Checked = true;
+                        }
+                        if (polSourceSiteInputToolHelper.OnPicturePage)
+                        {
+                            radioButtonPictures.Checked = true;
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            polSourceSiteInputToolHelper.OnDetailPage = true;
+            polSourceSiteInputToolHelper.OnIssuePage = false;
+            polSourceSiteInputToolHelper.OnMapPage = false;
+            polSourceSiteInputToolHelper.OnPicturePage = false;
+
             polSourceSiteInputToolHelper.ShowPolSourceSiteDetails = true;
             polSourceSiteInputToolHelper.ShowOnlyIssues = false;
             polSourceSiteInputToolHelper.ShowOnlyPictures = false;
@@ -482,6 +573,42 @@ namespace CSSPPolSourceSiteInputTool
 
         private void radioButtonIssues_CheckedChanged(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                if (radioButtonIssues.Checked)
+                {
+                    if (polSourceSiteInputToolHelper.OnDetailPage || polSourceSiteInputToolHelper.OnMapPage || polSourceSiteInputToolHelper.OnPicturePage)
+                    {
+                        if (polSourceSiteInputToolHelper.OnDetailPage)
+                        {
+                            radioButtonDetails.Checked = true;
+                        }
+                        if (polSourceSiteInputToolHelper.OnMapPage)
+                        {
+                            radioButtonShowMap.Checked = true;
+                        }
+                        if (polSourceSiteInputToolHelper.OnPicturePage)
+                        {
+                            radioButtonPictures.Checked = true;
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            polSourceSiteInputToolHelper.OnDetailPage = false;
+            polSourceSiteInputToolHelper.OnIssuePage = true;
+            polSourceSiteInputToolHelper.OnMapPage = false;
+            polSourceSiteInputToolHelper.OnPicturePage = false;
+
             polSourceSiteInputToolHelper.ShowPolSourceSiteDetails = false;
             polSourceSiteInputToolHelper.ShowOnlyIssues = true;
             polSourceSiteInputToolHelper.ShowOnlyPictures = false;
@@ -508,6 +635,42 @@ namespace CSSPPolSourceSiteInputTool
 
         private void radioButtonShowMap_CheckedChanged(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                if (radioButtonShowMap.Checked)
+                {
+                    if (polSourceSiteInputToolHelper.OnDetailPage || polSourceSiteInputToolHelper.OnIssuePage || polSourceSiteInputToolHelper.OnPicturePage)
+                    {
+                        if (polSourceSiteInputToolHelper.OnDetailPage)
+                        {
+                            radioButtonDetails.Checked = true;
+                        }
+                        if (polSourceSiteInputToolHelper.OnIssuePage)
+                        {
+                            radioButtonIssues.Checked = true;
+                        }
+                        if (polSourceSiteInputToolHelper.OnPicturePage)
+                        {
+                            radioButtonPictures.Checked = true;
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            polSourceSiteInputToolHelper.OnDetailPage = false;
+            polSourceSiteInputToolHelper.OnIssuePage = false;
+            polSourceSiteInputToolHelper.OnMapPage = true;
+            polSourceSiteInputToolHelper.OnPicturePage = false;
+
             polSourceSiteInputToolHelper.ShowPolSourceSiteDetails = false;
             polSourceSiteInputToolHelper.ShowOnlyIssues = false;
             polSourceSiteInputToolHelper.ShowOnlyPictures = false;
@@ -526,6 +689,42 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void radioButtonPictures_CheckedChanged(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                if (radioButtonPictures.Checked)
+                {
+                    if (polSourceSiteInputToolHelper.OnDetailPage || polSourceSiteInputToolHelper.OnIssuePage || polSourceSiteInputToolHelper.OnMapPage)
+                    {
+                        if (polSourceSiteInputToolHelper.OnDetailPage)
+                        {
+                            radioButtonDetails.Checked = true;
+                        }
+                        if (polSourceSiteInputToolHelper.OnIssuePage)
+                        {
+                            radioButtonIssues.Checked = true;
+                        }
+                        if (polSourceSiteInputToolHelper.OnMapPage)
+                        {
+                            radioButtonShowMap.Checked = true;
+                        }
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                        return;
+                    }
+                }
+                else
+                {
+                    return;
+                }
+            }
+            polSourceSiteInputToolHelper.OnDetailPage = false;
+            polSourceSiteInputToolHelper.OnIssuePage = false;
+            polSourceSiteInputToolHelper.OnMapPage = false;
+            polSourceSiteInputToolHelper.OnPicturePage = true;
+
             polSourceSiteInputToolHelper.ShowPolSourceSiteDetails = false;
             polSourceSiteInputToolHelper.ShowOnlyIssues = false;
             polSourceSiteInputToolHelper.ShowOnlyPictures = true;
@@ -1633,7 +1832,7 @@ namespace CSSPPolSourceSiteInputTool
             checkBoxMoreInfo.Visible = false;
 
 
-            polSourceSiteInputToolHelper = new PolSourceSiteInputToolHelper(panelViewAndEdit, panelPolSourceSite, panelMunicipalities, panelStreetType, LanguageEnum.en);
+            polSourceSiteInputToolHelper = new PolSourceSiteInputToolHelper(panelViewAndEdit, panelPolSourceSite, panelMunicipalities, panelStreetType, panelShowInputOptions, panelSubsectorOrMunicipality, LanguageEnum.en);
             polSourceSiteInputToolHelper.UpdateStatus += polSourceSiteInputToolHelper_UpdateStatus;
             polSourceSiteInputToolHelper.UpdateRTBClear += polSourceSiteInputToolHelper_UpdateRTBClear;
             polSourceSiteInputToolHelper.UpdateRTBMessage += polSourceSiteInputToolHelper_UpdateRTBMessage;
@@ -1788,16 +1987,23 @@ namespace CSSPPolSourceSiteInputTool
 
         private void lblHelp_Click(object sender, EventArgs e)
         {
-            richTextBoxStatus.LoadFile($@"C:\PollutionSourceSites\Documentations\help.rtf");
+            FileInfo fi = new FileInfo($@"C:\PollutionSourceSites\Documentations\help.html");
+            if (fi.Exists)
+            {
+                webBrowserDocument.BringToFront();
+                webBrowserDocument.Navigate($"{fi.FullName}");
+            }
+            else
+            {
+                richTextBoxStatus.BringToFront();
+                richTextBoxStatus.Text = "Could not find " + fi.FullName.Replace(@"\", @"/");
+            }
+
             if (splitContainer2.Panel2.Height < panelViewAndEdit.Height * 1 / 3)
             {
                 splitContainer2.SplitterDistance = panelViewAndEdit.Height * 2 / 3;
                 butReduceHelp.Visible = true;
             }
-            //else
-            //{
-            //    butReduceHelp.Visible = false;
-            //}
         }
     }
 }

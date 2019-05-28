@@ -382,6 +382,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         sb.AppendLine($"PICTUREDESCRIPTIONNEW\t{picture.DescriptionNew.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("  ", " ")}\t");
                     }
+                    if (picture.FromWater != null)
+                    {
+                        sb.AppendLine($"FROMWATER\t{picture.FromWater}\t");
+                    }
+                    if (picture.FromWaterNew != null)
+                    {
+                        sb.AppendLine($"FROMWATERNEW\t{picture.FromWaterNew}\t");
+                    }
                 }
 
             }
@@ -504,6 +512,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (!string.IsNullOrWhiteSpace(picture.DescriptionNew))
                     {
                         sb.AppendLine($"PICTUREDESCRIPTIONNEW\t{picture.DescriptionNew.Replace("\r", " ").Replace("\n", " ").Replace("\t", " ").Replace("  ", " ")}\t");
+                    }
+                    if (picture.FromWater != null)
+                    {
+                        sb.AppendLine($"FROMWATER\t{picture.FromWater}\t");
+                    }
+                    if (picture.FromWaterNew != null)
+                    {
+                        sb.AppendLine($"FROMWATERNEW\t{picture.FromWaterNew}\t");
                     }
                 }
 

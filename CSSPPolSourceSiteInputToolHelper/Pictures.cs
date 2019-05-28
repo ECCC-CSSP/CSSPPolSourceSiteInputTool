@@ -186,6 +186,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 TextBox tbFileName = new TextBox();
                                 TextBox tbDesc = new TextBox();
                                 PictureBox pbFileName = new PictureBox();
+                                CheckBox cbFromWater = new CheckBox();
                                 foreach (Control control2 in control.Controls)
                                 {
                                     if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxFileName")
@@ -204,13 +205,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                                             picture.DescriptionNew = tbDesc.Text.Trim();
                                         }
                                     }
-                                    if (control2.GetType().Name == "pictureBox" && control2.Name == "pictureBoxPicture")
+                                    if (control2.GetType().Name == "PictureBox" && control2.Name == "pictureBoxPicture")
                                     {
                                         pbFileName = (PictureBox)control2;
                                         FileInfo fiPicture = new FileInfo(pbFileName.ImageLocation);
                                         if (fiPicture.Extension != picture.Extension)
                                         {
                                             picture.ExtensionNew = fiPicture.Extension;
+                                        }
+                                    }
+                                    if (control2.GetType().Name == "CheckBox" && control2.Name == "checkBoxFromWater")
+                                    {
+                                        cbFromWater = (CheckBox)control2;
+                                        if (cbFromWater.Checked != picture.FromWater)
+                                        {
+                                            picture.FromWaterNew = cbFromWater.Checked;
                                         }
                                     }
                                 }
@@ -237,6 +246,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 TextBox tbFileName = new TextBox();
                                 TextBox tbDesc = new TextBox();
                                 PictureBox pbFileName = new PictureBox();
+                                CheckBox cbFromWater = new CheckBox();
                                 foreach (Control control2 in control.Controls)
                                 {
                                     if (control2.GetType().Name == "TextBox" && control2.Name == "textBoxFileName")
@@ -255,13 +265,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                                             picture.DescriptionNew = tbDesc.Text.Trim();
                                         }
                                     }
-                                    if (control2.GetType().Name == "pictureBox" && control2.Name == "pictureBoxPicture")
+                                    if (control2.GetType().Name == "PictureBox" && control2.Name == "pictureBoxPicture")
                                     {
                                         pbFileName = (PictureBox)control2;
                                         FileInfo fiPicture = new FileInfo(pbFileName.ImageLocation);
                                         if (fiPicture.Extension != picture.Extension)
                                         {
                                             picture.ExtensionNew = fiPicture.Extension;
+                                        }
+                                    }
+                                    if (control2.GetType().Name == "CheckBox" && control2.Name == "checkBoxFromWater")
+                                    {
+                                        cbFromWater = (CheckBox)control2;
+                                        if (cbFromWater.Checked != picture.FromWater)
+                                        {
+                                            picture.FromWaterNew = cbFromWater.Checked;
                                         }
                                     }
                                 }
@@ -467,6 +485,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             textBoxFileName.Text = picture.FileName;
                         }
 
+                        textBoxFileName.TextChanged += textBoxFileName_TextChanged;
                         panelPicture.Controls.Add(textBoxFileName);
                     }
                     else
@@ -569,7 +588,39 @@ namespace CSSPPolSourceSiteInputToolHelper
                             textBoxDescription.Text = picture.Description;
                         }
 
+                        textBoxDescription.TextChanged += textBoxDescription_TextChanged;
                         panelPicture.Controls.Add(textBoxDescription);
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+
+                        Label lblFromWater = new Label();
+                        lblFromWater.AutoSize = true;
+                        lblFromWater.Location = new Point(20, Y);
+                        lblFromWater.Font = new Font(new FontFamily(lblFromWater.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblFromWater.Tag = $"{picture.PictureTVItemID}";
+                        lblFromWater.Text = $@"From Water: ";
+
+                        panelPicture.Controls.Add(lblFromWater);
+
+                        X = panelPicture.Controls[panelPicture.Controls.Count - 1].Right + 5;
+
+
+                        CheckBox checkBoxFromWater = new CheckBox();
+                        checkBoxFromWater.Location = new Point(X, Y);
+                        checkBoxFromWater.Font = new Font(new FontFamily(checkBoxFromWater.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        checkBoxFromWater.Name = "checkBoxFromWater";
+                        checkBoxFromWater.Tag = $"{picture.PictureTVItemID}";
+                        if (picture.FromWaterNew != null)
+                        {
+                            checkBoxFromWater.Checked = (bool)picture.FromWaterNew;
+                        }
+                        else
+                        {
+                            checkBoxFromWater.Checked =  (picture.FromWater != null ? (bool)picture.FromWater : false);
+                        }
+
+                        checkBoxFromWater.CheckedChanged += checkBoxFromWater_CheckedChanged;
+                        panelPicture.Controls.Add(checkBoxFromWater);
                     }
                     else
                     {
@@ -601,6 +652,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
 
                         panelPicture.Controls.Add(lblDescription2);
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+
+                        Label lblFromWater = new Label();
+                        lblFromWater.AutoSize = true;
+                        lblFromWater.Location = new Point(20, Y);
+                        lblFromWater.Font = new Font(new FontFamily(lblFromWater.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                        lblFromWater.Tag = $"{picture.PictureTVItemID}";
+                        lblFromWater.Text = $@"From Water: " + (picture.FromWaterNew != null ? picture.FromWaterNew.ToString() : (picture.FromWater != null ? picture.FromWater.ToString() : "empty"));
+
+                        panelPicture.Controls.Add(lblFromWater);
                     }
 
                     Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
@@ -611,7 +673,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Button butSavePictureInfo = new Button();
                         butSavePictureInfo.AutoSize = true;
                         butSavePictureInfo.Location = new Point(X, Y);
-                        butSavePictureInfo.Text = "Save File Name And Description";
+                        butSavePictureInfo.Text = "Save Picture Related Info";
                         butSavePictureInfo.Tag = $"{picture.PictureTVItemID}";
                         butSavePictureInfo.Padding = new Padding(5);
                         butSavePictureInfo.Click += butSavePictureInfo_Click;
@@ -619,6 +681,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                         panelPicture.Controls.Add(butSavePictureInfo);
 
                         X = butSavePictureInfo.Right + 20;
+
+                        Button butCancelPictureInfo = new Button();
+                        butCancelPictureInfo.AutoSize = true;
+                        butCancelPictureInfo.Location = new Point(X, Y);
+                        butCancelPictureInfo.Text = "Cancel";
+                        butCancelPictureInfo.Tag = $"{picture.PictureTVItemID}";
+                        butCancelPictureInfo.Padding = new Padding(5);
+                        butCancelPictureInfo.Click += butCancelPictureInfo_Click;
+
+                        panelPicture.Controls.Add(butCancelPictureInfo);
+
+                        X = butCancelPictureInfo.Right + 20;
+
 
                         if (picture.ToRemove == true)
                         {

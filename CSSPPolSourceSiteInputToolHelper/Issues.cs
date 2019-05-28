@@ -32,6 +32,8 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             CurrentPSS.PSSObs.IssueList.Add(issue);
 
+            SavePolSourceSiteInfo();
+            RedrawSinglePanelPSS();
             ReDrawPolSourceSite();
         }
         public bool IssueWellFormed(Issue issue, bool IsNew)
@@ -765,6 +767,19 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
 
+                Button butIssueCancel = new Button();
+                butIssueCancel.AutoSize = true;
+                butIssueCancel.Location = new Point(X, Y);
+                butIssueCancel.Font = new Font(new FontFamily(butIssueCancel.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                butIssueCancel.Text = $"Cancel";
+                butIssueCancel.Tag = $"{issue.IssueID}";
+                butIssueCancel.Padding = new Padding(5);
+                butIssueCancel.Click += butIssueCancel_Click;
+
+                PanelViewAndEdit.Controls.Add(butIssueCancel);
+
+                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
+
                 Button butIssueDelete = new Button();
                 butIssueDelete.AutoSize = true;
                 butIssueDelete.Location = new Point(X, Y);
@@ -1073,6 +1088,9 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             PanelViewAndEdit.ScrollControlIntoView(PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1]);
 
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
+            PanelSubsectorOrMunicipality.Enabled = false;
         }
         private void SaveIssue(int IssueID)
         {
@@ -1132,7 +1150,9 @@ namespace CSSPPolSourceSiteInputToolHelper
             RedrawSinglePanelPSS();
             ReDrawPolSourceSite();
 
-
+            IsDirty = false;
+            PanelShowInputOptions.BackColor = BackColorDefault;
+            PanelSubsectorOrMunicipality.Enabled = true;
         }
         private void RecreateTVText()
         {

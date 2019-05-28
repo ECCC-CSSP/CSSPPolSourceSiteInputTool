@@ -768,6 +768,46 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "FROMWATER":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Picture lastPicture = lastPSS.PSSPictureList[lastPSS.PSSPictureList.Count - 1];
+
+                                string FromWaterText = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                                if (!string.IsNullOrWhiteSpace(FromWaterText))
+                                {
+                                    lastPicture.FromWater = bool.Parse(FromWaterText);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "FROMWATERNEW":
+                        {
+                            try
+                            {
+                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
+                                Picture lastPicture = lastPSS.PSSPictureList[lastPSS.PSSPictureList.Count - 1];
+
+                                string FromWaterText = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                                if (!string.IsNullOrWhiteSpace(FromWaterText))
+                                {
+                                    lastPicture.FromWaterNew = bool.Parse(FromWaterText);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
                     case "OBS":
                         {
                             try

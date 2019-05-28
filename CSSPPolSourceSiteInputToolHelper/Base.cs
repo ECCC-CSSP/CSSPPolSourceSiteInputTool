@@ -45,13 +45,14 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Color BackColorNotWellFormed = Color.LightYellow;
         public Color BackColorNotCompleted = Color.LightPink;
         public Color BackColorEditing = Color.LightGreen;
+        public Color BackColorDefault = Color.LightGray;
         public Color BackColorNormal = Color.White;
         public Color ForeColorChangedOrNew = Color.Green;
         public Color ForeColorNormal = Color.Black;
-        public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
-        public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
-        // public string baseURLEN = "http://localhost:11562/en-CA/PolSource/";
-        // public string baseURLFR = "http://localhost:11562/fr-CA/PolSource/";
+        // public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
+        // public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
+        public string baseURLEN = "http://localhost:11562/en-CA/PolSource/";
+        public string baseURLFR = "http://localhost:11562/fr-CA/PolSource/";
         public string BasePathPollutionSourceSites = @"C:\PollutionSourceSites\Subsectors\";
         public string BasePathInfrastructures = @"C:\PollutionSourceSites\Infrastructures\";
         public List<PolSourceObsInfoEnumTextAndID> polSourceObsInfoEnumTextAndIDList = new List<PolSourceObsInfoEnumTextAndID>();
@@ -65,6 +66,10 @@ namespace CSSPPolSourceSiteInputToolHelper
         public string InitialDirectorySubsectorPictures = $@"C:\";
         public string InitialDirectoryInfrastructurePictures = $@"C:\";
         public bool IsTryingToMoveUnderItself = false;
+        public bool OnDetailPage = false;
+        public bool OnIssuePage = false;
+        public bool OnPicturePage = false;
+        public bool OnMapPage = false;
         #endregion Variables
 
         #region Properties
@@ -78,17 +83,24 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Panel PanelMunicipalities { get; set; }
         public Panel PanelPolSourceSite { get; set; }
         public Panel PanelStreetType { get; set; }
+        public Panel PanelShowInputOptions { get; set; }
+        public Panel PanelSubsectorOrMunicipality { get; set; }
         public LanguageEnum Language { get; set; }
 
         #endregion Properties
 
         #region Constructors
-        public PolSourceSiteInputToolHelper(Panel panelViewAndEdit, Panel panelPolSourceSite, Panel panelMunicipalities, Panel panelStreetType, LanguageEnum language)
+        public PolSourceSiteInputToolHelper(Panel panelViewAndEdit, Panel panelPolSourceSite, Panel panelMunicipalities, Panel panelStreetType, Panel panelShowInputOptions, Panel panelSubsectorOrMunicipality, LanguageEnum language)
         {
             PanelViewAndEdit = panelViewAndEdit;
             PanelPolSourceSite = panelPolSourceSite;
             PanelMunicipalities = panelMunicipalities;
             PanelStreetType = panelStreetType;
+            PanelShowInputOptions = panelShowInputOptions;
+            PanelSubsectorOrMunicipality = panelSubsectorOrMunicipality;
+
+            BackColorDefault = panelViewAndEdit.BackColor;
+
             Language = language;
             subsectorDoc = new SubsectorDoc();
             municipalityDoc = new MunicipalityDoc();
