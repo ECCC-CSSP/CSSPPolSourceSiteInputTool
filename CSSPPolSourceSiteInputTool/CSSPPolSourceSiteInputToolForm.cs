@@ -489,16 +489,16 @@ namespace CSSPPolSourceSiteInputTool
             richTextBoxStatus.Clear();
             string FileName = e.FileName.Replace("(", "_").Replace(")", "_").Replace("\\", "_").Replace("/", "_").Replace(".", "_").Replace(" ", "_");
 
-            FileInfo fi = new FileInfo(FileName);
+            FileInfo fi = new FileInfo($@"C:/PollutionSourceSites/Documentations/" + $"{FileName}.html");
             if (fi.Exists)
             {
                 webBrowserDocument.BringToFront();
-                webBrowserDocument.Navigate($@"C:/PollutionSourceSites/Documentations/" + $"{FileName}.html");
+                webBrowserDocument.Navigate(fi.FullName);
             }
             else
             {
                 richTextBoxStatus.BringToFront();
-                richTextBoxStatus.Text = "Could not find " + $@"C:/PollutionSourceSites/Documentations/" + $"{FileName}.html";
+                richTextBoxStatus.Text = "Could not find " + fi.FullName;
             }
 
             if (splitContainer2.Panel2.Height < panelViewAndEdit.Height * 1 / 3)
