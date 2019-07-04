@@ -60,11 +60,11 @@ namespace CSSPPolSourceSiteInputTool
                 return;
             }
 
-            butFix.Text = "Working ...";
-            butFix.Refresh();
+            butFixPath.Text = "Working ...";
+            butFixPath.Refresh();
             Application.DoEvents();
-            polSourceSiteInputToolHelper.Fix();
-            butFix.Text = "Fix";
+            polSourceSiteInputToolHelper.FixPath();
+            butFixPath.Text = "Fix Path";
         }
         private void butReduceHelp_Click(object sender, EventArgs e)
         {
@@ -2004,6 +2004,16 @@ namespace CSSPPolSourceSiteInputTool
                 splitContainer2.SplitterDistance = panelViewAndEdit.Height * 2 / 3;
                 butReduceHelp.Visible = true;
             }
+        }
+
+        private void butFixImgDir_Click(object sender, EventArgs e)
+        {
+            butFixImgDir.Text = "Working ...";
+            butFixImgDir.Refresh();
+            Application.DoEvents();
+            polSourceSiteInputToolHelper.FixImgDir();
+            butFixImgDir.Text = "Fix Img Dir";
+
         }
     }
 }

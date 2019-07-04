@@ -36,7 +36,7 @@
             this.panelShowInfrastructure = new System.Windows.Forms.Panel();
             this.checkBoxShowInfrastructure = new System.Windows.Forms.CheckBox();
             this.panelSubsectorOrMunicipality = new System.Windows.Forms.Panel();
-            this.butFix = new System.Windows.Forms.Button();
+            this.butFixPath = new System.Windows.Forms.Button();
             this.comboBoxSubsectorOrMunicipality = new System.Windows.Forms.ComboBox();
             this.panelProvinces = new System.Windows.Forms.Panel();
             this.comboBoxProvince = new System.Windows.Forms.ComboBox();
@@ -90,6 +90,7 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
+            this.butFixImgDir = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
@@ -196,23 +197,24 @@
             // 
             // panelSubsectorOrMunicipality
             // 
-            this.panelSubsectorOrMunicipality.Controls.Add(this.butFix);
+            this.panelSubsectorOrMunicipality.Controls.Add(this.butFixImgDir);
+            this.panelSubsectorOrMunicipality.Controls.Add(this.butFixPath);
             this.panelSubsectorOrMunicipality.Controls.Add(this.comboBoxSubsectorOrMunicipality);
             this.panelSubsectorOrMunicipality.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSubsectorOrMunicipality.Location = new System.Drawing.Point(177, 0);
             this.panelSubsectorOrMunicipality.Name = "panelSubsectorOrMunicipality";
-            this.panelSubsectorOrMunicipality.Size = new System.Drawing.Size(331, 34);
+            this.panelSubsectorOrMunicipality.Size = new System.Drawing.Size(412, 34);
             this.panelSubsectorOrMunicipality.TabIndex = 13;
             // 
-            // butFix
+            // butFixPath
             // 
-            this.butFix.Location = new System.Drawing.Point(282, 6);
-            this.butFix.Name = "butFix";
-            this.butFix.Size = new System.Drawing.Size(38, 23);
-            this.butFix.TabIndex = 12;
-            this.butFix.Text = "Fix";
-            this.butFix.UseVisualStyleBackColor = true;
-            this.butFix.Click += new System.EventHandler(this.butFix_Click);
+            this.butFixPath.Location = new System.Drawing.Point(282, 6);
+            this.butFixPath.Name = "butFixPath";
+            this.butFixPath.Size = new System.Drawing.Size(53, 23);
+            this.butFixPath.TabIndex = 12;
+            this.butFixPath.Text = "Fix Path";
+            this.butFixPath.UseVisualStyleBackColor = true;
+            this.butFixPath.Click += new System.EventHandler(this.butFix_Click);
             // 
             // comboBoxSubsectorOrMunicipality
             // 
@@ -790,6 +792,16 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
+            // butFixImgDir
+            // 
+            this.butFixImgDir.Location = new System.Drawing.Point(341, 6);
+            this.butFixImgDir.Name = "butFixImgDir";
+            this.butFixImgDir.Size = new System.Drawing.Size(68, 23);
+            this.butFixImgDir.TabIndex = 13;
+            this.butFixImgDir.Text = "Fix Img Dir";
+            this.butFixImgDir.UseVisualStyleBackColor = true;
+            this.butFixImgDir.Click += new System.EventHandler(this.butFixImgDir_Click);
+            // 
             // CSSPPolSourceSiteInputToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -880,7 +892,7 @@
         private System.Windows.Forms.Panel panelCreateSubsectorDirectory;
         private System.Windows.Forms.Panel panelAddNewInfrastructure;
         private System.Windows.Forms.Button butInfrastructureAdd;
-        private System.Windows.Forms.Button butFix;
+        private System.Windows.Forms.Button butFixPath;
         private System.Windows.Forms.CheckBox checkBoxWrittenDescription;
         private System.Windows.Forms.CheckBox checkBoxOldIssueText;
         private System.Windows.Forms.CheckBox checkBoxOldIssue;
@@ -903,6 +915,7 @@
         private System.Windows.Forms.ComboBox comboBoxStreetType;
         private System.Windows.Forms.Label lblHelp;
         private System.Windows.Forms.WebBrowser webBrowserDocument;
+        private System.Windows.Forms.Button butFixImgDir;
     }
 }
 

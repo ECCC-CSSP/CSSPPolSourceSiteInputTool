@@ -3,6 +3,7 @@ using CSSPEnumsDLL.Services;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -402,17 +403,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                     X = 10;
                     Y = 10;
 
-                    PictureBox pictureBoxPicture = new PictureBox();
-
-                    pictureBoxPicture.BorderStyle = BorderStyle.FixedSingle;
+                    string pathToImageFile = "";
                     if (IsPolSourceSite)
                     {
-                        pictureBoxPicture.ImageLocation = $@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
+                        pathToImageFile = $@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\{CurrentPSS.SiteNumberText}_{picture.PictureTVItemID}{picture.Extension}";
                     }
                     else
                     {
-                        pictureBoxPicture.ImageLocation = $@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{CurrentInfrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{picture.Extension}";
+                        pathToImageFile = $@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\{CurrentInfrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{picture.Extension}";
                     }
+
+
+                    PictureBox pictureBoxPicture = new PictureBox();
+
+                    pictureBoxPicture.BorderStyle = BorderStyle.FixedSingle;
+                    pictureBoxPicture.ImageLocation = pathToImageFile;
                     pictureBoxPicture.Location = new Point(X, Y);
                     pictureBoxPicture.Size = new Size(600, 500);
                     pictureBoxPicture.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -616,7 +621,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
                         else
                         {
-                            checkBoxFromWater.Checked =  (picture.FromWater != null ? (bool)picture.FromWater : false);
+                            checkBoxFromWater.Checked = (picture.FromWater != null ? (bool)picture.FromWater : false);
                         }
 
                         checkBoxFromWater.CheckedChanged += checkBoxFromWater_CheckedChanged;

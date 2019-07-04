@@ -4,6 +4,7 @@ using CSSPModelsDLL.Models;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -39,7 +40,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 string IsActiveText = infrastructure.IsActive == null ? "false" : (((bool)infrastructure.IsActive) ? "true" : "false");
 
                 sb.AppendLine($"INFRASTRUCTURE\t{((double)infrastructure.InfrastructureTVItemID).ToString("F0")}\t{((DateTime)infrastructure.LastUpdateDate_UTC).Year}|" +
-                    $"{((DateTime)infrastructure.LastUpdateDate_UTC).Month.ToString("0#")}|{((DateTime)infrastructure.LastUpdateDate_UTC).Day.ToString("0#")}|" + 
+                    $"{((DateTime)infrastructure.LastUpdateDate_UTC).Month.ToString("0#")}|{((DateTime)infrastructure.LastUpdateDate_UTC).Day.ToString("0#")}|" +
                     $"{((DateTime)infrastructure.LastUpdateDate_UTC).Hour.ToString("0#")}|{((DateTime)infrastructure.LastUpdateDate_UTC).Minute.ToString("0#")}|" +
                     $"{((DateTime)infrastructure.LastUpdateDate_UTC).Second.ToString("0#")}\t{IsActiveText}\t");
 
@@ -597,7 +598,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             sw.Close();
         }
 
-        public void Fix()
+        public void FixPath()
         {
             foreach (PSS pss in subsectorDoc.Subsector.PSSList)
             {
@@ -612,7 +613,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
 
                         List<int> NewTempPolSourceObsInfoIntList = new List<int>();
-                        DoFix(TempPolSourceObsInfoIntList, NewTempPolSourceObsInfoIntList, new List<string>() { "101" });
+                        DoFixPath(TempPolSourceObsInfoIntList, NewTempPolSourceObsInfoIntList, new List<string>() { "101" });
 
                         issue.PolSourceObsInfoIntListNew = new List<int>();
 
@@ -627,7 +628,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             SaveSubsectorTextFile();
         }
 
-        private void DoFix(List<int> TempPolSourceObsInfoIntList, List<int> NewTempPolSourceObsInfoIntList, List<string> ChildList)
+        private void DoFixPath(List<int> TempPolSourceObsInfoIntList, List<int> NewTempPolSourceObsInfoIntList, List<string> ChildList)
         {
             List<PolSourceObsInfoChild> PolSourceObsInfoChildList = new List<PolSourceObsInfoChild>();
             foreach (string ChildStart3Char in ChildList)
@@ -672,8 +673,127 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             if (ChildList2.Count > 0)
             {
-                DoFix(TempPolSourceObsInfoIntList, NewTempPolSourceObsInfoIntList, ChildList2);
+                DoFixPath(TempPolSourceObsInfoIntList, NewTempPolSourceObsInfoIntList, ChildList2);
             }
         }
+
+        public void FixImgDir()
+        {
+            EmitRTBClear(new RTBClearEventArgs());
+
+            string pathToImageDir = "";
+            if (IsPolSourceSite)
+            {
+                pathToImageDir = $@"C:\PollutionSourceSites\Subsectors\{CurrentSubsectorName}\Pictures\";
+            }
+            else
+            {
+                pathToImageDir = $@"C:\PollutionSourceSites\Infrastructures\{CurrentMunicipalityName}\Pictures\";
+            }
+
+            DirectoryInfo dirInfo = new DirectoryInfo(pathToImageDir);
+
+            foreach (FileInfo fi in dirInfo.GetFiles().Where(c => c.Extension == ".jpg"))
+            {
+                Application.DoEvents();
+
+                Image img = Image.FromFile(fi.FullName);
+                bool NeedToResaveTheImg = true;
+                if (img.PropertyIdList.Contains(0x0112))
+                {
+                    PropertyItem propOrientation = img.GetPropertyItem(0x0112);
+                    short orientation = BitConverter.ToInt16(propOrientation.Value, 0);
+                    if (orientation > 0)
+                    {
+                        int slefj = 34;
+                    }
+                    switch (orientation)
+                    {
+                        case 1:
+                            {
+                                EmitStatus(new StatusEventArgs(RotateFlipType.RotateNoneFlipNone.ToString() + " --- " + fi.FullName));
+                                NeedToResaveTheImg = false;
+                            }
+                            break;
+                        case 2:
+                            {
+                                img.RotateFlip(RotateFlipType.RotateNoneFlipX);
+                                EmitStatus(new StatusEventArgs(RotateFlipType.RotateNoneFlipX.ToString() + " --- " + fi.FullName));
+                            }
+                            break;
+                        case 3:
+                            {
+                                img.RotateFlip(RotateFlipType.Rotate180FlipNone);
+                                EmitStatus(new StatusEventArgs(RotateFlipType.Rotate180FlipNone.ToString() + " --- " + fi.FullName));
+                            }
+                            break;
+                        case 4:
+                            {
+                                img.RotateFlip(RotateFlipType.Rotate180FlipX);
+                                EmitStatus(new StatusEventArgs(RotateFlipType.Rotate180FlipX.ToString() + " --- " + fi.FullName));
+                            }
+                            break;
+                        case 5:
+                            {
+                                img.RotateFlip(RotateFlipType.Rotate90FlipX);
+                                EmitStatus(new StatusEventArgs(RotateFlipType.Rotate90FlipX.ToString() + " --- " + fi.FullName));
+                            }
+                            break;
+                        case 6:
+                            {
+                                img.RotateFlip(RotateFlipType.Rotate90FlipNone);
+                                EmitStatus(new StatusEventArgs(RotateFlipType.Rotate90FlipNone.ToString() + " --- " + fi.FullName));
+                            }
+                            break;
+                        case 7:
+                            {
+                                img.RotateFlip(RotateFlipType.Rotate270FlipX);
+                                EmitStatus(new StatusEventArgs(RotateFlipType.Rotate270FlipX.ToString() + " --- " + fi.FullName));
+                            }
+                            break;
+                        case 8:
+                            {
+                                img.RotateFlip(RotateFlipType.Rotate270FlipNone);
+                                EmitStatus(new StatusEventArgs(RotateFlipType.Rotate270FlipNone.ToString() + " --- " + fi.FullName));
+                            }
+                            break;
+                        default:
+                            {
+                                img.RotateFlip(RotateFlipType.RotateNoneFlipNone);
+                                EmitStatus(new StatusEventArgs(RotateFlipType.RotateNoneFlipNone.ToString() + " --- " + fi.FullName));
+                                NeedToResaveTheImg = false;
+                            }
+                            break;
+                    }
+
+                    if (NeedToResaveTheImg == true)
+                    {
+                        propOrientation.Value = new byte[] { 0, 0 };
+                        img.SetPropertyItem(propOrientation);
+                        EmitStatus(new StatusEventArgs("Saving file ..." + fi.FullName + "\r\n"));
+                        bool HadError = false;
+                        try
+                        {
+                            img.Save(fi.FullName, ImageFormat.Jpeg);
+                        }
+                        catch (Exception ex)
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs("Error Could not save the file [" + fi.FullName + "]\r\n"));
+                            HadError = true;
+                        }
+
+                        if (!HadError)
+                        {
+                            EmitStatus(new StatusEventArgs("File saved ..." + fi.FullName + "\r\n"));
+                        }
+                    }
+
+                    img = null;
+                }
+            }
+            EmitStatus(new StatusEventArgs("done..."));
+
+        }
+
     }
 }
