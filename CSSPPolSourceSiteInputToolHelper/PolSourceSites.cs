@@ -9685,7 +9685,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 NameValueCollection paramList = new NameValueCollection();
                 paramList.Add("PSSTVItemID", PSSTVItemID.ToString());
-                paramList.Add("NewObsDate", NewObsDate.ToString());
+                paramList.Add("NewObsDate", NewObsDate.ToString("yyyy-MM-dd"));
                 paramList.Add("AdminEmail", AdminEmail);
 
                 using (WebClient webClient = new WebClient())
