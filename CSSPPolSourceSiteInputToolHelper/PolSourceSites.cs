@@ -5017,6 +5017,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
                     CurrentPSS.PSSTVItemID = int.Parse(ret);
+                    CurrentPSS.TVText = PSSName;
                     CurrentPSS.TVTextNew = null;
                     CurrentPSS.Lat = Lat;
                     CurrentPSS.Lng = Lng;

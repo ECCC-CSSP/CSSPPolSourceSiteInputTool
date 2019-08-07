@@ -36,6 +36,7 @@
             this.panelShowInfrastructure = new System.Windows.Forms.Panel();
             this.checkBoxShowInfrastructure = new System.Windows.Forms.CheckBox();
             this.panelSubsectorOrMunicipality = new System.Windows.Forms.Panel();
+            this.butFixImgDir = new System.Windows.Forms.Button();
             this.butFixPath = new System.Windows.Forms.Button();
             this.comboBoxSubsectorOrMunicipality = new System.Windows.Forms.ComboBox();
             this.panelProvinces = new System.Windows.Forms.Panel();
@@ -90,7 +91,6 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.butFixImgDir = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
@@ -205,6 +205,16 @@
             this.panelSubsectorOrMunicipality.Name = "panelSubsectorOrMunicipality";
             this.panelSubsectorOrMunicipality.Size = new System.Drawing.Size(412, 34);
             this.panelSubsectorOrMunicipality.TabIndex = 13;
+            // 
+            // butFixImgDir
+            // 
+            this.butFixImgDir.Location = new System.Drawing.Point(341, 6);
+            this.butFixImgDir.Name = "butFixImgDir";
+            this.butFixImgDir.Size = new System.Drawing.Size(68, 23);
+            this.butFixImgDir.TabIndex = 13;
+            this.butFixImgDir.Text = "Fix Img Dir";
+            this.butFixImgDir.UseVisualStyleBackColor = true;
+            this.butFixImgDir.Click += new System.EventHandler(this.butFixImgDir_Click);
             // 
             // butFixPath
             // 
@@ -791,16 +801,6 @@
             // openFileDialogCSSP
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
-            // 
-            // butFixImgDir
-            // 
-            this.butFixImgDir.Location = new System.Drawing.Point(341, 6);
-            this.butFixImgDir.Name = "butFixImgDir";
-            this.butFixImgDir.Size = new System.Drawing.Size(68, 23);
-            this.butFixImgDir.TabIndex = 13;
-            this.butFixImgDir.Text = "Fix Img Dir";
-            this.butFixImgDir.UseVisualStyleBackColor = true;
-            this.butFixImgDir.Click += new System.EventHandler(this.butFixImgDir_Click);
             // 
             // CSSPPolSourceSiteInputToolForm
             // 
