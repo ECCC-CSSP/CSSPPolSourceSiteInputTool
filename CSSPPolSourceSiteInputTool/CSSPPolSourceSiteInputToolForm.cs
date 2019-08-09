@@ -2008,12 +2008,16 @@ namespace CSSPPolSourceSiteInputTool
 
         private void butFixImgDir_Click(object sender, EventArgs e)
         {
+            DoFixImgDir();
+        }
+
+        public void DoFixImgDir()
+        {
             butFixImgDir.Text = "Working ...";
             butFixImgDir.Refresh();
             Application.DoEvents();
             polSourceSiteInputToolHelper.FixImgDir();
             butFixImgDir.Text = "Fix Img Dir";
-
         }
     }
 }
