@@ -1285,6 +1285,94 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "VALVETYPE":
+                        {
+                            try
+                            {
+                                Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    lastInfrastructure.ValveType = null;
+                                }
+                                else
+                                {
+                                    lastInfrastructure.ValveType = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "VALVETYPENEW":
+                        {
+                            try
+                            {
+                                Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    lastInfrastructure.ValveTypeNew = null;
+                                }
+                                else
+                                {
+                                    lastInfrastructure.ValveTypeNew = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "HASBACKUPPOWER":
+                        {
+                            try
+                            {
+                                Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    lastInfrastructure.HasBackupPower = null;
+                                }
+                                else
+                                {
+                                    lastInfrastructure.HasBackupPower = bool.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "HASBACKUPPOWERNEW":
+                        {
+                            try
+                            {
+                                Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    lastInfrastructure.HasBackupPowerNew = null;
+                                }
+                                else
+                                {
+                                    lastInfrastructure.HasBackupPowerNew = bool.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
                     case "PERCFLOWOFTOTAL":
                         {
                             try

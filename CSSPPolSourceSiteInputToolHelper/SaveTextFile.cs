@@ -190,6 +190,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string CanOverflowNew = infrastructure.CanOverflowNew != null ? ((bool)infrastructure.CanOverflowNew) == true ? "true" : "false" : "";
                     sb.AppendLine($"CANOVERFLOWNEW\t{CanOverflowNew}\t");
                 }
+                sb.AppendLine($"VALVETYPE\t{infrastructure.ValveType}\t");
+                if (infrastructure.ValveTypeNew != null)
+                {
+                    sb.AppendLine($"VALVETYPENEW\t{infrastructure.ValveTypeNew}\t");
+                }
+                string HasBackupPower = infrastructure.HasBackupPower != null ? ((bool)infrastructure.HasBackupPower) == true ? "true" : "false" : "";
+                sb.AppendLine($"HASBACKUPPOWER\t{HasBackupPower}\t");
+                if (infrastructure.HasBackupPowerNew != null)
+                {
+                    string HasBackupPowerNew = infrastructure.HasBackupPowerNew != null ? ((bool)infrastructure.HasBackupPowerNew) == true ? "true" : "false" : "";
+                    sb.AppendLine($"HASBACKUPPOWERNEW\t{HasBackupPowerNew}\t");
+                }
                 string PercFlowOfTotal = infrastructure.PercFlowOfTotal != null ? ((float)infrastructure.PercFlowOfTotal).ToString("F1") : "";
                 sb.AppendLine($"PERCFLOWOFTOTAL\t{PercFlowOfTotal}\t");
                 if (infrastructure.PercFlowOfTotalNew != null)

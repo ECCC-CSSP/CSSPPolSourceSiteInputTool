@@ -78,6 +78,10 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int? PopServedNew { get; set; } = null;
         public bool? CanOverflow { get; set; } = null;
         public bool? CanOverflowNew { get; set; } = null;
+        public int? ValveType { get; set; } = null;
+        public int? ValveTypeNew { get; set; } = null;
+        public bool? HasBackupPower { get; set; } = null;
+        public bool? HasBackupPowerNew { get; set; } = null;
         public float? PercFlowOfTotal { get; set; } = null;
         public float? PercFlowOfTotalNew { get; set; } = null;
         public float? AverageDepth_m { get; set; } = null;

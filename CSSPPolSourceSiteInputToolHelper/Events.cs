@@ -1168,5 +1168,13 @@ namespace CSSPPolSourceSiteInputToolHelper
             PanelSubsectorOrMunicipality.Enabled = false;
         }
 
+        // HasBackupPower_CheckedChanged
+        private void checkBoxHasBackupPower_CheckedChanged(object sender, EventArgs e)
+        {
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
+            PanelSubsectorOrMunicipality.Enabled = false;
+        }
+
     }
 }

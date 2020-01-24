@@ -672,6 +672,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     checkBoxItem.CheckedChanged += checkBoxCanOverFlow_CheckedChanged;
                 }
+                if (checkBoxItem.Name == "checkBoxHasBackupPower")
+                {
+                    checkBoxItem.CheckedChanged += checkBoxHasBackupPower_CheckedChanged;
+                }
 
                 PanelViewAndEdit.Controls.Add(checkBoxItem);
             }
@@ -755,6 +759,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblItemEnum.Text = $@"Alarm System Type: ";
                     }
                     break;
+                case "ValveTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Valve Type: ";
+                    }
+                    break;
                 default:
                     break;
             }
@@ -825,6 +834,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         case "AlarmSystemTypeEnum":
                             {
                                 lblItemEnumOld.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "ValveTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)val).ToString()})";
                             }
                             break;
                         default:
@@ -1200,6 +1214,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
+                    case "ValveTypeEnum":
+                        {
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ValveTypeEnum.Manually),
+                                "butValveTypeManually", "Manually", fontFamilyName, "Manually", butValveTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ValveTypeEnum.Automatically),
+                                "butValveTypeAutomatically", "Automatically", fontFamilyName, "Automatically", butValveTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
+                                "butValveTypeUnknown", "Unknown", fontFamilyName, "Unknown", butValveTypeSelect_Clicked);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -1268,6 +1297,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                     case "AlarmSystemTypeEnum":
                         {
                             lblItemEnum2.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "ValveTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)val).ToString()})";
                         }
                         break;
                     default:
@@ -1340,6 +1374,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         case "AlarmSystemTypeEnum":
                             {
                                 lblItemEnumNew.Text = valNew == null ? "empty" : _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "ValveTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : _BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)valNew).ToString();
                             }
                             break;
                         default:
@@ -1462,6 +1501,16 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "ValveTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.ValveTypeNew = null;
+                                CurrentInfrastructure.ValveType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -1562,6 +1611,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                             }
                             break;
+                        case "ValveTypeEnum":
+                            {
+                                CurrentInfrastructure.ValveTypeNew = valNew;
+                                if (CurrentInfrastructure.ValveTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -1657,6 +1715,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     CurrentInfrastructure.AlarmSystemType = val;
                                     if (CurrentInfrastructure.AlarmSystemType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "ValveTypeEnum":
+                                {
+                                    CurrentInfrastructure.ValveType = val;
+                                    if (CurrentInfrastructure.ValveType == elemEnumInt)
                                     {
                                         but.BackColor = Color.Green;
                                     }
@@ -2203,6 +2270,44 @@ namespace CSSPPolSourceSiteInputToolHelper
                 case "SCADAAndLight":
                     {
                         CurrentInfrastructure.AlarmSystemTypeNew = ((int)AlarmSystemTypeEnum.SCADAAndLight);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butValveTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            switch (tagText)
+            {
+                case "Unknown":
+                    {
+                        CurrentInfrastructure.ValveTypeNew = null;
+                        CurrentInfrastructure.ValveType = null;
+                    }
+                    break;
+                case "Manually":
+                    {
+                        CurrentInfrastructure.ValveTypeNew = ((int)ValveTypeEnum.Manually);
+                    }
+                    break;
+                case "Automatically":
+                    {
+                        CurrentInfrastructure.ValveTypeNew = ((int)ValveTypeEnum.Automatically);
                     }
                     break;
                 default:
@@ -3678,6 +3783,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             float? PeakFlow_m3_day = null;
             int? PopServed = null;
             bool? CanOverflow = null;
+            ValveTypeEnum? ValveType = null;
+            bool? HasBackupPower = null;
             float? PercFlowOfTotal = null;
             float? AverageDepth_m = null;
             int? NumberOfPorts = null;
@@ -4019,6 +4126,32 @@ namespace CSSPPolSourceSiteInputToolHelper
                 CanOverflow = (bool)CurrentInfrastructure.CanOverflowNew;
             }
 
+            // ValveType
+            if (CurrentInfrastructure.ValveTypeNew == null)
+            {
+                if (CurrentInfrastructure.ValveType != null)
+                {
+                    ValveType = (ValveTypeEnum)CurrentInfrastructure.ValveType;
+                }
+            }
+            else
+            {
+                ValveType = (ValveTypeEnum)CurrentInfrastructure.ValveTypeNew;
+            }
+
+            // HasBackupPower
+            if (CurrentInfrastructure.HasBackupPowerNew == null)
+            {
+                if (CurrentInfrastructure.HasBackupPower != null)
+                {
+                    HasBackupPower = (bool)CurrentInfrastructure.HasBackupPower;
+                }
+            }
+            else
+            {
+                HasBackupPower = (bool)CurrentInfrastructure.HasBackupPowerNew;
+            }
+
             // PercFlowOfTotal
             if (CurrentInfrastructure.PercFlowOfTotalNew == null)
             {
@@ -4337,6 +4470,12 @@ namespace CSSPPolSourceSiteInputToolHelper
             MessageText = $"\t\tCan Overflow\t[{CanOverflow.ToString()}]\r\n";
             EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
+            MessageText = $"\t\tValve Type\t[{ValveType.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tHas Backup Power\t[{HasBackupPower.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
             MessageText = $"\t\tPercentage of total flow (%)\t[{PercFlowOfTotal.ToString()}]\r\n";
             EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
@@ -4398,7 +4537,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Lat, Lng, LatOutfall, LngOutfall, CommentEN, CommentFR, InfrastructureType, FacilityType,
                 IsMechanicallyAerated, NumberOfCells, NumberOfAeratedCells, AerationType, PreliminaryTreatmentType, PrimaryTreatmentType,
                 SecondaryTreatmentType, TertiaryTreatmentType, DisinfectionType, CollectionSystemType, AlarmSystemType,
-                DesignFlow_m3_day, AverageFlow_m3_day, PeakFlow_m3_day, PopServed, CanOverflow, PercFlowOfTotal,
+                DesignFlow_m3_day, AverageFlow_m3_day, PeakFlow_m3_day, PopServed, CanOverflow, ValveType, HasBackupPower, PercFlowOfTotal,
                 AverageDepth_m, NumberOfPorts, PortDiameter_m, PortSpacing_m, PortElevation_m, VerticalAngle_deg,
                 HorizontalAngle_deg, DecayRate_per_day, NearFieldVelocity_m_s, FarFieldVelocity_m_s,
                 ReceivingWaterSalinity_PSU, ReceivingWaterTemperature_C, ReceivingWater_MPN_per_100ml, DistanceFromShore_m,
@@ -4528,6 +4667,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 CurrentInfrastructure.PopServedNew = null;
                 CurrentInfrastructure.CanOverflow = CanOverflow;
                 CurrentInfrastructure.CanOverflowNew = null;
+                CurrentInfrastructure.ValveType = (int?)ValveType;
+                CurrentInfrastructure.ValveTypeNew = null;
+                CurrentInfrastructure.HasBackupPower = HasBackupPower;
+                CurrentInfrastructure.HasBackupPowerNew = null;
                 CurrentInfrastructure.PercFlowOfTotal = PercFlowOfTotal;
                 CurrentInfrastructure.PercFlowOfTotalNew = null;
                 CurrentInfrastructure.AverageDepth_m = AverageDepth_m;
@@ -6470,6 +6613,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion CanOverflow
 
+                    #region ValveType
+                    X = 10;
+                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum));
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion ValveType
+
+                    #region HasBackupPower
+                    X = 10;
+                    DrawItemBool(X, Y, CurrentInfrastructure.HasBackupPower, CurrentInfrastructure.HasBackupPowerNew, "Has Backup Power", "checkBoxHasBackupPower");
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion HasBackupPower
+
                     #region PercFlowOfTotal
                     X = 10;
                     DrawItemFloat(X, Y, CurrentInfrastructure.PercFlowOfTotal, CurrentInfrastructure.PercFlowOfTotalNew, "Percentage Flow Of Total", 1, "textBoxPercFlowOfTotal");
@@ -6501,6 +6658,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion CanOverflow
 
+                    #region ValveType
+                    X = 10;
+                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum));
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion ValveType
+
+                    #region HasBackupPower
+                    X = 10;
+                    DrawItemBool(X, Y, CurrentInfrastructure.HasBackupPower, CurrentInfrastructure.HasBackupPowerNew, "Has Backup Power", "checkBoxHasBackupPower");
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion HasBackupPower
+                    
                     #region PercFlowOfTotal
                     X = 10;
                     DrawItemFloat(X, Y, CurrentInfrastructure.PercFlowOfTotal, CurrentInfrastructure.PercFlowOfTotalNew, "Percentage Flow Of Total", 1, "textBoxPercFlowOfTotal");
@@ -8168,6 +8339,38 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "comboBoxValveType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.ValveTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 0, count = Enum.GetNames(typeof(ValveTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
+                                        {
+                                            if (CurrentInfrastructure.ValveType == i)
+                                            {
+                                                CurrentInfrastructure.ValveTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.ValveTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
                     case "textBoxNumberOfCells":
                         {
                             TextBox tb = (TextBox)control;
@@ -8421,6 +8624,36 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     else
                                     {
                                         CurrentInfrastructure.CanOverflowNew = false;
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "checkBoxHasBackupPower":
+                        {
+                            CheckBox cb = (CheckBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.Checked)
+                                {
+                                    if (CurrentInfrastructure.HasBackupPower == CurrentInfrastructure.HasBackupPowerNew)
+                                    {
+                                        CurrentInfrastructure.HasBackupPowerNew = true;
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.HasBackupPowerNew = true;
+                                    }
+                                }
+                                else
+                                {
+                                    if (CurrentInfrastructure.HasBackupPower == CurrentInfrastructure.HasBackupPowerNew)
+                                    {
+                                        CurrentInfrastructure.HasBackupPowerNew = false;
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.HasBackupPowerNew = false;
                                     }
                                 }
                             }
@@ -9553,7 +9786,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             PreliminaryTreatmentTypeEnum? PreliminaryTreatmentType, PrimaryTreatmentTypeEnum? PrimaryTreatmentType,
             SecondaryTreatmentTypeEnum? SecondaryTreatmentType, TertiaryTreatmentTypeEnum? TertiaryTreatmentType,
             DisinfectionTypeEnum? DisinfectionType, CollectionSystemTypeEnum? CollectionSystemType, AlarmSystemTypeEnum? AlarmSystemType,
-            float? DesignFlow_m3_day, float? AverageFlow_m3_day, float? PeakFlow_m3_day, int? PopServed, bool? CanOverflow,
+            float? DesignFlow_m3_day, float? AverageFlow_m3_day, float? PeakFlow_m3_day, int? PopServed, 
+            bool? CanOverflow, ValveTypeEnum? ValveType, bool? HasBackupPower,
             float? PercFlowOfTotal, float? AverageDepth_m, int? NumberOfPorts,
             float? PortDiameter_m, float? PortSpacing_m, float? PortElevation_m, float? VerticalAngle_deg, float? HorizontalAngle_deg,
             float? DecayRate_per_day, float? NearFieldVelocity_m_s, float? FarFieldVelocity_m_s, float? ReceivingWaterSalinity_PSU,
@@ -9593,6 +9827,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 paramList.Add("PeakFlow_m3_day", PeakFlow_m3_day.ToString());
                 paramList.Add("PopServed", PopServed.ToString());
                 paramList.Add("CanOverflow", CanOverflow.ToString());
+                paramList.Add("ValveType", ((int?)ValveType).ToString());
+                paramList.Add("HasBackupPower", HasBackupPower.ToString());
                 paramList.Add("PercFlowOfTotal", PercFlowOfTotal.ToString());
                 paramList.Add("AverageDepth_m", AverageDepth_m.ToString());
                 paramList.Add("NumberOfPorts", NumberOfPorts.ToString());

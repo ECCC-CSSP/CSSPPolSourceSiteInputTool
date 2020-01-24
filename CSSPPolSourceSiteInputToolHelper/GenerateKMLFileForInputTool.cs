@@ -294,341 +294,361 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 // doing InfrastructureType
                 string InfrastructureTypeText = infrastructure.InfrastructureType != null ? _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)infrastructure.InfrastructureType) : "---";
-                sbKML.Append($@"                <p><b>InfrastructureType:</b> {InfrastructureTypeText}");
+                sbKML.Append($@"                <p><b>Infrastructure Type:</b> {InfrastructureTypeText}");
                 if (infrastructure.InfrastructureTypeNew != null)
                 {
                     string InfrastructureTypeNewText = infrastructure.InfrastructureTypeNew != null ? _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)infrastructure.InfrastructureTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>InfrastructureType New:</b> {InfrastructureTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Infrastructure Type New:</b> {InfrastructureTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing FacilityType
                 string FacilityTypeText = infrastructure.FacilityType != null ? _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)infrastructure.FacilityType) : "---";
-                sbKML.Append($@"                <p><b>FacilityType:</b> {FacilityTypeText}");
+                sbKML.Append($@"                <p><b>Facility Type:</b> {FacilityTypeText}");
                 if (infrastructure.FacilityTypeNew != null)
                 {
                     string FacilityTypeNewText = infrastructure.FacilityTypeNew != null ? _BaseEnumService.GetEnumText_FacilityTypeEnum((FacilityTypeEnum)infrastructure.FacilityTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>FacilityType New:</b> {FacilityTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Facility Type New:</b> {FacilityTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing IsMechanicallyAerated
                 string IsMechanicallyAerated = infrastructure.IsMechanicallyAerated != null && infrastructure.IsMechanicallyAerated == true ? "true" : "false";
-                sbKML.Append($@"                <p><b>IsMechanicallyAerated:</b> {IsMechanicallyAerated}</p>");
+                sbKML.Append($@"                <p><b>Is Mechanically Aerated:</b> {IsMechanicallyAerated}</p>");
                 if (infrastructure.IsMechanicallyAeratedNew != null)
                 {
                     string IsMechanicallyAeratedNew = infrastructure.IsMechanicallyAeratedNew == true ? "true" : "false";
-                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Is Active New:</b> {IsMechanicallyAeratedNew}");
+                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Is Mechanically Aerated New:</b> {IsMechanicallyAeratedNew}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing NumberOfCells
                 string NumberOfCells = infrastructure.NumberOfCells != null ? infrastructure.NumberOfCells.ToString() : "---";
-                sbKML.Append($@"                <p><b>NumberOfCells:</b> {NumberOfCells}</p>");
+                sbKML.Append($@"                <p><b>Number Of Cells:</b> {NumberOfCells}</p>");
                 if (infrastructure.NumberOfCellsNew != null)
                 {
                     string NumberOfCellsNew = infrastructure.NumberOfCellsNew != null ? infrastructure.NumberOfCellsNew.ToString() : "---";
-                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>NumberOfCells New:</b> {NumberOfCellsNew}");
+                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Number Of Cells New:</b> {NumberOfCellsNew}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing NumberOfAeratedCells
                 string NumberOfAeratedCells = infrastructure.NumberOfAeratedCells != null ? infrastructure.NumberOfAeratedCells.ToString() : "---";
-                sbKML.Append($@"                <p><b>NumberOfAeratedCells:</b> {NumberOfAeratedCells}</p>");
+                sbKML.Append($@"                <p><b>Number Of Aerated Cells:</b> {NumberOfAeratedCells}</p>");
                 if (infrastructure.NumberOfAeratedCellsNew != null)
                 {
                     string NumberOfAeratedCellsNew = infrastructure.NumberOfAeratedCellsNew != null ? infrastructure.NumberOfAeratedCellsNew.ToString() : "---";
-                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>NumberOfAeratedCells New:</b> {NumberOfAeratedCellsNew}");
+                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Number Of Aerated Cells New:</b> {NumberOfAeratedCellsNew}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing AerationType
                 string AerationTypeText = infrastructure.AerationType != null ? _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)infrastructure.AerationType) : "---";
-                sbKML.Append($@"                <p><b>AerationType:</b> {AerationTypeText}");
+                sbKML.Append($@"                <p><b>Aeration Type:</b> {AerationTypeText}");
                 if (infrastructure.AerationTypeNew != null)
                 {
                     string AerationTypeNewText = infrastructure.AerationTypeNew != null ? _BaseEnumService.GetEnumText_AerationTypeEnum((AerationTypeEnum)infrastructure.AerationTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>AerationType New:</b> {AerationTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Aeration Type New:</b> {AerationTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing PreliminaryTreatmentType
                 string PreliminaryTreatmentTypeText = infrastructure.PreliminaryTreatmentType != null ? _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)infrastructure.PreliminaryTreatmentType) : "---";
-                sbKML.Append($@"                <p><b>PreliminaryTreatmentType:</b> {PreliminaryTreatmentTypeText}");
+                sbKML.Append($@"                <p><b>Preliminary Treatment Type:</b> {PreliminaryTreatmentTypeText}");
                 if (infrastructure.PreliminaryTreatmentTypeNew != null)
                 {
                     string PreliminaryTreatmentTypeNewText = infrastructure.PreliminaryTreatmentTypeNew != null ? _BaseEnumService.GetEnumText_PreliminaryTreatmentTypeEnum((PreliminaryTreatmentTypeEnum)infrastructure.PreliminaryTreatmentTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PreliminaryTreatmentType New:</b> {PreliminaryTreatmentTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Preliminary Treatment Type New:</b> {PreliminaryTreatmentTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing PrimaryTreatmentType
                 string PrimaryTreatmentTypeText = infrastructure.PrimaryTreatmentType != null ? _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)infrastructure.PrimaryTreatmentType) : "---";
-                sbKML.Append($@"                <p><b>PrimaryTreatmentType:</b> {PrimaryTreatmentTypeText}");
+                sbKML.Append($@"                <p><b>Primary Treatment Type:</b> {PrimaryTreatmentTypeText}");
                 if (infrastructure.PrimaryTreatmentTypeNew != null)
                 {
                     string PrimaryTreatmentTypeNewText = infrastructure.PrimaryTreatmentTypeNew != null ? _BaseEnumService.GetEnumText_PrimaryTreatmentTypeEnum((PrimaryTreatmentTypeEnum)infrastructure.PrimaryTreatmentTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PrimaryTreatmentType New:</b> {PrimaryTreatmentTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Primary Treatment Type New:</b> {PrimaryTreatmentTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing SecondaryTreatmentType
                 string SecondaryTreatmentTypeText = infrastructure.SecondaryTreatmentType != null ? _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)infrastructure.SecondaryTreatmentType) : "---";
-                sbKML.Append($@"                <p><b>SecondaryTreatmentType:</b> {SecondaryTreatmentTypeText}");
+                sbKML.Append($@"                <p><b>Secondary Treatment Type:</b> {SecondaryTreatmentTypeText}");
                 if (infrastructure.SecondaryTreatmentTypeNew != null)
                 {
                     string SecondaryTreatmentTypeNewText = infrastructure.SecondaryTreatmentTypeNew != null ? _BaseEnumService.GetEnumText_SecondaryTreatmentTypeEnum((SecondaryTreatmentTypeEnum)infrastructure.SecondaryTreatmentTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>SecondaryTreatmentType New:</b> {SecondaryTreatmentTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Secondary Treatment Type New:</b> {SecondaryTreatmentTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing TertiaryTreatmentType
                 string TertiaryTreatmentTypeText = infrastructure.TertiaryTreatmentType != null ? _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)infrastructure.TertiaryTreatmentType) : "---";
-                sbKML.Append($@"                <p><b>TertiaryTreatmentType:</b> {TertiaryTreatmentTypeText}");
+                sbKML.Append($@"                <p><b>Tertiary Treatment Type:</b> {TertiaryTreatmentTypeText}");
                 if (infrastructure.TertiaryTreatmentTypeNew != null)
                 {
                     string TertiaryTreatmentTypeNewText = infrastructure.TertiaryTreatmentTypeNew != null ? _BaseEnumService.GetEnumText_TertiaryTreatmentTypeEnum((TertiaryTreatmentTypeEnum)infrastructure.TertiaryTreatmentTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>TertiaryTreatmentType New:</b> {TertiaryTreatmentTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Tertiary Treatment Type New:</b> {TertiaryTreatmentTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing DisinfectionType
                 string DisinfectionTypeText = infrastructure.DisinfectionType != null ? _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)infrastructure.DisinfectionType) : "---";
-                sbKML.Append($@"                <p><b>DisinfectionType:</b> {DisinfectionTypeText}");
+                sbKML.Append($@"                <p><b>Disinfection Type:</b> {DisinfectionTypeText}");
                 if (infrastructure.DisinfectionTypeNew != null)
                 {
                     string DisinfectionTypeNewText = infrastructure.DisinfectionTypeNew != null ? _BaseEnumService.GetEnumText_DisinfectionTypeEnum((DisinfectionTypeEnum)infrastructure.DisinfectionTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>DisinfectionType New:</b> {DisinfectionTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Disinfection Type New:</b> {DisinfectionTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing CollectionSystemType
                 string CollectionSystemTypeText = infrastructure.CollectionSystemType != null ? _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)infrastructure.CollectionSystemType) : "---";
-                sbKML.Append($@"                <p><b>CollectionSystemType:</b> {CollectionSystemTypeText}");
+                sbKML.Append($@"                <p><b>Collection System Type:</b> {CollectionSystemTypeText}");
                 if (infrastructure.CollectionSystemTypeNew != null)
                 {
                     string CollectionSystemTypeNewText = infrastructure.CollectionSystemTypeNew != null ? _BaseEnumService.GetEnumText_CollectionSystemTypeEnum((CollectionSystemTypeEnum)infrastructure.CollectionSystemTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>CollectionSystemType New:</b> {CollectionSystemTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Collection System Type New:</b> {CollectionSystemTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing AlarmSystemType
                 string AlarmSystemTypeText = infrastructure.AlarmSystemType != null ? _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)infrastructure.AlarmSystemType) : "---";
-                sbKML.Append($@"                <p><b>AlarmSystemType:</b> {AlarmSystemTypeText}");
+                sbKML.Append($@"                <p><b>Alarm System Type:</b> {AlarmSystemTypeText}");
                 if (infrastructure.AlarmSystemTypeNew != null)
                 {
                     string AlarmSystemTypeNewText = infrastructure.AlarmSystemTypeNew != null ? _BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)infrastructure.AlarmSystemTypeNew) : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>AlarmSystemType New:</b> {AlarmSystemTypeNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Alarm System Type New:</b> {AlarmSystemTypeNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing DesignFlow_m3_day
                 string DesignFlow_m3_dayText = infrastructure.DesignFlow_m3_day != null ? ((float)infrastructure.DesignFlow_m3_day).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>DesignFlow_m3_day:</b> {DesignFlow_m3_dayText}");
+                sbKML.Append($@"                <p><b>Design Flow (m3/day):</b> {DesignFlow_m3_dayText}");
                 if (infrastructure.DesignFlow_m3_dayNew != null)
                 {
                     string DesignFlow_m3_dayNewText = infrastructure.DesignFlow_m3_dayNew != null ? ((float)infrastructure.DesignFlow_m3_dayNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>DesignFlow_m3_day New:</b> {DesignFlow_m3_dayNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Design Flow (m3/day) New:</b> {DesignFlow_m3_dayNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing AverageFlow_m3_day
                 string AverageFlow_m3_dayText = infrastructure.AverageFlow_m3_day != null ? ((float)infrastructure.AverageFlow_m3_day).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>AverageFlow_m3_day:</b> {AverageFlow_m3_dayText}");
+                sbKML.Append($@"                <p><b>Average Flow (m3/day):</b> {AverageFlow_m3_dayText}");
                 if (infrastructure.AverageFlow_m3_dayNew != null)
                 {
                     string AverageFlow_m3_dayNewText = infrastructure.AverageFlow_m3_dayNew != null ? ((float)infrastructure.AverageFlow_m3_dayNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>AverageFlow_m3_day New:</b> {AverageFlow_m3_dayNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Average Flow (m3/day) New:</b> {AverageFlow_m3_dayNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing PeakFlow_m3_day
                 string PeakFlow_m3_dayText = infrastructure.PeakFlow_m3_day != null ? ((float)infrastructure.PeakFlow_m3_day).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>PeakFlow_m3_day:</b> {PeakFlow_m3_dayText}");
+                sbKML.Append($@"                <p><b>Peak Flow (m3/day):</b> {PeakFlow_m3_dayText}");
                 if (infrastructure.PeakFlow_m3_dayNew != null)
                 {
                     string PeakFlow_m3_dayNewText = infrastructure.PeakFlow_m3_dayNew != null ? ((float)infrastructure.PeakFlow_m3_dayNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PeakFlow_m3_day New:</b> {PeakFlow_m3_dayNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Peak Flow (m3/day) New:</b> {PeakFlow_m3_dayNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing PopServed
                 string PopServedText = infrastructure.PopServed != null ? ((int)infrastructure.PopServed).ToString() : "---";
-                sbKML.Append($@"                <p><b>PopServed:</b> {PopServedText}");
+                sbKML.Append($@"                <p><b>Pop Served:</b> {PopServedText}");
                 if (infrastructure.PopServedNew != null)
                 {
                     string PopServedNewText = infrastructure.PopServedNew != null ? ((int)infrastructure.PopServedNew).ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PopServed New:</b> {PopServedNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Pop Served New:</b> {PopServedNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing CanOverflow
                 string CanOverflow = infrastructure.CanOverflow != null && infrastructure.CanOverflow == true ? "true" : "false";
-                sbKML.Append($@"                <p><b>CanOverflow:</b> {CanOverflow}</p>");
+                sbKML.Append($@"                <p><b>Can Over flow:</b> {CanOverflow}</p>");
                 if (infrastructure.CanOverflowNew != null)
                 {
                     string CanOverflowNew = infrastructure.CanOverflowNew == true ? "true" : "false";
-                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Is Active New:</b> {CanOverflowNew}");
+                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Can Overflow New:</b> {CanOverflowNew}");
+                }
+                sbKML.AppendLine($@"</p>");
+
+                // doing ValveType
+                string ValveTypeText = infrastructure.ValveType != null ? _BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)infrastructure.ValveType) : "---";
+                sbKML.Append($@"                <p><b>Valve Type:</b> {ValveTypeText}");
+                if (infrastructure.ValveTypeNew != null)
+                {
+                    string ValveTypeNewText = infrastructure.ValveTypeNew != null ? _BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)infrastructure.ValveTypeNew) : "---";
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Valve Type New:</b> {ValveTypeNewText}");
+                }
+                sbKML.AppendLine($@"</p>");
+
+                // doing HasBackupPower
+                string HasBackupPower = infrastructure.HasBackupPower != null && infrastructure.HasBackupPower == true ? "true" : "false";
+                sbKML.Append($@"                <p><b>Has Backup Power:</b> {HasBackupPower}</p>");
+                if (infrastructure.HasBackupPowerNew != null)
+                {
+                    string HasBackupPowerNew = infrastructure.HasBackupPowerNew == true ? "true" : "false";
+                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Has Backup Power New:</b> {HasBackupPowerNew}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing PercFlowOfTotal
                 string PercFlowOfTotalText = infrastructure.PercFlowOfTotal != null ? ((float)infrastructure.PercFlowOfTotal).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>PercFlowOfTotal:</b> {PercFlowOfTotalText}");
+                sbKML.Append($@"                <p><b>Percentage Flow Of Total:</b> {PercFlowOfTotalText}");
                 if (infrastructure.PercFlowOfTotalNew != null)
                 {
                     string PercFlowOfTotalNewText = infrastructure.PercFlowOfTotalNew != null ? ((float)infrastructure.PercFlowOfTotalNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PercFlowOfTotal New:</b> {PercFlowOfTotalNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Percentage Flow Of Total New:</b> {PercFlowOfTotalNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing AverageDepth_m
                 string AverageDepth_mText = infrastructure.AverageDepth_m != null ? ((float)infrastructure.AverageDepth_m).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>AverageDepth_m:</b> {AverageDepth_mText}");
+                sbKML.Append($@"                <p><b>Average Depth (m):</b> {AverageDepth_mText}");
                 if (infrastructure.AverageDepth_mNew != null)
                 {
                     string AverageDepth_mNewText = infrastructure.AverageDepth_mNew != null ? ((float)infrastructure.AverageDepth_mNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>AverageDepth_m New:</b> {AverageDepth_mNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Average Depth (m) New:</b> {AverageDepth_mNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing NumberOfPorts
                 string NumberOfPortsText = infrastructure.NumberOfPorts != null ? ((int)infrastructure.NumberOfPorts).ToString() : "---";
-                sbKML.Append($@"                <p><b>NumberOfPorts:</b> {NumberOfPortsText}");
+                sbKML.Append($@"                <p><b>Number Of Ports:</b> {NumberOfPortsText}");
                 if (infrastructure.NumberOfPortsNew != null)
                 {
                     string NumberOfPortsNewText = infrastructure.NumberOfPortsNew != null ? ((int)infrastructure.NumberOfPortsNew).ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>NumberOfPorts New:</b> {NumberOfPortsNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Number Of Ports New:</b> {NumberOfPortsNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing PortDiameter_m
                 string PortDiameter_mText = infrastructure.PortDiameter_m != null ? ((float)infrastructure.PortDiameter_m).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>PortDiameter_m:</b> {PortDiameter_mText}");
+                sbKML.Append($@"                <p><b>Port Diameter (m):</b> {PortDiameter_mText}");
                 if (infrastructure.PortDiameter_mNew != null)
                 {
                     string PortDiameter_mNewText = infrastructure.PortDiameter_mNew != null ? ((float)infrastructure.PortDiameter_mNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PortDiameter_m New:</b> {PortDiameter_mNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Port Diameter (m) New:</b> {PortDiameter_mNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing PortSpacing_m
                 string PortSpacing_mText = infrastructure.PortSpacing_m != null ? ((float)infrastructure.PortSpacing_m).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>PortSpacing_m:</b> {PortSpacing_mText}");
+                sbKML.Append($@"                <p><b>PortSpacing (m):</b> {PortSpacing_mText}");
                 if (infrastructure.PortSpacing_mNew != null)
                 {
                     string PortSpacing_mNewText = infrastructure.PortSpacing_mNew != null ? ((float)infrastructure.PortSpacing_mNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PortSpacing_m New:</b> {PortSpacing_mNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Port Spacing (m) New:</b> {PortSpacing_mNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing PortElevation_m
                 string PortElevation_mText = infrastructure.PortElevation_m != null ? ((float)infrastructure.PortElevation_m).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>PortElevation_m:</b> {PortElevation_mText}");
+                sbKML.Append($@"                <p><b>Port Elevation (m):</b> {PortElevation_mText}");
                 if (infrastructure.PortElevation_mNew != null)
                 {
                     string PortElevation_mNewText = infrastructure.PortElevation_mNew != null ? ((float)infrastructure.PortElevation_mNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PortElevation_m New:</b> {PortElevation_mNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Port Elevation (m) New:</b> {PortElevation_mNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing VerticalAngle_deg
                 string VerticalAngle_degText = infrastructure.VerticalAngle_deg != null ? ((float)infrastructure.VerticalAngle_deg).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>VerticalAngle_deg:</b> {VerticalAngle_degText}");
+                sbKML.Append($@"                <p><b>Vertical Angle (deg):</b> {VerticalAngle_degText}");
                 if (infrastructure.VerticalAngle_degNew != null)
                 {
                     string VerticalAngle_degNewText = infrastructure.VerticalAngle_degNew != null ? ((float)infrastructure.VerticalAngle_degNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>VerticalAngle_deg New:</b> {VerticalAngle_degNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Vertical Angle (deg) New:</b> {VerticalAngle_degNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing HorizontalAngle_deg
                 string HorizontalAngle_degText = infrastructure.HorizontalAngle_deg != null ? ((float)infrastructure.HorizontalAngle_deg).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>HorizontalAngle_deg:</b> {HorizontalAngle_degText}");
+                sbKML.Append($@"                <p><b>Horizontal Angle (deg):</b> {HorizontalAngle_degText}");
                 if (infrastructure.HorizontalAngle_degNew != null)
                 {
                     string HorizontalAngle_degNewText = infrastructure.HorizontalAngle_degNew != null ? ((float)infrastructure.HorizontalAngle_degNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>HorizontalAngle_deg New:</b> {HorizontalAngle_degNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Horizontal Angle (deg) New:</b> {HorizontalAngle_degNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing DecayRate_per_day
                 string DecayRate_per_dayText = infrastructure.DecayRate_per_day != null ? ((float)infrastructure.DecayRate_per_day).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>DecayRate_per_day:</b> {DecayRate_per_dayText}");
+                sbKML.Append($@"                <p><b>Decay Rate (/day):</b> {DecayRate_per_dayText}");
                 if (infrastructure.DecayRate_per_dayNew != null)
                 {
                     string DecayRate_per_dayNewText = infrastructure.DecayRate_per_dayNew != null ? ((float)infrastructure.DecayRate_per_dayNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>DecayRate_per_day New:</b> {DecayRate_per_dayNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Decay Rate (/day) New:</b> {DecayRate_per_dayNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing NearFieldVelocity_m_s
                 string NearFieldVelocity_m_sText = infrastructure.NearFieldVelocity_m_s != null ? ((float)infrastructure.NearFieldVelocity_m_s).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>NearFieldVelocity_m_s:</b> {NearFieldVelocity_m_sText}");
+                sbKML.Append($@"                <p><b>Near Field Velocity (m/s):</b> {NearFieldVelocity_m_sText}");
                 if (infrastructure.NearFieldVelocity_m_sNew != null)
                 {
                     string NearFieldVelocity_m_sNewText = infrastructure.NearFieldVelocity_m_sNew != null ? ((float)infrastructure.NearFieldVelocity_m_sNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>NearFieldVelocity_m_s New:</b> {NearFieldVelocity_m_sNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Near Field Velocity (m/s) New:</b> {NearFieldVelocity_m_sNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing FarFieldVelocity_m_s
                 string FarFieldVelocity_m_sText = infrastructure.FarFieldVelocity_m_s != null ? ((float)infrastructure.FarFieldVelocity_m_s).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>FarFieldVelocity_m_s:</b> {FarFieldVelocity_m_sText}");
+                sbKML.Append($@"                <p><b>Far Field Velocity (m/s):</b> {FarFieldVelocity_m_sText}");
                 if (infrastructure.FarFieldVelocity_m_sNew != null)
                 {
                     string FarFieldVelocity_m_sNewText = infrastructure.FarFieldVelocity_m_sNew != null ? ((float)infrastructure.FarFieldVelocity_m_sNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>FarFieldVelocity_m_s New:</b> {FarFieldVelocity_m_sNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Far Field Velocity (m/s) New:</b> {FarFieldVelocity_m_sNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing ReceivingWaterSalinity_PSU
                 string ReceivingWaterSalinity_PSUText = infrastructure.ReceivingWaterSalinity_PSU != null ? ((float)infrastructure.ReceivingWaterSalinity_PSU).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>ReceivingWaterSalinity_PSU:</b> {ReceivingWaterSalinity_PSUText}");
+                sbKML.Append($@"                <p><b>ReceivingWater Salinity (PSU):</b> {ReceivingWaterSalinity_PSUText}");
                 if (infrastructure.ReceivingWaterSalinity_PSUNew != null)
                 {
                     string ReceivingWaterSalinity_PSUNewText = infrastructure.ReceivingWaterSalinity_PSUNew != null ? ((float)infrastructure.ReceivingWaterSalinity_PSUNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>ReceivingWaterSalinity_PSU New:</b> {ReceivingWaterSalinity_PSUNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Receiving Water Salinity (PSU) New:</b> {ReceivingWaterSalinity_PSUNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing ReceivingWaterTemperature_C
                 string ReceivingWaterTemperature_CText = infrastructure.ReceivingWaterTemperature_C != null ? ((float)infrastructure.ReceivingWaterTemperature_C).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>ReceivingWaterTemperature_C:</b> {ReceivingWaterTemperature_CText}");
+                sbKML.Append($@"                <p><b>Receiving Water Temperature (C):</b> {ReceivingWaterTemperature_CText}");
                 if (infrastructure.ReceivingWaterTemperature_CNew != null)
                 {
                     string ReceivingWaterTemperature_CNewText = infrastructure.ReceivingWaterTemperature_CNew != null ? ((float)infrastructure.ReceivingWaterTemperature_CNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>ReceivingWaterTemperature_C New:</b> {ReceivingWaterTemperature_CNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Receiving Water Temperature (C) New:</b> {ReceivingWaterTemperature_CNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing ReceivingWater_MPN_per_100ml
                 string ReceivingWater_MPN_per_100mlText = infrastructure.ReceivingWater_MPN_per_100ml != null ? ((int)infrastructure.ReceivingWater_MPN_per_100ml).ToString() : "---";
-                sbKML.Append($@"                <p><b>ReceivingWater_MPN_per_100ml:</b> {ReceivingWater_MPN_per_100mlText}");
+                sbKML.Append($@"                <p><b>Receiving Water (MPN / 100mL):</b> {ReceivingWater_MPN_per_100mlText}");
                 if (infrastructure.ReceivingWater_MPN_per_100mlNew != null)
                 {
                     string ReceivingWater_MPN_per_100mlNewText = infrastructure.ReceivingWater_MPN_per_100mlNew != null ? ((int)infrastructure.ReceivingWater_MPN_per_100mlNew).ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>ReceivingWater_MPN_per_100ml New:</b> {ReceivingWater_MPN_per_100mlNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Receiving Water (MPN / 100mL) New:</b> {ReceivingWater_MPN_per_100mlNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing DistanceFromShore_m
                 string DistanceFromShore_mText = infrastructure.DistanceFromShore_m != null ? ((float)infrastructure.DistanceFromShore_m).ToString("F1") : "---";
-                sbKML.Append($@"                <p><b>DistanceFromShore_m:</b> {DistanceFromShore_mText}");
+                sbKML.Append($@"                <p><b>Distance From Shore (m):</b> {DistanceFromShore_mText}");
                 if (infrastructure.DistanceFromShore_mNew != null)
                 {
                     string DistanceFromShore_mNewText = infrastructure.DistanceFromShore_mNew != null ? ((float)infrastructure.DistanceFromShore_mNew).ToString("F1") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>DistanceFromShore_m New:</b> {DistanceFromShore_mNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Distance From Shore (m) New:</b> {DistanceFromShore_mNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
                 // doing SeeOtherMunicipalityTVItemID
                 string SeeOtherMunicipalityTVItemIDText = infrastructure.SeeOtherMunicipalityTVItemID != null ? ((int)infrastructure.SeeOtherMunicipalityTVItemID).ToString() : "---";
-                sbKML.Append($@"                <p><b>SeeOtherMunicipalityTVItemID:</b> {SeeOtherMunicipalityTVItemIDText}");
+                sbKML.Append($@"                <p><b>See Other Municipality TVItemID:</b> {SeeOtherMunicipalityTVItemIDText}");
                 if (infrastructure.SeeOtherMunicipalityTVItemIDNew != null)
                 {
                     string SeeOtherMunicipalityTVItemIDNewText = infrastructure.SeeOtherMunicipalityTVItemIDNew != null ? ((int)infrastructure.SeeOtherMunicipalityTVItemIDNew).ToString() : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>SeeOtherMunicipalityTVItemID New:</b> {SeeOtherMunicipalityTVItemIDNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>See Other Municipality TVItemID New:</b> {SeeOtherMunicipalityTVItemIDNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
@@ -639,7 +659,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     infPumpTo = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == infrastructure.PumpsToTVItemID).FirstOrDefault();
                 }
                 string PumpsToTVItemIDText = infrastructure.PumpsToTVItemID != null ? (infPumpTo != null ? (infPumpTo.TVTextNew != null ? infPumpTo.TVTextNew : infPumpTo.TVText) : "---")  : "---";
-                sbKML.Append($@"                <p><b>PumpsToTVItemID:</b> {PumpsToTVItemIDText}");
+                sbKML.Append($@"                <p><b>Pumps To TVItemID:</b> {PumpsToTVItemIDText}");
                 if (infrastructure.PumpsToTVItemIDNew != null)
                 {
                     Infrastructure infPumpToNew = new Infrastructure();
@@ -648,7 +668,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         infPumpToNew = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == infrastructure.PumpsToTVItemIDNew).FirstOrDefault();
                     }
                     string PumpsToTVItemIDNewText = infrastructure.PumpsToTVItemIDNew != null ? (infPumpToNew != null ? (infPumpToNew.TVTextNew != null ? infPumpToNew.TVTextNew : infPumpToNew.TVText) : "---") : "---";
-                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>PumpsToTVItemID New:</b> {PumpsToTVItemIDNewText}");
+                    sbKML.Append($@"                nbsp;nbsp;nbsp;<b>Pumps To TVItemID New:</b> {PumpsToTVItemIDNewText}");
                 }
                 sbKML.AppendLine($@"</p>");
 
