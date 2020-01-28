@@ -221,6 +221,369 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "MUNICIPALITYLATLNG":
+                        {
+                            try
+                            {
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    municipalityDoc.Municipality.Lat = null;
+                                }
+                                else
+                                {
+                                    municipalityDoc.Municipality.Lat = float.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
+                                    municipalityDoc.Municipality.Lng = null;
+                                }
+                                else
+                                {
+                                    municipalityDoc.Municipality.Lng = float.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "CONTACT":
+                        {
+                            try
+                            {
+                                Contact contact = new Contact();
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    contact.FirstName = null;
+                                }
+                                else
+                                {
+                                    contact.FirstName = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
+                                    contact.Initial = null;
+                                }
+                                else
+                                {
+                                    contact.Initial = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
+                                {
+                                    contact.LastName = null;
+                                }
+                                else
+                                {
+                                    contact.LastName = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
+                                }
+
+                                municipalityDoc.Municipality.ContactList.Add(contact);
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "CONTACTNEW":
+                        {
+                            try
+                            {
+                                Contact lastContact = municipalityDoc.Municipality.ContactList[municipalityDoc.Municipality.ContactList.Count - 1];
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    lastContact.FirstNameNew = null;
+                                }
+                                else
+                                {
+                                    lastContact.FirstNameNew = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
+                                    lastContact.InitialNew = null;
+                                }
+                                else
+                                {
+                                    lastContact.InitialNew = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
+                                {
+                                    lastContact.LastNameNew = null;
+                                }
+                                else
+                                {
+                                    lastContact.LastNameNew = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "CONTACTTELEPHONE":
+                        {
+                            try
+                            {
+                                Telephone telephone = new Telephone();
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    telephone.TelType = null;
+                                }
+                                else
+                                {
+                                    telephone.TelType = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
+                                    telephone.Number = null;
+                                }
+                                else
+                                {
+                                    telephone.Number = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                }
+
+                                Contact lastContact = municipalityDoc.Municipality.ContactList[municipalityDoc.Municipality.ContactList.Count - 1];
+
+                                lastContact.TelephoneList.Add(telephone);
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "CONTACTTELEPHONENEW":
+                        {
+                            try
+                            {
+                                Contact lastContact = municipalityDoc.Municipality.ContactList[municipalityDoc.Municipality.ContactList.Count - 1];
+                                Telephone lastTelephone = lastContact.TelephoneList[lastContact.TelephoneList.Count - 1];
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    lastTelephone.TelTypeNew = null;
+                                }
+                                else
+                                {
+                                    lastTelephone.TelTypeNew = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
+                                    lastTelephone.NumberNew = null;
+                                }
+                                else
+                                {
+                                    lastTelephone.NumberNew = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "CONTACTEMAIL":
+                        {
+                            try
+                            {
+                                Email email = new Email();
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    email.EmailType = null;
+                                }
+                                else
+                                {
+                                    email.EmailType = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
+                                    email.EmailAddress = null;
+                                }
+                                else
+                                {
+                                    email.EmailAddress = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                }
+
+                                Contact lastContact = municipalityDoc.Municipality.ContactList[municipalityDoc.Municipality.ContactList.Count - 1];
+
+                                lastContact.EmailList.Add(email);
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "CONTACTEMAILNEW":
+                        {
+                            try
+                            {
+                                Contact lastContact = municipalityDoc.Municipality.ContactList[municipalityDoc.Municipality.ContactList.Count - 1];
+                                Email lastEmail = lastContact.EmailList[lastContact.EmailList.Count - 1];
+
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
+                                {
+                                    lastEmail.EmailTypeNew = null;
+                                }
+                                else
+                                {
+                                    lastEmail.EmailTypeNew = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
+                                    lastEmail.EmailAddressNew = null;
+                                }
+                                else
+                                {
+                                    lastEmail.EmailAddressNew = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "CONTACTADDRESS":
+                        {
+                            try
+                            {
+                                Address address = new Address();
+                                double tempDouble = 0;
+                                int temp = 0;
+                                if (double.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out tempDouble))
+                                {
+                                    address.AddressTVItemID = (int)tempDouble;
+                                }
+                                else
+                                {
+                                    address.AddressTVItemID = null;
+                                }
+                                address.Municipality = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                if (string.IsNullOrWhiteSpace(address.Municipality))
+                                {
+                                    address.Municipality = null;
+                                }
+                                if (!string.IsNullOrWhiteSpace(address.Municipality))
+                                {
+                                    address.Municipality = address.Municipality.Trim();
+                                }
+                                if (int.TryParse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1), out temp))
+                                {
+                                    address.AddressType = temp;
+                                }
+                                else
+                                {
+                                    address.AddressType = null;
+                                }
+                                address.StreetNumber = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
+                                if (string.IsNullOrWhiteSpace(address.StreetNumber))
+                                {
+                                    address.StreetNumber = null;
+                                }
+                                address.StreetName = LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1);
+                                if (string.IsNullOrWhiteSpace(address.StreetName))
+                                {
+                                    address.StreetName = null;
+                                }
+                                if (int.TryParse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1), out temp))
+                                {
+                                    address.StreetType = temp;
+                                }
+                                else
+                                {
+                                    address.StreetType = null;
+                                }
+                                address.PostalCode = LineTxt.Substring(pos7 + 1, pos8 - pos7 - 1);
+                                if (string.IsNullOrWhiteSpace(address.PostalCode))
+                                {
+                                    address.PostalCode = null;
+                                }
+
+                                Contact lastContact = municipalityDoc.Municipality.ContactList[municipalityDoc.Municipality.ContactList.Count - 1];
+                                lastContact.ContactAddress = address;
+
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
+                    case "CONTACTADDRESSNEW":
+                        {
+                            try
+                            {
+                                Address address = new Address();
+                                double tempDouble = 0;
+                                int temp = 0;
+                                if (double.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out tempDouble))
+                                {
+                                    address.AddressTVItemID = (int)temp;
+                                }
+                                else
+                                {
+                                    address.AddressTVItemID = null;
+                                }
+                                address.Municipality = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                if (string.IsNullOrWhiteSpace(address.Municipality))
+                                {
+                                    address.Municipality = null;
+                                }
+                                if (int.TryParse(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1), out temp))
+                                {
+                                    address.AddressType = temp;
+                                }
+                                else
+                                {
+                                    address.AddressType = null;
+                                }
+                                address.StreetNumber = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
+                                if (string.IsNullOrWhiteSpace(address.StreetNumber))
+                                {
+                                    address.StreetNumber = null;
+                                }
+                                address.StreetName = LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1);
+                                if (string.IsNullOrWhiteSpace(address.StreetName))
+                                {
+                                    address.StreetName = null;
+                                }
+                                if (int.TryParse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1), out temp))
+                                {
+                                    address.StreetType = temp;
+                                }
+                                else
+                                {
+                                    address.StreetType = null;
+                                }
+                                address.PostalCode = LineTxt.Substring(pos7 + 1, pos8 - pos7 - 1);
+                                if (string.IsNullOrWhiteSpace(address.PostalCode))
+                                {
+                                    address.PostalCode = null;
+                                }
+
+                                Contact lastContact = municipalityDoc.Municipality.ContactList[municipalityDoc.Municipality.ContactList.Count - 1];
+                                lastContact.ContactAddressNew = address;
+                            }
+                            catch (Exception)
+                            {
+                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
+                                return false;
+                            }
+                        }
+                        break;
                     case "-----":
                         {
                             try

@@ -34,6 +34,84 @@ namespace CSSPPolSourceSiteInputToolHelper
             sb.AppendLine($"PROVINCEMUNICIPALITIES\t{ MunicipalityListText }");
 
             sb.AppendLine($"MUNICIPALITY\t{municipalityDoc.Municipality.MunicipalityTVItemID}\t{municipalityDoc.Municipality.MunicipalityName}\t");
+
+            string LatText2 = municipalityDoc.Municipality.Lat == null ? "" : ((float)municipalityDoc.Municipality.Lat).ToString("F5");
+            string LngText2 = municipalityDoc.Municipality.Lng == null ? "" : ((float)municipalityDoc.Municipality.Lng).ToString("F5");
+            sb.AppendLine($"MUNICIPALITYLATLNG\t{LatText2}\t{LngText2}\t");
+
+            foreach (Contact contact in municipalityDoc.Municipality.ContactList)
+            {
+                sb.AppendLine($"CONTACT\t{contact.FirstName}\t{contact.Initial}\t{contact.LastName}\t");
+
+                if (contact.FirstNameNew != null || contact.InitialNew != null || contact.LastNameNew != null)
+                {
+                    string FirstName = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
+                    string Initial = contact.InitialNew != null ? contact.InitialNew : contact.Initial;
+                    string LastName = contact.LastNameNew != null ? contact.LastNameNew : contact.FirstName;
+                    sb.AppendLine($"CONTACTNEW\t{FirstName}\t{Initial}\t{LastName}\t");
+                }
+
+                foreach (Telephone telephone in contact.TelephoneList)
+                {
+                    sb.AppendLine($"CONTACTTELEPHONE\t{telephone.TelType}\t{telephone.Number}\t");
+
+                    if (telephone.TelTypeNew != null || telephone.NumberNew != null)
+                    {
+                        int? TelType = telephone.TelTypeNew != null ? telephone.TelTypeNew : telephone.TelType;
+                        string Number = telephone.NumberNew != null ? telephone.NumberNew : telephone.Number;
+                        sb.AppendLine($"CONTACTTELEPHONENEW\t{TelType}\t{Number}\t");
+                    }
+                }
+
+                foreach (Email email in contact.EmailList)
+                {
+                    sb.AppendLine($"CONTACTEMAIL\t{email.EmailType}\t{email.EmailAddress}\t");
+
+                    if (email.EmailTypeNew != null || email.EmailAddressNew != null)
+                    {
+                        int? EmailType = email.EmailTypeNew != null ? email.EmailTypeNew : email.EmailType;
+                        string EmailAddress = email.EmailAddressNew != null ? email.EmailAddressNew : email.EmailAddress;
+                        sb.AppendLine($"CONTACTEMAILNEW\t{EmailType}\t{EmailAddress}\t");
+                    }
+                }
+
+                if (contact.ContactAddress != null)
+                {
+                    if (contact.ContactAddress.AddressTVItemID != null)
+                    {
+                        string AddressTVItemID = contact.ContactAddress.AddressTVItemID == null ? "-999999999" : contact.ContactAddress.AddressTVItemID.ToString();
+                        string Municipality = contact.ContactAddress.Municipality == null ? "" : contact.ContactAddress.Municipality;
+                        string AddressType = contact.ContactAddress.AddressType == null ? "" : ((int)contact.ContactAddress.AddressType).ToString();
+                        string StreetNumber = contact.ContactAddress.StreetNumber == null ? "" : contact.ContactAddress.StreetNumber;
+                        string StreetName = contact.ContactAddress.StreetName == null ? "" : contact.ContactAddress.StreetName;
+                        string StreetType = contact.ContactAddress.StreetType == null ? "" : ((int)contact.ContactAddress.StreetType).ToString();
+                        string PostalCode = contact.ContactAddress.PostalCode == null ? "" : contact.ContactAddress.PostalCode;
+
+                        sb.AppendLine($"CONTACTADDRESS\t{contact.ContactAddress.AddressTVItemID}\t{contact.ContactAddress.Municipality}\t{((int)contact.ContactAddress.AddressType).ToString()}\t{contact.ContactAddress.StreetNumber}\t{contact.ContactAddress.StreetName}\t{((int)contact.ContactAddress.StreetType).ToString()}\t{contact.ContactAddress.PostalCode}\t");
+                    }
+                }
+
+                if (contact.ContactAddressNew.AddressTVItemID != null)
+                {
+                    if (contact.ContactAddressNew.Municipality != null
+                        || contact.ContactAddressNew.AddressType != null
+                        || contact.ContactAddressNew.StreetNumber != null
+                        || contact.ContactAddressNew.StreetName != null
+                        || contact.ContactAddressNew.StreetType != null
+                        || contact.ContactAddressNew.PostalCode != null)
+                    {
+                        string AddressTVItemID = contact.ContactAddressNew.AddressTVItemID.ToString();
+                        string Municipality = contact.ContactAddressNew.Municipality == null ? "" : contact.ContactAddressNew.Municipality;
+                        string AddressType = contact.ContactAddressNew.AddressType == null ? "" : ((int)contact.ContactAddressNew.AddressType).ToString();
+                        string StreetNumber = contact.ContactAddressNew.StreetNumber == null ? "" : contact.ContactAddressNew.StreetNumber;
+                        string StreetName = contact.ContactAddressNew.StreetName == null ? "" : contact.ContactAddressNew.StreetName;
+                        string StreetType = contact.ContactAddressNew.StreetType == null ? "" : ((int)contact.ContactAddressNew.StreetType).ToString();
+                        string PostalCode = contact.ContactAddressNew.PostalCode == null ? "" : contact.ContactAddressNew.PostalCode;
+                        sb.AppendLine($"CONTACTADDRESSNEW\t{AddressTVItemID}\t{Municipality}\t{AddressType}\t{StreetNumber}\t{StreetName}\t{StreetType}\t{PostalCode}\t");
+                    }
+                }
+            }
+
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
             {
                 sb.AppendLine($"-----\t-------------------------------------------------\t");

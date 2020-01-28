@@ -36,6 +36,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public bool IsReading = false;
         public bool IsAdmin = false;
         public bool IsPolSourceSite = true;
+        public bool IsContact = false;
         public bool ShowPolSourceSiteDetails = true;
         public bool ShowOnlyPictures = false;
         public bool ShowOnlyIssues = false;
@@ -74,6 +75,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public SubsectorDoc subsectorDoc { get; set; }
         public MunicipalityDoc municipalityDoc { get; set; }
         public PSS CurrentPSS { get; set; }
+        public Contact CurrentContact { get; set; }
         public Infrastructure CurrentInfrastructure { get; set; }
         public BaseEnumService _BaseEnumService { get; set; }
         public BaseModelService _BaseModelService { get; set; }
@@ -238,6 +240,15 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             return ObsDateIDNumberList;
+        }
+        public void ReDrawContact()
+        {
+            IsReading = true;
+            ShowContact();
+            UpdatePolSourceSitePanelColor();
+            IsReading = false;
+
+            PanelViewAndEdit.Focus();
         }
         public void ReDrawInfrastructure()
         {

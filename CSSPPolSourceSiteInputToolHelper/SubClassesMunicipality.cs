@@ -15,13 +15,50 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int ProvinceTVItemID { get; set; } = 0;
         public Municipality Municipality { get; set; } = null;
         public List<MunicipalityIDNumber> MunicipalityIDNumberList { get; set; } = new List<MunicipalityIDNumber>();
-
     }
     public class Municipality
     {
         public int? MunicipalityTVItemID { get; set; } = null;
         public string MunicipalityName { get; set; } = null;
+        public float? Lat { get; set; } = null;
+        public float? Lng { get; set; } = null;
         public List<Infrastructure> InfrastructureList { get; set; } = new List<Infrastructure>();
+        public List<Contact> ContactList { get; set; } = new List<Contact>();
+    }
+    public class Contact
+    {
+        public int? ContactTVItemID { get; set; }
+        public bool? IsActive { get; set; } = null;
+        public bool? IsActiveNew { get; set; } = null;
+        public string FirstName { get; set; } = null;
+        public string FirstNameNew { get; set; } = null;
+        public string Initial { get; set; } = null;
+        public string InitialNew { get; set; } = null;
+        public string LastName { get; set; } = null;
+        public string LastNameNew { get; set; } = null;
+        public int? Title { get; set; } = null;
+        public int? TitleNew { get; set; } = null;
+        public List<Telephone> TelephoneList { get; set; } = new List<Telephone>();
+        public List<Email> EmailList { get; set; } = new List<Email>();
+        public Address ContactAddress { get; set; } = new Address();
+        public Address ContactAddressNew { get; set; } = new Address();
+    }
+
+    public class Telephone
+    {
+        public int? TelTVItemID { get; set; } = null;
+        public int? TelType { get; set; } = null;
+        public int? TelTypeNew { get; set; } = null;
+        public string Number { get; set; } = null;
+        public string NumberNew { get; set; } = null;
+    }
+    public class Email
+    {
+        public int? EmailTVItemID { get; set; } = null;
+        public int? EmailType { get; set; } = null;
+        public int? EmailTypeNew { get; set; } = null;
+        public string EmailAddress { get; set; } = null;
+        public string EmailAddressNew { get; set; } = null;
     }
     public class Infrastructure
     {

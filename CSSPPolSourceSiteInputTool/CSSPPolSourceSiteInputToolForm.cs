@@ -152,6 +152,15 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.SaveMunicipalityTextFile();
             polSourceSiteInputToolHelper.RedrawInfrastructureList();
         }
+        private void butShowContacts_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void butShowInfrastructures_Click(object sender, EventArgs e)
+        {
+
+        }
         private void butViewKMLFile_Click(object sender, EventArgs e)
         {
             if (polSourceSiteInputToolHelper.IsDirty)
@@ -201,6 +210,7 @@ namespace CSSPPolSourceSiteInputTool
 
             polSourceSiteInputToolHelper.AdminEmail = "";
 
+            panelShowContact.Visible = false;
 
             if (checkBoxShowAdmin.Checked)
             {
@@ -239,6 +249,11 @@ namespace CSSPPolSourceSiteInputTool
             }
             else
             {
+                if (checkBoxShowInfrastructure.Checked)
+                {
+                    panelShowContact.Visible = true;
+                }
+
                 checkBoxMoreInfo.Checked = false;
                 checkBoxEditing.Checked = false;
                 radioButtonDetails.Checked = true;
@@ -308,18 +323,31 @@ namespace CSSPPolSourceSiteInputTool
         {
             if (polSourceSiteInputToolHelper.IsDirty)
             {
-                if (checkBoxShowInfrastructure.Checked)
+                if (panelAddNewInfrastructure.Visible)
                 {
-                    MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
-                    checkBoxShowInfrastructure.Checked = false;
+                    if (!checkBoxShowInfrastructure.Checked)
+                    {
+                        MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                        checkBoxShowInfrastructure.Checked = true;
+                    }
+                }
+                else
+                {
+                    if (checkBoxShowInfrastructure.Checked)
+                    {
+                        MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                        checkBoxShowInfrastructure.Checked = false;
+                    }
                 }
                 return;
             }
 
             panelPolSourceSite.Controls.Clear();
 
+            checkBoxShowContact.Checked = false;
             if (checkBoxShowInfrastructure.Checked)
             {
+                panelShowContact.Visible = true;
                 checkBoxMoreInfo.Visible = false;
                 if (radioButtonIssues.Checked)
                 {
@@ -329,6 +357,7 @@ namespace CSSPPolSourceSiteInputTool
             }
             else
             {
+                panelShowContact.Visible = false;
                 checkBoxMoreInfo.Visible = true;
                 ShowPollutionSourceSiteParts();
             }
@@ -424,6 +453,10 @@ namespace CSSPPolSourceSiteInputTool
             {
                 polSourceSiteInputToolHelper.ReDrawInfrastructure();
             }
+        }
+        private void checkBoxShowContact_CheckedChanged(object sender, EventArgs e)
+        {
+            ShowInfrastructureParts();
         }
         private void checkBoxWrittenDescription_CheckedChanged(object sender, EventArgs e)
         {
@@ -792,6 +825,7 @@ namespace CSSPPolSourceSiteInputTool
             panelPolSourceSite.Controls.Clear();
             panelAddNewPollutionSourceSite.Visible = false;
             panelAddNewInfrastructure.Visible = false;
+            panelAddNewContact.Visible = false;
             panelCreateMunicipalityDirectory.Visible = false;
             panelCreateSubsectorDirectory.Visible = false;
             panelShowInputOptions.Visible = false;
@@ -867,6 +901,7 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.InfrastructureTVItemID = 0;
             panelAddNewPollutionSourceSite.Visible = false;
             panelAddNewInfrastructure.Visible = false;
+            panelAddNewContact.Visible = false;
             panelCreateMunicipalityDirectory.Visible = false;
             panelCreateSubsectorDirectory.Visible = false;
             panelShowInputOptions.Visible = !polSourceSiteInputToolHelper.IsAdmin;
@@ -948,13 +983,30 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 else
                 {
-                    panelAddNewInfrastructure.Visible = true;
+                    if (checkBoxShowContact.Checked)
+                    {
+                        panelAddNewContact.Visible = true;
+                        panelAddNewInfrastructure.Visible = false;
+                    }
+                    else
+                    {
+                        panelAddNewInfrastructure.Visible = true;
+                        panelAddNewContact.Visible = false;
+                    }
                     radioButtonIssues.Visible = false;
 
                     polSourceSiteInputToolHelper.CurrentSubsectorName = null;
                     polSourceSiteInputToolHelper.CurrentMunicipalityName = (string)comboBoxSubsectorOrMunicipality.SelectedItem;
-                    polSourceSiteInputToolHelper.RedrawInfrastructureList();
-                    polSourceSiteInputToolHelper.ReDrawInfrastructure();
+                    if (checkBoxShowContact.Checked)
+                    {
+                        polSourceSiteInputToolHelper.RedrawContactList();
+                        polSourceSiteInputToolHelper.ReDrawContact();
+                    }
+                    else
+                    {
+                        polSourceSiteInputToolHelper.RedrawInfrastructureList();
+                        polSourceSiteInputToolHelper.ReDrawInfrastructure();
+                    }
                     butViewKMLFile.Enabled = true;
                 }
             }
@@ -1617,14 +1669,32 @@ namespace CSSPPolSourceSiteInputTool
                         }
                         else
                         {
-                            panelAddNewInfrastructure.Visible = true;
+                            if (checkBoxShowContact.Checked)
+                            {
+                                panelAddNewContact.Visible = true;
+                                panelAddNewInfrastructure.Visible = false;
+                            }
+                            else
+                            {
+                                panelAddNewInfrastructure.Visible = true;
+                                panelAddNewContact.Visible = false;
+                            }
                         }
                         comboBoxSubsectorOrMunicipality.SelectedIndex = 0;
                     }
                     else
                     {
                         panelCreateMunicipalityDirectory.Visible = false;
-                        panelAddNewInfrastructure.Visible = false;
+                        if (checkBoxShowContact.Checked)
+                        {
+                            panelAddNewContact.Visible = true;
+                            panelAddNewInfrastructure.Visible = false;
+                        }
+                        else
+                        {
+                            panelAddNewInfrastructure.Visible = true;
+                            panelAddNewContact.Visible = false;
+                        }
                         polSourceSiteInputToolHelper.DrawPanelInfrastructures();
                     }
                 }
@@ -1707,6 +1777,7 @@ namespace CSSPPolSourceSiteInputTool
         {
             panelAddNewPollutionSourceSite.Visible = false;
             panelAddNewInfrastructure.Visible = false;
+            panelAddNewContact.Visible = false;
             panelCreateSubsectorDirectory.Visible = false;
             panelCreateMunicipalityDirectory.Visible = false;
 
@@ -1723,6 +1794,7 @@ namespace CSSPPolSourceSiteInputTool
 
             panelAddNewPollutionSourceSite.Visible = false;
             panelAddNewInfrastructure.Visible = false;
+            panelAddNewContact.Visible = false;
             panelCreateSubsectorDirectory.Visible = false;
             panelCreateMunicipalityDirectory.Visible = false;
 
@@ -1763,7 +1835,16 @@ namespace CSSPPolSourceSiteInputTool
             }
             else
             {
-                panelAddNewInfrastructure.Visible = true;
+                if (checkBoxShowContact.Checked)
+                {
+                    panelAddNewContact.Visible = true;
+                    panelAddNewInfrastructure.Visible = false;
+                }
+                else
+                {
+                    panelAddNewInfrastructure.Visible = true;
+                    panelAddNewContact.Visible = false;
+                }
 
                 comboBoxSubsectorOrMunicipality.ValueMember = null;
                 comboBoxSubsectorOrMunicipality.DisplayMember = null;
@@ -1830,7 +1911,7 @@ namespace CSSPPolSourceSiteInputTool
             panelShowInputOptions.Visible = false;
             radioButtonShowMap.Visible = false;
             checkBoxMoreInfo.Visible = false;
-
+            panelShowContact.Visible = false;
 
             polSourceSiteInputToolHelper = new PolSourceSiteInputToolHelper(panelViewAndEdit, panelPolSourceSite, panelMunicipalities, panelStreetType, panelShowInputOptions, panelSubsectorOrMunicipality, LanguageEnum.en);
             polSourceSiteInputToolHelper.UpdateStatus += polSourceSiteInputToolHelper_UpdateStatus;
@@ -2019,5 +2100,6 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.FixImgDir();
             butFixImgDir.Text = "Fix Img Dir";
         }
+
     }
 }

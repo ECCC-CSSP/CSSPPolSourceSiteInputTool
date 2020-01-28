@@ -131,13 +131,165 @@ namespace CSSPPolSourceSiteInputToolHelper
             sbKML.AppendLine($@"		</Pair>");
             sbKML.AppendLine($@"	</StyleMap>");
 
+            sbKML.AppendLine($@"		<Placemark>");
+            sbKML.AppendLine($@"			<name>{municipalityDoc.Municipality.MunicipalityName} --- Contact(s)</name>");
+            sbKML.AppendLine($@"            <description><![CDATA[");
+            sbKML.AppendLine($@"            <h2>{municipalityDoc.Municipality.MunicipalityName} --- Contact(s)</h2><br />");
+            foreach (Contact contact in municipalityDoc.Municipality.ContactList.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
+            {
+                if (contact.FirstNameNew != null || contact.InitialNew != null || contact.LastNameNew != null)
+                {
+                    string FirstName = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
+                    string Initial = contact.InitialNew != null ? contact.InitialNew : contact.Initial;
+                    string LastName = contact.LastNameNew != null ? contact.LastNameNew : contact.LastName;
+                    sbKML.AppendLine($@"                <h3>Contact: {FirstName} {Initial}, {LastName}</h3>");
+                }
+                else
+                {
+                    sbKML.AppendLine($@"                <h3>Contact: {contact.FirstName} {contact.Initial}, {contact.LastName}</h3>");
+                }
+                sbKML.AppendLine($@"                <blockquote>");
+
+                // doing IsActive
+                string IsActive2 = contact.IsActive != null && contact.IsActive == true ? "true" : "false";
+                sbKML.Append($@"                <p><b>IsActive:</b> {IsActive2}</p>");
+                if (contact.IsActiveNew != null)
+                {
+                    string IsActiveNew2 = contact.IsActiveNew == true ? "true" : "false";
+                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Is Active New:</b> {IsActiveNew2}");
+                }
+                sbKML.AppendLine($@"</p>");
+
+                // doing FirstName, Initial and LastName
+                if (contact.FirstNameNew != null || contact.InitialNew != null || contact.LastNameNew != null)
+                {
+                    string FirstName = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
+                    string Initial = contact.InitialNew != null ? contact.InitialNew : contact.Initial;
+                    string LastName = contact.LastNameNew != null ? contact.LastNameNew : contact.LastName;
+                    sbKML.AppendLine($@"                <p><b>Contact:</b> {FirstName} {Initial}, {LastName}");
+                }
+                else
+                {
+                    sbKML.AppendLine($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Contact New:</b> {contact.FirstName} {contact.Initial}, {contact.LastName}");
+                }
+                sbKML.AppendLine($@"</p>");
+
+                // doing Title
+                sbKML.Append($@"                <p><b>Title:</b> {contact.Title}</p>");
+                if (contact.TitleNew != null)
+                {
+                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Title New:</b> {contact.TitleNew}");
+                }
+                sbKML.AppendLine($@"</p>");
+
+                // doing Telephones
+                sbKML.AppendLine($@"                <blockquote>");
+                sbKML.AppendLine($@"                <h4>Telephones</h3>");
+
+                foreach (Telephone telephone in contact.TelephoneList)
+                {
+                    // doing TelType
+                    sbKML.Append($@"                <p><b>Telephone Type:</b> {telephone.TelType}</p>");
+                    if (telephone.TelTypeNew != null)
+                    {
+                        sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Telephone Type New:</b> {telephone.TelTypeNew}");
+                    }
+                    sbKML.AppendLine($@"</p>");
+
+                    // doing Number
+                    sbKML.Append($@"                <p><b>Number:</b> {telephone.Number}</p>");
+                    if (telephone.NumberNew != null)
+                    {
+                        sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Telephone Number New:</b> {telephone.NumberNew}");
+                    }
+                    sbKML.AppendLine($@"</p>");
+                    sbKML.AppendLine($@"<p>&nbsp;</p>");
+                }
+                sbKML.AppendLine($@"                </blockquote>");
+
+                // doing Emails
+                sbKML.AppendLine($@"                <blockquote>");
+                sbKML.AppendLine($@"                <h4>Emails</h3>");
+
+                foreach (Email email in contact.EmailList)
+                {
+                    // doing EmailType
+                    sbKML.Append($@"                <p><b>Email Type:</b> {email.EmailType}</p>");
+                    if (email.EmailTypeNew != null)
+                    {
+                        sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Email Type New:</b> {email.EmailTypeNew}");
+                    }
+                    sbKML.AppendLine($@"</p>");
+
+                    // doing EmailText
+                    sbKML.Append($@"                <p><b>Number:</b> {email.EmailText}</p>");
+                    if (email.EmailTextNew != null)
+                    {
+                        sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Telephone Number New:</b> {email.EmailTextNew}");
+                    }
+                    sbKML.AppendLine($@"</p>");
+                    sbKML.AppendLine($@"<p>&nbsp;</p>");
+                }
+                sbKML.AppendLine($@"                </blockquote>");
+
+                if (contact.ContactAddress != null)
+                {
+                    string StreetNumber = contact.ContactAddress.StreetNumber == null ? "" : contact.ContactAddress.StreetNumber + " ";
+                    string StreetName = contact.ContactAddress.StreetName == null ? "" : contact.ContactAddress.StreetName + " ";
+                    string StreetType = contact.ContactAddress.StreetType == null ? "" : _BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)contact.ContactAddress.StreetType) + ", ";
+                    string Municipality = contact.ContactAddress.Municipality == null ? "" : contact.ContactAddress.Municipality + ", ";
+                    string PostalCode = contact.ContactAddress.PostalCode == null ? "" : contact.ContactAddress.PostalCode;
+
+                    string Address = $"{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}".Trim();
+                    if (string.IsNullOrWhiteSpace(Address))
+                    {
+                        sbKML.AppendLine($@"                <p>Address: ---</p>");
+                    }
+                    else
+                    {
+                        sbKML.AppendLine($@"                <p>Address: {StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}</p>");
+                    }
+                }
+                if (contact.ContactAddressNew != null)
+                {
+                    string StreetNumber = contact.ContactAddressNew.StreetNumber == null ? "" : contact.ContactAddressNew.StreetNumber + " ";
+                    string StreetName = contact.ContactAddressNew.StreetName == null ? "" : contact.ContactAddressNew.StreetName + " ";
+                    string StreetType = contact.ContactAddressNew.StreetType == null ? "" : _BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)contact.ContactAddressNew.StreetType) + ", ";
+                    string Municipality = contact.ContactAddressNew.Municipality == null ? "" : contact.ContactAddressNew.Municipality + ", ";
+                    string PostalCode = contact.ContactAddressNew.PostalCode == null ? "" : contact.ContactAddressNew.PostalCode;
+
+                    string Address = $"{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}".Trim();
+                    if (string.IsNullOrWhiteSpace(Address))
+                    {
+                        sbKML.AppendLine($@"                <p>New Address: ---</p>");
+                    }
+                    else
+                    {
+                        sbKML.AppendLine($@"                <p>New Address: {StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}</p>");
+                    }
+                }
+
+                sbKML.AppendLine($@"                </blockquote>");
+
+            }
+            sbKML.AppendLine($@"");
+            sbKML.AppendLine($@"");
+            sbKML.AppendLine($@"");
+            sbKML.AppendLine($@"            ]]>");
+            sbKML.AppendLine($@"            </description>");
+            sbKML.AppendLine($@"			<Point>");
+            sbKML.AppendLine($@"				<coordinates>{municipalityDoc.Municipality.Lng},{municipalityDoc.Municipality.Lat},0</coordinates>");
+            sbKML.AppendLine($@"			</Point>");
+            sbKML.AppendLine($@"		</Placemark>");
+
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList.OrderBy(c => c.TVText))
             {
                 sbKML.AppendLine($@"		<Placemark>");
                 string InfrastructureNameText = string.IsNullOrWhiteSpace(infrastructure.TVTextNew) ? infrastructure.TVText : infrastructure.TVTextNew;
                 sbKML.AppendLine($@"			<name>{InfrastructureNameText}</name>");
                 sbKML.AppendLine($@"            <description><![CDATA[");
-                sbKML.AppendLine($@"            {InfrastructureNameText} --- ({infrastructure.InfrastructureTVItemID.ToString()})<br />");
+                sbKML.AppendLine($@"            <h2>{municipalityDoc.Municipality.MunicipalityName})</h2>");
+                sbKML.AppendLine($@"            <h2>{InfrastructureNameText} --- ({infrastructure.InfrastructureTVItemID.ToString()})</h2>");
                 if (!string.IsNullOrWhiteSpace(infrastructure.TVTextNew))
                 {
                     sbKML.AppendLine($@"            Old Name: {infrastructure.TVTextNew}<br />");
@@ -182,7 +334,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 sbKML.AppendLine($@"                <h3>Details</h3>");
                 sbKML.AppendLine($@"                <blockquote>");
-                
+
                 // doing IsActive
                 string IsActive = infrastructure.IsActive != null && infrastructure.IsActive == true ? "true" : "false";
                 sbKML.Append($@"                <p><b>IsActive:</b> {IsActive}</p>");
@@ -658,7 +810,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     infPumpTo = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == infrastructure.PumpsToTVItemID).FirstOrDefault();
                 }
-                string PumpsToTVItemIDText = infrastructure.PumpsToTVItemID != null ? (infPumpTo != null ? (infPumpTo.TVTextNew != null ? infPumpTo.TVTextNew : infPumpTo.TVText) : "---")  : "---";
+                string PumpsToTVItemIDText = infrastructure.PumpsToTVItemID != null ? (infPumpTo != null ? (infPumpTo.TVTextNew != null ? infPumpTo.TVTextNew : infPumpTo.TVText) : "---") : "---";
                 sbKML.Append($@"                <p><b>Pumps To TVItemID:</b> {PumpsToTVItemIDText}");
                 if (infrastructure.PumpsToTVItemIDNew != null)
                 {
