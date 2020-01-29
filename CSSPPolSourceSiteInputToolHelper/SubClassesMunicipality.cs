@@ -49,8 +49,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int? TelTVItemID { get; set; } = null;
         public int? TelType { get; set; } = null;
         public int? TelTypeNew { get; set; } = null;
-        public string Number { get; set; } = null;
-        public string NumberNew { get; set; } = null;
+        public string TelNumber { get; set; } = null;
+        public string TelNumberNew { get; set; } = null;
     }
     public class Email
     {

@@ -53,25 +53,27 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 foreach (Telephone telephone in contact.TelephoneList)
                 {
-                    sb.AppendLine($"CONTACTTELEPHONE\t{telephone.TelType}\t{telephone.Number}\t");
+                    sb.AppendLine($"CONTACTTELEPHONE\t{telephone.TelTVItemID}\t{telephone.TelType}\t{telephone.TelNumber}\t");
 
-                    if (telephone.TelTypeNew != null || telephone.NumberNew != null)
+                    if (telephone.TelTypeNew != null || telephone.TelNumberNew != null)
                     {
+                        int? TelTVItemID = telephone.TelTVItemID;
                         int? TelType = telephone.TelTypeNew != null ? telephone.TelTypeNew : telephone.TelType;
-                        string Number = telephone.NumberNew != null ? telephone.NumberNew : telephone.Number;
-                        sb.AppendLine($"CONTACTTELEPHONENEW\t{TelType}\t{Number}\t");
+                        string Number = telephone.TelNumberNew != null ? telephone.TelNumberNew : telephone.TelNumber;
+                        sb.AppendLine($"CONTACTTELEPHONENEW\t{TelTVItemID}\t{TelType}\t{Number}\t");
                     }
                 }
 
                 foreach (Email email in contact.EmailList)
                 {
-                    sb.AppendLine($"CONTACTEMAIL\t{email.EmailType}\t{email.EmailAddress}\t");
+                    sb.AppendLine($"CONTACTEMAIL\t{email.EmailTVItemID}\t{email.EmailType}\t{email.EmailAddress}\t");
 
                     if (email.EmailTypeNew != null || email.EmailAddressNew != null)
                     {
+                        int? EmailTVItemID = email.EmailTVItemID;
                         int? EmailType = email.EmailTypeNew != null ? email.EmailTypeNew : email.EmailType;
                         string EmailAddress = email.EmailAddressNew != null ? email.EmailAddressNew : email.EmailAddress;
-                        sb.AppendLine($"CONTACTEMAILNEW\t{EmailType}\t{EmailAddress}\t");
+                        sb.AppendLine($"CONTACTEMAILNEW\t{EmailTVItemID}\t{EmailType}\t{EmailAddress}\t");
                     }
                 }
 

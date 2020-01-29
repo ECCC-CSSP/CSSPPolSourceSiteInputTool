@@ -334,19 +334,27 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 Telephone telephone = new Telephone();
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
+                                    telephone.TelTVItemID = null;
+                                }
+                                else
+                                {
+                                    telephone.TelTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
                                     telephone.TelType = null;
                                 }
                                 else
                                 {
-                                    telephone.TelType = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    telephone.TelType = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
                                 {
-                                    telephone.Number = null;
+                                    telephone.TelNumber = null;
                                 }
                                 else
                                 {
-                                    telephone.Number = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                    telephone.TelNumber = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 }
 
                                 Contact lastContact = municipalityDoc.Municipality.ContactList[municipalityDoc.Municipality.ContactList.Count - 1];
@@ -369,19 +377,27 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
+                                    lastTelephone.TelTVItemID = null;
+                                }
+                                else
+                                {
+                                    lastTelephone.TelTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
                                     lastTelephone.TelTypeNew = null;
                                 }
                                 else
                                 {
-                                    lastTelephone.TelTypeNew = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    lastTelephone.TelTypeNew = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
                                 {
-                                    lastTelephone.NumberNew = null;
+                                    lastTelephone.TelNumberNew = null;
                                 }
                                 else
                                 {
-                                    lastTelephone.NumberNew = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                    lastTelephone.TelNumberNew = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 }
                             }
                             catch (Exception)
@@ -398,19 +414,27 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 Email email = new Email();
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
+                                    email.EmailTVItemID = null;
+                                }
+                                else
+                                {
+                                    email.EmailTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
                                     email.EmailType = null;
                                 }
                                 else
                                 {
-                                    email.EmailType = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    email.EmailType = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
                                 {
                                     email.EmailAddress = null;
                                 }
                                 else
                                 {
-                                    email.EmailAddress = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                    email.EmailAddress = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 }
 
                                 Contact lastContact = municipalityDoc.Municipality.ContactList[municipalityDoc.Municipality.ContactList.Count - 1];
@@ -433,19 +457,27 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
+                                    lastEmail.EmailTVItemID = null;
+                                }
+                                else
+                                {
+                                    lastEmail.EmailTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
                                     lastEmail.EmailTypeNew = null;
                                 }
                                 else
                                 {
-                                    lastEmail.EmailTypeNew = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    lastEmail.EmailTypeNew = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos - 1)))
                                 {
                                     lastEmail.EmailAddressNew = null;
                                 }
                                 else
                                 {
-                                    lastEmail.EmailAddressNew = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                    lastEmail.EmailAddressNew = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 }
                             }
                             catch (Exception)

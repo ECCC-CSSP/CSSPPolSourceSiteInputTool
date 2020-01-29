@@ -196,11 +196,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                     sbKML.AppendLine($@"</p>");
 
-                    // doing Number
-                    sbKML.Append($@"                <p><b>Number:</b> {telephone.Number}</p>");
-                    if (telephone.NumberNew != null)
+                    // doing TelNumber
+                    sbKML.Append($@"                <p><b>Number:</b> {telephone.TelNumber}</p>");
+                    if (telephone.TelNumberNew != null)
                     {
-                        sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Telephone Number New:</b> {telephone.NumberNew}");
+                        sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Telephone Number New:</b> {telephone.TelNumberNew}");
                     }
                     sbKML.AppendLine($@"</p>");
                     sbKML.AppendLine($@"<p>&nbsp;</p>");
@@ -221,11 +221,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                     sbKML.AppendLine($@"</p>");
 
-                    // doing EmailText
-                    sbKML.Append($@"                <p><b>Number:</b> {email.EmailText}</p>");
-                    if (email.EmailTextNew != null)
+                    // doing EmailAddress
+                    sbKML.Append($@"                <p><b>Number:</b> {email.EmailAddress}</p>");
+                    if (email.EmailAddressNew != null)
                     {
-                        sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Telephone Number New:</b> {email.EmailTextNew}");
+                        sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Telephone Number New:</b> {email.EmailAddressNew}");
                     }
                     sbKML.AppendLine($@"</p>");
                     sbKML.AppendLine($@"<p>&nbsp;</p>");

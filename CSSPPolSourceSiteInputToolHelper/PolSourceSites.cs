@@ -11021,10 +11021,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     webClient.Proxy = webProxy;
 
                     webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    Uri uri = new Uri($"{baseURLEN}SavePSSOrInfrastructureAddressJSON");
+                    Uri uri = new Uri($"{baseURLEN}SaveAddressJSON");
                     if (Language == LanguageEnum.fr)
                     {
-                        uri = new Uri($"{baseURLFR}SavePSSOrInfrastructureAddressJSON");
+                        uri = new Uri($"{baseURLFR}SaveAddressJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);
