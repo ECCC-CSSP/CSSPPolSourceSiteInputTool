@@ -2728,8 +2728,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                         {
                             try
                             {
-                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
-                                Picture lastPicture = lastPSS.PSSPictureList[lastPSS.PSSPictureList.Count - 1];
+                                Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
+                                Picture lastPicture = lastInfrastructure.InfrastructurePictureList[lastInfrastructure.InfrastructurePictureList.Count - 1];
 
                                 string FromWaterText = LineTxt.Substring(pos + 1, pos2 - pos - 1);
                                 if (!string.IsNullOrWhiteSpace(FromWaterText))
@@ -2748,8 +2748,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                         {
                             try
                             {
-                                PSS lastPSS = subsectorDoc.Subsector.PSSList[subsectorDoc.Subsector.PSSList.Count - 1];
-                                Picture lastPicture = lastPSS.PSSPictureList[lastPSS.PSSPictureList.Count - 1];
+                                Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
+                                Picture lastPicture = lastInfrastructure.InfrastructurePictureList[lastInfrastructure.InfrastructurePictureList.Count - 1];
 
                                 string FromWaterText = LineTxt.Substring(pos + 1, pos2 - pos - 1);
                                 if (!string.IsNullOrWhiteSpace(FromWaterText))

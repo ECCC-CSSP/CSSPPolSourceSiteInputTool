@@ -461,7 +461,47 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void checkBoxShowContact_CheckedChanged(object sender, EventArgs e)
         {
-            ShowInfrastructureParts();
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                if (panelAddNewInfrastructure.Visible)
+                {
+                    if (!checkBoxShowInfrastructure.Checked)
+                    {
+                        MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                        checkBoxShowInfrastructure.Checked = true;
+                    }
+                }
+                else
+                {
+                    if (checkBoxShowInfrastructure.Checked)
+                    {
+                        MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                        checkBoxShowInfrastructure.Checked = false;
+                    }
+                }
+                return;
+            }
+
+            panelPolSourceSite.Controls.Clear();
+
+            if (checkBoxShowInfrastructure.Checked)
+            {
+                if (checkBoxShowContact.Checked)
+                {
+                    panelShowContact.Visible = true;
+                    polSourceSiteInputToolHelper.DrawPanelContacts();
+                }
+                else
+                {
+                    panelShowContact.Visible = true;
+                    checkBoxMoreInfo.Visible = false;
+                    if (radioButtonIssues.Checked)
+                    {
+                        radioButtonDetails.Checked = true;
+                    }
+                    polSourceSiteInputToolHelper.DrawPanelInfrastructures();
+                }
+            }
         }
         private void checkBoxWrittenDescription_CheckedChanged(object sender, EventArgs e)
         {
@@ -788,8 +828,16 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 else
                 {
-                    polSourceSiteInputToolHelper.DrawPanelInfrastructures();
-                    polSourceSiteInputToolHelper.ReDrawInfrastructure();
+                    if (checkBoxShowContact.Checked)
+                    {
+                        polSourceSiteInputToolHelper.DrawPanelContacts();
+                        polSourceSiteInputToolHelper.ReDrawContact();
+                    }
+                    else
+                    {
+                        polSourceSiteInputToolHelper.DrawPanelInfrastructures();
+                        polSourceSiteInputToolHelper.ReDrawInfrastructure();
+                    }
                 }
             }
         }
@@ -805,8 +853,16 @@ namespace CSSPPolSourceSiteInputTool
                 }
                 else
                 {
-                    polSourceSiteInputToolHelper.DrawPanelInfrastructures();
-                    polSourceSiteInputToolHelper.ReDrawInfrastructure();
+                    if (checkBoxShowContact.Checked)
+                    {
+                        polSourceSiteInputToolHelper.DrawPanelContacts();
+                        polSourceSiteInputToolHelper.ReDrawContact();
+                    }
+                    else
+                    {
+                        polSourceSiteInputToolHelper.DrawPanelInfrastructures();
+                        polSourceSiteInputToolHelper.ReDrawInfrastructure();
+                    }
                 }
             }
         }
@@ -1045,8 +1101,16 @@ namespace CSSPPolSourceSiteInputTool
             }
             polSourceSiteInputToolHelper.RegenerateMunicipalityKMLFile();
 
-            polSourceSiteInputToolHelper.DrawPanelInfrastructures();
-            polSourceSiteInputToolHelper.ReDrawInfrastructure();
+            if (checkBoxShowContact.Checked)
+            {
+                polSourceSiteInputToolHelper.DrawPanelContacts();
+                polSourceSiteInputToolHelper.ReDrawContact();
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.DrawPanelInfrastructures();
+                polSourceSiteInputToolHelper.ReDrawInfrastructure();
+            }
             butViewKMLFile.Enabled = true;
 
             lblStatus.Text = $"Done ... {polSourceSiteInputToolHelper.CurrentMunicipalityName} directory now exist";
@@ -1694,13 +1758,14 @@ namespace CSSPPolSourceSiteInputTool
                         {
                             panelAddNewContact.Visible = true;
                             panelAddNewInfrastructure.Visible = false;
+                            polSourceSiteInputToolHelper.DrawPanelContacts();
                         }
                         else
                         {
                             panelAddNewInfrastructure.Visible = true;
                             panelAddNewContact.Visible = false;
+                            polSourceSiteInputToolHelper.DrawPanelInfrastructures();
                         }
-                        polSourceSiteInputToolHelper.DrawPanelInfrastructures();
                     }
                 }
             }

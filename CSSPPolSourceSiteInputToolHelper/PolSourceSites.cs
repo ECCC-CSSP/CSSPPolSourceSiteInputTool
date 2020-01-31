@@ -3395,7 +3395,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         {
             PanelPolSourceSite.Controls.Clear();
 
-            if (subsectorDoc.Subsector == null)
+            if (municipalityDoc.Municipality == null)
             {
                 Label lblTVText = new Label();
 
@@ -3403,7 +3403,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.Location = new Point(10, 4);
                 lblTVText.TabIndex = 0;
                 lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblTVText.Text = $"Selected subsector has no contact";
+                lblTVText.Text = $"Selected municipality has no contact";
 
                 PanelPolSourceSite.Controls.Add(lblTVText);
             }
@@ -3435,7 +3435,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                     else
                     {
-                        IsActive = (bool)contact.IsActive;
+                        if (contact.IsActive == null)
+                        {
+                            IsActive = true;
+                        }
+                        else
+                        {
+                            IsActive = (bool)contact.IsActive;
+                        }
                     }
 
                     if (IsActive == false)
@@ -3553,7 +3560,14 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
                         else
                         {
-                            IsActive2 = (bool)contact.IsActive;
+                            if (contact.IsActive == null)
+                            {
+                                IsActive2 = true;
+                            }
+                            else
+                            {
+                                IsActive2 = (bool)contact.IsActive;
+                            }
                         }
 
                         if (IsActive2 == false)
