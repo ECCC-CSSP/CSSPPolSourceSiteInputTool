@@ -216,6 +216,11 @@ namespace CSSPPolSourceSiteInputTool
             {
                 switch (Environment.UserName.ToLower())
                 {
+                    case "charl":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc2@canada.ca";
+                        }
+                        break;
                     case "charles":
                         {
                             polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc2@canada.ca";
@@ -1877,7 +1882,8 @@ namespace CSSPPolSourceSiteInputTool
         private void Setup()
         {
             panelShowAdmin.Visible = false;
-            if (Environment.UserName.ToLower() == "charles" ||
+            if (Environment.UserName.ToLower() == "charl" ||
+                Environment.UserName.ToLower() == "charles" ||
                 Environment.UserName.ToLower() == "leblancc" ||
                 Environment.UserName.ToLower() == "pomeroyj" ||
                 Environment.UserName.ToLower() == "perchardg" ||
