@@ -73,7 +73,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             return true;
         }
-        public bool ReadInfrastructuresMunicipalityFile()
+        public bool ReadMunicipalityFile()
         {
             FileInfo fi = new FileInfo($@"{BasePathInfrastructures}{CurrentMunicipalityName}\{CurrentMunicipalityName}.txt");
 
@@ -257,28 +257,37 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
+                                    contact.ContactTVItemID = null;
+                                }
+                                else
+                                {
+                                    contact.ContactTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
                                     contact.FirstName = null;
                                 }
                                 else
                                 {
-                                    contact.FirstName = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                                    contact.FirstName = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
                                 {
                                     contact.Initial = null;
                                 }
                                 else
                                 {
-                                    contact.Initial = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                    contact.Initial = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1)))
                                 {
                                     contact.LastName = null;
                                 }
                                 else
                                 {
-                                    contact.LastName = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
+                                    contact.LastName = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
                                 }
+                                contact.IsActive = bool.Parse(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1));
 
                                 municipalityDoc.Municipality.ContactList.Add(contact);
                             }
@@ -297,28 +306,37 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
+                                    lastContact.ContactTVItemID = null;
+                                }
+                                else
+                                {
+                                    lastContact.ContactTVItemID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                }
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                {
                                     lastContact.FirstNameNew = null;
                                 }
                                 else
                                 {
-                                    lastContact.FirstNameNew = LineTxt.Substring(pos + 1, pos2 - pos - 1);
+                                    lastContact.FirstNameNew = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
                                 {
                                     lastContact.InitialNew = null;
                                 }
                                 else
                                 {
-                                    lastContact.InitialNew = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
+                                    lastContact.InitialNew = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1)))
                                 {
                                     lastContact.LastNameNew = null;
                                 }
                                 else
                                 {
-                                    lastContact.LastNameNew = LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1);
+                                    lastContact.LastNameNew = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
                                 }
+                                lastContact.IsActive = bool.Parse(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1));
                             }
                             catch (Exception)
                             {

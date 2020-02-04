@@ -31,8 +31,6 @@
             this.panelButtonBar = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.butReduceHelp = new System.Windows.Forms.Button();
-            this.panelShowContact = new System.Windows.Forms.Panel();
-            this.checkBoxShowContact = new System.Windows.Forms.CheckBox();
             this.panelShowAdmin = new System.Windows.Forms.Panel();
             this.checkBoxShowAdmin = new System.Windows.Forms.CheckBox();
             this.panelShowInfrastructure = new System.Windows.Forms.Panel();
@@ -54,8 +52,6 @@
             this.lblStatus = new System.Windows.Forms.Label();
             this.lblStatusTxt = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.panelAddNewContact = new System.Windows.Forms.Panel();
-            this.butContactAdd = new System.Windows.Forms.Button();
             this.panelAddNewInfrastructure = new System.Windows.Forms.Panel();
             this.butInfrastructureAdd = new System.Windows.Forms.Button();
             this.panelCreateMunicipalityDirectory = new System.Windows.Forms.Panel();
@@ -95,9 +91,9 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
+            this.butContactAdd = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panel1.SuspendLayout();
-            this.panelShowContact.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
             this.panelShowInfrastructure.SuspendLayout();
             this.panelSubsectorOrMunicipality.SuspendLayout();
@@ -110,7 +106,6 @@
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            this.panelAddNewContact.SuspendLayout();
             this.panelAddNewInfrastructure.SuspendLayout();
             this.panelCreateMunicipalityDirectory.SuspendLayout();
             this.panelCreateSubsectorDirectory.SuspendLayout();
@@ -128,7 +123,6 @@
             // 
             this.panelButtonBar.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panelButtonBar.Controls.Add(this.panel1);
-            this.panelButtonBar.Controls.Add(this.panelShowContact);
             this.panelButtonBar.Controls.Add(this.panelShowAdmin);
             this.panelButtonBar.Controls.Add(this.panelShowInfrastructure);
             this.panelButtonBar.Controls.Add(this.panelSubsectorOrMunicipality);
@@ -146,7 +140,7 @@
             // 
             this.panel1.Controls.Add(this.butReduceHelp);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(549, 0);
+            this.panel1.Location = new System.Drawing.Point(658, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(95, 34);
             this.panel1.TabIndex = 21;
@@ -160,26 +154,6 @@
             this.butReduceHelp.Text = "Reduce Help";
             this.butReduceHelp.UseVisualStyleBackColor = true;
             this.butReduceHelp.Visible = false;
-            // 
-            // panelShowContact
-            // 
-            this.panelShowContact.Controls.Add(this.checkBoxShowContact);
-            this.panelShowContact.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelShowContact.Location = new System.Drawing.Point(644, 0);
-            this.panelShowContact.Name = "panelShowContact";
-            this.panelShowContact.Size = new System.Drawing.Size(109, 34);
-            this.panelShowContact.TabIndex = 20;
-            // 
-            // checkBoxShowContact
-            // 
-            this.checkBoxShowContact.AutoSize = true;
-            this.checkBoxShowContact.Location = new System.Drawing.Point(11, 10);
-            this.checkBoxShowContact.Name = "checkBoxShowContact";
-            this.checkBoxShowContact.Size = new System.Drawing.Size(98, 17);
-            this.checkBoxShowContact.TabIndex = 11;
-            this.checkBoxShowContact.Text = "Show Contacts";
-            this.checkBoxShowContact.UseVisualStyleBackColor = true;
-            this.checkBoxShowContact.CheckedChanged += new System.EventHandler(this.checkBoxShowContact_CheckedChanged);
             // 
             // panelShowAdmin
             // 
@@ -389,7 +363,6 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this.panelAddNewContact);
             this.splitContainer1.Panel1.Controls.Add(this.panelAddNewInfrastructure);
             this.splitContainer1.Panel1.Controls.Add(this.panelCreateMunicipalityDirectory);
             this.splitContainer1.Panel1.Controls.Add(this.panelCreateSubsectorDirectory);
@@ -406,28 +379,10 @@
             this.splitContainer1.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer1_SplitterMoved);
             this.splitContainer1.SizeChanged += new System.EventHandler(this.splitContainer1_SizeChanged);
             // 
-            // panelAddNewContact
-            // 
-            this.panelAddNewContact.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panelAddNewContact.Controls.Add(this.butContactAdd);
-            this.panelAddNewContact.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panelAddNewContact.Location = new System.Drawing.Point(0, 148);
-            this.panelAddNewContact.Name = "panelAddNewContact";
-            this.panelAddNewContact.Size = new System.Drawing.Size(347, 37);
-            this.panelAddNewContact.TabIndex = 15;
-            // 
-            // butContactAdd
-            // 
-            this.butContactAdd.Location = new System.Drawing.Point(55, 1);
-            this.butContactAdd.Name = "butContactAdd";
-            this.butContactAdd.Size = new System.Drawing.Size(217, 28);
-            this.butContactAdd.TabIndex = 15;
-            this.butContactAdd.Text = "Add New Contact";
-            this.butContactAdd.UseVisualStyleBackColor = true;
-            // 
             // panelAddNewInfrastructure
             // 
             this.panelAddNewInfrastructure.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panelAddNewInfrastructure.Controls.Add(this.butContactAdd);
             this.panelAddNewInfrastructure.Controls.Add(this.butInfrastructureAdd);
             this.panelAddNewInfrastructure.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelAddNewInfrastructure.Location = new System.Drawing.Point(0, 111);
@@ -437,9 +392,9 @@
             // 
             // butInfrastructureAdd
             // 
-            this.butInfrastructureAdd.Location = new System.Drawing.Point(55, 4);
+            this.butInfrastructureAdd.Location = new System.Drawing.Point(7, 4);
             this.butInfrastructureAdd.Name = "butInfrastructureAdd";
-            this.butInfrastructureAdd.Size = new System.Drawing.Size(217, 28);
+            this.butInfrastructureAdd.Size = new System.Drawing.Size(143, 28);
             this.butInfrastructureAdd.TabIndex = 15;
             this.butInfrastructureAdd.Text = "Add New Infrastructure";
             this.butInfrastructureAdd.UseVisualStyleBackColor = true;
@@ -848,6 +803,15 @@
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
             // 
+            // butContactAdd
+            // 
+            this.butContactAdd.Location = new System.Drawing.Point(169, 3);
+            this.butContactAdd.Name = "butContactAdd";
+            this.butContactAdd.Size = new System.Drawing.Size(112, 28);
+            this.butContactAdd.TabIndex = 16;
+            this.butContactAdd.Text = "Add New Contact";
+            this.butContactAdd.UseVisualStyleBackColor = true;
+            // 
             // CSSPPolSourceSiteInputToolForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -861,8 +825,6 @@
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panelButtonBar.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
-            this.panelShowContact.ResumeLayout(false);
-            this.panelShowContact.PerformLayout();
             this.panelShowAdmin.ResumeLayout(false);
             this.panelShowAdmin.PerformLayout();
             this.panelShowInfrastructure.ResumeLayout(false);
@@ -881,7 +843,6 @@
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.panelAddNewContact.ResumeLayout(false);
             this.panelAddNewInfrastructure.ResumeLayout(false);
             this.panelCreateMunicipalityDirectory.ResumeLayout(false);
             this.panelCreateSubsectorDirectory.ResumeLayout(false);
@@ -965,9 +926,6 @@
         private System.Windows.Forms.Button butFixImgDir;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button butReduceHelp;
-        private System.Windows.Forms.Panel panelShowContact;
-        private System.Windows.Forms.CheckBox checkBoxShowContact;
-        private System.Windows.Forms.Panel panelAddNewContact;
         private System.Windows.Forms.Button butContactAdd;
     }
 }

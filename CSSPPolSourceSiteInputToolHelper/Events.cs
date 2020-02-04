@@ -84,7 +84,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             else
             {
                 AddPicture();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
             }
         }
@@ -99,11 +99,18 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
-                CurrentInfrastructure.IsActiveNew = true;
+                if (ContactTVItemID > 0)
+                {
+                    CurrentContact.IsActiveNew = true;
+                }
+                else
+                {
+                    CurrentInfrastructure.IsActiveNew = true;
+                }
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
             }
         }
         private void butChangeToIsNotActive_Click(object sender, EventArgs e)
@@ -117,11 +124,18 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
-                CurrentInfrastructure.IsActiveNew = false;
+                if (ContactTVItemID > 0)
+                {
+                    CurrentContact.IsActiveNew = false;
+                }
+                else
+                {
+                    CurrentInfrastructure.IsActiveNew = false;
+                }
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
             }
         }
         private void butChangeToIsPointSource_Click(object sender, EventArgs e)
@@ -408,8 +422,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                     CurrentInfrastructure = null;
                     InfrastructureTVItemID = 0;
                 }
-                RedrawInfrastructureList();
-                ReDrawInfrastructure();
+                RedrawContactAndInfrastructureList();
+                ReDrawContactAndInfrastructure();
             }
 
             PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -437,9 +451,9 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
                 SavePictureInfo(PictureTVItemID);
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
             }
 
             IsDirty = false;
@@ -519,9 +533,9 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (!IsReading)
             {
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
             }
         }
         private void SeeOtherMunicipalityChanged(object sender, EventArgs e)
@@ -542,9 +556,9 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (!IsReading)
             {
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
             }
         }
         private void ShowHelpDocument(object sender, EventArgs e)
@@ -611,7 +625,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             ReDrawPolSourceSite();
         }
-        private void ShowMunicipality_Click(object sender, EventArgs e)
+
+        private void ShowContact_Click(object sender, EventArgs e)
         {
             if (IsDirty)
             {
@@ -619,6 +634,66 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return;
             }
 
+            InfrastructureTVItemID = 0;
+            ContactTVItemID = int.Parse(((Control)sender).Tag.ToString());
+            CurrentContact = municipalityDoc.Municipality.ContactList.Where(c => c.ContactTVItemID == ContactTVItemID).FirstOrDefault();
+            foreach (Control control in PanelShowInputOptions.Controls)
+            {
+                if (control.Name == "radioButtonDetails")
+                {
+                    if (((RadioButton)control).Checked)
+                    {
+                        OnDetailPage = true;
+                        OnIssuePage = false;
+                        OnMapPage = false;
+                        OnPicturePage = false;
+                    }
+                }
+
+                if (control.Name == "radioButtonIssues")
+                {
+                    if (((RadioButton)control).Checked)
+                    {
+                        OnDetailPage = false;
+                        OnIssuePage = true;
+                        OnMapPage = false;
+                        OnPicturePage = false;
+                    }
+                }
+
+                if (control.Name == "radioButtonShowMap")
+                {
+                    if (((RadioButton)control).Checked)
+                    {
+                        OnDetailPage = false;
+                        OnIssuePage = false;
+                        OnMapPage = true;
+                        OnPicturePage = false;
+                    }
+                }
+
+                if (control.Name == "radioButtonPictures")
+                {
+                    if (((RadioButton)control).Checked)
+                    {
+                        OnDetailPage = false;
+                        OnIssuePage = false;
+                        OnMapPage = false;
+                        OnPicturePage = true;
+                    }
+                }
+            }
+            ReDrawContactAndInfrastructure();
+        }
+        private void ShowInfrastructure_Click(object sender, EventArgs e)
+        {
+            if (IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
+
+            ContactTVItemID = 0;
             InfrastructureTVItemID = int.Parse(((Control)sender).Tag.ToString());
             CurrentInfrastructure = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == InfrastructureTVItemID).FirstOrDefault();
             foreach (Control control in PanelShowInputOptions.Controls)
@@ -667,7 +742,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                 }
             }
-            ReDrawInfrastructure();
+            ReDrawContactAndInfrastructure();
         }
 
         private void textBoxDescription_TextChanged(object sender, EventArgs e)

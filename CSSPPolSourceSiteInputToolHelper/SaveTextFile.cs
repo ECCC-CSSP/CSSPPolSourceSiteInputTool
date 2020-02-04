@@ -41,14 +41,14 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             foreach (Contact contact in municipalityDoc.Municipality.ContactList)
             {
-                sb.AppendLine($"CONTACT\t{contact.FirstName}\t{contact.Initial}\t{contact.LastName}\t");
+                sb.AppendLine($"CONTACT\t{contact.ContactTVItemID}\t{contact.FirstName}\t{contact.Initial}\t{contact.LastName}\t{contact.IsActive}\t");
 
                 if (contact.FirstNameNew != null || contact.InitialNew != null || contact.LastNameNew != null)
                 {
                     string FirstName = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
                     string Initial = contact.InitialNew != null ? contact.InitialNew : contact.Initial;
                     string LastName = contact.LastNameNew != null ? contact.LastNameNew : contact.FirstName;
-                    sb.AppendLine($"CONTACTNEW\t{FirstName}\t{Initial}\t{LastName}\t");
+                    sb.AppendLine($"CONTACTNEW\t{contact.ContactTVItemID}\t{FirstName}\t{Initial}\t{LastName}\t{contact.IsActive}\t");
                 }
 
                 foreach (Telephone telephone in contact.TelephoneList)

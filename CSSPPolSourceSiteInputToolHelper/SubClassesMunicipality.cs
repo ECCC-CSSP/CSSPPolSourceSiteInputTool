@@ -42,6 +42,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public List<Email> EmailList { get; set; } = new List<Email>();
         public Address ContactAddress { get; set; } = new Address();
         public Address ContactAddressNew { get; set; } = new Address();
+        public bool Shown { get; set; } = false;
     }
 
     public class Telephone

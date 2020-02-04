@@ -24,6 +24,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public List<TVItemModel> tvItemModelMunicipalityList { get; set; }
         public int PolSourceSiteTVItemID = 0;
         public int InfrastructureTVItemID = 0;
+        public int ContactTVItemID = 0;
         public int IssueID = 0;
         public bool IsEditing = false;
         public bool MoreInfo = false;
@@ -241,16 +242,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             return ObsDateIDNumberList;
         }
-        public void ReDrawContact()
-        {
-            IsReading = true;
-            ShowContact();
-            UpdatePolSourceSitePanelColor();
-            IsReading = false;
-
-            PanelViewAndEdit.Focus();
-        }
-        public void ReDrawInfrastructure()
+        public void ReDrawContactAndInfrastructure()
         {
             IsReading = true;
             if (ShowOnlyPictures)
@@ -263,7 +255,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
-                ShowInfrastructure();
+                ShowContactOrInfrastructure();
             }
             UpdatePolSourceSitePanelColor();
             IsReading = false;

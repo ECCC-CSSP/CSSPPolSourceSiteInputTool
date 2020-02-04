@@ -113,7 +113,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
 
                     SaveMunicipalityTextFile();
-                    RedrawInfrastructureList();
+                    RedrawContactAndInfrastructureList();
                     ShowPictures();
                 }
             }
@@ -140,7 +140,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
 
                 SaveMunicipalityTextFile();
-                RedrawInfrastructureList();
+                RedrawContactAndInfrastructureList();
                 ShowPictures();
             }
         }
@@ -166,7 +166,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
 
                 SaveMunicipalityTextFile();
-                RedrawInfrastructureList();
+                RedrawContactAndInfrastructureList();
                 ShowPictures();
             }
         }
@@ -290,7 +290,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
 
                 SaveMunicipalityTextFile();
-                RedrawInfrastructureList();
+                RedrawContactAndInfrastructureList();
                 ShowPictures();
             }
         }

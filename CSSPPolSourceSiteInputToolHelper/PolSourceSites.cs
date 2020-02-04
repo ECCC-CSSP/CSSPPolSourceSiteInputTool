@@ -692,7 +692,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
-        private void DrawItemEnum(int x, int y, int? val, int? valNew, string lblTxt, string comboBoxName, Type enumType)
+        private void DrawItemEnum(int x, int y, int? val, int? valNew, string lblTxt, string comboBoxName, Type enumType, int item)
         {
             Label lblItemEnum = new Label();
             lblItemEnum.AutoSize = true;
@@ -762,6 +762,16 @@ namespace CSSPPolSourceSiteInputToolHelper
                 case "ValveTypeEnum":
                     {
                         lblItemEnum.Text = $@"Valve Type: ";
+                    }
+                    break;
+                case "TelTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Telephone Type: ";
+                    }
+                    break;
+                case "EmailTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Email Type: ";
                     }
                     break;
                 default:
@@ -841,6 +851,16 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 lblItemEnumOld.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)val).ToString()})";
                             }
                             break;
+                        case "TelTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_TelTypeEnum((TelTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "EmailTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_EmailTypeEnum((EmailTypeEnum)val).ToString()})";
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -859,28 +879,28 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     case "InfrastructureTypeEnum":
                         {
-                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.WWTP), 
-                                "butInfrastructureTypeWWTP", "WWTP", fontFamilyName, "WWTP", butInfrastructureTypeSelect_Clicked);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.WWTP),
+                                "butInfrastructureTypeWWTP", "WWTP", fontFamilyName, "WWTP", butInfrastructureTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.LiftStation), 
-                                "butInfrastructureTypeLiftStation", "Lift Station", fontFamilyName, "LiftStation", butInfrastructureTypeSelect_Clicked);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.LiftStation),
+                                "butInfrastructureTypeLiftStation", "Lift Station", fontFamilyName, "LiftStation", butInfrastructureTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.LineOverflow), 
-                                "butInfrastructureTypeLineOverflow", "Line Overflow", fontFamilyName, "LineOverflow", butInfrastructureTypeSelect_Clicked);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.LineOverflow),
+                                "butInfrastructureTypeLineOverflow", "Line Overflow", fontFamilyName, "LineOverflow", butInfrastructureTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.SeeOtherMunicipality), 
-                                "butInfrastructureTypeSeeOtherMunicipality", "See Other Municipality", fontFamilyName, "SeeOtherMunicipality", butInfrastructureTypeSelect_Clicked);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.SeeOtherMunicipality),
+                                "butInfrastructureTypeSeeOtherMunicipality", "See Other Municipality", fontFamilyName, "SeeOtherMunicipality", butInfrastructureTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
-                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.Other), 
-                                "butInfrastructureTypeOther", "Other", fontFamilyName, "Other", butInfrastructureTypeSelect_Clicked);
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)InfrastructureTypeEnum.Other),
+                                "butInfrastructureTypeOther", "Other", fontFamilyName, "Other", butInfrastructureTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butInfrastructureTypeNull", "None", fontFamilyName, "None", butInfrastructureTypeSelect_Clicked);
+                                "butInfrastructureTypeNull", "None", fontFamilyName, "None", butInfrastructureTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                         }
@@ -888,72 +908,72 @@ namespace CSSPPolSourceSiteInputToolHelper
                     case "FacilityTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)FacilityTypeEnum.Lagoon),
-                                "butFacilityTypeLagoon", "Lagoon", fontFamilyName, "Lagoon", butFacilityTypeSelect_Clicked);
+                                "butFacilityTypeLagoon", "Lagoon", fontFamilyName, "Lagoon", butFacilityTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)FacilityTypeEnum.Plant),
-                                "butFacilityTypePlant", "Plant", fontFamilyName, "Plant", butFacilityTypeSelect_Clicked);
+                                "butFacilityTypePlant", "Plant", fontFamilyName, "Plant", butFacilityTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butFacilityTypeNull", "None", fontFamilyName, "None", butFacilityTypeSelect_Clicked);
+                                "butFacilityTypeNull", "None", fontFamilyName, "None", butFacilityTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "AerationTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AerationTypeEnum.MechanicalAirLines),
-                                "butAerationTypeMechanicalAirLines", "Mechanical Air Lines", fontFamilyName, "MechanicalAirLines", butAerationTypeSelect_Clicked);
+                                "butAerationTypeMechanicalAirLines", "Mechanical Air Lines", fontFamilyName, "MechanicalAirLines", butAerationTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AerationTypeEnum.MechanicalSurfaceMixers),
-                                "butAerationTypeMechanicalSurfaceMixers", "MechanicalSurfaceMixers", fontFamilyName, "MechanicalSurfaceMixers", butAerationTypeSelect_Clicked);
+                                "butAerationTypeMechanicalSurfaceMixers", "MechanicalSurfaceMixers", fontFamilyName, "MechanicalSurfaceMixers", butAerationTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butAerationTypeNull", "None", fontFamilyName, "None", butAerationTypeSelect_Clicked);
+                                "butAerationTypeNull", "None", fontFamilyName, "None", butAerationTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "PreliminaryTreatmentTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PreliminaryTreatmentTypeEnum.BarScreen),
-                                "butPreliminaryTreatmentTypeBarScreen", "Bar Screen", fontFamilyName, "BarScreen", butPreliminaryTreatmentTypeSelect_Clicked);
+                                "butPreliminaryTreatmentTypeBarScreen", "Bar Screen", fontFamilyName, "BarScreen", butPreliminaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PreliminaryTreatmentTypeEnum.Grinder),
-                                "butPreliminaryTreatmentTypeGrinder", "Grinder", fontFamilyName, "Grinder", butPreliminaryTreatmentTypeSelect_Clicked);
+                                "butPreliminaryTreatmentTypeGrinder", "Grinder", fontFamilyName, "Grinder", butPreliminaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PreliminaryTreatmentTypeEnum.MechanicalScreening),
-                                "butPreliminaryTreatmentTypeMechanicalScreening", "Mechanical Screening", fontFamilyName, "MechanicalScreening", butPreliminaryTreatmentTypeSelect_Clicked);
+                                "butPreliminaryTreatmentTypeMechanicalScreening", "Mechanical Screening", fontFamilyName, "MechanicalScreening", butPreliminaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butPreliminaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butPreliminaryTreatmentTypeSelect_Clicked);
+                                "butPreliminaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butPreliminaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "PrimaryTreatmentTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PrimaryTreatmentTypeEnum.ChemicalCoagulation),
-                                "butPrimaryTreatmentTypeChemicalCoagulation", "Chemical Coagulation", fontFamilyName, "ChemicalCoagulation", butPrimaryTreatmentTypeSelect_Clicked);
+                                "butPrimaryTreatmentTypeChemicalCoagulation", "Chemical Coagulation", fontFamilyName, "ChemicalCoagulation", butPrimaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PrimaryTreatmentTypeEnum.Filtration),
-                                "butPrimaryTreatmentTypeFiltration", "Filtration", fontFamilyName, "Filtration", butPrimaryTreatmentTypeSelect_Clicked);
+                                "butPrimaryTreatmentTypeFiltration", "Filtration", fontFamilyName, "Filtration", butPrimaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PrimaryTreatmentTypeEnum.PrimaryClarification),
-                                "butPrimaryTreatmentTypePrimaryClarification", "Primary Clarification", fontFamilyName, "PrimaryClarification", butPrimaryTreatmentTypeSelect_Clicked);
+                                "butPrimaryTreatmentTypePrimaryClarification", "Primary Clarification", fontFamilyName, "PrimaryClarification", butPrimaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)PrimaryTreatmentTypeEnum.Sedimentation),
-                                "butPrimaryTreatmentTypeSedimentation", "Sedimentation", fontFamilyName, "Sedimentation", butPrimaryTreatmentTypeSelect_Clicked);
+                                "butPrimaryTreatmentTypeSedimentation", "Sedimentation", fontFamilyName, "Sedimentation", butPrimaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butPrimaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butPrimaryTreatmentTypeSelect_Clicked);
+                                "butPrimaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butPrimaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
@@ -963,7 +983,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butSecondaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 20;
@@ -974,37 +994,37 @@ namespace CSSPPolSourceSiteInputToolHelper
                             lblAttachedGrowthGroup.Location = new Point(x, y);
                             lblAttachedGrowthGroup.Font = new Font(new FontFamily(fontFamilyName).Name, 10f, FontStyle.Bold);
                             lblAttachedGrowthGroup.Text = "Attached Growth Group";
-                        
+
                             PanelViewAndEdit.Controls.Add(lblAttachedGrowthGroup);
 
                             x = 30;
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.AeratedSubmergedBioFilmReactor),
-                                "butSecondaryTreatmentTypeAeratedSubmergedBioFilmReactor", "Aerated Submerged Bio Film Reactor", fontFamilyName, "AeratedSubmergedBioFilmReactor", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeAeratedSubmergedBioFilmReactor", "Aerated Submerged Bio Film Reactor", fontFamilyName, "AeratedSubmergedBioFilmReactor", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.BiologicalAearatedFilters),
-                                "butSecondaryTreatmentTypeBiologicalAearatedFilters", "Biological Aearated Filters", fontFamilyName, "BiologicalAearatedFilters", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeBiologicalAearatedFilters", "Biological Aearated Filters", fontFamilyName, "BiologicalAearatedFilters", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.IntegratedFixedFilmActivatedSludge),
-                                "butSecondaryTreatmentTypeIntegratedFixedFilmActivatedSludge", "Integrated Fixed Film Activated Sludge", fontFamilyName, "IntegratedFixedFilmActivatedSludge", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeIntegratedFixedFilmActivatedSludge", "Integrated Fixed Film Activated Sludge", fontFamilyName, "IntegratedFixedFilmActivatedSludge", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 30;
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.MovingBedBioReactor),
-                                "butSecondaryTreatmentTypeMovingBedBioReactor", "Moving Bed BioReactor", fontFamilyName, "MovingBedBioReactor", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeMovingBedBioReactor", "Moving Bed BioReactor", fontFamilyName, "MovingBedBioReactor", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.RotatingBiologicalContactor),
-                                "butSecondaryTreatmentTypeRotatingBiologicalContactor", "Rotating Biological Contactor (RBC)", fontFamilyName, "RotatingBiologicalContactor", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeRotatingBiologicalContactor", "Rotating Biological Contactor (RBC)", fontFamilyName, "RotatingBiologicalContactor", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.TricklingFilters),
-                                "butSecondaryTreatmentTypeTricklingFilters", "Trickling Filters", fontFamilyName, "TricklingFilters", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeTricklingFilters", "Trickling Filters", fontFamilyName, "TricklingFilters", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 20;
@@ -1022,37 +1042,37 @@ namespace CSSPPolSourceSiteInputToolHelper
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.ActivatedSludge),
-                                "butSecondaryTreatmentTypeActivatedSludge", "Activated Sludge", fontFamilyName, "ActivatedSludge", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeActivatedSludge", "Activated Sludge", fontFamilyName, "ActivatedSludge", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.ContactStabilization),
-                                "butSecondaryTreatmentTypeContactStabilization", "Contact Stabilization", fontFamilyName, "ContactStabilization", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeContactStabilization", "Contact Stabilization", fontFamilyName, "ContactStabilization", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 30;
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.ExtendedAeration),
-                                "butSecondaryTreatmentTypeExtendedAeration", "Extended Aeration", fontFamilyName, "ExtendedAeration", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeExtendedAeration", "Extended Aeration", fontFamilyName, "ExtendedAeration", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.ExtendedActivatedSludge),
-                                "butSecondaryTreatmentTypeExtendedActivatedSludge", "Extended Activated Sludge", fontFamilyName, "ExtendedActivatedSludge", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeExtendedActivatedSludge", "Extended Activated Sludge", fontFamilyName, "ExtendedActivatedSludge", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.OxidationDitch),
-                                "butSecondaryTreatmentTypeOxidationDitch", "Oxidation Ditch", fontFamilyName, "OxidationDitch", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeOxidationDitch", "Oxidation Ditch", fontFamilyName, "OxidationDitch", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 30;
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.PhysicalChemicalProcesses),
-                                "butSecondaryTreatmentTypePhysicalChemicalProcesses", "Physical Chemical Processes", fontFamilyName, "PhysicalChemicalProcesses", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypePhysicalChemicalProcesses", "Physical Chemical Processes", fontFamilyName, "PhysicalChemicalProcesses", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)SecondaryTreatmentTypeEnum.SequencingBatchReactor),
-                                "butSecondaryTreatmentTypeSequencingBatchReactor", "Sequencing Batch Reactor", fontFamilyName, "SequencingBatchReactor", butSecondaryTreatmentTypeSelect_Clicked);
+                                "butSecondaryTreatmentTypeSequencingBatchReactor", "Sequencing Batch Reactor", fontFamilyName, "SequencingBatchReactor", butSecondaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                         }
@@ -1060,68 +1080,68 @@ namespace CSSPPolSourceSiteInputToolHelper
                     case "TertiaryTreatmentTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butTertiaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butTertiaryTreatmentTypeSelect_Clicked);
+                                "butTertiaryTreatmentTypeNotApplicable", "Not Applicable", fontFamilyName, "NotApplicable", butTertiaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.Adsorption),
-                                "butTertiaryTreatmentTypeAdsorption", "Adsorption", fontFamilyName, "Adsorption", butTertiaryTreatmentTypeSelect_Clicked);
+                                "butTertiaryTreatmentTypeAdsorption", "Adsorption", fontFamilyName, "Adsorption", butTertiaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.BiologicalNutrientRemoval),
-                                "butTertiaryTreatmentTypeBiologicalNutrientRemoval", "Biological Nutrient Removal", fontFamilyName, "BiologicalNutrientRemoval", butTertiaryTreatmentTypeSelect_Clicked);
+                                "butTertiaryTreatmentTypeBiologicalNutrientRemoval", "Biological Nutrient Removal", fontFamilyName, "BiologicalNutrientRemoval", butTertiaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 30;
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.Flocculation),
-                                "butTertiaryTreatmentTypeFlocculation", "Flocculation", fontFamilyName, "Flocculation", butTertiaryTreatmentTypeSelect_Clicked);
+                                "butTertiaryTreatmentTypeFlocculation", "Flocculation", fontFamilyName, "Flocculation", butTertiaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.IonExchange),
-                                "butTertiaryTreatmentTypeIonExchange", "Ion Exchange", fontFamilyName, "IonExchange", butTertiaryTreatmentTypeSelect_Clicked);
+                                "butTertiaryTreatmentTypeIonExchange", "Ion Exchange", fontFamilyName, "IonExchange", butTertiaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.MembraneFiltration),
-                                "butTertiaryTreatmentTypeMembraneFiltration", "Membrane Filtration", fontFamilyName, "MembraneFiltration", butTertiaryTreatmentTypeSelect_Clicked);
+                                "butTertiaryTreatmentTypeMembraneFiltration", "Membrane Filtration", fontFamilyName, "MembraneFiltration", butTertiaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TertiaryTreatmentTypeEnum.ReverseOsmosis),
-                                "butTertiaryTreatmentTypeReverseOsmosis", "Reverse Osmosis", fontFamilyName, "ReverseOsmosis", butTertiaryTreatmentTypeSelect_Clicked);
+                                "butTertiaryTreatmentTypeReverseOsmosis", "Reverse Osmosis", fontFamilyName, "ReverseOsmosis", butTertiaryTreatmentTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "DisinfectionTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butDisinfectionTypeNone", "None", fontFamilyName, "None", butDisinfectionTypeSelect_Clicked);
+                                "butDisinfectionTypeNone", "None", fontFamilyName, "None", butDisinfectionTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.UV),
-                                "butDisinfectionTypeUV", "UV", fontFamilyName, "UV", butDisinfectionTypeSelect_Clicked);
+                                "butDisinfectionTypeUV", "UV", fontFamilyName, "UV", butDisinfectionTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.UVSeasonal),
-                                "butDisinfectionTypeUVSeasonal", "UV Seasonal", fontFamilyName, "UVSeasonal", butDisinfectionTypeSelect_Clicked);
+                                "butDisinfectionTypeUVSeasonal", "UV Seasonal", fontFamilyName, "UVSeasonal", butDisinfectionTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.ChlorinationNoDechlorination),
-                                "butDisinfectionTypeChlorinationNoDechlorination", "Chlorination No Dechlorination", fontFamilyName, "ChlorinationNoDechlorination", butDisinfectionTypeSelect_Clicked);
+                                "butDisinfectionTypeChlorinationNoDechlorination", "Chlorination No Dechlorination", fontFamilyName, "ChlorinationNoDechlorination", butDisinfectionTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 30;
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.ChlorinationNoDechlorinationSeasonal),
-                                "butDisinfectionTypeChlorinationNoDechlorinationSeasonal", "Chlorination No Dechlorination Seasonal", fontFamilyName, "ChlorinationNoDechlorinationSeasonal", butDisinfectionTypeSelect_Clicked);
+                                "butDisinfectionTypeChlorinationNoDechlorinationSeasonal", "Chlorination No Dechlorination Seasonal", fontFamilyName, "ChlorinationNoDechlorinationSeasonal", butDisinfectionTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.ChlorinationWithDechlorination),
-                                "butDisinfectionTypeChlorinationWithDechlorination", "Chlorination With Dechlorination", fontFamilyName, "ChlorinationWithDechlorination", butDisinfectionTypeSelect_Clicked);
+                                "butDisinfectionTypeChlorinationWithDechlorination", "Chlorination With Dechlorination", fontFamilyName, "ChlorinationWithDechlorination", butDisinfectionTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)DisinfectionTypeEnum.ChlorinationWithDechlorinationSeasonal),
-                                "butDisinfectionTypeChlorinationWithDechlorinationSeasonal", "Chlorination With Dechlorination Seasonal", fontFamilyName, "ChlorinationWithDechlorinationSeasonal", butDisinfectionTypeSelect_Clicked);
+                                "butDisinfectionTypeChlorinationWithDechlorinationSeasonal", "Chlorination With Dechlorination Seasonal", fontFamilyName, "ChlorinationWithDechlorinationSeasonal", butDisinfectionTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                         }
@@ -1129,64 +1149,64 @@ namespace CSSPPolSourceSiteInputToolHelper
                     case "CollectionSystemTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butCollectionSystemTypeNone", "None", fontFamilyName, "None", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeNone", "None", fontFamilyName, "None", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.CompletelyCombined),
-                                "butCollectionSystemTypeCompletelyCombined", "Completely Combined", fontFamilyName, "CompletelyCombined", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCompletelyCombined", "Completely Combined", fontFamilyName, "CompletelyCombined", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.CompletelySeparated),
-                                "butCollectionSystemTypeCompletelySeparated", "Completely Separated", fontFamilyName, "CompletelySeparated", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCompletelySeparated", "Completely Separated", fontFamilyName, "CompletelySeparated", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined10Separated90),
-                                "butCollectionSystemTypeCombined10Separated90", "Combined 10% Separated 90%", fontFamilyName, "Combined10Separated90", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined10Separated90", "Combined 10% Separated 90%", fontFamilyName, "Combined10Separated90", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 30;
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined20Separated80),
-                                "butCollectionSystemTypeCombined20Separated80", "Combined 20% Separated 80%", fontFamilyName, "Combined20Separated80", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined20Separated80", "Combined 20% Separated 80%", fontFamilyName, "Combined20Separated80", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined30Separated70),
-                                "butCollectionSystemTypeCombined20Separated80", "Combined 20% Separated 80%", fontFamilyName, "Combined20Separated80", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined20Separated80", "Combined 20% Separated 80%", fontFamilyName, "Combined20Separated80", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined30Separated70),
-                                "butCollectionSystemTypeCombined30Separated70", "Combined 30% Separated 70%", fontFamilyName, "Combined20Separated80", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined30Separated70", "Combined 30% Separated 70%", fontFamilyName, "Combined20Separated80", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 30;
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined40Separated60),
-                                "butCollectionSystemTypeCombined40Separated60", "Combined 40% Separated 60%", fontFamilyName, "Combined40Separated60", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined40Separated60", "Combined 40% Separated 60%", fontFamilyName, "Combined40Separated60", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined50Separated50),
-                                "butCollectionSystemTypeCombined50Separated50", "Combined 50% Separated 50%", fontFamilyName, "Combined50Separated50", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined50Separated50", "Combined 50% Separated 50%", fontFamilyName, "Combined50Separated50", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined60Separated40),
-                                "butCollectionSystemTypeCombined60Separated40", "Combined 60% Separated 40%", fontFamilyName, "Combined60Separated40", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined60Separated40", "Combined 60% Separated 40%", fontFamilyName, "Combined60Separated40", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             x = 30;
                             y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined70Separated30),
-                                "butCollectionSystemTypeCombined70Separated30", "Combined 70% Separated 30%", fontFamilyName, "Combined70Separated30", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined70Separated30", "Combined 70% Separated 30%", fontFamilyName, "Combined70Separated30", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined80Separated20),
-                                "butCollectionSystemTypeCombined80Separated20", "Combined 80% Separated 20%", fontFamilyName, "Combined80Separated20", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined80Separated20", "Combined 80% Separated 20%", fontFamilyName, "Combined80Separated20", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CollectionSystemTypeEnum.Combined90Separated10),
-                                "butCollectionSystemTypeCombined80Separated20", "Combined 90% Separated 10%", fontFamilyName, "Combined90Separated10", butCollectionSystemTypeSelect_Clicked);
+                                "butCollectionSystemTypeCombined80Separated20", "Combined 90% Separated 10%", fontFamilyName, "Combined90Separated10", butCollectionSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                         }
@@ -1194,46 +1214,92 @@ namespace CSSPPolSourceSiteInputToolHelper
                     case "AlarmSystemTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AlarmSystemTypeEnum.None),
-                                "butAlarmSystemTypeNone", "None", fontFamilyName, "None", butAlarmSystemTypeSelect_Clicked);
+                                "butAlarmSystemTypeNone", "None", fontFamilyName, "None", butAlarmSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AlarmSystemTypeEnum.OnlyVisualLight),
-                                "butAlarmSystemTypeOnlyVisualLight", "Only Visual Light", fontFamilyName, "OnlyVisualLight", butAlarmSystemTypeSelect_Clicked);
+                                "butAlarmSystemTypeOnlyVisualLight", "Only Visual Light", fontFamilyName, "OnlyVisualLight", butAlarmSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AlarmSystemTypeEnum.PagerAndLight),
-                                "butAlarmSystemTypePagerAndLight", "Pager And Light", fontFamilyName, "PagerAndLight", butAlarmSystemTypeSelect_Clicked);
+                                "butAlarmSystemTypePagerAndLight", "Pager And Light", fontFamilyName, "PagerAndLight", butAlarmSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AlarmSystemTypeEnum.SCADA),
-                                "butAlarmSystemTypeSCADA", "SCADA", fontFamilyName, "SCADA", butAlarmSystemTypeSelect_Clicked);
+                                "butAlarmSystemTypeSCADA", "SCADA", fontFamilyName, "SCADA", butAlarmSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)AlarmSystemTypeEnum.SCADAAndLight),
-                                "butAlarmSystemTypeSCADAAndLight", "SCADAAndLight", fontFamilyName, "SCADAAndLight", butAlarmSystemTypeSelect_Clicked);
+                                "butAlarmSystemTypeSCADAAndLight", "SCADAAndLight", fontFamilyName, "SCADAAndLight", butAlarmSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butAlarmSystemTypeNone", "Unknown", fontFamilyName, "Unknown", butAlarmSystemTypeSelect_Clicked);
+                                "butAlarmSystemTypeNone", "Unknown", fontFamilyName, "Unknown", butAlarmSystemTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
                     case "ValveTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ValveTypeEnum.Manually),
-                                "butValveTypeManually", "Manually", fontFamilyName, "Manually", butValveTypeSelect_Clicked);
+                                "butValveTypeManually", "Manually", fontFamilyName, "Manually", butValveTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ValveTypeEnum.Automatically),
-                                "butValveTypeAutomatically", "Automatically", fontFamilyName, "Automatically", butValveTypeSelect_Clicked);
+                                "butValveTypeAutomatically", "Automatically", fontFamilyName, "Automatically", butValveTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ValveTypeEnum.None),
-                                "butValveTypeManually", "None", fontFamilyName, "None", butValveTypeSelect_Clicked);
+                                "butValveTypeManually", "None", fontFamilyName, "None", butValveTypeSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
 
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, null,
-                                "butValveTypeUnknown", "Unknown", fontFamilyName, "Unknown", butValveTypeSelect_Clicked);
+                                "butValveTypeUnknown", "Unknown", fontFamilyName, "Unknown", butValveTypeSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                        }
+                        break;
+                    case "TelTypeEnum":
+                        {
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TelTypeEnum.Mobile),
+                                "butTelTypeMobile", "Mobile", fontFamilyName, "Mobile", butTelTypeSelect_Clicked, item);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TelTypeEnum.Mobile2),
+                                "butTelTypeMobile2", "Mobile 2", fontFamilyName, "Mobile 2", butTelTypeSelect_Clicked, item);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TelTypeEnum.Personal),
+                                "butTelTypePersonal", "Personal", fontFamilyName, "Personal", butTelTypeSelect_Clicked, item);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TelTypeEnum.Personal2),
+                                "butTelTypePersonal2", "Personal 2", fontFamilyName, "Personal 2", butTelTypeSelect_Clicked, item);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TelTypeEnum.Work),
+                                "butTelTypeWork", "Work", fontFamilyName, "Work", butTelTypeSelect_Clicked, item);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TelTypeEnum.Work2),
+                                "butTelTypeWork2", "Work 2", fontFamilyName, "Work 2", butTelTypeSelect_Clicked, item);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                        }
+                        break;
+                    case "EmailTypeEnum":
+                        {
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)EmailTypeEnum.Personal),
+                                "butEmailTypePersonal", "Personal", fontFamilyName, "Personal", butEmailTypeSelect_Clicked, item);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)EmailTypeEnum.Personal2),
+                                "butEmailTypePersonal2", "Personal 2", fontFamilyName, "Personal 2", butEmailTypeSelect_Clicked, item);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)EmailTypeEnum.Work),
+                                "butEmailTypeWork", "Work", fontFamilyName, "Work", butEmailTypeSelect_Clicked, item);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)EmailTypeEnum.Work2),
+                                "butEmailTypeWork2", "Work 2", fontFamilyName, "Work 2", butEmailTypeSelect_Clicked, item);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
@@ -1310,6 +1376,16 @@ namespace CSSPPolSourceSiteInputToolHelper
                     case "ValveTypeEnum":
                         {
                             lblItemEnum2.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "TelTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_TelTypeEnum((TelTypeEnum)val).ToString()})";
+                        }
+                        break;
+                    case "EmailTypeEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_EmailTypeEnum((EmailTypeEnum)val).ToString()})";
                         }
                         break;
                     default:
@@ -1389,6 +1465,16 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 lblItemEnumNew.Text = valNew == null ? "empty" : _BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)valNew).ToString();
                             }
                             break;
+                        case "TelTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : _BaseEnumService.GetEnumText_TelTypeEnum((TelTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "EmailTypeEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : _BaseEnumService.GetEnumText_EmailTypeEnum((EmailTypeEnum)valNew).ToString();
+                            }
+                            break;
                         default:
                             break;
                     }
@@ -1399,11 +1485,12 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
         }
 
-        private void CreateChoiceButton(int x, int top, int? val, int? valNew, string elemName, int? elemEnumInt, string butName, string butText, string butFontFamilyName, string tag, EventHandler but_Clicked)
+        private void CreateChoiceButton(int x, int top, int? val, int? valNew, string elemName, int? elemEnumInt, string butName, string butText, string butFontFamilyName, string tag, EventHandler but_Clicked, int item)
         {
             Button but = new Button();
             but.Location = new Point(x, top);
             but.AutoSize = true;
+            //but.Tag = item.ToString();
 
             if (elemEnumInt == null)
             {
@@ -1519,6 +1606,26 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "TelTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentContact.TelephoneList[item].TelTypeNew = null;
+                                CurrentContact.TelephoneList[item].TelType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
+                    case "EmailTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentContact.EmailList[item].EmailTypeNew = null;
+                                CurrentContact.EmailList[item].EmailType = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -1623,6 +1730,24 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 CurrentInfrastructure.ValveTypeNew = valNew;
                                 if (CurrentInfrastructure.ValveTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "TelTypeEnum":
+                            {
+                                CurrentContact.TelephoneList[item].TelTypeNew = valNew;
+                                if (CurrentContact.TelephoneList[item].TelTypeNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
+                        case "EmailTypeEnum":
+                            {
+                                CurrentContact.EmailList[item].EmailTypeNew = valNew;
+                                if (CurrentContact.EmailList[item].EmailTypeNew == elemEnumInt)
                                 {
                                     but.BackColor = Color.Green;
                                 }
@@ -1737,6 +1862,24 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     }
                                 }
                                 break;
+                            case "TelTypeEnum":
+                                {
+                                    CurrentContact.TelephoneList[item].TelType = val;
+                                    if (CurrentContact.TelephoneList[item].TelType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "EmailTypeEnum":
+                                {
+                                    CurrentContact.EmailList[item].EmailType = val;
+                                    if (CurrentContact.EmailList[item].EmailType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
                             default:
                                 break;
                         }
@@ -1746,7 +1889,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             but.Font = new Font(new FontFamily(butFontFamilyName).Name, 10f, FontStyle.Regular);
             but.Name = butName;
             but.Text = butText;
-            but.Tag = tag;
+            but.Tag = tag + "|" + item.ToString();
             but.Click += but_Clicked;
 
             PanelViewAndEdit.Controls.Add(but);
@@ -1755,6 +1898,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butInfrastructureTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "None":
@@ -1795,15 +1939,16 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (!IsReading)
             {
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
             }
         }
 
         private void butFacilityTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "None":
@@ -1829,15 +1974,16 @@ namespace CSSPPolSourceSiteInputToolHelper
             if (!IsReading)
             {
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
             }
         }
 
         private void butAerationTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "None":
@@ -1865,9 +2011,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                 int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
 
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
@@ -1876,6 +2022,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butPreliminaryTreatmentTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "NotApplicable":
@@ -1908,9 +2055,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                 int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
 
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
@@ -1919,6 +2066,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butPrimaryTreatmentTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "NotApplicable":
@@ -1956,8 +2104,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
 
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
-                ReDrawInfrastructure();
+                DrawPanelContactsAndInfrastructures();
+                ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
@@ -1966,6 +2114,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butSecondaryTreatmentTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "NotApplicable":
@@ -2043,8 +2192,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
 
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
-                ReDrawInfrastructure();
+                DrawPanelContactsAndInfrastructures();
+                ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
@@ -2053,6 +2202,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butTertiaryTreatmentTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "NotApplicable":
@@ -2100,9 +2250,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                 int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
 
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
@@ -2111,6 +2261,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butDisinfectionTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "None":
@@ -2158,9 +2309,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                 int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
 
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
@@ -2169,6 +2320,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butCollectionSystemTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "None":
@@ -2241,9 +2393,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                 int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
 
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
@@ -2252,6 +2404,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butAlarmSystemTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "Unknown":
@@ -2294,9 +2447,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                 int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
 
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
@@ -2305,6 +2458,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butValveTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
             switch (tagText)
             {
                 case "Unknown":
@@ -2337,9 +2491,107 @@ namespace CSSPPolSourceSiteInputToolHelper
                 int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
 
                 SaveInfrastructureInfo();
-                DrawPanelInfrastructures();
+                DrawPanelContactsAndInfrastructures();
                 //RedrawSinglePanelInfrastructure();
-                ReDrawInfrastructure();
+                ReDrawContactAndInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butTelTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            int item = int.Parse(tagText.Substring(tagText.IndexOf("|") + 1));
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
+            switch (tagText)
+            {
+                case "Mobile":
+                    {
+                        CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Mobile);
+                    }
+                    break;
+                case "Mobile2":
+                    {
+                        CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Mobile2);
+                    }
+                    break;
+                case "Personal":
+                    {
+                        CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Personal);
+                    }
+                    break;
+                case "Personal2":
+                    {
+                        CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Personal2);
+                    }
+                    break;
+                case "Work":
+                    {
+                        CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Work);
+                    }
+                    break;
+                case "Work2":
+                    {
+                        CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Work2);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelContactsAndInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawContactAndInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
+        private void butEmailTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            int item = int.Parse(tagText.Substring(tagText.IndexOf("|") + 1));
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
+            switch (tagText)
+            {
+                case "Personal":
+                    {
+                        CurrentContact.EmailList[item].EmailTypeNew = ((int)EmailTypeEnum.Personal);
+                    }
+                    break;
+                case "Personal2":
+                    {
+                        CurrentContact.EmailList[item].EmailTypeNew = ((int)EmailTypeEnum.Personal2);
+                    }
+                    break;
+                case "Work":
+                    {
+                        CurrentContact.EmailList[item].EmailTypeNew = ((int)EmailTypeEnum.Work);
+                    }
+                    break;
+                case "Work2":
+                    {
+                        CurrentContact.EmailList[item].EmailTypeNew = ((int)EmailTypeEnum.Work2);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelContactsAndInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
@@ -2970,7 +3222,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             }
         }
-        private void DrawItemText(int x, int y, string val, string valNew, string lblTxt, string textBoxName, int width)
+        private void DrawItemText(int x, int y, string val, string valNew, string lblTxt, string textBoxName, int width, int item)
         {
             Label lblItem = new Label();
             lblItem.AutoSize = true;
@@ -3090,7 +3342,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
-        public void DrawPanelContacts()
+        public void DrawPanelContactsAndInfrastructures()
         {
             PanelPolSourceSite.Controls.Clear();
 
@@ -3102,44 +3354,225 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.Location = new Point(10, 4);
                 lblTVText.TabIndex = 0;
                 lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblTVText.Text = $"Selected municipality has no contact";
+                lblTVText.Text = $"Selected municipality has no contact or infrastructure";
 
                 PanelPolSourceSite.Controls.Add(lblTVText);
             }
             else
             {
-                DrawPanelContact();
-            }
-        }
-        public void DrawPanelInfrastructures()
-        {
-            PanelPolSourceSite.Controls.Clear();
 
-            if (municipalityDoc.Municipality == null)
-            {
-                Label lblTVText = new Label();
 
-                lblTVText.AutoSize = true;
-                lblTVText.Location = new Point(10, 4);
-                lblTVText.TabIndex = 0;
-                lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblTVText.Text = $"Selected municipality has no infrastructure";
-
-                PanelPolSourceSite.Controls.Add(lblTVText);
-            }
-            else
-            {
-                int countInfrastructure = 0;
+                List<Contact> ContactList = municipalityDoc.Municipality.ContactList;
+                ShowPanelContact();
 
                 List<Infrastructure> InfNextList = municipalityDoc.Municipality.InfrastructureList.Where(c => c.PumpsToTVItemID == null && c.PumpsToTVItemIDNew == null).ToList();
                 int Level = 0;
-                ShowRecursivePanelInfrastructure(InfNextList, Level, countInfrastructure);
+                ShowRecursivePanelInfrastructure(InfNextList, Level);
 
                 InfNextList = municipalityDoc.Municipality.InfrastructureList.Where(c => c.Shown == false).ToList();
-                ShowRecursivePanelInfrastructure(InfNextList, Level, countInfrastructure);
+                ShowRecursivePanelInfrastructure(InfNextList, Level);
             }
         }
-        public void ShowRecursivePanelInfrastructure(List<Infrastructure> InfNextList, int Level, int countInfrastructure)
+        public void ShowPanelContact()
+        {
+            int Y = 0;
+            foreach (Contact contact in municipalityDoc.Municipality.ContactList)
+            {
+                if (PanelPolSourceSite.Controls.Count > 0)
+                {
+                    Y = PanelPolSourceSite.Controls[PanelPolSourceSite.Controls.Count - 1].Bottom;
+                }
+                else
+                {
+                    Y = 0;
+                }
+                Panel panelContact = new Panel();
+
+                panelContact.BorderStyle = BorderStyle.FixedSingle;
+                panelContact.Location = new Point(0, Y);
+                panelContact.Size = new Size(PanelPolSourceSite.Width, 44);
+                panelContact.TabIndex = 0;
+                panelContact.Tag = contact.ContactTVItemID;
+                panelContact.Click += ShowContact_Click;
+
+                Label lblTVText = new Label();
+
+                lblTVText.AutoSize = true;
+                lblTVText.Location = new Point(10, 4);
+                lblTVText.TabIndex = 0;
+                lblTVText.Tag = contact.ContactTVItemID;
+
+                bool IsActive = false;
+                if (contact.IsActiveNew != null)
+                {
+                    IsActive = (bool)contact.IsActiveNew;
+                }
+                else
+                {
+                    IsActive = (bool)contact.IsActive;
+                }
+
+                if (IsActive == false)
+                {
+                    lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                }
+                else
+                {
+                    lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
+                }
+                string FirstName = string.IsNullOrWhiteSpace(contact.FirstNameNew) == false ? contact.FirstNameNew : contact.FirstName;
+                string Initial = string.IsNullOrWhiteSpace(contact.InitialNew) == false ? contact.InitialNew : contact.Initial;
+                if (!string.IsNullOrWhiteSpace(Initial))
+                {
+                    Initial = Initial + ", ";
+                }
+                string LastName = string.IsNullOrWhiteSpace(contact.LastNameNew) == false ? contact.LastNameNew : contact.LastName;
+                string FullName = $"{FirstName} {Initial} {LastName}";
+                lblTVText.Text = $"{contact.ContactTVItemID}    {FullName} (Contact)";
+                lblTVText.Click += ShowContact_Click;
+
+                panelContact.Controls.Add(lblTVText);
+
+                Label lbContactStatus = new Label();
+
+                bool NeedsUpdate = false;
+
+                if (IsAdmin)
+                {
+                    if (contact.IsActiveNew != null && contact.IsActiveNew != contact.IsActive)
+                    {
+                        NeedsUpdate = true;
+                    }
+
+                    if (!NeedsUpdate)
+                    {
+                        if (contact.FirstNameNew != null
+                            || contact.InitialNew != null
+                            || contact.LastNameNew != null)
+                        {
+                            NeedsUpdate = true;
+                        }
+                    }
+
+                    if (!NeedsUpdate)
+                    {
+                        if (contact.IsActiveNew != null
+                            || contact.ContactAddressNew.AddressTVItemID != null
+                            || contact.ContactAddressNew.AddressType != null
+                            || contact.ContactAddressNew.Municipality != null
+                            || contact.ContactAddressNew.PostalCode != null
+                            || contact.ContactAddressNew.StreetName != null
+                            || contact.ContactAddressNew.StreetNumber != null
+                            || contact.ContactAddressNew.StreetType != null)
+                        {
+                            NeedsUpdate = true;
+                        }
+                    }
+
+                    if (!NeedsUpdate)
+                    {
+                        foreach (Telephone tel in contact.TelephoneList)
+                        {
+                            if (tel.TelTypeNew != null
+                                || tel.TelNumberNew != null)
+                            {
+                                NeedsUpdate = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!NeedsUpdate)
+                    {
+                        foreach (Email email in contact.EmailList)
+                        {
+                            if (email.EmailTypeNew != null
+                                || email.EmailAddressNew != null)
+                            {
+                                NeedsUpdate = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    string NeedsUpdateText = NeedsUpdate ? "Needs Update" : "";
+
+                    lbContactStatus.AutoSize = true;
+                    lbContactStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                    lbContactStatus.TabIndex = 0;
+                    lbContactStatus.Tag = contact.ContactTVItemID;
+
+                    bool IsActive2 = false;
+                    if (contact.IsActiveNew != null)
+                    {
+                        IsActive2 = (bool)contact.IsActiveNew;
+                    }
+                    else
+                    {
+                        IsActive2 = (bool)contact.IsActive;
+                    }
+
+                    if (IsActive2 == false)
+                    {
+                        lbContactStatus.Font = new Font(new FontFamily(lbContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                    }
+                    else
+                    {
+                        lbContactStatus.Font = new Font(new FontFamily(lbContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    }
+                    if (NeedsUpdate)
+                    {
+                        lbContactStatus.Text = $"{NeedsUpdateText}";
+                    }
+                    else
+                    {
+                        lbContactStatus.Text = $"";
+                    }
+                    lbContactStatus.Click += ShowContact_Click;
+
+
+                    panelContact.Controls.Add(lbContactStatus);
+
+                }
+                else
+                {
+
+                    lbContactStatus.AutoSize = true;
+                    lbContactStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                    lbContactStatus.TabIndex = 0;
+                    lbContactStatus.Tag = contact.ContactTVItemID;
+
+                    bool IsActive2 = false;
+                    if (contact.IsActiveNew != null)
+                    {
+                        IsActive2 = (bool)contact.IsActiveNew;
+                    }
+                    else
+                    {
+                        IsActive2 = (bool)contact.IsActive;
+                    }
+
+                    if (IsActive2 == false)
+                    {
+                        lbContactStatus.Font = new Font(new FontFamily(lbContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                    }
+                    else
+                    {
+                        lbContactStatus.Font = new Font(new FontFamily(lbContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    }
+                    lbContactStatus.Text = $"";
+                    lbContactStatus.Click += ShowContact_Click;
+
+
+                    panelContact.Controls.Add(lbContactStatus);
+                }
+
+                PanelPolSourceSite.Controls.Add(panelContact);
+
+                contact.Shown = true;
+            }
+        }
+        public void ShowRecursivePanelInfrastructure(List<Infrastructure> InfNextList, int Level)
         {
             int Y = 0;
             foreach (Infrastructure infrastructure in InfNextList)
@@ -3159,7 +3592,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 panelInfrastructure.Size = new Size(PanelPolSourceSite.Width - (Level * 10), 44);
                 panelInfrastructure.TabIndex = 0;
                 panelInfrastructure.Tag = infrastructure.InfrastructureTVItemID;
-                panelInfrastructure.Click += ShowMunicipality_Click;
+                panelInfrastructure.Click += ShowInfrastructure_Click;
 
                 Label lblTVText = new Label();
 
@@ -3194,7 +3627,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     lblTVText.Text = $"{infrastructure.InfrastructureTVItemID}    {infrastructure.TVText}";
                 }
-                lblTVText.Click += ShowMunicipality_Click;
+                lblTVText.Click += ShowInfrastructure_Click;
 
                 panelInfrastructure.Controls.Add(lblTVText);
 
@@ -3322,7 +3755,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         lbInfrastructureStatus.Text = $"";
                     }
-                    lbInfrastructureStatus.Click += ShowMunicipality_Click;
+                    lbInfrastructureStatus.Click += ShowInfrastructure_Click;
 
 
                     panelInfrastructure.Controls.Add(lbInfrastructureStatus);
@@ -3355,7 +3788,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lbInfrastructureStatus.Font = new Font(new FontFamily(lbInfrastructureStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     }
                     lbInfrastructureStatus.Text = $"";
-                    lbInfrastructureStatus.Click += ShowMunicipality_Click;
+                    lbInfrastructureStatus.Click += ShowInfrastructure_Click;
 
 
                     panelInfrastructure.Controls.Add(lbInfrastructureStatus);
@@ -3387,208 +3820,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 if (InfNextListChild.Count > 0)
                 {
-                    ShowRecursivePanelInfrastructure(InfNextListChild, Level + 1, countInfrastructure + 1);
-                }
-            }
-        }
-        public void DrawPanelContact()
-        {
-            PanelPolSourceSite.Controls.Clear();
-
-            if (municipalityDoc.Municipality == null)
-            {
-                Label lblTVText = new Label();
-
-                lblTVText.AutoSize = true;
-                lblTVText.Location = new Point(10, 4);
-                lblTVText.TabIndex = 0;
-                lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                lblTVText.Text = $"Selected municipality has no contact";
-
-                PanelPolSourceSite.Controls.Add(lblTVText);
-            }
-            else
-            {
-                int countContact = 0;
-                foreach (Contact contact in municipalityDoc.Municipality.ContactList.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
-                {
-                    Panel panelContact = new Panel();
-
-                    panelContact.BorderStyle = BorderStyle.FixedSingle;
-                    panelContact.Location = new Point(0, countContact * 44);
-                    panelContact.Size = new Size(PanelPolSourceSite.Width, 44);
-                    panelContact.TabIndex = 0;
-                    panelContact.Tag = contact.ContactTVItemID;
-                    panelContact.Click += ShowPolSourceSite_Click;
-
-                    Label lblTVText = new Label();
-
-                    lblTVText.AutoSize = true;
-                    lblTVText.Location = new Point(5, 4);
-                    lblTVText.TabIndex = 0;
-                    lblTVText.Tag = contact.ContactTVItemID;
-
-                    bool IsActive = false;
-                    if (contact.IsActiveNew != null)
-                    {
-                        IsActive = (bool)contact.IsActiveNew;
-                    }
-                    else
-                    {
-                        if (contact.IsActive == null)
-                        {
-                            IsActive = true;
-                        }
-                        else
-                        {
-                            IsActive = (bool)contact.IsActive;
-                        }
-                    }
-
-                    if (IsActive == false)
-                    {
-                        lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
-                    }
-                    else
-                    {
-                        lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(contact.FirstNameNew))
-                    {
-                        lblTVText.Text = $"{contact.FirstNameNew}";
-                    }
-                    else
-                    {
-                        lblTVText.Text = $"{contact.FirstName}";
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(contact.InitialNew))
-                    {
-                        lblTVText.Text = lblTVText.Text + $"{contact.InitialNew}. ";
-                    }
-                    else
-                    {
-                        lblTVText.Text = lblTVText.Text + $"{contact.Initial}. ";
-                    }
-
-                    if (!string.IsNullOrWhiteSpace(contact.LastNameNew))
-                    {
-                        lblTVText.Text = lblTVText.Text + $"{contact.LastNameNew}";
-                    }
-                    else
-                    {
-                        lblTVText.Text = lblTVText.Text + $"{contact.LastName}";
-                    }
-
-                    lblTVText.Click += ShowPolSourceSite_Click;
-
-                    panelContact.Controls.Add(lblTVText);
-
-
-                    Label lblContactStatus = new Label();
-
-                    bool NeedsUpdate = false;
-                    if (IsAdmin)
-                    {
-                        if (contact.IsActiveNew != null && contact.IsActiveNew != contact.IsActive)
-                        {
-                            NeedsUpdate = false;
-                        }
-
-                        if (  contact.IsActiveNew != null
-                           || contact.ContactAddressNew.AddressTVItemID != null
-                           || contact.ContactAddressNew.AddressType != null
-                           || contact.ContactAddressNew.Municipality != null
-                           || contact.ContactAddressNew.PostalCode != null
-                           || contact.ContactAddressNew.StreetName != null
-                           || contact.ContactAddressNew.StreetNumber != null
-                           || contact.ContactAddressNew.StreetType != null)
-                        {
-                            NeedsUpdate = true;
-                        }
-
-                        lblContactStatus.AutoSize = true;
-                        lblContactStatus.Location = new Point(5, lblTVText.Bottom + 4);
-                        lblContactStatus.TabIndex = 0;
-                        lblContactStatus.Tag = contact.ContactTVItemID;
-
-                        bool IsActive2 = false;
-                        if (contact.IsActiveNew != null)
-                        {
-                            IsActive2 = (bool)contact.IsActiveNew;
-                        }
-                        else
-                        {
-                            IsActive2 = (bool)contact.IsActive;
-                        }
-
-                        if (IsActive2 == false)
-                        {
-                            lblContactStatus.Font = new Font(new FontFamily(lblContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
-                        }
-                        else
-                        {
-                            lblContactStatus.Font = new Font(new FontFamily(lblContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        }
-                        if (NeedsUpdate)
-                        {
-                            lblContactStatus.Text = $"Good --- Needs update";
-                        }
-                        else
-                        {
-                            lblContactStatus.Text = $"Good";
-                        }
-                        lblContactStatus.Click += ShowPolSourceSite_Click;
-
-
-                        panelContact.Controls.Add(lblContactStatus);
-
-                    }
-                    else
-                    {
-
-                        lblContactStatus.AutoSize = true;
-                        lblContactStatus.Location = new Point(5, lblTVText.Bottom + 4);
-                        lblContactStatus.TabIndex = 0;
-                        lblContactStatus.Tag = contact.ContactTVItemID;
-
-                        bool IsActive2 = false;
-                        if (contact.IsActiveNew != null)
-                        {
-                            IsActive2 = (bool)contact.IsActiveNew;
-                        }
-                        else
-                        {
-                            if (contact.IsActive == null)
-                            {
-                                IsActive2 = true;
-                            }
-                            else
-                            {
-                                IsActive2 = (bool)contact.IsActive;
-                            }
-                        }
-
-                        if (IsActive2 == false)
-                        {
-                            lblContactStatus.Font = new Font(new FontFamily(lblContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
-                        }
-                        else
-                        {
-                            lblContactStatus.Font = new Font(new FontFamily(lblContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        }
-                        lblContactStatus.Text = $"Good";
-                        lblContactStatus.Click += ShowPolSourceSite_Click;
-
-
-                        panelContact.Controls.Add(lblContactStatus);
-                    }
-
-
-                    PanelPolSourceSite.Controls.Add(panelContact);
-
-                    countContact += 1;
+                    ShowRecursivePanelInfrastructure(InfNextListChild, Level + 1);
                 }
             }
         }
@@ -5299,8 +5531,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
             SaveMunicipalityTextFile();
-            RedrawInfrastructureList();
-            ReDrawInfrastructure();
+            RedrawContactAndInfrastructureList();
+            ReDrawContactAndInfrastructure();
 
         }
         public void InfrastructureSaveAllToCSSPWebToolsRecursive(Infrastructure infrastructure)
@@ -6276,10 +6508,10 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             }
         }
-        public void RedrawContactList()
+        public void RedrawContactAndInfrastructureList()
         {
             IsReading = true;
-            if (!ReadInfrastructuresMunicipalityFile())
+            if (!ReadMunicipalityFile())
             {
                 return;
             }
@@ -6289,22 +6521,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return;
             }
 
-            DrawPanelContacts();
-        }
-        public void RedrawInfrastructureList()
-        {
-            IsReading = true;
-            if (!ReadInfrastructuresMunicipalityFile())
-            {
-                return;
-            }
-            IsReading = false;
-            if (!CheckAllReadDataMunicipalityOK())
-            {
-                return;
-            }
-
-            DrawPanelInfrastructures();
+            DrawPanelContactsAndInfrastructures();
         }
         public void RedrawPolSourceSiteList()
         {
@@ -6356,7 +6573,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
             }
         }
-        public void ShowContact()
+        private void ShowContact()
         {
             PanelViewAndEdit.Controls.Clear();
 
@@ -6367,7 +6584,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblMessage.Location = new Point(30, 30);
                 lblMessage.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                 lblMessage.Font = new Font(new FontFamily(lblMessage.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
-                lblMessage.Text = $"Please select an infrastructure items for {(IsEditing ? "editing" : "viewing")} {(ShowOnlyIssues ? "issues" : (ShowOnlyPictures ? "pictures" : "pollution source site"))}";
+                lblMessage.Text = $"Please select a contact items for {(IsEditing ? "editing" : "viewing")} {(ShowOnlyIssues ? "issues" : (ShowOnlyPictures ? "pictures" : "pollution source site"))}";
 
                 PanelViewAndEdit.Controls.Add(lblMessage);
 
@@ -6385,7 +6602,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             int Y = 0;
             int X = 10;
-            if (CurrentInfrastructure != null)
+            if (CurrentContact != null)
             {
                 #region Title and Active button
                 Label lblTVText = new Label();
@@ -6394,13 +6611,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblTVText.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
 
                 bool IsActive = false;
-                if (CurrentInfrastructure.IsActiveNew != null)
+                if (CurrentContact.IsActiveNew != null)
                 {
-                    IsActive = (bool)CurrentInfrastructure.IsActiveNew;
+                    IsActive = (bool)CurrentContact.IsActiveNew;
                 }
                 else
                 {
-                    IsActive = (bool)CurrentInfrastructure.IsActive;
+                    if (CurrentContact.IsActive == null)
+                    {
+                        IsActive = true;
+                    }
+                    else
+                    {
+                        IsActive = (bool)CurrentContact.IsActive;
+                    }
                 }
 
                 if (IsActive == false)
@@ -6411,20 +6635,36 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                 }
-                lblTVText.Text = $"{(CurrentInfrastructure.TVTextNew != null ? CurrentInfrastructure.TVTextNew : CurrentInfrastructure.TVText)}";
+
+                string FirstName = string.IsNullOrEmpty(CurrentContact.FirstNameNew) == true ? CurrentContact.FirstNameNew : CurrentContact.FirstName;
+                string Inital = string.IsNullOrEmpty(CurrentContact.InitialNew) == true ? CurrentContact.InitialNew : CurrentContact.Initial;
+                if (!string.IsNullOrWhiteSpace(Inital))
+                {
+                    Inital = Inital + ", ";
+                }
+                string LastName = string.IsNullOrEmpty(CurrentContact.LastNameNew) == true ? CurrentContact.LastNameNew : CurrentContact.LastName;
+                string FullName = $"{FirstName} {Inital} {LastName}";
+                lblTVText.Text = $"{FullName}";
 
                 PanelViewAndEdit.Controls.Add(lblTVText);
 
                 if (IsEditing)
                 {
                     bool IsActive2 = false;
-                    if (CurrentInfrastructure.IsActiveNew != null)
+                    if (CurrentContact.IsActiveNew != null)
                     {
-                        IsActive2 = (bool)CurrentInfrastructure.IsActiveNew;
+                        IsActive2 = (bool)CurrentContact.IsActiveNew;
                     }
                     else
                     {
-                        IsActive2 = (bool)CurrentInfrastructure.IsActive;
+                        if (CurrentContact.IsActive == null)
+                        {
+                            IsActive2 = true;
+                        }
+                        else
+                        {
+                            IsActive2 = (bool)CurrentContact.IsActive;
+                        }
                     }
                     if (IsActive2)
                     {
@@ -6434,7 +6674,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         butChangeToIsNotActive.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                         butChangeToIsNotActive.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                         butChangeToIsNotActive.Padding = new Padding(5);
-                        butChangeToIsNotActive.Tag = CurrentInfrastructure.InfrastructureTVItemID.ToString();
+                        butChangeToIsNotActive.Tag = CurrentContact.ContactTVItemID.ToString();
                         butChangeToIsNotActive.Text = $"Set as non active";
                         butChangeToIsNotActive.Click += butChangeToIsNotActive_Click;
 
@@ -6448,7 +6688,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         butChangeToIsActive.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                         butChangeToIsActive.Font = new Font(new FontFamily(butChangeToIsActive.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                         butChangeToIsActive.Padding = new Padding(5);
-                        butChangeToIsActive.Tag = CurrentInfrastructure.InfrastructureTVItemID.ToString();
+                        butChangeToIsActive.Tag = CurrentContact.ContactTVItemID.ToString();
                         butChangeToIsActive.Text = $"Set as active";
                         butChangeToIsActive.Click += butChangeToIsActive_Click;
 
@@ -6461,8 +6701,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblIsActive.AutoSize = true;
                     lblIsActive.Location = new Point(lblTVText.Right + 10, lblTVText.Top);
                     lblIsActive.Font = new Font(new FontFamily(lblIsActive.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    lblIsActive.ForeColor = CurrentInfrastructure.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
-                    lblIsActive.Text = (CurrentInfrastructure.IsActiveNew != null ? ((bool)CurrentInfrastructure.IsActiveNew ? "Is Active" : "Not Active") : ((bool)CurrentInfrastructure.IsActive ? "Is Active" : "Not Active"));
+                    lblIsActive.ForeColor = CurrentContact.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                    lblIsActive.Text = (CurrentContact.IsActiveNew != null ? ((bool)CurrentContact.IsActiveNew ? "Is Active" : "Not Active") : ((bool)CurrentContact.IsActive ? "Is Active" : "Not Active"));
 
                     PanelViewAndEdit.Controls.Add(lblIsActive);
                 }
@@ -6470,856 +6710,203 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 #endregion Title and Active button
 
-                #region TVText
+                #region FirstName
                 X = 10;
-                DrawItemText(X, Y, CurrentInfrastructure.TVText, CurrentInfrastructure.TVTextNew, "Infrastructure Name", "textBoxTVText", 300);
+                DrawItemText(X, Y, CurrentContact.FirstName, CurrentContact.FirstNameNew, "First Name", "textBoxFirstName", 300, 0);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                #endregion TVText
+                #endregion FirstName
 
-                #region Lat and Lng
+                #region Initial
                 X = 10;
-                DrawItemFloat(X, Y, CurrentInfrastructure.Lat, CurrentInfrastructure.LatNew, "Lat", 5, "textBoxLat");
-
-                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
-
-                DrawItemFloat(X, Y, CurrentInfrastructure.Lng, CurrentInfrastructure.LngNew, "Lng", 5, "textBoxLng");
+                DrawItemText(X, Y, CurrentContact.Initial, CurrentContact.InitialNew, "Initial", "textBoxInitial", 300, 0);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                #endregion Lat and Lng
+                #endregion Initial
 
-                #region LatOutfall and LngOutfall
+                #region LastName
                 X = 10;
-                DrawItemFloat(X, Y, CurrentInfrastructure.LatOutfall, CurrentInfrastructure.LatOutfallNew, "Lat Outfall", 5, "textBoxLatOutfall");
-
-                X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 5;
-
-                DrawItemFloat(X, Y, CurrentInfrastructure.LngOutfall, CurrentInfrastructure.LngOutfallNew, "Lng Outfall", 5, "textBoxLngOutfall");
+                DrawItemText(X, Y, CurrentContact.LastName, CurrentContact.LastNameNew, "Last Name", "textBoxLastName", 300, 0);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                #endregion LatOutfall and LngOutfall
+                #endregion LastName
 
-                if (IsEditing)
+                Label lblTel = new Label();
+                lblTel.AutoSize = true;
+                lblTel.Location = new Point(10, Y);
+                lblTel.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                lblTel.Font = new Font(new FontFamily(lblTel.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                lblTel.ForeColor = Color.Black;
+                lblTel.Text = $"Telephones";
+
+                PanelViewAndEdit.Controls.Add(lblTel);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
+                int CountTel = 0;
+                foreach (Telephone tel in CurrentContact.TelephoneList)
                 {
-                    Label lblWGS84Decimal = new Label();
-                    lblWGS84Decimal.AutoSize = true;
-                    lblWGS84Decimal.Location = new Point(10, Y);
-                    lblWGS84Decimal.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblWGS84Decimal.Font = new Font(new FontFamily(lblWGS84Decimal.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
-                    lblWGS84Decimal.ForeColor = Color.Red;
-                    lblWGS84Decimal.Text = $"Lat and Lng should be entered as WGS84 decimal degrees";
+                    #region TelType
+                    X = 10;
+                    DrawItemEnum(X, Y, tel.TelType, tel.TelTypeNew, "Telephone Type", "comboBoxTelType" + CountTel.ToString(), typeof(TelTypeEnum), CountTel);
+                    #endregion TelType
 
-                    PanelViewAndEdit.Controls.Add(lblWGS84Decimal);
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                    #region TelNumber
+                    X = 10;
+                    DrawItemText(X, Y, tel.TelNumber, tel.TelNumberNew, "Telephone Number", "textBoxTelNumber" + CountTel.ToString(), 300, CountTel);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion TelNumber
+
+                    CountTel++;
+                }
+
+                Label lblEmail = new Label();
+                lblEmail.AutoSize = true;
+                lblEmail.Location = new Point(10, Y);
+                lblEmail.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                lblEmail.Font = new Font(new FontFamily(lblEmail.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                lblEmail.ForeColor = Color.Black;
+                lblEmail.Text = $"Emails";
+
+                PanelViewAndEdit.Controls.Add(lblEmail);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
+                int CountEmail = 0;
+                foreach (Email email in CurrentContact.EmailList)
+                {
+                    #region EmailType
+                    X = 10;
+                    DrawItemEnum(X, Y, email.EmailType, email.EmailTypeNew, "Email Type", "comboBoxEmailType" + CountEmail.ToString(), typeof(EmailTypeEnum), CountEmail);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion EmailType
+
+                    #region EmailNumber
+                    X = 10;
+                    DrawItemText(X, Y, email.EmailAddress, email.EmailAddressNew, "Email Address", "textBoxEmailNumber" + CountEmail.ToString(), 300, CountEmail);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                    #endregion EmailNumber
+
+                    CountEmail++;
                 }
 
                 #region Address
-                DrawItemAddress(X, Y, CurrentInfrastructure.InfrastructureAddress, CurrentInfrastructure.InfrastructureAddressNew, true);
+                DrawItemAddress(X, Y, CurrentContact.ContactAddress, CurrentContact.ContactAddressNew, true);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 #endregion Address
 
-                #region PrismID, TPID, LSID etc...
-                //#region PrismID
-                //X = 10;
-                //DrawItemInt(X, Y, CurrentInfrastructure.PrismID, CurrentInfrastructure.PrismIDNew, "PrismID", "textBoxPrismID");
-
-                //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                //#endregion PrismID
-
-                //#region TPID
-                //X = 10;
-                //DrawItemInt(X, Y, CurrentInfrastructure.TPID, CurrentInfrastructure.TPIDNew, "TPID", "textBoxTPID");
-
-                //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                //#endregion TPID
-
-                //#region LSID
-                //X = 10;
-                //DrawItemInt(X, Y, CurrentInfrastructure.LSID, CurrentInfrastructure.LSIDNew, "LSID", "textBoxLSID");
-
-                //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                //#endregion LSID
-
-                //#region SiteID
-                //X = 10;
-                //DrawItemInt(X, Y, CurrentInfrastructure.SiteID, CurrentInfrastructure.SiteIDNew, "SiteID", "textBoxSiteID");
-
-                //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                //#endregion SiteID
-
-                //#region Site
-                //X = 10;
-                //DrawItemInt(X, Y, CurrentInfrastructure.Site, CurrentInfrastructure.SiteNew, "Site", "textBoxSite");
-
-                //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                //#endregion Site
-
-                //#region InfrastructureCategory
-                //X = 10;
-                //DrawItemText(X, Y, CurrentInfrastructure.InfrastructureCategory, CurrentInfrastructure.InfrastructureCategoryNew, "Infrastructure Category", "textBoxInfrastructureCategory", 300);
-
-                //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                //#endregion InfrastructureCategory
-
-                #endregion  PrismID, TPID, LSID etc...
-
                 #region Save button
                 if (IsEditing)
                 {
-                    Button butSaveLatLngObsAndAddress = new Button();
-                    butSaveLatLngObsAndAddress.AutoSize = true;
-                    butSaveLatLngObsAndAddress.Location = new Point(200, Y);
-                    butSaveLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    butSaveLatLngObsAndAddress.Padding = new Padding(5);
-                    butSaveLatLngObsAndAddress.Text = $"Save";
-                    butSaveLatLngObsAndAddress.Click += butSaves_Click;
+                    Button butSaveContactAll = new Button();
+                    butSaveContactAll.AutoSize = true;
+                    butSaveContactAll.Location = new Point(200, Y);
+                    butSaveContactAll.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    butSaveContactAll.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    butSaveContactAll.Padding = new Padding(5);
+                    butSaveContactAll.Text = $"Save";
+                    butSaveContactAll.Click += butSaves_Click;
 
-                    PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
+                    PanelViewAndEdit.Controls.Add(butSaveContactAll);
 
                     X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
 
-                    Button butCancelLatLngObsAndAddress = new Button();
-                    butCancelLatLngObsAndAddress.AutoSize = true;
-                    butCancelLatLngObsAndAddress.Location = new Point(X, Y);
-                    butCancelLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    butCancelLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    butCancelLatLngObsAndAddress.Padding = new Padding(5);
-                    butCancelLatLngObsAndAddress.Text = $"Cancel";
-                    butCancelLatLngObsAndAddress.Click += butCancel_Click;
+                    Button butCancelContactAll = new Button();
+                    butCancelContactAll.AutoSize = true;
+                    butCancelContactAll.Location = new Point(X, Y);
+                    butCancelContactAll.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    butCancelContactAll.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    butCancelContactAll.Padding = new Padding(5);
+                    butCancelContactAll.Text = $"Cancel";
+                    butCancelContactAll.Click += butCancel_Click;
 
-                    PanelViewAndEdit.Controls.Add(butCancelLatLngObsAndAddress);
+                    PanelViewAndEdit.Controls.Add(butCancelContactAll);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                 }
                 #endregion Save button
-
-                #region InfrastructureType
-                X = 10;
-                DrawItemEnum(X, Y, CurrentInfrastructure.InfrastructureType, CurrentInfrastructure.InfrastructureTypeNew, "Infrastructure Type", "comboBoxInfrastructureType", typeof(InfrastructureTypeEnum));
-
-                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-
-                bool IsWWTP = false;
-                bool IsLS = false;
-                bool IsLineOverflow = false;
-                bool IsOther = false;
-                bool IsSeeOtherMunicipality = false;
-                if (CurrentInfrastructure.InfrastructureTypeNew != null)
-                {
-                    if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.WWTP)
-                    {
-                        IsWWTP = true;
-                    }
-                    if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.LiftStation)
-                    {
-                        IsLS = true;
-                    }
-                    if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.LineOverflow)
-                    {
-                        IsLineOverflow = true;
-                    }
-                    if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.Other)
-                    {
-                        IsOther = true;
-                    }
-                    if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew == InfrastructureTypeEnum.SeeOtherMunicipality)
-                    {
-                        IsSeeOtherMunicipality = true;
-                    }
-                }
-                else
-                {
-                    if (CurrentInfrastructure.InfrastructureType != null)
-                    {
-                        if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType == InfrastructureTypeEnum.WWTP)
-                        {
-                            IsWWTP = true;
-                        }
-                        if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType == InfrastructureTypeEnum.LiftStation)
-                        {
-                            IsLS = true;
-                        }
-                        if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType == InfrastructureTypeEnum.LineOverflow)
-                        {
-                            IsLineOverflow = true;
-                        }
-                        if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType == InfrastructureTypeEnum.Other)
-                        {
-                            IsOther = true;
-                        }
-                        if ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType == InfrastructureTypeEnum.SeeOtherMunicipality)
-                        {
-                            IsSeeOtherMunicipality = true;
-                        }
-                    }
-                }
-                #endregion InfrastructureType
-
-                #region FacilityType
-                bool IsLagoon = false;
-                bool IsPlant = false;
-                if (IsWWTP)
-                {
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.FacilityType, CurrentInfrastructure.FacilityTypeNew, "Facility Type", "comboBoxFacilityType", typeof(FacilityTypeEnum));
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-
-                    if (CurrentInfrastructure.FacilityTypeNew != null)
-                    {
-                        if ((FacilityTypeEnum)CurrentInfrastructure.FacilityTypeNew == FacilityTypeEnum.Lagoon)
-                        {
-                            IsLagoon = true;
-                        }
-                        if ((FacilityTypeEnum)CurrentInfrastructure.FacilityTypeNew == FacilityTypeEnum.Plant)
-                        {
-                            IsPlant = true;
-                        }
-                    }
-                    else
-                    {
-                        if (CurrentInfrastructure.FacilityType != null)
-                        {
-                            if ((FacilityTypeEnum)CurrentInfrastructure.FacilityType == FacilityTypeEnum.Lagoon)
-                            {
-                                IsLagoon = true;
-                            }
-                            if ((FacilityTypeEnum)CurrentInfrastructure.FacilityType == FacilityTypeEnum.Plant)
-                            {
-                                IsPlant = true;
-                            }
-                        }
-                    }
-                }
-                #endregion FacilityType
-
-
-                if (IsWWTP)
-                {
-                    if (IsLagoon)
-                    {
-                        #region NumberOfCells
-                        X = 10;
-                        DrawItemInt(X, Y, CurrentInfrastructure.NumberOfCells, CurrentInfrastructure.NumberOfCellsNew, "Number Of Cells", "textBoxNumberOfCells");
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion NumberOfCells
-
-                        #region NumberOfAeratedCells
-                        X = 10;
-                        DrawItemInt(X, Y, CurrentInfrastructure.NumberOfAeratedCells, CurrentInfrastructure.NumberOfAeratedCellsNew, "Number Of Aerated Cells", "textBoxNumberOfAeratedCells");
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion NumberOfAeratedCells
-
-                        #region IsMechanicallyAerated
-                        X = 10;
-                        DrawItemBool(X, Y, CurrentInfrastructure.IsMechanicallyAerated, CurrentInfrastructure.IsMechanicallyAeratedNew, "Is Mechanically Aerated", "checkBoxIsMechanicallyAerated");
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion IsMechanicallyAerated
-
-
-                        if (CurrentInfrastructure.IsMechanicallyAeratedNew != null)
-                        {
-                            if (CurrentInfrastructure.IsMechanicallyAeratedNew == true)
-                            {
-                                #region AerationType
-                                X = 40;
-                                DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum));
-
-                                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                                #endregion AerationType
-                            }
-                        }
-                        else
-                        {
-                            if (CurrentInfrastructure.IsMechanicallyAerated == true)
-                            {
-                                #region AerationType
-                                X = 40;
-                                DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum));
-
-                                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                                #endregion AerationType
-                            }
-                        }
-
-                        #region DisinfectionType
-                        X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum));
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion DisinfectionType
-                    }
-
-                    if (IsPlant)
-                    {
-
-                        #region PreliminaryTreatmentType
-                        X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.PreliminaryTreatmentType, CurrentInfrastructure.PreliminaryTreatmentTypeNew, "Preliminary Treatment Type", "comboBoxPreliminaryTreatmentType", typeof(PreliminaryTreatmentTypeEnum));
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion PreliminaryTreatmentType
-
-                        #region PrimaryTreatmentType
-                        X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.PrimaryTreatmentType, CurrentInfrastructure.PrimaryTreatmentTypeNew, "Primary Treatment Type", "comboBoxPrimaryTreatmentType", typeof(PrimaryTreatmentTypeEnum));
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion PrimaryTreatmentType
-
-                        #region SecondaryTreatmentType
-                        X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.SecondaryTreatmentType, CurrentInfrastructure.SecondaryTreatmentTypeNew, "Secondary Treatment Type", "comboBoxSecondaryTreatmentType", typeof(SecondaryTreatmentTypeEnum));
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion SecondaryTreatmentType
-
-                        #region TertiaryTreatmentType
-                        X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.TertiaryTreatmentType, CurrentInfrastructure.TertiaryTreatmentTypeNew, "Tertiary Treatment Type", "comboBoxTertiaryTreatmentType", typeof(TertiaryTreatmentTypeEnum));
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion TertiaryTreatmentType
-
-                        #region DisinfectionType
-                        X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum));
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                        #endregion DisinfectionType
-                    }
-
-                    #region AlarmSystemType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.AlarmSystemType, CurrentInfrastructure.AlarmSystemTypeNew, "Alarm System Type", "comboBoxAlarmSystemType", typeof(AlarmSystemTypeEnum));
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion AlarmSystemType
-
-                    #region CollectionSystemType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.CollectionSystemType, CurrentInfrastructure.CollectionSystemTypeNew, "Collection System Type", "comboBoxCollectionSystemType", typeof(CollectionSystemTypeEnum));
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion CollectionSystemType
-
-                    #region DesignFlow_m3_day
-                    X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.DesignFlow_m3_day, CurrentInfrastructure.DesignFlow_m3_dayNew, "Design Flow (m3/day)", 0, "textBoxDesignFlow_m3_day");
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-
-                    DrawItemFloat(X, Y, CurrentInfrastructure.DesignFlow_m3_day, CurrentInfrastructure.DesignFlow_m3_dayNew, "(Can. Gal./day)", 0, "textBoxDesignFlow_CanGal_day");
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-
-                    DrawItemFloat(X, Y, CurrentInfrastructure.DesignFlow_m3_day, CurrentInfrastructure.DesignFlow_m3_dayNew, "(US. Gal./day)", 0, "textBoxDesignFlow_USGal_day");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion DesignFlow_m3_day
-
-                    #region AverageFlow_m3_day
-                    X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.AverageFlow_m3_day, CurrentInfrastructure.AverageFlow_m3_dayNew, "Average Flow (m3/day)", 0, "textBoxAverageFlow_m3_day");
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-
-                    DrawItemFloat(X, Y, CurrentInfrastructure.AverageFlow_m3_day, CurrentInfrastructure.AverageFlow_m3_dayNew, "(Can. Gal./day)", 0, "textBoxAverageFlow_CanGal_day");
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-
-                    DrawItemFloat(X, Y, CurrentInfrastructure.AverageFlow_m3_day, CurrentInfrastructure.AverageFlow_m3_dayNew, "(US. Gal./day)", 0, "textBoxAverageFlow_USGal_day");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion AverageFlow_m3_day
-
-                    #region PeakFlow_m3_day
-                    X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PeakFlow_m3_day, CurrentInfrastructure.PeakFlow_m3_dayNew, "Peak Flow (m3/day)", 0, "textBoxPeakFlow_m3_day");
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PeakFlow_m3_day, CurrentInfrastructure.PeakFlow_m3_dayNew, "(Can. Gal./day)", 0, "textBoxPeakFlow_CanGal_day");
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PeakFlow_m3_day, CurrentInfrastructure.PeakFlow_m3_dayNew, "(US. Gal./day)", 0, "textBoxPeakFlow_USGal_day");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PeakFlow_m3_day
-
-                    #region PopServed
-                    X = 10;
-                    DrawItemInt(X, Y, CurrentInfrastructure.PopServed, CurrentInfrastructure.PopServedNew, "Population Served", "textBoxPopServed");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PopServed
-
-                    #region CanOverflow
-                    X = 10;
-                    DrawItemBool(X, Y, CurrentInfrastructure.CanOverflow, CurrentInfrastructure.CanOverflowNew, "Can Overflow", "checkBoxCanOverflow");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion CanOverflow
-
-                    #region ValveType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum));
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion ValveType
-
-                    #region HasBackupPower
-                    X = 10;
-                    DrawItemBool(X, Y, CurrentInfrastructure.HasBackupPower, CurrentInfrastructure.HasBackupPowerNew, "Has Backup Power", "checkBoxHasBackupPower");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion HasBackupPower
-
-                    #region PercFlowOfTotal
-                    X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PercFlowOfTotal, CurrentInfrastructure.PercFlowOfTotalNew, "Percentage Flow Of Total", 1, "textBoxPercFlowOfTotal");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PercFlowOfTotal
-
-                    #region PumpsToTVItemID
-                    X = 10;
-                    DrawItemInt(X, Y, CurrentInfrastructure.PumpsToTVItemID, CurrentInfrastructure.PumpsToTVItemIDNew, "Pumps To Infrastructure", "textBoxPumpsToTVItemID");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PumpsToTVItemID
-                }
-
-                if (IsLS || IsLineOverflow)
-                {
-                    #region AlarmSystemType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.AlarmSystemType, CurrentInfrastructure.AlarmSystemTypeNew, "Alarm System Type", "comboBoxAlarmSystemType", typeof(AlarmSystemTypeEnum));
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion AlarmSystemType
-
-                    #region CanOverflow
-                    X = 10;
-                    DrawItemBool(X, Y, CurrentInfrastructure.CanOverflow, CurrentInfrastructure.CanOverflowNew, "Can Overflow", "checkBoxCanOverflow");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion CanOverflow
-
-                    #region ValveType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum));
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion ValveType
-
-                    #region HasBackupPower
-                    X = 10;
-                    DrawItemBool(X, Y, CurrentInfrastructure.HasBackupPower, CurrentInfrastructure.HasBackupPowerNew, "Has Backup Power", "checkBoxHasBackupPower");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion HasBackupPower
-
-                    #region PercFlowOfTotal
-                    X = 10;
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PercFlowOfTotal, CurrentInfrastructure.PercFlowOfTotalNew, "Percentage Flow Of Total", 1, "textBoxPercFlowOfTotal");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PercFlowOfTotal
-
-                    #region PumpsToTVItemID
-                    X = 10;
-                    DrawItemInt(X, Y, CurrentInfrastructure.PumpsToTVItemID, CurrentInfrastructure.PumpsToTVItemIDNew, "Pumps To Infrastructure", "textBoxPumpsToTVItemID");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PumpsToTVItemID
-                }
-
-                if (IsOther)
-                {
-                    // nothing to draw
-                }
-
-                if (IsSeeOtherMunicipality)
-                {
-                    #region List Municipalities
-                    X = 10;
-                    DrawSeeOtherMunicipality(X, Y, "comboBoxSeeOtherMunicipality");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion List Municipalities
-
-                }
-
-                #region Save button
-                if (IsEditing)
-                {
-                    Button butSaveLatLngObsAndAddress = new Button();
-                    butSaveLatLngObsAndAddress.AutoSize = true;
-                    butSaveLatLngObsAndAddress.Location = new Point(200, Y);
-                    butSaveLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    butSaveLatLngObsAndAddress.Padding = new Padding(5);
-                    butSaveLatLngObsAndAddress.Text = $"Save";
-                    butSaveLatLngObsAndAddress.Click += butSaves_Click;
-
-                    PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
-
-                    Button butCancelLatLngObsAndAddress = new Button();
-                    butCancelLatLngObsAndAddress.AutoSize = true;
-                    butCancelLatLngObsAndAddress.Location = new Point(X, Y);
-                    butCancelLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    butCancelLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    butCancelLatLngObsAndAddress.Padding = new Padding(5);
-                    butCancelLatLngObsAndAddress.Text = $"Cancel";
-                    butCancelLatLngObsAndAddress.Click += butCancel_Click;
-
-                    PanelViewAndEdit.Controls.Add(butCancelLatLngObsAndAddress);
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                }
-                #endregion Save button
-
-
-                #region CommentEN
-                X = 10;
-                DrawItemTextMultiline(X, Y, CurrentInfrastructure.CommentEN, CurrentInfrastructure.CommentENNew, "Comment (EN)", "textBoxCommentEN", 500);
-
-                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                #endregion CommentEN
-
-                #region CommentFR
-                X = 10;
-                DrawItemTextMultiline(X, Y, CurrentInfrastructure.CommentFR, CurrentInfrastructure.CommentFRNew, "Comment (FR)", "textBoxCommentFR", 500);
-
-                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                #endregion CommentFR
-
-                if (IsLS || IsWWTP || IsLineOverflow)
-                {
-                    #region Save button
-                    if (IsEditing)
-                    {
-                        Button butSaveLatLngObsAndAddress = new Button();
-                        butSaveLatLngObsAndAddress.AutoSize = true;
-                        butSaveLatLngObsAndAddress.Location = new Point(200, Y);
-                        butSaveLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                        butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        butSaveLatLngObsAndAddress.Padding = new Padding(5);
-                        butSaveLatLngObsAndAddress.Text = $"Save";
-                        butSaveLatLngObsAndAddress.Click += butSaves_Click;
-
-                        PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
-
-                        X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
-
-                        Button butCancelLatLngObsAndAddress = new Button();
-                        butCancelLatLngObsAndAddress.AutoSize = true;
-                        butCancelLatLngObsAndAddress.Location = new Point(X, Y);
-                        butCancelLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                        butCancelLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        butCancelLatLngObsAndAddress.Padding = new Padding(5);
-                        butCancelLatLngObsAndAddress.Text = $"Cancel";
-                        butCancelLatLngObsAndAddress.Click += butCancel_Click;
-
-                        PanelViewAndEdit.Controls.Add(butCancelLatLngObsAndAddress);
-
-                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                    }
-                    #endregion Save button
-
-                    #region Optional values for Visual Plumes and Box Model 
-                    Label lblOptional = new Label();
-                    lblOptional.AutoSize = true;
-                    lblOptional.Location = new Point(X, Y);
-                    lblOptional.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblOptional.Font = new Font(new FontFamily(lblOptional.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
-                    lblOptional.Text = $"\r\n\r\nOptional information for Visual Plumes and Box Model";
-
-                    PanelViewAndEdit.Controls.Add(lblOptional);
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                    #endregion Optional values for Visual Plumes and Box Model 
-
-
-                    #region End of Pipe 
-                    Label lblEndOfPipe = new Label();
-                    lblEndOfPipe.AutoSize = true;
-                    lblEndOfPipe.Location = new Point(X, Y);
-                    lblEndOfPipe.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblEndOfPipe.Font = new Font(new FontFamily(lblEndOfPipe.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
-                    lblEndOfPipe.Text = $"End of Pipe";
-
-                    PanelViewAndEdit.Controls.Add(lblEndOfPipe);
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                    #endregion End of Pipe 
-
-                    X = 20;
-
-                    #region NumberOfPorts
-                    DrawItemInt(X, Y, CurrentInfrastructure.NumberOfPorts, CurrentInfrastructure.NumberOfPortsNew, "Number Of Ports", "textBoxNumberOfPorts");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion NumberOfPorts
-
-                    #region PortDiameter_m
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PortDiameter_m, CurrentInfrastructure.PortDiameter_mNew, "Port Diameter (m)", 5, "textBoxPortDiameter_m");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PortDiameter_m
-
-                    #region PortSpacing_m
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PortSpacing_m, CurrentInfrastructure.PortSpacing_mNew, "Port Spacing (m)", 5, "textBoxPortSpacing_m");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PortSpacing_m
-
-                    #region PortElevation_m
-                    DrawItemFloat(X, Y, CurrentInfrastructure.PortElevation_m, CurrentInfrastructure.PortElevation_mNew, "Port Elevation (m)", 5, "textBoxPortElevation_m");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion PortElevation_m
-
-                    #region VerticalAngle_deg
-                    DrawItemFloat(X, Y, CurrentInfrastructure.VerticalAngle_deg, CurrentInfrastructure.VerticalAngle_degNew, "Vertical Angle (deg)", 5, "textBoxVerticalAngle_deg");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion VerticalAngle_deg
-
-                    #region HorizontalAngle_deg
-                    DrawItemFloat(X, Y, CurrentInfrastructure.HorizontalAngle_deg, CurrentInfrastructure.HorizontalAngle_degNew, "Horizontal Angle (deg)", 5, "textBoxHorizontalAngle_deg");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion HorizontalAngle_deg
-
-                    #region DistanceFromShore_m
-                    DrawItemFloat(X, Y, CurrentInfrastructure.DistanceFromShore_m, CurrentInfrastructure.DistanceFromShore_mNew, "Distance From Shore (m)", 5, "textBoxDistanceFromShore_m");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                    #endregion DistanceFromShore_m
-
-                    X = 10;
-
-                    #region Surrounding water conditions 
-                    Label lblWaterConditions = new Label();
-                    lblWaterConditions.AutoSize = true;
-                    lblWaterConditions.Location = new Point(X, Y);
-                    lblWaterConditions.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    lblWaterConditions.Font = new Font(new FontFamily(lblWaterConditions.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
-                    lblWaterConditions.Text = $"Surrounding water conditions";
-
-                    PanelViewAndEdit.Controls.Add(lblWaterConditions);
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                    #endregion Surrounding water conditions
-
-                    X = 20;
-                    #region AverageDepth_m
-                    DrawItemFloat(X, Y, CurrentInfrastructure.AverageDepth_m, CurrentInfrastructure.AverageDepth_mNew, "Average Depth (m)", 5, "textBoxAverageDepth_m");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion AverageDepth_m
-
-                    #region DecayRate_per_day
-                    DrawItemFloat(X, Y, CurrentInfrastructure.DecayRate_per_day, CurrentInfrastructure.DecayRate_per_dayNew, "Decay Rate (/day)", 5, "textBoxDecayRate_per_day");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion DecayRate_per_day
-
-                    #region NearFieldVelocity_m_s
-                    DrawItemFloat(X, Y, CurrentInfrastructure.NearFieldVelocity_m_s, CurrentInfrastructure.NearFieldVelocity_m_sNew, "Near Field Velocity (m/s)", 5, "textBoxNearFieldVelocity_m_s");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion NearFieldVelocity_m_s
-
-                    #region FarFieldVelocity_m_s
-                    DrawItemFloat(X, Y, CurrentInfrastructure.FarFieldVelocity_m_s, CurrentInfrastructure.FarFieldVelocity_m_sNew, "Far Field Velocity (m/s)", 5, "textBoxFarFieldVelocity_m_s");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion FarFieldVelocity_m_s
-
-                    #region ReceivingWaterSalinity_PSU
-                    DrawItemFloat(X, Y, CurrentInfrastructure.ReceivingWaterSalinity_PSU, CurrentInfrastructure.ReceivingWaterSalinity_PSUNew, "Receiving Water Salinity (PSU)", 5, "textBoxReceivingWaterSalinity_PSU");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion ReceivingWaterSalinity_PSU
-
-                    #region ReceivingWaterTemperature_C
-                    DrawItemFloat(X, Y, CurrentInfrastructure.ReceivingWaterTemperature_C, CurrentInfrastructure.ReceivingWaterTemperature_CNew, "Receiving Water Temperature (C)", 5, "textBoxReceivingWaterTemperature_C");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion ReceivingWaterTemperature_C
-
-                    #region ReceivingWater_MPN_per_100ml
-                    DrawItemInt(X, Y, CurrentInfrastructure.ReceivingWater_MPN_per_100ml, CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew, "Receiving Water (MPN /100 mL)", "textBoxReceivingWater_MPN_per_100ml");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion ReceivingWater_MPN_per_100ml
-
-                }
-
-
-                if (false)
-                {
-                    #region SeeOtherMunicipalityTVItemID
-                    X = 10;
-                    DrawItemInt(X, Y, CurrentInfrastructure.SeeOtherMunicipalityTVItemID, CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew, "See Other TVItemID", "textBoxSeeOtherMunicipalityTVItemID");
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion SeeOtherMunicipalityTVItemID
-                }
-
-                #region Save button
-                if (IsEditing)
-                {
-                    Button butSaveLatLngObsAndAddress = new Button();
-                    butSaveLatLngObsAndAddress.AutoSize = true;
-                    butSaveLatLngObsAndAddress.Location = new Point(200, Y);
-                    butSaveLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    butSaveLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    butSaveLatLngObsAndAddress.Padding = new Padding(5);
-                    butSaveLatLngObsAndAddress.Text = $"Save";
-                    butSaveLatLngObsAndAddress.Click += butSaves_Click;
-
-                    PanelViewAndEdit.Controls.Add(butSaveLatLngObsAndAddress);
-
-                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
-
-                    Button butCancelLatLngObsAndAddress = new Button();
-                    butCancelLatLngObsAndAddress.AutoSize = true;
-                    butCancelLatLngObsAndAddress.Location = new Point(X, Y);
-                    butCancelLatLngObsAndAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
-                    butCancelLatLngObsAndAddress.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                    butCancelLatLngObsAndAddress.Padding = new Padding(5);
-                    butCancelLatLngObsAndAddress.Text = $"Cancel";
-                    butCancelLatLngObsAndAddress.Click += butCancel_Click;
-
-                    PanelViewAndEdit.Controls.Add(butCancelLatLngObsAndAddress);
-
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                }
-                #endregion Save button
-
-                if (!IsEditing)
-                {
-                    ShowPictures();
-                }
 
                 if (IsAdmin)
                 {
-                    bool NeedDetailsUpdate = false;
-                    bool NeedPicturesUpdate = false;
-                    bool NeedActiveUpdate = false;
+                    bool NeedsUpdate = false;
 
-                    if (CurrentInfrastructure.IsActiveNew != null && CurrentInfrastructure.IsActiveNew != CurrentInfrastructure.IsActive)
+                    if (CurrentContact.IsActiveNew != null && CurrentContact.IsActiveNew != CurrentContact.IsActive)
                     {
-                        NeedActiveUpdate = true;
+                        NeedsUpdate = true;
                     }
 
-                    if (CurrentInfrastructure.LatNew != null
-                       || CurrentInfrastructure.LngNew != null
-                       || CurrentInfrastructure.LatOutfallNew != null
-                       || CurrentInfrastructure.LngOutfallNew != null
-                       || CurrentInfrastructure.IsActiveNew != null
-                       || CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID != null
-                       || CurrentInfrastructure.InfrastructureAddressNew.AddressType != null
-                       // || CurrentInfrastructure.InfrastructureAddressNew.Municipality != null
-                       || CurrentInfrastructure.InfrastructureAddressNew.PostalCode != null
-                       || CurrentInfrastructure.InfrastructureAddressNew.StreetName != null
-                       || CurrentInfrastructure.InfrastructureAddressNew.StreetNumber != null
-                       || CurrentInfrastructure.InfrastructureAddressNew.StreetType != null)
+                    if (!NeedsUpdate)
                     {
-                        NeedDetailsUpdate = true;
-                    }
-
-                    if (!NeedDetailsUpdate)
-                    {
-                        if (CurrentInfrastructure.AerationTypeNew != null
-                            || CurrentInfrastructure.AlarmSystemTypeNew != null
-                            || CurrentInfrastructure.AverageDepth_mNew != null
-                            || CurrentInfrastructure.AverageFlow_m3_dayNew != null
-                            || CurrentInfrastructure.CanOverflowNew != null
-                            || CurrentInfrastructure.CollectionSystemTypeNew != null
-                            || CurrentInfrastructure.CommentENNew != null
-                            || CurrentInfrastructure.CommentFRNew != null
-                            || CurrentInfrastructure.DecayRate_per_dayNew != null
-                            || CurrentInfrastructure.DesignFlow_m3_dayNew != null
-                            || CurrentInfrastructure.DisinfectionTypeNew != null
-                            || CurrentInfrastructure.DistanceFromShore_mNew != null
-                            || CurrentInfrastructure.FacilityTypeNew != null
-                            || CurrentInfrastructure.FarFieldVelocity_m_sNew != null
-                            || CurrentInfrastructure.HorizontalAngle_degNew != null
-                            || CurrentInfrastructure.InfrastructureTypeNew != null
-                            || CurrentInfrastructure.IsActiveNew != null
-                            || CurrentInfrastructure.IsMechanicallyAeratedNew != null
-                            || CurrentInfrastructure.NearFieldVelocity_m_sNew != null
-                            || CurrentInfrastructure.NumberOfAeratedCellsNew != null
-                            || CurrentInfrastructure.NumberOfCellsNew != null
-                            || CurrentInfrastructure.NumberOfPortsNew != null
-                            || CurrentInfrastructure.PeakFlow_m3_dayNew != null
-                            || CurrentInfrastructure.PercFlowOfTotalNew != null
-                            || CurrentInfrastructure.PopServedNew != null
-                            || CurrentInfrastructure.PortDiameter_mNew != null
-                            || CurrentInfrastructure.PortElevation_mNew != null
-                            || CurrentInfrastructure.PortSpacing_mNew != null
-                            || CurrentInfrastructure.PreliminaryTreatmentTypeNew != null
-                            || CurrentInfrastructure.PrimaryTreatmentTypeNew != null
-                            || CurrentInfrastructure.PumpsToTVItemIDNew != null
-                            || CurrentInfrastructure.ReceivingWaterSalinity_PSUNew != null
-                            || CurrentInfrastructure.ReceivingWaterTemperature_CNew != null
-                            || CurrentInfrastructure.ReceivingWater_MPN_per_100mlNew != null
-                            || CurrentInfrastructure.SecondaryTreatmentTypeNew != null
-                            || CurrentInfrastructure.SeeOtherMunicipalityTVItemIDNew != null
-                            || CurrentInfrastructure.TertiaryTreatmentTypeNew != null
-                            || CurrentInfrastructure.TVTextNew != null
-                            || CurrentInfrastructure.VerticalAngle_degNew != null)
+                        if (CurrentContact.FirstNameNew != null
+                            || CurrentContact.InitialNew != null
+                            || CurrentContact.LastNameNew != null)
                         {
-                            NeedDetailsUpdate = true;
-                        }
-                    }
-                    foreach (Picture picture in CurrentInfrastructure.InfrastructurePictureList)
-                    {
-                        if (picture.DescriptionNew != null
-                            || picture.ExtensionNew != null
-                            || picture.FileNameNew != null
-                            || picture.ToRemove != null
-                            || picture.FromWaterNew != null
-                            || picture.PictureTVItemID >= 10000000)
-                        {
-                            NeedPicturesUpdate = true;
-                            break;
+                            NeedsUpdate = true;
                         }
                     }
 
-                    string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
-                    string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
-                    string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+                    if (!NeedsUpdate)
+                    {
+                        if (CurrentContact.IsActiveNew != null
+                            || CurrentContact.ContactAddressNew.AddressTVItemID != null
+                            || CurrentContact.ContactAddressNew.AddressType != null
+                            || CurrentContact.ContactAddressNew.Municipality != null
+                            || CurrentContact.ContactAddressNew.PostalCode != null
+                            || CurrentContact.ContactAddressNew.StreetName != null
+                            || CurrentContact.ContactAddressNew.StreetNumber != null
+                            || CurrentContact.ContactAddressNew.StreetType != null)
+                        {
+                            NeedsUpdate = true;
+                        }
+                    }
 
-                    if (NeedDetailsUpdate || NeedPicturesUpdate || NeedActiveUpdate)
+                    if (!NeedsUpdate)
+                    {
+                        foreach (Telephone tel in CurrentContact.TelephoneList)
+                        {
+                            if (tel.TelTypeNew != null
+                                || tel.TelNumberNew != null)
+                            {
+                                NeedsUpdate = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (!NeedsUpdate)
+                    {
+                        foreach (Email email in CurrentContact.EmailList)
+                        {
+                            if (email.EmailTypeNew != null
+                                || email.EmailAddressNew != null)
+                            {
+                                NeedsUpdate = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (NeedsUpdate)
                     {
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                         X = 20;
 
-                        Button butInfrastructureSaveToCSSPWebTools = new Button();
-                        butInfrastructureSaveToCSSPWebTools.AutoSize = true;
-                        butInfrastructureSaveToCSSPWebTools.Location = new Point(20, Y);
-                        butInfrastructureSaveToCSSPWebTools.Text = "Update All Infrastructure Related Information To CSSPWebTools";
-                        butInfrastructureSaveToCSSPWebTools.Tag = $"{CurrentInfrastructure.InfrastructureTVItemID}";
-                        butInfrastructureSaveToCSSPWebTools.Font = new Font(new FontFamily(butInfrastructureSaveToCSSPWebTools.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
-                        butInfrastructureSaveToCSSPWebTools.Padding = new Padding(5);
-                        butInfrastructureSaveToCSSPWebTools.Click += butSaveAllToCSSPWebTools_Click;
+                        Button butContactAndInfrastructureSaveToCSSPWebTools = new Button();
+                        butContactAndInfrastructureSaveToCSSPWebTools.AutoSize = true;
+                        butContactAndInfrastructureSaveToCSSPWebTools.Location = new Point(20, Y);
+                        butContactAndInfrastructureSaveToCSSPWebTools.Text = "Update All Contacts and Infrastructure Related Information To CSSPWebTools";
+                        butContactAndInfrastructureSaveToCSSPWebTools.Tag = $"{CurrentContact.ContactTVItemID}";
+                        butContactAndInfrastructureSaveToCSSPWebTools.Font = new Font(new FontFamily(butContactAndInfrastructureSaveToCSSPWebTools.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+                        butContactAndInfrastructureSaveToCSSPWebTools.Padding = new Padding(5);
+                        butContactAndInfrastructureSaveToCSSPWebTools.Click += butSaveAllToCSSPWebTools_Click;
 
-                        PanelViewAndEdit.Controls.Add(butInfrastructureSaveToCSSPWebTools);
+                        PanelViewAndEdit.Controls.Add(butContactAndInfrastructureSaveToCSSPWebTools);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                         X = 20;
@@ -7342,7 +6929,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             IsReading = false;
         }
-        public void ShowInfrastructure()
+        private void ShowInfrastructure()
         {
             PanelViewAndEdit.Controls.Clear();
 
@@ -7458,7 +7045,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 #region TVText
                 X = 10;
-                DrawItemText(X, Y, CurrentInfrastructure.TVText, CurrentInfrastructure.TVTextNew, "Infrastructure Name", "textBoxTVText", 300);
+                DrawItemText(X, Y, CurrentInfrastructure.TVText, CurrentInfrastructure.TVTextNew, "Infrastructure Name", "textBoxTVText", 300, 0);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 #endregion TVText
@@ -7544,7 +7131,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 //#region InfrastructureCategory
                 //X = 10;
-                //DrawItemText(X, Y, CurrentInfrastructure.InfrastructureCategory, CurrentInfrastructure.InfrastructureCategoryNew, "Infrastructure Category", "textBoxInfrastructureCategory", 300);
+                //DrawItemText(X, Y, CurrentInfrastructure.InfrastructureCategory, CurrentInfrastructure.InfrastructureCategoryNew, "Infrastructure Category", "textBoxInfrastructureCategory", 300, 0);
 
                 //Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 //#endregion InfrastructureCategory
@@ -7584,7 +7171,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 #region InfrastructureType
                 X = 10;
-                DrawItemEnum(X, Y, CurrentInfrastructure.InfrastructureType, CurrentInfrastructure.InfrastructureTypeNew, "Infrastructure Type", "comboBoxInfrastructureType", typeof(InfrastructureTypeEnum));
+                DrawItemEnum(X, Y, CurrentInfrastructure.InfrastructureType, CurrentInfrastructure.InfrastructureTypeNew, "Infrastructure Type", "comboBoxInfrastructureType", typeof(InfrastructureTypeEnum), 0);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
@@ -7650,7 +7237,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 if (IsWWTP)
                 {
                     X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.FacilityType, CurrentInfrastructure.FacilityTypeNew, "Facility Type", "comboBoxFacilityType", typeof(FacilityTypeEnum));
+                    DrawItemEnum(X, Y, CurrentInfrastructure.FacilityType, CurrentInfrastructure.FacilityTypeNew, "Facility Type", "comboBoxFacilityType", typeof(FacilityTypeEnum), 0);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
@@ -7715,7 +7302,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 #region AerationType
                                 X = 40;
-                                DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum));
+                                DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum), 0);
 
                                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                                 #endregion AerationType
@@ -7727,7 +7314,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                             {
                                 #region AerationType
                                 X = 40;
-                                DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum));
+                                DrawItemEnum(X, Y, CurrentInfrastructure.AerationType, CurrentInfrastructure.AerationTypeNew, "Aeration Type", "comboBoxAerationType", typeof(AerationTypeEnum), 0);
 
                                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                                 #endregion AerationType
@@ -7736,7 +7323,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                         #region DisinfectionType
                         X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum));
+                        DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum), 0);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                         #endregion DisinfectionType
@@ -7747,35 +7334,35 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                         #region PreliminaryTreatmentType
                         X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.PreliminaryTreatmentType, CurrentInfrastructure.PreliminaryTreatmentTypeNew, "Preliminary Treatment Type", "comboBoxPreliminaryTreatmentType", typeof(PreliminaryTreatmentTypeEnum));
+                        DrawItemEnum(X, Y, CurrentInfrastructure.PreliminaryTreatmentType, CurrentInfrastructure.PreliminaryTreatmentTypeNew, "Preliminary Treatment Type", "comboBoxPreliminaryTreatmentType", typeof(PreliminaryTreatmentTypeEnum), 0);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                         #endregion PreliminaryTreatmentType
 
                         #region PrimaryTreatmentType
                         X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.PrimaryTreatmentType, CurrentInfrastructure.PrimaryTreatmentTypeNew, "Primary Treatment Type", "comboBoxPrimaryTreatmentType", typeof(PrimaryTreatmentTypeEnum));
+                        DrawItemEnum(X, Y, CurrentInfrastructure.PrimaryTreatmentType, CurrentInfrastructure.PrimaryTreatmentTypeNew, "Primary Treatment Type", "comboBoxPrimaryTreatmentType", typeof(PrimaryTreatmentTypeEnum), 0);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                         #endregion PrimaryTreatmentType
 
                         #region SecondaryTreatmentType
                         X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.SecondaryTreatmentType, CurrentInfrastructure.SecondaryTreatmentTypeNew, "Secondary Treatment Type", "comboBoxSecondaryTreatmentType", typeof(SecondaryTreatmentTypeEnum));
+                        DrawItemEnum(X, Y, CurrentInfrastructure.SecondaryTreatmentType, CurrentInfrastructure.SecondaryTreatmentTypeNew, "Secondary Treatment Type", "comboBoxSecondaryTreatmentType", typeof(SecondaryTreatmentTypeEnum), 0);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                         #endregion SecondaryTreatmentType
 
                         #region TertiaryTreatmentType
                         X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.TertiaryTreatmentType, CurrentInfrastructure.TertiaryTreatmentTypeNew, "Tertiary Treatment Type", "comboBoxTertiaryTreatmentType", typeof(TertiaryTreatmentTypeEnum));
+                        DrawItemEnum(X, Y, CurrentInfrastructure.TertiaryTreatmentType, CurrentInfrastructure.TertiaryTreatmentTypeNew, "Tertiary Treatment Type", "comboBoxTertiaryTreatmentType", typeof(TertiaryTreatmentTypeEnum), 0);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                         #endregion TertiaryTreatmentType
 
                         #region DisinfectionType
                         X = 10;
-                        DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum));
+                        DrawItemEnum(X, Y, CurrentInfrastructure.DisinfectionType, CurrentInfrastructure.DisinfectionTypeNew, "Disinfection Type", "comboBoxDisinfectionType", typeof(DisinfectionTypeEnum), 0);
 
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                         #endregion DisinfectionType
@@ -7783,14 +7370,14 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     #region AlarmSystemType
                     X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.AlarmSystemType, CurrentInfrastructure.AlarmSystemTypeNew, "Alarm System Type", "comboBoxAlarmSystemType", typeof(AlarmSystemTypeEnum));
+                    DrawItemEnum(X, Y, CurrentInfrastructure.AlarmSystemType, CurrentInfrastructure.AlarmSystemTypeNew, "Alarm System Type", "comboBoxAlarmSystemType", typeof(AlarmSystemTypeEnum), 0);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion AlarmSystemType
 
                     #region CollectionSystemType
                     X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.CollectionSystemType, CurrentInfrastructure.CollectionSystemTypeNew, "Collection System Type", "comboBoxCollectionSystemType", typeof(CollectionSystemTypeEnum));
+                    DrawItemEnum(X, Y, CurrentInfrastructure.CollectionSystemType, CurrentInfrastructure.CollectionSystemTypeNew, "Collection System Type", "comboBoxCollectionSystemType", typeof(CollectionSystemTypeEnum), 0);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion CollectionSystemType
@@ -7856,7 +7443,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     #region ValveType
                     X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum));
+                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum), 0);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion ValveType
@@ -7887,7 +7474,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     #region AlarmSystemType
                     X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.AlarmSystemType, CurrentInfrastructure.AlarmSystemTypeNew, "Alarm System Type", "comboBoxAlarmSystemType", typeof(AlarmSystemTypeEnum));
+                    DrawItemEnum(X, Y, CurrentInfrastructure.AlarmSystemType, CurrentInfrastructure.AlarmSystemTypeNew, "Alarm System Type", "comboBoxAlarmSystemType", typeof(AlarmSystemTypeEnum), 0);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion AlarmSystemType
@@ -7901,7 +7488,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     #region ValveType
                     X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum));
+                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum), 0);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion ValveType
@@ -7912,7 +7499,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion HasBackupPower
-                    
+
                     #region PercFlowOfTotal
                     X = 10;
                     DrawItemFloat(X, Y, CurrentInfrastructure.PercFlowOfTotal, CurrentInfrastructure.PercFlowOfTotalNew, "Percentage Flow Of Total", 1, "textBoxPercFlowOfTotal");
@@ -8327,6 +7914,21 @@ namespace CSSPPolSourceSiteInputToolHelper
             PanelViewAndEdit.Controls.Add(lblReturns);
 
             IsReading = false;
+        }
+        public void ShowContactOrInfrastructure()
+        {
+            if (ContactTVItemID > 0 && InfrastructureTVItemID == 0)
+            {
+                ShowContact();
+            }
+            else if (InfrastructureTVItemID > 0)
+            {
+                ShowInfrastructure();
+            }
+            else
+            {
+                // nothing
+            }
         }
         public void ShowPolSourceSite()
         {
@@ -8833,27 +8435,55 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if ("" + CurrentInfrastructure.InfrastructureAddress.PostalCode == tb.Text)
+                                if (ContactTVItemID > 0)
                                 {
-                                    CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    if ("" + CurrentContact.ContactAddress.PostalCode == tb.Text)
                                     {
-                                        if (tb.Text.Trim().Length > 7)
-                                        {
-                                            MessageBox.Show("Postal Code maximum length is 7 characters", "Error");
-                                        }
-                                        CurrentInfrastructure.InfrastructureAddressNew.PostalCode = tb.Text;
+                                        CurrentContact.ContactAddressNew.PostalCode = null;
                                     }
                                     else
                                     {
-                                        CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
-                                        CurrentInfrastructure.InfrastructureAddress.PostalCode = null;
+                                        CurrentContact.ContactAddressNew.AddressTVItemID = 10000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            if (tb.Text.Trim().Length > 7)
+                                            {
+                                                MessageBox.Show("Postal Code maximum length is 7 characters", "Error");
+                                            }
+                                            CurrentContact.ContactAddressNew.PostalCode = tb.Text;
+                                        }
+                                        else
+                                        {
+                                            CurrentContact.ContactAddressNew.PostalCode = null;
+                                            CurrentContact.ContactAddress.PostalCode = null;
+                                        }
+                                        IsDirty = true;
                                     }
-                                    IsDirty = true;
+                                }
+                                else
+                                {
+                                    if ("" + CurrentInfrastructure.InfrastructureAddress.PostalCode == tb.Text)
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            if (tb.Text.Trim().Length > 7)
+                                            {
+                                                MessageBox.Show("Postal Code maximum length is 7 characters", "Error");
+                                            }
+                                            CurrentInfrastructure.InfrastructureAddressNew.PostalCode = tb.Text;
+                                        }
+                                        else
+                                        {
+                                            CurrentInfrastructure.InfrastructureAddressNew.PostalCode = null;
+                                            CurrentInfrastructure.InfrastructureAddress.PostalCode = null;
+                                        }
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                         }
@@ -9015,28 +8645,57 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if ("" + CurrentInfrastructure.InfrastructureAddress.Municipality == tb.Text)
+                                if (ContactTVItemID > 0)
                                 {
-                                    CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    if ("" + CurrentContact.ContactAddress.Municipality == tb.Text)
                                     {
-                                        if (tb.Text.Trim().Length > 200)
-                                        {
-                                            MessageBox.Show("Municipality maximum length is 200 characters", "Error");
-                                        }
-                                        CurrentInfrastructure.InfrastructureAddressNew.Municipality = tb.Text.Trim();
+                                        CurrentContact.ContactAddressNew.Municipality = null;
                                     }
                                     else
                                     {
-                                        CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
-                                        CurrentInfrastructure.InfrastructureAddress.Municipality = null;
+                                        CurrentContact.ContactAddressNew.AddressTVItemID = 20000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            if (tb.Text.Trim().Length > 200)
+                                            {
+                                                MessageBox.Show("Municipality maximum length is 200 characters", "Error");
+                                            }
+                                            CurrentContact.ContactAddressNew.Municipality = tb.Text.Trim();
+                                        }
+                                        else
+                                        {
+                                            CurrentContact.ContactAddressNew.Municipality = null;
+                                            CurrentContact.ContactAddress.Municipality = null;
+                                        }
+                                        SaveRestOfAddressNewContact();
+                                        IsDirty = true;
                                     }
-                                    SaveRestOfAddressNewInfrastructure();
-                                    IsDirty = true;
+                                }
+                                else
+                                {
+                                    if ("" + CurrentInfrastructure.InfrastructureAddress.Municipality == tb.Text)
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            if (tb.Text.Trim().Length > 200)
+                                            {
+                                                MessageBox.Show("Municipality maximum length is 200 characters", "Error");
+                                            }
+                                            CurrentInfrastructure.InfrastructureAddressNew.Municipality = tb.Text.Trim();
+                                        }
+                                        else
+                                        {
+                                            CurrentInfrastructure.InfrastructureAddressNew.Municipality = null;
+                                            CurrentInfrastructure.InfrastructureAddress.Municipality = null;
+                                        }
+                                        SaveRestOfAddressNewInfrastructure();
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                         }
@@ -9061,24 +8720,49 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     }
                                 }
 
-                                if (CurrentInfrastructure.InfrastructureAddress.StreetType != null && (StreetTypeEnum)CurrentInfrastructure.InfrastructureAddress.StreetType == streetType)
+                                if (ContactTVItemID > 0)
                                 {
-                                    CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    if (CurrentContact.ContactAddress.StreetType != null && (StreetTypeEnum)CurrentContact.ContactAddress.StreetType == streetType)
                                     {
-                                        CurrentInfrastructure.InfrastructureAddressNew.StreetType = (int)streetType;
+                                        CurrentContact.ContactAddressNew.StreetType = null;
                                     }
                                     else
                                     {
-                                        CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
-                                        CurrentInfrastructure.InfrastructureAddress.StreetType = null;
+                                        CurrentContact.ContactAddressNew.AddressTVItemID = 20000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            CurrentContact.ContactAddressNew.StreetType = (int)streetType;
+                                        }
+                                        else
+                                        {
+                                            CurrentContact.ContactAddressNew.StreetType = null;
+                                            CurrentContact.ContactAddress.StreetType = null;
+                                        }
+                                        SaveRestOfAddressNewContact();
+                                        IsDirty = true;
                                     }
-                                    SaveRestOfAddressNewInfrastructure();
-                                    IsDirty = true;
+                                }
+                                else
+                                {
+                                    if (CurrentInfrastructure.InfrastructureAddress.StreetType != null && (StreetTypeEnum)CurrentInfrastructure.InfrastructureAddress.StreetType == streetType)
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            CurrentInfrastructure.InfrastructureAddressNew.StreetType = (int)streetType;
+                                        }
+                                        else
+                                        {
+                                            CurrentInfrastructure.InfrastructureAddressNew.StreetType = null;
+                                            CurrentInfrastructure.InfrastructureAddress.StreetType = null;
+                                        }
+                                        SaveRestOfAddressNewInfrastructure();
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                         }
@@ -9088,28 +8772,56 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if ("" + CurrentInfrastructure.InfrastructureAddress.StreetName == tb.Text)
+                                if (ContactTVItemID > 0)
                                 {
-                                    CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    if ("" + CurrentContact.ContactAddress.StreetName == tb.Text)
                                     {
-                                        if (tb.Text.Trim().Length > 200)
-                                        {
-                                            MessageBox.Show("Street Name maximum length is 200 characters", "Error");
-                                        }
-                                        CurrentInfrastructure.InfrastructureAddressNew.StreetName = tb.Text.Trim();
+                                        CurrentContact.ContactAddressNew.StreetName = null;
                                     }
                                     else
                                     {
+                                        CurrentContact.ContactAddressNew.AddressTVItemID = 20000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            if (tb.Text.Trim().Length > 200)
+                                            {
+                                                MessageBox.Show("Street Name maximum length is 200 characters", "Error");
+                                            }
+                                            CurrentContact.ContactAddressNew.StreetName = tb.Text.Trim();
+                                        }
+                                        else
+                                        {
+                                            CurrentContact.ContactAddressNew.StreetName = null;
+                                            CurrentContact.ContactAddress.StreetName = null;
+                                        }
+                                        SaveRestOfAddressNewContact();
+                                        IsDirty = true;
+                                    }                                }
+                                else
+                                {
+                                    if ("" + CurrentInfrastructure.InfrastructureAddress.StreetName == tb.Text)
+                                    {
                                         CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
-                                        CurrentInfrastructure.InfrastructureAddress.StreetName = null;
                                     }
-                                    SaveRestOfAddressNewInfrastructure();
-                                    IsDirty = true;
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            if (tb.Text.Trim().Length > 200)
+                                            {
+                                                MessageBox.Show("Street Name maximum length is 200 characters", "Error");
+                                            }
+                                            CurrentInfrastructure.InfrastructureAddressNew.StreetName = tb.Text.Trim();
+                                        }
+                                        else
+                                        {
+                                            CurrentInfrastructure.InfrastructureAddressNew.StreetName = null;
+                                            CurrentInfrastructure.InfrastructureAddress.StreetName = null;
+                                        }
+                                        SaveRestOfAddressNewInfrastructure();
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                         }
@@ -9119,28 +8831,57 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if ("" + CurrentInfrastructure.InfrastructureAddress.StreetNumber == tb.Text)
+                                if (ContactTVItemID > 0)
                                 {
-                                    CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
-                                }
-                                else
-                                {
-                                    CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
-                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    if ("" + CurrentContact.ContactAddress.StreetNumber == tb.Text)
                                     {
-                                        if (tb.Text.Trim().Length > 200)
-                                        {
-                                            MessageBox.Show("Street Number maximum length is 200 characters", "Error");
-                                        }
-                                        CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = tb.Text.Trim();
+                                        CurrentContact.ContactAddressNew.StreetNumber = null;
                                     }
                                     else
                                     {
-                                        CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
-                                        CurrentInfrastructure.InfrastructureAddress.StreetNumber = null;
+                                        CurrentContact.ContactAddressNew.AddressTVItemID = 20000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            if (tb.Text.Trim().Length > 200)
+                                            {
+                                                MessageBox.Show("Street Number maximum length is 200 characters", "Error");
+                                            }
+                                            CurrentContact.ContactAddressNew.StreetNumber = tb.Text.Trim();
+                                        }
+                                        else
+                                        {
+                                            CurrentContact.ContactAddressNew.StreetNumber = null;
+                                            CurrentContact.ContactAddressNew.StreetNumber = null;
+                                        }
+                                        SaveRestOfAddressNewContact();
+                                        IsDirty = true;
                                     }
-                                    SaveRestOfAddressNewInfrastructure();
-                                    IsDirty = true;
+                                }
+                                else
+                                {
+                                    if ("" + CurrentInfrastructure.InfrastructureAddress.StreetNumber == tb.Text)
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
+                                    }
+                                    else
+                                    {
+                                        CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID = 10000000;
+                                        if (!string.IsNullOrWhiteSpace(tb.Text))
+                                        {
+                                            if (tb.Text.Trim().Length > 200)
+                                            {
+                                                MessageBox.Show("Street Number maximum length is 200 characters", "Error");
+                                            }
+                                            CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = tb.Text.Trim();
+                                        }
+                                        else
+                                        {
+                                            CurrentInfrastructure.InfrastructureAddressNew.StreetNumber = null;
+                                            CurrentInfrastructure.InfrastructureAddress.StreetNumber = null;
+                                        }
+                                        SaveRestOfAddressNewInfrastructure();
+                                        IsDirty = true;
+                                    }
                                 }
                             }
                         }
@@ -9198,6 +8939,90 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     {
                                         CurrentInfrastructure.TVTextNew = null;
                                         CurrentInfrastructure.TVText = null;
+                                    }
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxFirstName":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                if ("" + CurrentContact.FirstName == tb.Text)
+                                {
+                                    CurrentContact.FirstNameNew = null;
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("First Name maximum length is 200 characters", "Error");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        CurrentContact.FirstNameNew = null;
+                                        CurrentContact.FirstName = null;
+                                    }
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxInitial":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                if ("" + CurrentContact.Initial == tb.Text)
+                                {
+                                    CurrentContact.InitialNew = null;
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("First Name maximum length is 200 characters", "Error");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        CurrentContact.InitialNew = null;
+                                        CurrentContact.Initial = null;
+                                    }
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxLastName":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                if ("" + CurrentContact.LastName == tb.Text)
+                                {
+                                    CurrentContact.LastNameNew = null;
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("First Name maximum length is 200 characters", "Error");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        CurrentContact.LastNameNew = null;
+                                        CurrentContact.LastName = null;
                                     }
                                     IsDirty = true;
                                 }
@@ -9635,6 +9460,74 @@ namespace CSSPPolSourceSiteInputToolHelper
                                             else
                                             {
                                                 CurrentInfrastructure.ValveTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxTelType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                string TagText = cb.Tag.ToString();
+                                int item = int.Parse(TagText.Substring(TagText.IndexOf("|") + 1));
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentContact.TelephoneList[item].TelTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 0, count = Enum.GetNames(typeof(TelTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
+                                        {
+                                            if (CurrentContact.TelephoneList[item].TelType == i)
+                                            {
+                                                CurrentContact.TelephoneList[item].TelTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentContact.TelephoneList[item].TelTypeNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
+                    case "comboBoxEmailType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                string TagText = cb.Tag.ToString();
+                                int item = int.Parse(TagText.Substring(TagText.IndexOf("|") + 1));
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentContact.EmailList[item].EmailTypeNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 0, count = Enum.GetNames(typeof(EmailTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
+                                        {
+                                            if (CurrentContact.EmailList[item].EmailType == i)
+                                            {
+                                                CurrentContact.EmailList[item].EmailTypeNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentContact.EmailList[item].EmailTypeNew = i;
                                                 IsDirty = true;
                                             }
                                             break;
@@ -10581,13 +10474,27 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            if (CurrentInfrastructure.InfrastructureAddressNew.StreetNumber != null
-                || CurrentInfrastructure.InfrastructureAddressNew.StreetName != null
-                || CurrentInfrastructure.InfrastructureAddressNew.StreetType != null
-                || CurrentInfrastructure.InfrastructureAddressNew.Municipality != null
-                || CurrentInfrastructure.InfrastructureAddressNew.PostalCode != null)
+            if (ContactTVItemID > 0)
             {
-                SaveRestOfAddressNewInfrastructure();
+                if (CurrentContact.ContactAddressNew.StreetNumber != null
+                    || CurrentContact.ContactAddressNew.StreetName != null
+                    || CurrentContact.ContactAddressNew.StreetType != null
+                    || CurrentContact.ContactAddressNew.Municipality != null
+                    || CurrentContact.ContactAddressNew.PostalCode != null)
+                {
+                    SaveRestOfAddressNewContact();
+                }
+            }
+            else
+            {
+                if (CurrentInfrastructure.InfrastructureAddressNew.StreetNumber != null
+                    || CurrentInfrastructure.InfrastructureAddressNew.StreetName != null
+                    || CurrentInfrastructure.InfrastructureAddressNew.StreetType != null
+                    || CurrentInfrastructure.InfrastructureAddressNew.Municipality != null
+                    || CurrentInfrastructure.InfrastructureAddressNew.PostalCode != null)
+                {
+                    SaveRestOfAddressNewInfrastructure();
+                }
             }
 
             SaveMunicipalityTextFile();
@@ -10987,6 +10894,29 @@ namespace CSSPPolSourceSiteInputToolHelper
                 CurrentPSS.PSSAddressNew.PostalCode = CurrentPSS.PSSAddress.PostalCode;
             }
         }
+        public void SaveRestOfAddressNewContact()
+        {
+            if (CurrentContact.ContactAddressNew.StreetNumber == null)
+            {
+                CurrentContact.ContactAddressNew.StreetNumber = CurrentContact.ContactAddress.StreetNumber;
+            }
+            if (CurrentContact.ContactAddressNew.StreetName == null)
+            {
+                CurrentContact.ContactAddressNew.StreetName = CurrentContact.ContactAddress.StreetName;
+            }
+            if (CurrentContact.ContactAddressNew.StreetType == null)
+            {
+                CurrentContact.ContactAddressNew.StreetType = CurrentContact.ContactAddress.StreetType;
+            }
+            if (CurrentContact.ContactAddressNew.Municipality == null)
+            {
+                CurrentContact.ContactAddressNew.Municipality = CurrentContact.ContactAddress.Municipality;
+            }
+            if (CurrentContact.ContactAddressNew.PostalCode == null)
+            {
+                CurrentContact.ContactAddressNew.PostalCode = CurrentContact.ContactAddress.PostalCode;
+            }
+        }
         public void SaveRestOfAddressNewInfrastructure()
         {
             if (CurrentInfrastructure.InfrastructureAddressNew.StreetNumber == null)
@@ -11059,7 +10989,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             PreliminaryTreatmentTypeEnum? PreliminaryTreatmentType, PrimaryTreatmentTypeEnum? PrimaryTreatmentType,
             SecondaryTreatmentTypeEnum? SecondaryTreatmentType, TertiaryTreatmentTypeEnum? TertiaryTreatmentType,
             DisinfectionTypeEnum? DisinfectionType, CollectionSystemTypeEnum? CollectionSystemType, AlarmSystemTypeEnum? AlarmSystemType,
-            float? DesignFlow_m3_day, float? AverageFlow_m3_day, float? PeakFlow_m3_day, int? PopServed, 
+            float? DesignFlow_m3_day, float? AverageFlow_m3_day, float? PeakFlow_m3_day, int? PopServed,
             bool? CanOverflow, ValveTypeEnum? ValveType, bool? HasBackupPower,
             float? PercFlowOfTotal, float? AverageDepth_m, int? NumberOfPorts,
             float? PortDiameter_m, float? PortSpacing_m, float? PortElevation_m, float? VerticalAngle_deg, float? HorizontalAngle_deg,
