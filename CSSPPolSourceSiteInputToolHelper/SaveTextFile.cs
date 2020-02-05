@@ -41,25 +41,37 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             foreach (Contact contact in municipalityDoc.Municipality.ContactList)
             {
-                sb.AppendLine($"CONTACT\t{contact.ContactTVItemID}\t{contact.FirstName}\t{contact.Initial}\t{contact.LastName}\t{contact.IsActive}\t");
+                sb.AppendLine($"CONTACT\t{contact.ContactTVItemID}\t{contact.FirstName}\t{contact.Initial}\t{contact.LastName}\t{contact.Email}\t{contact.IsActive}\t");
 
-                if (contact.FirstNameNew != null || contact.InitialNew != null || contact.LastNameNew != null)
+                if (contact.FirstNameNew != null || contact.InitialNew != null || contact.LastNameNew != null || contact.EmailNew != null)
                 {
                     string FirstName = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
                     string Initial = contact.InitialNew != null ? contact.InitialNew : contact.Initial;
-                    string LastName = contact.LastNameNew != null ? contact.LastNameNew : contact.FirstName;
-                    sb.AppendLine($"CONTACTNEW\t{contact.ContactTVItemID}\t{FirstName}\t{Initial}\t{LastName}\t{contact.IsActive}\t");
+                    string LastName = contact.LastNameNew != null ? contact.LastNameNew : contact.LastName;
+                    string Email = contact.EmailNew != null ? contact.EmailNew : contact.Email;
+                    sb.AppendLine($"CONTACTNEW\t{contact.ContactTVItemID}\t{FirstName}\t{Initial}\t{LastName}\t{Email}\t{contact.IsActive}\t");
                 }
 
                 foreach (Telephone telephone in contact.TelephoneList)
                 {
                     sb.AppendLine($"CONTACTTELEPHONE\t{telephone.TelTVItemID}\t{telephone.TelType}\t{telephone.TelNumber}\t");
 
-                    if (telephone.TelTypeNew != null || telephone.TelNumberNew != null)
+                    bool HasNew = false;
+                    int? TelTVItemID = telephone.TelTVItemID;
+                    string TelType = "";
+                    string Number = "";
+                    if (telephone.TelTypeNew != null)
                     {
-                        int? TelTVItemID = telephone.TelTVItemID;
-                        int? TelType = telephone.TelTypeNew != null ? telephone.TelTypeNew : telephone.TelType;
-                        string Number = telephone.TelNumberNew != null ? telephone.TelNumberNew : telephone.TelNumber;
+                        TelType = telephone.TelTypeNew != null ? telephone.TelTypeNew.ToString() : telephone.TelType.ToString();
+                        HasNew = true;
+                    }
+                    if (telephone.TelNumberNew != null)
+                    {
+                        HasNew = true;
+                        Number = telephone.TelNumberNew != null ? telephone.TelNumberNew : telephone.TelNumber;
+                    }
+                    if (HasNew)
+                    {
                         sb.AppendLine($"CONTACTTELEPHONENEW\t{TelTVItemID}\t{TelType}\t{Number}\t");
                     }
                 }
@@ -68,11 +80,22 @@ namespace CSSPPolSourceSiteInputToolHelper
                 {
                     sb.AppendLine($"CONTACTEMAIL\t{email.EmailTVItemID}\t{email.EmailType}\t{email.EmailAddress}\t");
 
-                    if (email.EmailTypeNew != null || email.EmailAddressNew != null)
+                    bool HasNew = false;
+                    int? EmailTVItemID = email.EmailTVItemID;
+                    string EmailType = "";
+                    string EmailAddress = "";
+                    if (email.EmailTypeNew != null)
                     {
-                        int? EmailTVItemID = email.EmailTVItemID;
-                        int? EmailType = email.EmailTypeNew != null ? email.EmailTypeNew : email.EmailType;
-                        string EmailAddress = email.EmailAddressNew != null ? email.EmailAddressNew : email.EmailAddress;
+                        EmailType = email.EmailTypeNew != null ? email.EmailTypeNew.ToString() : email.EmailType.ToString();
+                    }
+
+                    if (email.EmailAddressNew != null)
+                    {
+                        EmailAddress = email.EmailAddressNew != null ? email.EmailAddressNew : email.EmailAddress;
+                        sb.AppendLine($"CONTACTEMAILNEW\t{EmailTVItemID}\t{EmailType}\t{EmailAddress}\t");
+                    }
+                    if (HasNew)
+                    {
                         sb.AppendLine($"CONTACTEMAILNEW\t{EmailTVItemID}\t{EmailType}\t{EmailAddress}\t");
                     }
                 }
@@ -263,11 +286,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string PopServedNew = infrastructure.PopServedNew != null ? ((int)infrastructure.PopServedNew).ToString() : "";
                     sb.AppendLine($"POPSERVEDNEW\t{PopServedNew}\t");
                 }
-                string CanOverflow = infrastructure.CanOverflow != null ? ((bool)infrastructure.CanOverflow) == true ? "true" : "false" : "";
+                string CanOverflow = infrastructure.CanOverflow != null ? infrastructure.CanOverflow == (int)CanOverflowTypeEnum.Yes ? "true" : "false" : "";
                 sb.AppendLine($"CANOVERFLOW\t{CanOverflow}\t");
                 if (infrastructure.CanOverflowNew != null)
                 {
-                    string CanOverflowNew = infrastructure.CanOverflowNew != null ? ((bool)infrastructure.CanOverflowNew) == true ? "true" : "false" : "";
+                    string CanOverflowNew = infrastructure.CanOverflowNew != null ? infrastructure.CanOverflowNew == (int)CanOverflowTypeEnum.Yes ? "true" : "false" : "";
                     sb.AppendLine($"CANOVERFLOWNEW\t{CanOverflowNew}\t");
                 }
                 sb.AppendLine($"VALVETYPE\t{infrastructure.ValveType}\t");

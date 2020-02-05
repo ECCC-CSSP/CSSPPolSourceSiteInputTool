@@ -615,11 +615,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                 sbKML.AppendLine($@"</p>");
 
                 // doing CanOverflow
-                string CanOverflow = infrastructure.CanOverflow != null && infrastructure.CanOverflow == true ? "true" : "false";
+                string CanOverflow = infrastructure.CanOverflow != null && infrastructure.CanOverflow == (int)CanOverflowTypeEnum.Yes ? "true" : "false";
                 sbKML.Append($@"                <p><b>Can Over flow:</b> {CanOverflow}</p>");
                 if (infrastructure.CanOverflowNew != null)
                 {
-                    string CanOverflowNew = infrastructure.CanOverflowNew == true ? "true" : "false";
+                    string CanOverflowNew = infrastructure.CanOverflowNew == (int)CanOverflowTypeEnum.Yes ? "true" : "false";
                     sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Can Overflow New:</b> {CanOverflowNew}");
                 }
                 sbKML.AppendLine($@"</p>");

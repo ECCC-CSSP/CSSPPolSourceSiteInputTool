@@ -528,6 +528,30 @@ namespace CSSPPolSourceSiteInputToolHelper
             Label labelSelected = ((Label)sender);
             DrawAfterLabelSelectd(labelSelected);
         }
+        private void butEmailAdd_Click(object sender, EventArgs e)
+        {
+            if (IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
+
+            EmailAdd();
+            SaveMunicipalityTextFile();
+            ReDrawContactAndInfrastructure();
+        }
+        private void butTelAdd_Click(object sender, EventArgs e)
+        {
+            if (IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
+
+            TelAdd();
+            SaveMunicipalityTextFile();
+            ReDrawContactAndInfrastructure();
+        }
         private void SaveAndRedraw(object sender, EventArgs e)
         {
             if (!IsReading)
@@ -1100,7 +1124,55 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
 
         // TVText_TextChanged
-        private void textItemTVText_TextChanged(object sender, EventArgs e)
+        private void textBoxTVText_TextChanged(object sender, EventArgs e)
+        {
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
+            PanelSubsectorOrMunicipality.Enabled = false;
+        }
+
+        // FirstName_TextChanged
+        private void textBoxFirstName_TextChanged(object sender, EventArgs e)
+        {
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
+            PanelSubsectorOrMunicipality.Enabled = false;
+        }
+
+        // Initial_TextChanged
+        private void textBoxInitial_TextChanged(object sender, EventArgs e)
+        {
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
+            PanelSubsectorOrMunicipality.Enabled = false;
+        }
+
+        // LastName_TextChanged
+        private void textBoxLastName_TextChanged(object sender, EventArgs e)
+        {
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
+            PanelSubsectorOrMunicipality.Enabled = false;
+        }
+
+        // Email_TextChanged
+        private void textBoxEmail_TextChanged(object sender, EventArgs e)
+        {
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
+            PanelSubsectorOrMunicipality.Enabled = false;
+        }
+
+        // TelNumber_TextChanged
+        private void textBoxTelNumber_TextChanged(object sender, EventArgs e)
+        {
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
+            PanelSubsectorOrMunicipality.Enabled = false;
+        }
+
+        // EmailAddress_TextChanged
+        private void textBoxEmailAddress_TextChanged(object sender, EventArgs e)
         {
             IsDirty = true;
             PanelShowInputOptions.BackColor = BackColorEditing;

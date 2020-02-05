@@ -759,6 +759,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblItemEnum.Text = $@"Alarm System Type: ";
                     }
                     break;
+                case "CanOverflowTypeEnum":
+                    {
+                        lblItemEnum.Text = $@"Can Overflow: ";
+                    }
+                    break;
                 case "ValveTypeEnum":
                     {
                         lblItemEnum.Text = $@"Valve Type: ";
@@ -844,6 +849,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         case "AlarmSystemTypeEnum":
                             {
                                 lblItemEnumOld.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_AlarmSystemTypeEnum((AlarmSystemTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "CanOverflowTypeEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_CanOverflowTypeEnum((CanOverflowTypeEnum)val).ToString()})";
                             }
                             break;
                         case "ValveTypeEnum":
@@ -1238,6 +1248,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
+                    case "CanOverflowTypeEnum":
+                        {
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CanOverflowTypeEnum.Yes),
+                                "butCanOverflowTypeYes", "Yes", fontFamilyName, "Yes", butCanOverflowTypeSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CanOverflowTypeEnum.No),
+                                "butCanOverflowTypeNo", "No", fontFamilyName, "No", butCanOverflowTypeSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)CanOverflowTypeEnum.Unknown),
+                                "butCanOverflowTypeUnknown", "Unknown", fontFamilyName, "Unknown", butCanOverflowTypeSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                        }
+                        break;
                     case "ValveTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ValveTypeEnum.Manually),
@@ -1596,6 +1621,16 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "CanOverflowTypeEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentInfrastructure.CanOverflowNew = null;
+                                CurrentInfrastructure.CanOverflow = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
                     case "ValveTypeEnum":
                         {
                             if (val == null && valNew == null)
@@ -1726,6 +1761,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                             }
                             break;
+                        case "CanOverflowTypeEnum":
+                            {
+                                CurrentInfrastructure.CanOverflowNew = valNew;
+                                if (CurrentInfrastructure.CanOverflowNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
                         case "ValveTypeEnum":
                             {
                                 CurrentInfrastructure.ValveTypeNew = valNew;
@@ -1848,6 +1892,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     CurrentInfrastructure.AlarmSystemType = val;
                                     if (CurrentInfrastructure.AlarmSystemType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "CanOverflowTypeEnum":
+                                {
+                                    CurrentInfrastructure.CanOverflow = val;
+                                    if (CurrentInfrastructure.CanOverflow == elemEnumInt)
                                     {
                                         but.BackColor = Color.Green;
                                     }
@@ -2455,6 +2508,44 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
         }
 
+        private void butCanOverflowTypeSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
+            switch (tagText)
+            {
+                case "Unknown":
+                    {
+                        CurrentInfrastructure.CanOverflowNew = ((int)CanOverflowTypeEnum.Unknown);
+                    }
+                    break;
+                case "Yes":
+                    {
+                        CurrentInfrastructure.CanOverflowNew = ((int)CanOverflowTypeEnum.Yes);
+                    }
+                    break;
+                case "No":
+                    {
+                        CurrentInfrastructure.CanOverflowNew = ((int)CanOverflowTypeEnum.No);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelContactsAndInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawContactAndInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
         private void butValveTypeSelect_Clicked(object sender, EventArgs e)
         {
             string tagText = (string)((Button)sender).Tag;
@@ -2511,7 +2602,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Mobile);
                     }
                     break;
-                case "Mobile2":
+                case "Mobile 2":
                     {
                         CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Mobile2);
                     }
@@ -2521,7 +2612,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Personal);
                     }
                     break;
-                case "Personal2":
+                case "Personal 2":
                     {
                         CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Personal2);
                     }
@@ -2531,7 +2622,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Work);
                     }
                     break;
-                case "Work2":
+                case "Work 2":
                     {
                         CurrentContact.TelephoneList[item].TelTypeNew = ((int)TelTypeEnum.Work2);
                     }
@@ -2565,7 +2656,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         CurrentContact.EmailList[item].EmailTypeNew = ((int)EmailTypeEnum.Personal);
                     }
                     break;
-                case "Personal2":
+                case "Personal 2":
                     {
                         CurrentContact.EmailList[item].EmailTypeNew = ((int)EmailTypeEnum.Personal2);
                     }
@@ -2575,7 +2666,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         CurrentContact.EmailList[item].EmailTypeNew = ((int)EmailTypeEnum.Work);
                     }
                     break;
-                case "Work2":
+                case "Work 2":
                     {
                         CurrentContact.EmailList[item].EmailTypeNew = ((int)EmailTypeEnum.Work2);
                     }
@@ -3256,10 +3347,35 @@ namespace CSSPPolSourceSiteInputToolHelper
                 textItem.Name = $"{textBoxName}";
                 textItem.Font = new Font(new FontFamily(textItem.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                 textItem.Text = (string.IsNullOrWhiteSpace(valNew) ? (string.IsNullOrWhiteSpace(val) ? "" : val) : valNew);
+                textItem.Tag = item;
 
                 if (textBoxName == "textBoxTVText")
                 {
-                    textItem.TextChanged += textItemTVText_TextChanged;
+                    textItem.TextChanged += textBoxTVText_TextChanged;
+                }
+                if (textBoxName == "textBoxFirstName")
+                {
+                    textItem.TextChanged += textBoxFirstName_TextChanged;
+                }
+                if (textBoxName == "textBoxInitial")
+                {
+                    textItem.TextChanged += textBoxInitial_TextChanged;
+                }
+                if (textBoxName == "textBoxLastName")
+                {
+                    textItem.TextChanged += textBoxLastName_TextChanged;
+                }
+                if (textBoxName == "textBoxEmail")
+                {
+                    textItem.TextChanged += textBoxEmail_TextChanged;
+                }
+                if (textBoxName == "textBoxTelNumber")
+                {
+                    textItem.TextChanged += textBoxTelNumber_TextChanged;
+                }
+                if (textBoxName == "textBoxEmailAddress")
+                {
+                    textItem.TextChanged += textBoxEmailAddress_TextChanged;
                 }
                 PanelViewAndEdit.Controls.Add(textItem);
 
@@ -3433,7 +3549,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 panelContact.Controls.Add(lblTVText);
 
-                Label lbContactStatus = new Label();
+                Label lblContactStatus = new Label();
 
                 bool NeedsUpdate = false;
 
@@ -3448,7 +3564,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         if (contact.FirstNameNew != null
                             || contact.InitialNew != null
-                            || contact.LastNameNew != null)
+                            || contact.LastNameNew != null
+                            || contact.EmailNew != null)
                         {
                             NeedsUpdate = true;
                         }
@@ -3497,10 +3614,10 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     string NeedsUpdateText = NeedsUpdate ? "Needs Update" : "";
 
-                    lbContactStatus.AutoSize = true;
-                    lbContactStatus.Location = new Point(40, lblTVText.Bottom + 4);
-                    lbContactStatus.TabIndex = 0;
-                    lbContactStatus.Tag = contact.ContactTVItemID;
+                    lblContactStatus.AutoSize = true;
+                    lblContactStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                    lblContactStatus.TabIndex = 0;
+                    lblContactStatus.Tag = contact.ContactTVItemID;
 
                     bool IsActive2 = false;
                     if (contact.IsActiveNew != null)
@@ -3514,33 +3631,33 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     if (IsActive2 == false)
                     {
-                        lbContactStatus.Font = new Font(new FontFamily(lbContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                        lblContactStatus.Font = new Font(new FontFamily(lblContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                     }
                     else
                     {
-                        lbContactStatus.Font = new Font(new FontFamily(lbContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblContactStatus.Font = new Font(new FontFamily(lblContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     }
                     if (NeedsUpdate)
                     {
-                        lbContactStatus.Text = $"{NeedsUpdateText}";
+                        lblContactStatus.Text = $"{NeedsUpdateText}";
                     }
                     else
                     {
-                        lbContactStatus.Text = $"";
+                        lblContactStatus.Text = $"";
                     }
-                    lbContactStatus.Click += ShowContact_Click;
+                    lblContactStatus.Click += ShowContact_Click;
 
 
-                    panelContact.Controls.Add(lbContactStatus);
+                    panelContact.Controls.Add(lblContactStatus);
 
                 }
                 else
                 {
 
-                    lbContactStatus.AutoSize = true;
-                    lbContactStatus.Location = new Point(40, lblTVText.Bottom + 4);
-                    lbContactStatus.TabIndex = 0;
-                    lbContactStatus.Tag = contact.ContactTVItemID;
+                    lblContactStatus.AutoSize = true;
+                    lblContactStatus.Location = new Point(40, lblTVText.Bottom + 4);
+                    lblContactStatus.TabIndex = 0;
+                    lblContactStatus.Tag = contact.ContactTVItemID;
 
                     bool IsActive2 = false;
                     if (contact.IsActiveNew != null)
@@ -3554,22 +3671,37 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     if (IsActive2 == false)
                     {
-                        lbContactStatus.Font = new Font(new FontFamily(lbContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
+                        lblContactStatus.Font = new Font(new FontFamily(lblContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Strikeout, GraphicsUnit.Point, ((byte)(0)));
                     }
                     else
                     {
-                        lbContactStatus.Font = new Font(new FontFamily(lbContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblContactStatus.Font = new Font(new FontFamily(lblContactStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     }
-                    lbContactStatus.Text = $"";
-                    lbContactStatus.Click += ShowContact_Click;
+                    lblContactStatus.Text = $"";
+                    lblContactStatus.Click += ShowContact_Click;
 
 
-                    panelContact.Controls.Add(lbContactStatus);
+                    panelContact.Controls.Add(lblContactStatus);
                 }
 
                 PanelPolSourceSite.Controls.Add(panelContact);
 
                 contact.Shown = true;
+            }
+
+            if (municipalityDoc.Municipality.ContactList.Count > 0)
+            {
+                Y = PanelPolSourceSite.Controls[PanelPolSourceSite.Controls.Count - 1].Bottom;
+
+                Panel panelContact = new Panel();
+
+                panelContact.BorderStyle = BorderStyle.FixedSingle;
+                panelContact.Location = new Point(0, Y);
+                panelContact.Size = new Size(PanelPolSourceSite.Width, 10);
+                panelContact.BackColor = Color.Blue;
+
+                PanelPolSourceSite.Controls.Add(panelContact);
+
             }
         }
         public void ShowRecursivePanelInfrastructure(List<Infrastructure> InfNextList, int Level)
@@ -4096,6 +4228,71 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
         }
+        public void EmailAdd()
+        {
+            if (municipalityDoc.Municipality.MunicipalityName != null)
+            {
+                Email email = new Email();
+                int MaxEmailTVItemID = 40000000;
+                if (CurrentContact.EmailList.Count > 0)
+                {
+                    int Max = CurrentContact.EmailList.Max(c => c.EmailTVItemID).Value;
+                    if (Max >= MaxEmailTVItemID)
+                    {
+                        MaxEmailTVItemID = Max + 1;
+                    }
+                }
+                email.EmailTVItemID = MaxEmailTVItemID;
+                email.EmailType = (int)EmailTypeEnum.Work;
+                email.EmailAddress = "john.doe@gmail.com";
+
+                CurrentContact.EmailList.Add(email);
+            }
+        }
+        public void TelAdd()
+        {
+            if (municipalityDoc.Municipality.MunicipalityName != null)
+            {
+                Telephone tel = new Telephone();
+                int MaxTelTVItemID = 30000000;
+                if (CurrentContact.TelephoneList.Count > 0)
+                {
+                    int Max = CurrentContact.TelephoneList.Max(c => c.TelTVItemID).Value;
+                    if (Max >= MaxTelTVItemID)
+                    {
+                        MaxTelTVItemID = Max + 1;
+                    }
+                }
+                tel.TelTVItemID = MaxTelTVItemID;
+                tel.TelType = (int)TelTypeEnum.Mobile;
+                tel.TelNumber = "1(506)555-1212";
+
+                CurrentContact.TelephoneList.Add(tel);
+            }
+        }
+        public void ContactAdd()
+        {
+            if (municipalityDoc.Municipality.MunicipalityName != null)
+            {
+                Contact contact = new Contact();
+                int MaxContactTVItemID = 20000000;
+                if (municipalityDoc.Municipality.ContactList.Count > 0)
+                {
+                    int Max = municipalityDoc.Municipality.ContactList.Max(c => c.ContactTVItemID).Value;
+                    if (Max >= MaxContactTVItemID)
+                    {
+                        MaxContactTVItemID = Max + 1;
+                    }
+                }
+                contact.ContactTVItemID = MaxContactTVItemID;
+                contact.IsActive = true;
+                contact.IsActiveNew = true;
+                contact.FirstName = "First Name";
+                contact.LastName = "Last Name";
+
+                municipalityDoc.Municipality.ContactList.Add(contact);
+            }
+        }
         public void InfrastructureAdd()
         {
             if (municipalityDoc.Municipality.MunicipalityName != null)
@@ -4254,7 +4451,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             float? AverageFlow_m3_day = null;
             float? PeakFlow_m3_day = null;
             int? PopServed = null;
-            bool? CanOverflow = null;
+            CanOverflowTypeEnum? CanOverflow = null;
             ValveTypeEnum? ValveType = null;
             bool? HasBackupPower = null;
             float? PercFlowOfTotal = null;
@@ -4585,17 +4782,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                 PopServed = (int)CurrentInfrastructure.PopServedNew;
             }
 
-            // CanOverflow
+            // CanOverflowType
             if (CurrentInfrastructure.CanOverflowNew == null)
             {
                 if (CurrentInfrastructure.CanOverflow != null)
                 {
-                    CanOverflow = (bool)CurrentInfrastructure.CanOverflow;
+                    CanOverflow = (CanOverflowTypeEnum)CurrentInfrastructure.CanOverflow;
                 }
             }
             else
             {
-                CanOverflow = (bool)CurrentInfrastructure.CanOverflowNew;
+                CanOverflow = (CanOverflowTypeEnum)CurrentInfrastructure.CanOverflowNew;
             }
 
             // ValveType
@@ -5137,7 +5334,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 CurrentInfrastructure.PeakFlow_m3_dayNew = null;
                 CurrentInfrastructure.PopServed = PopServed;
                 CurrentInfrastructure.PopServedNew = null;
-                CurrentInfrastructure.CanOverflow = CanOverflow;
+                CurrentInfrastructure.CanOverflow = (int?)CanOverflow;
                 CurrentInfrastructure.CanOverflowNew = null;
                 CurrentInfrastructure.ValveType = (int?)ValveType;
                 CurrentInfrastructure.ValveTypeNew = null;
@@ -6731,6 +6928,44 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 #endregion LastName
 
+                #region Email
+                X = 10;
+                DrawItemText(X, Y, CurrentContact.Email, CurrentContact.EmailNew, "Email", "textBoxEmail", 300, 0);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                #endregion Email
+
+                #region Save button
+                if (IsEditing)
+                {
+                    Button butSaveContactAll = new Button();
+                    butSaveContactAll.AutoSize = true;
+                    butSaveContactAll.Location = new Point(200, Y);
+                    butSaveContactAll.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    butSaveContactAll.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    butSaveContactAll.Padding = new Padding(5);
+                    butSaveContactAll.Text = $"Save";
+                    butSaveContactAll.Click += butSaves_Click;
+
+                    PanelViewAndEdit.Controls.Add(butSaveContactAll);
+
+                    X = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 20;
+
+                    Button butCancelContactAll = new Button();
+                    butCancelContactAll.AutoSize = true;
+                    butCancelContactAll.Location = new Point(X, Y);
+                    butCancelContactAll.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    butCancelContactAll.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    butCancelContactAll.Padding = new Padding(5);
+                    butCancelContactAll.Text = $"Cancel";
+                    butCancelContactAll.Click += butCancel_Click;
+
+                    PanelViewAndEdit.Controls.Add(butCancelContactAll);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                }
+                #endregion Save button
+
                 Label lblTel = new Label();
                 lblTel.AutoSize = true;
                 lblTel.Location = new Point(10, Y);
@@ -6743,25 +6978,54 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
+                X = 40;
+
                 int CountTel = 0;
                 foreach (Telephone tel in CurrentContact.TelephoneList)
                 {
                     #region TelType
-                    X = 10;
-                    DrawItemEnum(X, Y, tel.TelType, tel.TelTypeNew, "Telephone Type", "comboBoxTelType" + CountTel.ToString(), typeof(TelTypeEnum), CountTel);
+                    DrawItemEnum(X, Y, tel.TelType, tel.TelTypeNew, "Telephone Type", "comboBoxTelType", typeof(TelTypeEnum), CountTel);
                     #endregion TelType
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
 
                     #region TelNumber
-                    X = 10;
-                    DrawItemText(X, Y, tel.TelNumber, tel.TelNumberNew, "Telephone Number", "textBoxTelNumber" + CountTel.ToString(), 300, CountTel);
+                    DrawItemText(X, Y, tel.TelNumber, tel.TelNumberNew, "Telephone Number", "textBoxTelNumber", 300, CountTel);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion TelNumber
 
+                    Label lblTelSeparator = new Label();
+                    lblTelSeparator.AutoSize = true;
+                    lblTelSeparator.Location = new Point(10, Y);
+                    lblTelSeparator.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblTelSeparator.Font = new Font(new FontFamily(lblTelSeparator.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                    lblTelSeparator.ForeColor = Color.Black;
+                    lblTelSeparator.Text = $"          - - - - - - - - - - - - - - - - - - - - -          ";
+
+                    PanelViewAndEdit.Controls.Add(lblTelSeparator);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
                     CountTel++;
                 }
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                X = 100;
+
+                Button butTelAdd = new Button();
+                butTelAdd.AutoSize = true;
+                butTelAdd.Location = new Point(20, Y);
+                butTelAdd.Text = $"Add Another Telephone for {FullName}";
+                butTelAdd.Font = new Font(new FontFamily(butTelAdd.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+                butTelAdd.Padding = new Padding(5);
+                butTelAdd.Click += butTelAdd_Click;
+
+                PanelViewAndEdit.Controls.Add(butTelAdd);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
+                X = 10;
 
                 Label lblEmail = new Label();
                 lblEmail.AutoSize = true;
@@ -6769,31 +7033,73 @@ namespace CSSPPolSourceSiteInputToolHelper
                 lblEmail.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                 lblEmail.Font = new Font(new FontFamily(lblEmail.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
                 lblEmail.ForeColor = Color.Black;
-                lblEmail.Text = $"Emails";
+                lblEmail.Text = $"Other Emails";
 
                 PanelViewAndEdit.Controls.Add(lblEmail);
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
+                X = 40;
+
                 int CountEmail = 0;
                 foreach (Email email in CurrentContact.EmailList)
                 {
                     #region EmailType
-                    X = 10;
-                    DrawItemEnum(X, Y, email.EmailType, email.EmailTypeNew, "Email Type", "comboBoxEmailType" + CountEmail.ToString(), typeof(EmailTypeEnum), CountEmail);
+                    DrawItemEnum(X, Y, email.EmailType, email.EmailTypeNew, "Email Type", "comboBoxEmailType", typeof(EmailTypeEnum), CountEmail);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion EmailType
 
                     #region EmailNumber
-                    X = 10;
-                    DrawItemText(X, Y, email.EmailAddress, email.EmailAddressNew, "Email Address", "textBoxEmailNumber" + CountEmail.ToString(), 300, CountEmail);
+                    DrawItemText(X, Y, email.EmailAddress, email.EmailAddressNew, "Email Address", "textBoxEmailAddress", 300, CountEmail);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion EmailNumber
 
+                    Label lblEmailSeparator = new Label();
+                    lblEmailSeparator.AutoSize = true;
+                    lblEmailSeparator.Location = new Point(10, Y);
+                    lblEmailSeparator.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblEmailSeparator.Font = new Font(new FontFamily(lblEmailSeparator.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                    lblEmailSeparator.ForeColor = Color.Black;
+                    lblEmailSeparator.Text = $"          - - - - - - - - - - - - - - - - - - - - -          ";
+
+                    PanelViewAndEdit.Controls.Add(lblEmailSeparator);
+
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
                     CountEmail++;
                 }
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                X = 100;
+
+                Button butEmailAdd = new Button();
+                butEmailAdd.AutoSize = true;
+                butEmailAdd.Location = new Point(20, Y);
+                butEmailAdd.Text = $"Add Another Email for {FullName}";
+                butEmailAdd.Font = new Font(new FontFamily(butEmailAdd.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+                butEmailAdd.Padding = new Padding(5);
+                butEmailAdd.Click += butEmailAdd_Click;
+
+                PanelViewAndEdit.Controls.Add(butEmailAdd);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
+                X = 10;
+                Label lblAddress = new Label();
+                lblAddress.AutoSize = true;
+                lblAddress.Location = new Point(10, Y);
+                lblAddress.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                lblAddress.Font = new Font(new FontFamily(lblTel.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                lblAddress.ForeColor = Color.Black;
+                lblAddress.Text = $"Address";
+
+                PanelViewAndEdit.Controls.Add(lblAddress);
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+
+                X = 40;
 
                 #region Address
                 DrawItemAddress(X, Y, CurrentContact.ContactAddress, CurrentContact.ContactAddressNew, true);
@@ -6845,7 +7151,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         if (CurrentContact.FirstNameNew != null
                             || CurrentContact.InitialNew != null
-                            || CurrentContact.LastNameNew != null)
+                            || CurrentContact.LastNameNew != null
+                            || CurrentContact.EmailNew != null)
                         {
                             NeedsUpdate = true;
                         }
@@ -6900,7 +7207,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Button butContactAndInfrastructureSaveToCSSPWebTools = new Button();
                         butContactAndInfrastructureSaveToCSSPWebTools.AutoSize = true;
                         butContactAndInfrastructureSaveToCSSPWebTools.Location = new Point(20, Y);
-                        butContactAndInfrastructureSaveToCSSPWebTools.Text = "Update All Contacts and Infrastructure Related Information To CSSPWebTools";
+                        butContactAndInfrastructureSaveToCSSPWebTools.Text = "Update All Contact and Infrastructure Related Information To CSSPWebTools";
                         butContactAndInfrastructureSaveToCSSPWebTools.Tag = $"{CurrentContact.ContactTVItemID}";
                         butContactAndInfrastructureSaveToCSSPWebTools.Font = new Font(new FontFamily(butContactAndInfrastructureSaveToCSSPWebTools.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
                         butContactAndInfrastructureSaveToCSSPWebTools.Padding = new Padding(5);
@@ -7436,17 +7743,36 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     #region CanOverflow
                     X = 10;
-                    DrawItemBool(X, Y, CurrentInfrastructure.CanOverflow, CurrentInfrastructure.CanOverflowNew, "Can Overflow", "checkBoxCanOverflow");
+                    DrawItemEnum(X, Y, CurrentInfrastructure.CanOverflow, CurrentInfrastructure.CanOverflowNew, "Can Overflow", "comboBoxCanOverflowType", typeof(CanOverflowTypeEnum), 0);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion CanOverflow
 
-                    #region ValveType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum), 0);
+                    bool ShowValve = false;
+                    if (CurrentInfrastructure.CanOverflowNew != null)
+                    {
+                        if (CurrentInfrastructure.CanOverflowNew == (int)CanOverflowTypeEnum.Yes)
+                        {
+                            ShowValve = true;
+                        }
+                    }
+                    else
+                    {
+                        if (CurrentInfrastructure.CanOverflow == (int)CanOverflowTypeEnum.Yes)
+                        {
+                            ShowValve = true;
+                        }
+                    }
 
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion ValveType
+                    if (ShowValve)
+                    {
+                        #region ValveType
+                        X = 10;
+                        DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum), 0);
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                        #endregion ValveType
+                    }
 
                     #region HasBackupPower
                     X = 10;
@@ -7481,17 +7807,36 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     #region CanOverflow
                     X = 10;
-                    DrawItemBool(X, Y, CurrentInfrastructure.CanOverflow, CurrentInfrastructure.CanOverflowNew, "Can Overflow", "checkBoxCanOverflow");
+                    DrawItemEnum(X, Y, CurrentInfrastructure.CanOverflow, CurrentInfrastructure.CanOverflowNew, "Can Overflow", "comboBoxCanOverflowType", typeof(CanOverflowTypeEnum), 0);
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                     #endregion CanOverflow
 
-                    #region ValveType
-                    X = 10;
-                    DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum), 0);
+                    bool ShowValve = false;
+                    if (CurrentInfrastructure.CanOverflowNew != null)
+                    {
+                        if (CurrentInfrastructure.CanOverflowNew == (int)CanOverflowTypeEnum.Yes)
+                        {
+                            ShowValve = true;
+                        }
+                    }
+                    else
+                    {
+                        if (CurrentInfrastructure.CanOverflow == (int)CanOverflowTypeEnum.Yes)
+                        {
+                            ShowValve = true;
+                        }
+                    }
 
-                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion ValveType
+                    if (ShowValve)
+                    {
+                        #region ValveType
+                        X = 10;
+                        DrawItemEnum(X, Y, CurrentInfrastructure.ValveType, CurrentInfrastructure.ValveTypeNew, "Valve Type", "comboBoxValveType", typeof(ValveTypeEnum), 0);
+
+                        Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+                        #endregion ValveType
+                    }
 
                     #region HasBackupPower
                     X = 10;
@@ -7886,7 +8231,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         Button butInfrastructureSaveToCSSPWebTools = new Button();
                         butInfrastructureSaveToCSSPWebTools.AutoSize = true;
                         butInfrastructureSaveToCSSPWebTools.Location = new Point(20, Y);
-                        butInfrastructureSaveToCSSPWebTools.Text = "Update All Infrastructure Related Information To CSSPWebTools";
+                        butInfrastructureSaveToCSSPWebTools.Text = "Update All Contact and Infrastructure Related Information To CSSPWebTools";
                         butInfrastructureSaveToCSSPWebTools.Tag = $"{CurrentInfrastructure.InfrastructureTVItemID}";
                         butInfrastructureSaveToCSSPWebTools.Font = new Font(new FontFamily(butInfrastructureSaveToCSSPWebTools.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
                         butInfrastructureSaveToCSSPWebTools.Padding = new Padding(5);
@@ -8961,7 +9306,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                                         if (tb.Text.Trim().Length > 200)
                                         {
                                             MessageBox.Show("First Name maximum length is 200 characters", "Error");
+                                            return;
                                         }
+                                        CurrentContact.FirstNameNew = tb.Text.Trim();
                                     }
                                     else
                                     {
@@ -8986,10 +9333,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     if (!string.IsNullOrWhiteSpace(tb.Text))
                                     {
-                                        if (tb.Text.Trim().Length > 200)
+                                        if (tb.Text.Trim().Length > 50)
                                         {
-                                            MessageBox.Show("First Name maximum length is 200 characters", "Error");
+                                            MessageBox.Show("Initial maximum length is 50 characters", "Error");
+                                            return;
                                         }
+                                        CurrentContact.InitialNew = tb.Text.Trim();
                                     }
                                     else
                                     {
@@ -9016,13 +9365,111 @@ namespace CSSPPolSourceSiteInputToolHelper
                                     {
                                         if (tb.Text.Trim().Length > 200)
                                         {
-                                            MessageBox.Show("First Name maximum length is 200 characters", "Error");
+                                            MessageBox.Show("Last Name maximum length is 200 characters", "Error");
+                                            return;
                                         }
+                                        CurrentContact.LastNameNew = tb.Text.Trim();
                                     }
                                     else
                                     {
                                         CurrentContact.LastNameNew = null;
                                         CurrentContact.LastName = null;
+                                    }
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxEmail":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                if ("" + CurrentContact.Email == tb.Text)
+                                {
+                                    CurrentContact.EmailNew = null;
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 200)
+                                        {
+                                            MessageBox.Show("Email maximum length is 200 characters", "Error");
+                                            return;
+                                        }
+                                        CurrentContact.EmailNew = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentContact.EmailNew = null;
+                                        CurrentContact.Email = null;
+                                    }
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxTelNumber":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                string Tag = tb.Tag.ToString();
+                                int item = int.Parse(Tag);
+
+                                if ("" + CurrentContact.TelephoneList[item].TelNumber == tb.Text)
+                                {
+                                    CurrentContact.TelephoneList[item].TelNumberNew = null;
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 50)
+                                        {
+                                            MessageBox.Show("Tel Number maximum length is 50 characters", "Error");
+                                            return;
+                                        }
+                                        CurrentContact.TelephoneList[item].TelNumberNew = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentContact.TelephoneList[item].TelNumberNew = null;
+                                        CurrentContact.TelephoneList[item].TelNumber = null;
+                                    }
+                                    IsDirty = true;
+                                }
+                            }
+                        }
+                        break;
+                    case "textBoxEmailAddress":
+                        {
+                            TextBox tb = (TextBox)control;
+                            if (tb != null)
+                            {
+                                string Tag = tb.Tag.ToString();
+                                int item = int.Parse(Tag);
+
+                                if ("" + CurrentContact.EmailList[item].EmailAddress == tb.Text)
+                                {
+                                    CurrentContact.EmailList[item].EmailAddressNew = null;
+                                }
+                                else
+                                {
+                                    if (!string.IsNullOrWhiteSpace(tb.Text))
+                                    {
+                                        if (tb.Text.Trim().Length > 100)
+                                        {
+                                            MessageBox.Show("Tel Number maximum length is 100 characters", "Error");
+                                            return;
+                                        }
+                                        CurrentContact.EmailList[item].EmailAddressNew = tb.Text.Trim();
+                                    }
+                                    else
+                                    {
+                                        CurrentContact.EmailList[item].EmailAddressNew = null;
+                                        CurrentContact.EmailList[item].EmailAddress = null;
                                     }
                                     IsDirty = true;
                                 }
@@ -9437,6 +9884,38 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "comboBoxCanOverflowType":
+                        {
+                            ComboBox cb = (ComboBox)control;
+                            if (cb != null)
+                            {
+                                if (cb.SelectedItem == null)
+                                {
+                                    CurrentInfrastructure.CanOverflowNew = null;
+                                }
+                                else
+                                {
+                                    for (int i = 0, count = Enum.GetNames(typeof(CanOverflowTypeEnum)).Count(); i < count; i++)
+                                    {
+                                        if (((EnumTextAndID)cb.SelectedItem).EnumID == i)
+                                        {
+                                            if (CurrentInfrastructure.CanOverflow == i)
+                                            {
+                                                CurrentInfrastructure.CanOverflowNew = null;
+                                                IsDirty = true;
+                                            }
+                                            else
+                                            {
+                                                CurrentInfrastructure.CanOverflowNew = i;
+                                                IsDirty = true;
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                        break;
                     case "comboBoxValveType":
                         {
                             ComboBox cb = (ComboBox)control;
@@ -9761,36 +10240,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 else
                                 {
                                     CurrentInfrastructure.PopServed = null;
-                                }
-                            }
-                        }
-                        break;
-                    case "checkBoxCanOverflow":
-                        {
-                            CheckBox cb = (CheckBox)control;
-                            if (cb != null)
-                            {
-                                if (cb.Checked)
-                                {
-                                    if (CurrentInfrastructure.CanOverflow == CurrentInfrastructure.CanOverflowNew)
-                                    {
-                                        CurrentInfrastructure.CanOverflowNew = true;
-                                    }
-                                    else
-                                    {
-                                        CurrentInfrastructure.CanOverflowNew = true;
-                                    }
-                                }
-                                else
-                                {
-                                    if (CurrentInfrastructure.CanOverflow == CurrentInfrastructure.CanOverflowNew)
-                                    {
-                                        CurrentInfrastructure.CanOverflowNew = false;
-                                    }
-                                    else
-                                    {
-                                        CurrentInfrastructure.CanOverflowNew = false;
-                                    }
                                 }
                             }
                         }
@@ -10990,7 +11439,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             SecondaryTreatmentTypeEnum? SecondaryTreatmentType, TertiaryTreatmentTypeEnum? TertiaryTreatmentType,
             DisinfectionTypeEnum? DisinfectionType, CollectionSystemTypeEnum? CollectionSystemType, AlarmSystemTypeEnum? AlarmSystemType,
             float? DesignFlow_m3_day, float? AverageFlow_m3_day, float? PeakFlow_m3_day, int? PopServed,
-            bool? CanOverflow, ValveTypeEnum? ValveType, bool? HasBackupPower,
+            CanOverflowTypeEnum? CanOverflow, ValveTypeEnum? ValveType, bool? HasBackupPower,
             float? PercFlowOfTotal, float? AverageDepth_m, int? NumberOfPorts,
             float? PortDiameter_m, float? PortSpacing_m, float? PortElevation_m, float? VerticalAngle_deg, float? HorizontalAngle_deg,
             float? DecayRate_per_day, float? NearFieldVelocity_m_s, float? FarFieldVelocity_m_s, float? ReceivingWaterSalinity_PSU,
@@ -11029,7 +11478,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 paramList.Add("AverageFlow_m3_day", AverageFlow_m3_day.ToString());
                 paramList.Add("PeakFlow_m3_day", PeakFlow_m3_day.ToString());
                 paramList.Add("PopServed", PopServed.ToString());
-                paramList.Add("CanOverflow", CanOverflow.ToString());
+                paramList.Add("CanOverflow", ((int?)CanOverflow).ToString());
                 paramList.Add("ValveType", ((int?)ValveType).ToString());
                 paramList.Add("HasBackupPower", HasBackupPower.ToString());
                 paramList.Add("PercFlowOfTotal", PercFlowOfTotal.ToString());
@@ -11455,9 +11904,22 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         ((Panel)a).BackColor = BackColorNormal;
 
-                        if (((Panel)a).Tag.ToString() == InfrastructureTVItemID.ToString())
+                        if (((Panel)a).Tag != null)
                         {
-                            ((Panel)a).BackColor = BackColorEditing;
+                            if (ContactTVItemID > 0)
+                            {
+                                if (((Panel)a).Tag.ToString() == ContactTVItemID.ToString())
+                                {
+                                    ((Panel)a).BackColor = BackColorEditing;
+                                }
+                            }
+                            else
+                            {
+                                if (((Panel)a).Tag.ToString() == InfrastructureTVItemID.ToString())
+                                {
+                                    ((Panel)a).BackColor = BackColorEditing;
+                                }
+                            }
                         }
                     }
                 }

@@ -152,14 +152,17 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.SaveMunicipalityTextFile();
             polSourceSiteInputToolHelper.RedrawContactAndInfrastructureList();
         }
-        private void butShowContacts_Click(object sender, EventArgs e)
+        private void butContactAdd_Click(object sender, EventArgs e)
         {
+            if (polSourceSiteInputToolHelper.IsDirty)
+            {
+                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
+                return;
+            }
 
-        }
-
-        private void butShowInfrastructures_Click(object sender, EventArgs e)
-        {
-
+            polSourceSiteInputToolHelper.ContactAdd();
+            polSourceSiteInputToolHelper.SaveMunicipalityTextFile();
+            polSourceSiteInputToolHelper.RedrawContactAndInfrastructureList();
         }
         private void butViewKMLFile_Click(object sender, EventArgs e)
         {
@@ -925,6 +928,7 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.CurrentMunicipalityName = null;
             polSourceSiteInputToolHelper.PolSourceSiteTVItemID = 0;
             polSourceSiteInputToolHelper.InfrastructureTVItemID = 0;
+            polSourceSiteInputToolHelper.ContactTVItemID = 0;
             panelAddNewPollutionSourceSite.Visible = false;
             panelAddNewInfrastructure.Visible = false;
             panelCreateMunicipalityDirectory.Visible = false;

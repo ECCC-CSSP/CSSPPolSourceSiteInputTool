@@ -36,6 +36,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public string InitialNew { get; set; } = null;
         public string LastName { get; set; } = null;
         public string LastNameNew { get; set; } = null;
+        public string Email { get; set; } = null;
+        public string EmailNew { get; set; } = null;
         public int? Title { get; set; } = null;
         public int? TitleNew { get; set; } = null;
         public List<Telephone> TelephoneList { get; set; } = new List<Telephone>();
@@ -114,8 +116,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public float? PeakFlow_m3_dayNew { get; set; } = null;
         public int? PopServed { get; set; } = null;
         public int? PopServedNew { get; set; } = null;
-        public bool? CanOverflow { get; set; } = null;
-        public bool? CanOverflowNew { get; set; } = null;
+        public int? CanOverflow { get; set; } = null;
+        public int? CanOverflowNew { get; set; } = null;
         public int? ValveType { get; set; } = null;
         public int? ValveTypeNew { get; set; } = null;
         public bool? HasBackupPower { get; set; } = null;

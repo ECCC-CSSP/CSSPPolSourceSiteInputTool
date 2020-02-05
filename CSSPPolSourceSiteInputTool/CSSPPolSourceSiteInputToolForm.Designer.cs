@@ -53,6 +53,7 @@
             this.lblStatusTxt = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panelAddNewInfrastructure = new System.Windows.Forms.Panel();
+            this.butContactAdd = new System.Windows.Forms.Button();
             this.butInfrastructureAdd = new System.Windows.Forms.Button();
             this.panelCreateMunicipalityDirectory = new System.Windows.Forms.Panel();
             this.butCreateMunicipalityDirectory = new System.Windows.Forms.Button();
@@ -91,7 +92,6 @@
             this.radioButtonDetails = new System.Windows.Forms.RadioButton();
             this.checkBoxEditing = new System.Windows.Forms.CheckBox();
             this.openFileDialogCSSP = new System.Windows.Forms.OpenFileDialog();
-            this.butContactAdd = new System.Windows.Forms.Button();
             this.panelButtonBar.SuspendLayout();
             this.panel1.SuspendLayout();
             this.panelShowAdmin.SuspendLayout();
@@ -389,6 +389,16 @@
             this.panelAddNewInfrastructure.Name = "panelAddNewInfrastructure";
             this.panelAddNewInfrastructure.Size = new System.Drawing.Size(347, 37);
             this.panelAddNewInfrastructure.TabIndex = 14;
+            // 
+            // butContactAdd
+            // 
+            this.butContactAdd.Location = new System.Drawing.Point(169, 3);
+            this.butContactAdd.Name = "butContactAdd";
+            this.butContactAdd.Size = new System.Drawing.Size(112, 28);
+            this.butContactAdd.TabIndex = 16;
+            this.butContactAdd.Text = "Add New Contact";
+            this.butContactAdd.UseVisualStyleBackColor = true;
+            this.butContactAdd.Click += new System.EventHandler(this.butContactAdd_Click);
             // 
             // butInfrastructureAdd
             // 
@@ -802,15 +812,6 @@
             // openFileDialogCSSP
             // 
             this.openFileDialogCSSP.FileName = "PollutionSourceSiteFromCSSPWebTools_*.txt";
-            // 
-            // butContactAdd
-            // 
-            this.butContactAdd.Location = new System.Drawing.Point(169, 3);
-            this.butContactAdd.Name = "butContactAdd";
-            this.butContactAdd.Size = new System.Drawing.Size(112, 28);
-            this.butContactAdd.TabIndex = 16;
-            this.butContactAdd.Text = "Add New Contact";
-            this.butContactAdd.UseVisualStyleBackColor = true;
             // 
             // CSSPPolSourceSiteInputToolForm
             // 

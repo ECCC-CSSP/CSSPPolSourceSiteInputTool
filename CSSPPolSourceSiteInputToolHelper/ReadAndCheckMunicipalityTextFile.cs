@@ -287,7 +287,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     contact.LastName = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
                                 }
-                                contact.IsActive = bool.Parse(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1));
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1)))
+                                {
+                                    contact.Email = null;
+                                }
+                                else
+                                {
+                                    contact.Email = LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1);
+                                }
+                                contact.IsActive = bool.Parse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1));
 
                                 municipalityDoc.Municipality.ContactList.Add(contact);
                             }
@@ -336,7 +344,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     lastContact.LastNameNew = LineTxt.Substring(pos4 + 1, pos5 - pos4 - 1);
                                 }
-                                lastContact.IsActive = bool.Parse(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1));
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1)))
+                                {
+                                    lastContact.EmailNew = null;
+                                }
+                                else
+                                {
+                                    lastContact.EmailNew = LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1);
+                                }
+                                lastContact.IsActive = bool.Parse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1));
                             }
                             catch (Exception)
                             {
@@ -489,7 +505,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     lastEmail.EmailTypeNew = int.Parse(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1));
                                 }
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos - 1)))
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos3 + 1, pos4 - pos3 - 1)))
                                 {
                                     lastEmail.EmailAddressNew = null;
                                 }
@@ -1662,11 +1678,12 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
-                                    lastInfrastructure.CanOverflow = null;
+                                    lastInfrastructure.CanOverflow = (int)CanOverflowTypeEnum.Unknown;
                                 }
                                 else
                                 {
-                                    lastInfrastructure.CanOverflow = bool.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    bool tempBool = bool.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    lastInfrastructure.CanOverflow = tempBool == true ? (int)CanOverflowTypeEnum.Yes : (int)CanOverflowTypeEnum.No;
                                 }
                             }
                             catch (Exception)
@@ -1684,11 +1701,12 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
-                                    lastInfrastructure.CanOverflowNew = null;
+                                    lastInfrastructure.CanOverflowNew = (int)CanOverflowTypeEnum.Unknown;
                                 }
                                 else
                                 {
-                                    lastInfrastructure.CanOverflowNew = bool.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    bool tempBool = bool.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    lastInfrastructure.CanOverflowNew = tempBool == true ? (int)CanOverflowTypeEnum.Yes : (int)CanOverflowTypeEnum.No;
                                 }
                             }
                             catch (Exception)
