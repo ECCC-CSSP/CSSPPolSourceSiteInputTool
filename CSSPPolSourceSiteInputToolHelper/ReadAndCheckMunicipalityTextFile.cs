@@ -295,7 +295,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     contact.Email = LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1);
                                 }
-                                contact.IsActive = bool.Parse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1));
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1)))
+                                {
+                                    contact.ContactTitle = (int)ContactTitleEnum.Error;
+                                }
+                                else
+                                {
+                                    contact.ContactTitle = int.Parse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1));
+                                }
+                                contact.IsActive = bool.Parse(LineTxt.Substring(pos7 + 1, pos8 - pos7 - 1));
 
                                 municipalityDoc.Municipality.ContactList.Add(contact);
                             }
@@ -352,7 +360,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     lastContact.EmailNew = LineTxt.Substring(pos5 + 1, pos6 - pos5 - 1);
                                 }
-                                lastContact.IsActive = bool.Parse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1));
+                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1)))
+                                {
+                                    lastContact.ContactTitleNew = (int)ContactTitleEnum.Error;
+                                }
+                                else
+                                {
+                                    lastContact.ContactTitleNew = int.Parse(LineTxt.Substring(pos6 + 1, pos7 - pos6 - 1));
+                                }
+                                lastContact.IsActiveNew = bool.Parse(LineTxt.Substring(pos7 + 1, pos8 - pos7 - 1));
                             }
                             catch (Exception)
                             {

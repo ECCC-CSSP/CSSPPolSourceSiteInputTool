@@ -41,15 +41,16 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             foreach (Contact contact in municipalityDoc.Municipality.ContactList)
             {
-                sb.AppendLine($"CONTACT\t{contact.ContactTVItemID}\t{contact.FirstName}\t{contact.Initial}\t{contact.LastName}\t{contact.Email}\t{contact.IsActive}\t");
+                sb.AppendLine($"CONTACT\t{contact.ContactTVItemID}\t{contact.FirstName}\t{contact.Initial}\t{contact.LastName}\t{contact.Email}\t{(int)contact.ContactTitle}\t{contact.IsActive}\t");
 
-                if (contact.FirstNameNew != null || contact.InitialNew != null || contact.LastNameNew != null || contact.EmailNew != null)
+                if (contact.FirstNameNew != null || contact.InitialNew != null || contact.LastNameNew != null || contact.EmailNew != null || contact.ContactTitleNew != null)
                 {
                     string FirstName = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
                     string Initial = contact.InitialNew != null ? contact.InitialNew : contact.Initial;
                     string LastName = contact.LastNameNew != null ? contact.LastNameNew : contact.LastName;
                     string Email = contact.EmailNew != null ? contact.EmailNew : contact.Email;
-                    sb.AppendLine($"CONTACTNEW\t{contact.ContactTVItemID}\t{FirstName}\t{Initial}\t{LastName}\t{Email}\t{contact.IsActive}\t");
+                    int ContactTitle = contact.ContactTitleNew != null ? ((int)contact.ContactTitleNew) : ((int)contact.ContactTitle);
+                    sb.AppendLine($"CONTACTNEW\t{contact.ContactTVItemID}\t{FirstName}\t{Initial}\t{LastName}\t{Email}\t{ContactTitle}\t{contact.IsActive}\t");
                 }
 
                 foreach (Telephone telephone in contact.TelephoneList)

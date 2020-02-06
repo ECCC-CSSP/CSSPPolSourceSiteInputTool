@@ -175,10 +175,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 sbKML.AppendLine($@"</p>");
 
                 // doing Title
-                sbKML.Append($@"                <p><b>Title:</b> {contact.Title}</p>");
-                if (contact.TitleNew != null)
+                sbKML.Append($@"                <p><b>Title:</b> {contact.ContactTitle}</p>");
+                if (contact.ContactTitleNew != null)
                 {
-                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Title New:</b> {contact.TitleNew}");
+                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Title New:</b> {contact.ContactTitleNew}");
                 }
                 sbKML.AppendLine($@"</p>");
 

@@ -769,6 +769,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblItemEnum.Text = $@"Valve Type: ";
                     }
                     break;
+                case "ContactTitleEnum":
+                    {
+                        lblItemEnum.Text = $@"Contact Title: ";
+                    }
+                    break;
                 case "TelTypeEnum":
                     {
                         lblItemEnum.Text = $@"Telephone Type: ";
@@ -859,6 +864,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         case "ValveTypeEnum":
                             {
                                 lblItemEnumOld.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)val).ToString()})";
+                            }
+                            break;
+                        case "ContactTitleEnum":
+                            {
+                                lblItemEnumOld.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_ContactTitleEnum((ContactTitleEnum)val).ToString()})";
                             }
                             break;
                         case "TelTypeEnum":
@@ -1282,6 +1292,52 @@ namespace CSSPPolSourceSiteInputToolHelper
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
                         }
                         break;
+                    case "ContactTitleEnum":
+                        {
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.DirectorGeneral),
+                                "butContactTitleDirectorGeneral", "Director General", fontFamilyName, "Director General", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.DirectorPublicWorks),
+                                "butContactTitleDirectorPublicWorks", "Director Public Works", fontFamilyName, "Director Public Works", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Engineer),
+                                "butContactTitleEngineer", "Engineer", fontFamilyName, "Engineer", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                           
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.FacilitiesManager),
+                                "butContactTitleFacilitiesManager", "Facilities Manager", fontFamilyName, "Facilities Manager", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                           
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Foreman),
+                                "butContactTitleForeman", "Foreman", fontFamilyName, "Foreman", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            x = 30;
+                            y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Operator),
+                                "butContactTitleOperator", "Operator", fontFamilyName, "Operator", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                          
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Superintendent),
+                                "butContactTitleSuperintendent", "Superintendent", fontFamilyName, "Superintendent", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                          
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Supervisor),
+                                "butContactTitleSupervisor", "Supervisor", fontFamilyName, "Supervisor", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                          
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Technician),
+                                "butContactTitleTechnician", "Technician", fontFamilyName, "Technician", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                            CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Error),
+                                "butContactTitleUnknown", "Unknown", fontFamilyName, "Unknown", butContactTitleSelect_Clicked, 0);
+                            x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+                        }
+                        break;
                     case "TelTypeEnum":
                         {
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)TelTypeEnum.Mobile),
@@ -1403,6 +1459,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                             lblItemEnum2.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)val).ToString()})";
                         }
                         break;
+                    case "ContactTitleEnum":
+                        {
+                            lblItemEnum2.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_ContactTitleEnum((ContactTitleEnum)val).ToString()})";
+                        }
+                        break;
                     case "TelTypeEnum":
                         {
                             lblItemEnum2.Text = val == null ? "(empty)" : $"({_BaseEnumService.GetEnumText_TelTypeEnum((TelTypeEnum)val).ToString()})";
@@ -1488,6 +1549,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         case "ValveTypeEnum":
                             {
                                 lblItemEnumNew.Text = valNew == null ? "empty" : _BaseEnumService.GetEnumText_ValveTypeEnum((ValveTypeEnum)valNew).ToString();
+                            }
+                            break;
+                        case "ContactTitleEnum":
+                            {
+                                lblItemEnumNew.Text = valNew == null ? "empty" : _BaseEnumService.GetEnumText_ContactTitleEnum((ContactTitleEnum)valNew).ToString();
                             }
                             break;
                         case "TelTypeEnum":
@@ -1641,6 +1707,16 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
+                    case "ContactTitleEnum":
+                        {
+                            if (val == null && valNew == null)
+                            {
+                                CurrentContact.ContactTitleNew = null;
+                                CurrentContact.ContactTitle = null;
+                                but.BackColor = Color.Green;
+                            }
+                        }
+                        break;
                     case "TelTypeEnum":
                         {
                             if (val == null && valNew == null)
@@ -1779,6 +1855,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 }
                             }
                             break;
+                        case "ContactTitleEnum":
+                            {
+                                CurrentContact.ContactTitleNew = valNew;
+                                if (CurrentContact.ContactTitleNew == elemEnumInt)
+                                {
+                                    but.BackColor = Color.Green;
+                                }
+                            }
+                            break;
                         case "TelTypeEnum":
                             {
                                 CurrentContact.TelephoneList[item].TelTypeNew = valNew;
@@ -1910,6 +1995,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 {
                                     CurrentInfrastructure.ValveType = val;
                                     if (CurrentInfrastructure.ValveType == elemEnumInt)
+                                    {
+                                        but.BackColor = Color.Green;
+                                    }
+                                }
+                                break;
+                            case "ContactTitleEnum":
+                                {
+                                    CurrentContact.ContactTitle = val;
+                                    if (CurrentContact.ContactTitle == elemEnumInt)
                                     {
                                         but.BackColor = Color.Green;
                                     }
@@ -2589,6 +2683,80 @@ namespace CSSPPolSourceSiteInputToolHelper
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
             }
         }
+
+        private void butContactTitleSelect_Clicked(object sender, EventArgs e)
+        {
+            string tagText = (string)((Button)sender).Tag;
+            tagText = tagText.Substring(0, tagText.IndexOf("|"));
+            switch (tagText)
+            {
+                case "Unknown":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.Error);
+                    }
+                    break;
+                case "Director General":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.DirectorGeneral);
+                    }
+                    break;
+                case "Director Public Works":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.DirectorPublicWorks);
+                    }
+                    break;
+                case "Engineer":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.Engineer);
+                    }
+                    break;
+                case "Facilities Manager":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.FacilitiesManager);
+                    }
+                    break;
+                case "Foreman":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.Foreman);
+                    }
+                    break;
+                case "Operator":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.Operator);
+                    }
+                    break;
+                case "Superintendent":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.Superintendent);
+                    }
+                    break;
+                case "Supervisor":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.Supervisor);
+                    }
+                    break;
+                case "Technician":
+                    {
+                        CurrentContact.ContactTitleNew = ((int)ContactTitleEnum.Technician);
+                    }
+                    break;
+                default:
+                    break;
+            }
+
+            if (!IsReading)
+            {
+                int AutoScrollPos = PanelViewAndEdit.VerticalScroll.Value;
+
+                SaveInfrastructureInfo();
+                DrawPanelContactsAndInfrastructures();
+                //RedrawSinglePanelInfrastructure();
+                ReDrawContactAndInfrastructure();
+
+                PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
+            }
+        }
+
 
         private void butTelTypeSelect_Clicked(object sender, EventArgs e)
         {
@@ -4287,8 +4455,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                 contact.ContactTVItemID = MaxContactTVItemID;
                 contact.IsActive = true;
                 contact.IsActiveNew = true;
-                contact.FirstName = "First Name";
-                contact.LastName = "Last Name";
+                contact.FirstName = "Jane";
+                contact.LastName = "Doe";
+                contact.ContactTitle = (int)ContactTitleEnum.Error;
 
                 municipalityDoc.Municipality.ContactList.Add(contact);
             }
@@ -5705,8 +5874,437 @@ namespace CSSPPolSourceSiteInputToolHelper
             EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: completed"));
 
         }
+        public void ContactSaveToCSSPWebTools()
+        {
+            string ret = "";
+            bool NeedToSave = false;
+
+            string FirstName = string.IsNullOrEmpty(CurrentContact.FirstNameNew) == false ? CurrentContact.FirstNameNew : CurrentContact.FirstName;
+            string Initial = string.IsNullOrEmpty(CurrentContact.InitialNew) == false ? CurrentContact.InitialNew : CurrentContact.Initial;
+            if (!string.IsNullOrWhiteSpace(Initial))
+            {
+                Initial = Initial + ", ";
+            }
+            string LastName = string.IsNullOrEmpty(CurrentContact.LastNameNew) == false ? CurrentContact.LastNameNew : CurrentContact.LastName;
+            string FullName = $"{FirstName} {Initial} {LastName}";
+
+            EmitRTBMessage(new RTBMessageEventArgs($"Checking if contact [{FullName}] already exist in CSSPWebTools\r\n"));
+
+            ret = ContactExistInCSSPWebTools((int)CurrentContact.ContactTVItemID, AdminEmail);
+            ret = ret.Replace("\"", "");
+
+            if (ret.StartsWith("ERROR:"))
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"Contact [{FullName}] does not exist in CSSPWebTools\r\n"));
+            }
+            else
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"Contact [{FullName}] already exist in CSSPWebTools\r\n"));
+            }
+
+            #region Load Variables
+            bool IsActive = true;
+            // FirstName already loaded
+            // Inital already loaded
+            // LastName already loaded
+            string Email = "";
+            ContactTitleEnum? Title = null;
+
+            // IsActive
+            if (CurrentContact.IsActiveNew == null)
+            {
+                if (CurrentContact.IsActive != null)
+                {
+                    IsActive = (bool)CurrentContact.IsActive;
+                }
+            }
+            else
+            {
+                IsActive = (bool)CurrentContact.IsActiveNew;
+            }
+
+            // Email
+            if (CurrentContact.EmailNew == null)
+            {
+                if (CurrentContact.Email != null)
+                {
+                    Email = CurrentContact.Email;
+                }
+            }
+            else
+            {
+                Email = CurrentContact.EmailNew;
+            }
+
+            // Title
+            if (CurrentContact.ContactTitleNew == null)
+            {
+                if (CurrentContact.ContactTitle != null)
+                {
+                    Title = (ContactTitleEnum)CurrentContact.ContactTitle;
+                }
+            }
+            else
+            {
+                Title = (ContactTitleEnum)CurrentContact.ContactTitleNew;
+            }
+
+
+            string MessageText = $"Trying to save all information for Contact [{FullName}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tMunicipality TVItemID\t[{(int)municipalityDoc.Municipality.MunicipalityTVItemID}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tIsActive[{IsActive}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tFirst Name\t[{FirstName}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tInitial\t[{Initial}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tLast Name\t[{LastName}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tEmail\t[{Email}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tTitle\t[{Title.ToString()}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+            #endregion Load Variables
+
+            ret = SaveToCSSPWebToolsCreateOrModifyContact((int)municipalityDoc.Municipality.MunicipalityTVItemID,
+                (int)CurrentContact.ContactTVItemID, FirstName, Initial, LastName, Email, Title, IsActive, AdminEmail);
+            ret = ret.Replace("\"", "");
+            if (ret.StartsWith("ERROR:"))
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                if (NeedToSave)
+                {
+                    SaveMunicipalityTextFile();
+                }
+            }
+            else
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                #region reset variables
+                int NewTVItemID = int.Parse(ret);
+                if (CurrentContact.ContactTVItemID != NewTVItemID)
+                {
+                    CurrentContact.ContactTVItemID = NewTVItemID;
+                }
+
+                CurrentContact.ContactTVItemID = NewTVItemID;
+                CurrentContact.IsActive = IsActive;
+                CurrentContact.IsActiveNew = null;
+                CurrentContact.FirstName = FirstName;
+                CurrentContact.FirstNameNew = null;
+                CurrentContact.Initial = Initial;
+                CurrentContact.InitialNew = null;
+                CurrentContact.LastName = LastName;
+                CurrentContact.LastNameNew = null;
+                CurrentContact.Email = Email;
+                CurrentContact.EmailNew = null;
+                ContactTVItemID = (int)CurrentContact.ContactTVItemID;
+                #endregion reset variables
+
+                NeedToSave = true;
+            }
+
+            if (CurrentContact.ContactAddressNew.AddressTVItemID != null)
+            {
+                if (!(CurrentContact.ContactAddress.StreetNumber == null
+                    && CurrentContact.ContactAddress.StreetName == null
+                    && CurrentContact.ContactAddress.StreetType == null
+                    // && CurrentContact.ContactAddress.Municipality == null
+                    && CurrentContact.ContactAddress.PostalCode == null
+                    && CurrentContact.ContactAddressNew.StreetNumber == null
+                    && CurrentContact.ContactAddressNew.StreetName == null
+                    && CurrentContact.ContactAddressNew.StreetType == null
+                    // && CurrentContact.ContactAddressNew.Municipality == null
+                    && CurrentContact.ContactAddressNew.PostalCode == null
+                    && CurrentContact.ContactAddress.StreetName == null))
+                {
+                    string StreetNumberText = CurrentContact.ContactAddress.StreetNumber == null ? "" : CurrentContact.ContactAddress.StreetNumber;
+                    string StreetNameText = CurrentContact.ContactAddress.StreetName == null ? "" : CurrentContact.ContactAddress.StreetName;
+                    int StreetType = CurrentContact.ContactAddress.StreetType == null ? 0 : (int)CurrentContact.ContactAddress.StreetType;
+                    string MunicipalityText = CurrentContact.ContactAddress.Municipality == null ? "" : CurrentContact.ContactAddress.Municipality;
+                    string PostalCodeText = CurrentContact.ContactAddress.PostalCode == null ? "" : CurrentContact.ContactAddress.PostalCode;
+                    string StreetNumberNewText = CurrentContact.ContactAddressNew.StreetNumber == null ? "" : CurrentContact.ContactAddressNew.StreetNumber;
+                    string StreetNameNewText = CurrentContact.ContactAddressNew.StreetName == null ? "" : CurrentContact.ContactAddressNew.StreetName;
+                    int StreetTypeNew = CurrentContact.ContactAddressNew.StreetType == null ? 0 : (int)CurrentContact.ContactAddressNew.StreetType;
+                    string MunicipalityNewText = CurrentContact.ContactAddressNew.Municipality == null ? "" : CurrentContact.ContactAddressNew.Municipality;
+                    string PostalCodeNewText = CurrentContact.ContactAddressNew.PostalCode == null ? "" : CurrentContact.ContactAddressNew.PostalCode;
+
+                    if (!string.IsNullOrWhiteSpace(MunicipalityText))
+                    {
+                        MunicipalityText = MunicipalityText.Trim();
+                    }
+
+                    if (!string.IsNullOrWhiteSpace(MunicipalityNewText))
+                    {
+                        MunicipalityNewText = MunicipalityNewText.Trim();
+                    }
+
+                    if (string.IsNullOrWhiteSpace(MunicipalityNewText))
+                    {
+                        string NoMunicipality = $"ERROR: To add an address you need to have a municipality name\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs(NoMunicipality));
+                        return;
+                    }
+
+                    MessageText = $"Checking if municipality exist [{MunicipalityNewText}]\r\n";
+                    EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                    bool MunicipalityExist = false;
+                    ret = MunicipalityExistUnderProvinceInCSSPWebTools((int)subsectorDoc.ProvinceTVItemID, MunicipalityNewText, AdminEmail);
+                    ret = ret.Replace("\"", "");
+                    if (ret.StartsWith("ERROR"))
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
+                        MunicipalityExist = false;
+                        NeedToSave = true;
+                    }
+                    else
+                    {
+                        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+                        MunicipalityExist = true;
+                    }
+
+                    if (!MunicipalityExist)
+                    {
+                        MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentContact.ContactTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, false, true, AdminEmail);
+                        ret = ret.Replace("\"", "");
+                        if (ret.StartsWith("ERROR"))
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                            if (NeedToSave)
+                            {
+                                SaveMunicipalityTextFile();
+                            }
+                        }
+                        else
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                            CurrentContact.ContactAddress.AddressType = (int)AddressTypeEnum.Civic;
+                            CurrentContact.ContactAddress.AddressTVItemID = int.Parse(ret);
+                            CurrentContact.ContactAddress.StreetNumber = CurrentContact.ContactAddressNew.StreetNumber;
+                            CurrentContact.ContactAddress.StreetName = CurrentContact.ContactAddressNew.StreetName;
+                            CurrentContact.ContactAddress.StreetType = CurrentContact.ContactAddressNew.StreetType;
+                            CurrentContact.ContactAddress.Municipality = CurrentContact.ContactAddressNew.Municipality;
+                            CurrentContact.ContactAddress.PostalCode = CurrentContact.ContactAddressNew.PostalCode;
+                            CurrentContact.ContactAddressNew.StreetNumber = null;
+                            CurrentContact.ContactAddressNew.StreetName = null;
+                            CurrentContact.ContactAddressNew.StreetType = null;
+                            CurrentContact.ContactAddressNew.Municipality = null;
+                            CurrentContact.ContactAddressNew.PostalCode = null;
+                            CurrentContact.ContactAddressNew.AddressTVItemID = null;
+                            CurrentContact.ContactAddressNew.AddressType = null;
+                            NeedToSave = true;
+                        }
+                    }
+                    else
+                    {
+                        MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
+                        EmitRTBMessage(new RTBMessageEventArgs(MessageText));
+
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentContact.ContactTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, false, true, AdminEmail);
+                        ret = ret.Replace("\"", "");
+                        if (ret.StartsWith("ERROR"))
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                            if (NeedToSave)
+                            {
+                                SaveMunicipalityTextFile();
+                            }
+                        }
+                        else
+                        {
+                            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                            CurrentContact.ContactAddress.AddressType = (int)AddressTypeEnum.Civic;
+                            CurrentContact.ContactAddress.AddressTVItemID = int.Parse(ret);
+                            CurrentContact.ContactAddress.StreetNumber = CurrentContact.ContactAddressNew.StreetNumber;
+                            CurrentContact.ContactAddress.StreetName = CurrentContact.ContactAddressNew.StreetName;
+                            CurrentContact.ContactAddress.StreetType = CurrentContact.ContactAddressNew.StreetType;
+                            CurrentContact.ContactAddress.Municipality = CurrentContact.ContactAddressNew.Municipality;
+                            CurrentContact.ContactAddress.PostalCode = CurrentContact.ContactAddressNew.PostalCode;
+                            CurrentContact.ContactAddressNew.StreetNumber = null;
+                            CurrentContact.ContactAddressNew.StreetName = null;
+                            CurrentContact.ContactAddressNew.StreetType = null;
+                            CurrentContact.ContactAddressNew.Municipality = null;
+                            CurrentContact.ContactAddressNew.PostalCode = null;
+                            CurrentContact.ContactAddressNew.AddressTVItemID = null;
+                            CurrentContact.ContactAddressNew.AddressType = null;
+                            NeedToSave = true;
+                        }
+                    }
+                }
+                else
+                {
+                    CurrentContact.ContactAddressNew.StreetNumber = null;
+                    CurrentContact.ContactAddressNew.StreetName = null;
+                    CurrentContact.ContactAddressNew.StreetType = null;
+                    CurrentContact.ContactAddressNew.Municipality = null;
+                    CurrentContact.ContactAddressNew.PostalCode = null;
+                    CurrentContact.ContactAddressNew.AddressTVItemID = null;
+                    CurrentContact.ContactAddressNew.AddressType = null;
+                }
+            }
+
+            foreach (Telephone tel in CurrentContact.TelephoneList)
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"Checking if telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
+
+                ret = TelExistInCSSPWebTools((int)tel.TelTVItemID, AdminEmail);
+                ret = ret.Replace("\"", "");
+
+                if (ret.StartsWith("ERROR:"))
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] does not exist in CSSPWebTools\r\n"));
+                }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
+                }
+
+                int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
+                int TelTVItemID = (int)tel.TelTVItemID;
+                int? TelType = tel.TelTypeNew != null ? tel.TelTypeNew : tel.TelType;
+                string TelNumber = tel.TelNumberNew != null ? tel.TelNumberNew : tel.TelNumber;
+                bool ShouldDelete = tel.ShouldDelete;
+
+
+                MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                MessageText = $"\t\tTelephone Type\t[{TelType}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                MessageText = $"\t\tTelephone Number\t[{TelNumber}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                ret = SaveToCSSPWebToolsCreateOrModifyTel(ContactTVItemID, TelTVItemID, TelType, TelNumber, ShouldDelete, AdminEmail);
+                ret = ret.Replace("\"", "");
+                if (ret.StartsWith("ERROR:"))
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                    if (NeedToSave)
+                    {
+                        SaveMunicipalityTextFile();
+                    }
+                }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                    #region reset variables
+                    int NewTVItemID = int.Parse(ret);
+
+                    tel.TelTVItemID = NewTVItemID;
+                    tel.TelType = TelType;
+                    tel.TelTypeNew = null;
+                    tel.TelNumber = TelNumber;
+                    tel.TelNumberNew = null;
+                    #endregion reset variables
+
+                    NeedToSave = true;
+                }
+            }
+
+            foreach (Email email in CurrentContact.EmailList)
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"Checking if email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
+
+                ret = EmailExistInCSSPWebTools((int)email.EmailTVItemID, AdminEmail);
+                ret = ret.Replace("\"", "");
+
+                if (ret.StartsWith("ERROR:"))
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] does not exist in CSSPWebTools\r\n"));
+                }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
+                }
+
+                int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
+                int EmailTVItemID = (int)email.EmailTVItemID;
+                int? EmailType = email.EmailTypeNew != null ? email.EmailTypeNew : email.EmailType;
+                string EmailAddress = email.EmailAddressNew != null ? email.EmailAddressNew : email.EmailAddress;
+                bool ShouldDelete = email.ShouldDelete;
+
+
+                MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                MessageText = $"\t\tEmail Type\t[{EmailType}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                MessageText = $"\t\tEmail Address\t[{EmailAddress}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                ret = SaveToCSSPWebToolsCreateOrModifyEmail(ContactTVItemID, EmailTVItemID, EmailType, EmailAddress, ShouldDelete, AdminEmail);
+                ret = ret.Replace("\"", "");
+                if (ret.StartsWith("ERROR:"))
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                    if (NeedToSave)
+                    {
+                        SaveMunicipalityTextFile();
+                    }
+                }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                    #region reset variables
+                    int NewTVItemID = int.Parse(ret);
+
+                    email.EmailTVItemID = NewTVItemID;
+                    email.EmailType = EmailType;
+                    email.EmailTypeNew = null;
+                    email.EmailAddress = EmailAddress;
+                    email.EmailAddressNew = null;
+                    #endregion reset variables
+
+                    NeedToSave = true;
+                }
+            }
+
+
+            if (NeedToSave)
+            {
+                // SaveMunicipalityTextFile();
+            }
+
+            EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: completed"));
+
+        }
         public void InfrastructureSaveAllToCSSPWebTools()
         {
+            foreach (Contact contact in municipalityDoc.Municipality.ContactList)
+            {
+                CurrentContact = contact;
+                ContactSaveToCSSPWebTools();
+            }
+
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
             {
                 int PumpToTVItemID = 0;
@@ -6833,13 +7431,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                     lblTVText.Font = new Font(new FontFamily(lblTVText.Font.FontFamily.Name).Name, 10f, FontStyle.Bold);
                 }
 
-                string FirstName = string.IsNullOrEmpty(CurrentContact.FirstNameNew) == true ? CurrentContact.FirstNameNew : CurrentContact.FirstName;
-                string Inital = string.IsNullOrEmpty(CurrentContact.InitialNew) == true ? CurrentContact.InitialNew : CurrentContact.Initial;
+                string FirstName = string.IsNullOrEmpty(CurrentContact.FirstNameNew) == false ? CurrentContact.FirstNameNew : CurrentContact.FirstName;
+                string Inital = string.IsNullOrEmpty(CurrentContact.InitialNew) == false ? CurrentContact.InitialNew : CurrentContact.Initial;
                 if (!string.IsNullOrWhiteSpace(Inital))
                 {
                     Inital = Inital + ", ";
                 }
-                string LastName = string.IsNullOrEmpty(CurrentContact.LastNameNew) == true ? CurrentContact.LastNameNew : CurrentContact.LastName;
+                string LastName = string.IsNullOrEmpty(CurrentContact.LastNameNew) == false ? CurrentContact.LastNameNew : CurrentContact.LastName;
                 string FullName = $"{FirstName} {Inital} {LastName}";
                 lblTVText.Text = $"{FullName}";
 
@@ -6876,6 +7474,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                         butChangeToIsNotActive.Click += butChangeToIsNotActive_Click;
 
                         PanelViewAndEdit.Controls.Add(butChangeToIsNotActive);
+
+                        if (CurrentContact.ContactTVItemID >= 20000000)
+                        {
+                            Button butDeleteContact = new Button();
+                            butDeleteContact.AutoSize = true;
+                            butDeleteContact.Location = new Point(butChangeToIsNotActive.Right + 10, butChangeToIsNotActive.Top);
+                            butDeleteContact.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                            butDeleteContact.Font = new Font(new FontFamily(butDeleteContact.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                            butDeleteContact.Padding = new Padding(5);
+                            butDeleteContact.Tag = CurrentContact.ContactTVItemID.ToString();
+                            butDeleteContact.Text = $"Delete Contact";
+                            butDeleteContact.Click += butDeleteContact_Click;
+
+                            PanelViewAndEdit.Controls.Add(butDeleteContact);
+                        }
                     }
                     else
                     {
@@ -6890,6 +7503,21 @@ namespace CSSPPolSourceSiteInputToolHelper
                         butChangeToIsActive.Click += butChangeToIsActive_Click;
 
                         PanelViewAndEdit.Controls.Add(butChangeToIsActive);
+
+                        if (CurrentContact.ContactTVItemID >= 20000000)
+                        {
+                            Button butDeleteContact = new Button();
+                            butDeleteContact.AutoSize = true;
+                            butDeleteContact.Location = new Point(butChangeToIsActive.Right + 10, butChangeToIsActive.Top);
+                            butDeleteContact.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                            butDeleteContact.Font = new Font(new FontFamily(butDeleteContact.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                            butDeleteContact.Padding = new Padding(5);
+                            butDeleteContact.Tag = CurrentContact.ContactTVItemID.ToString();
+                            butDeleteContact.Text = $"Delete Contact";
+                            butDeleteContact.Click += butDeleteContact_Click;
+
+                            PanelViewAndEdit.Controls.Add(butDeleteContact);
+                        }
                     }
                 }
                 else
@@ -6934,6 +7562,12 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
                 #endregion Email
+
+                #region ContactTitle
+                DrawItemEnum(X, Y, CurrentContact.ContactTitle, CurrentContact.ContactTitleNew, "Contact Title", "comboBoxContactTitle", typeof(ContactTitleEnum), 0);
+                #endregion ContactTitle
+
+                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
                 #region Save button
                 if (IsEditing)
@@ -7005,23 +7639,42 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(lblTelSeparator);
 
+                    if (IsEditing && tel.TelTVItemID >= 30000000)
+                    {
+                        Button butDeleteTel = new Button();
+                        butDeleteTel.AutoSize = true;
+                        butDeleteTel.Location = new Point(lblTelSeparator.Right + 10, lblTelSeparator.Top);
+                        butDeleteTel.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        butDeleteTel.Font = new Font(new FontFamily(butDeleteTel.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butDeleteTel.Padding = new Padding(5);
+                        butDeleteTel.Tag = tel.TelTVItemID.ToString();
+                        butDeleteTel.Text = $"Delete Telephone";
+                        butDeleteTel.Click += butDeleteTel_Click;
+
+                        PanelViewAndEdit.Controls.Add(butDeleteTel);
+                    }
+
+
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
                     CountTel++;
                 }
 
-                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                X = 100;
+                if (IsEditing)
+                {
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                    X = 100;
 
-                Button butTelAdd = new Button();
-                butTelAdd.AutoSize = true;
-                butTelAdd.Location = new Point(20, Y);
-                butTelAdd.Text = $"Add Another Telephone for {FullName}";
-                butTelAdd.Font = new Font(new FontFamily(butTelAdd.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
-                butTelAdd.Padding = new Padding(5);
-                butTelAdd.Click += butTelAdd_Click;
+                    Button butTelAdd = new Button();
+                    butTelAdd.AutoSize = true;
+                    butTelAdd.Location = new Point(20, Y);
+                    butTelAdd.Text = $"Add Another Telephone for {FullName}";
+                    butTelAdd.Font = new Font(new FontFamily(butTelAdd.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+                    butTelAdd.Padding = new Padding(5);
+                    butTelAdd.Click += butTelAdd_Click;
 
-                PanelViewAndEdit.Controls.Add(butTelAdd);
+                    PanelViewAndEdit.Controls.Add(butTelAdd);
+                }
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
@@ -7066,23 +7719,41 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     PanelViewAndEdit.Controls.Add(lblEmailSeparator);
 
+                    if (IsEditing && email.EmailTVItemID >= 40000000)
+                    {
+                        Button butDeleteEmail = new Button();
+                        butDeleteEmail.AutoSize = true;
+                        butDeleteEmail.Location = new Point(lblEmailSeparator.Right + 10, lblEmailSeparator.Top);
+                        butDeleteEmail.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                        butDeleteEmail.Font = new Font(new FontFamily(butDeleteEmail.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        butDeleteEmail.Padding = new Padding(5);
+                        butDeleteEmail.Tag = email.EmailTVItemID.ToString();
+                        butDeleteEmail.Text = $"Delete Email";
+                        butDeleteEmail.Click += butDeleteEmail_Click;
+
+                        PanelViewAndEdit.Controls.Add(butDeleteEmail);
+                    }
+
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
                     CountEmail++;
                 }
 
-                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
-                X = 100;
+                if (IsEditing)
+                {
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                    X = 100;
 
-                Button butEmailAdd = new Button();
-                butEmailAdd.AutoSize = true;
-                butEmailAdd.Location = new Point(20, Y);
-                butEmailAdd.Text = $"Add Another Email for {FullName}";
-                butEmailAdd.Font = new Font(new FontFamily(butEmailAdd.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
-                butEmailAdd.Padding = new Padding(5);
-                butEmailAdd.Click += butEmailAdd_Click;
+                    Button butEmailAdd = new Button();
+                    butEmailAdd.AutoSize = true;
+                    butEmailAdd.Location = new Point(20, Y);
+                    butEmailAdd.Text = $"Add Another Email for {FullName}";
+                    butEmailAdd.Font = new Font(new FontFamily(butEmailAdd.Font.FontFamily.Name).Name, 12f, FontStyle.Bold);
+                    butEmailAdd.Padding = new Padding(5);
+                    butEmailAdd.Click += butEmailAdd_Click;
 
-                PanelViewAndEdit.Controls.Add(butEmailAdd);
+                    PanelViewAndEdit.Controls.Add(butEmailAdd);
+                }
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
 
@@ -9141,7 +9812,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                                         }
                                         SaveRestOfAddressNewContact();
                                         IsDirty = true;
-                                    }                                }
+                                    }
+                                }
                                 else
                                 {
                                     if ("" + CurrentInfrastructure.InfrastructureAddress.StreetName == tb.Text)
@@ -11432,6 +12104,127 @@ namespace CSSPPolSourceSiteInputToolHelper
                 return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
             }
         }
+        private string SaveToCSSPWebToolsCreateOrModifyEmail(int ContactTVItemID, int EmailTVItemID, int? EmailType, string EmailAddress, bool ShouldDelete, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("ContactTVItemID", ContactTVItemID.ToString());
+                paramList.Add("EmailTVItemID", EmailTVItemID.ToString());
+                paramList.Add("EmailType", EmailType == null ? "" : EmailType.ToString());
+                paramList.Add("EmailAddress", EmailAddress);
+                paramList.Add("ShouldDelete", ShouldDelete.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}CreateOrModifyEmailJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}CreateOrModifyEmailJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+
+        }
+        private string SaveToCSSPWebToolsCreateOrModifyTel(int ContactTVItemID, int TelTVItemID, int? TelType, string TelNumber, bool ShouldDelete, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("ContactTVItemID", ContactTVItemID.ToString());
+                paramList.Add("TelTVItemID", TelTVItemID.ToString());
+                paramList.Add("TelType", TelType == null ? "" : TelType.ToString());
+                paramList.Add("TelNumber", TelNumber);
+                paramList.Add("ShouldDelete", ShouldDelete.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}CreateOrModifyTelephoneJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}CreateOrModifyTelephoneJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+
+        }
+        private string SaveToCSSPWebToolsCreateOrModifyContact(int MunicipalityTVItemID, int ContactTVItemID, string FirstName, string Initial,
+            string LastName, string Email, ContactTitleEnum? Title, bool IsActive, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("MunicipalityTVItemID", MunicipalityTVItemID.ToString());
+                paramList.Add("ContactTVItemID", ContactTVItemID.ToString());
+                paramList.Add("FirstName", FirstName);
+                paramList.Add("Initial", Initial);
+                paramList.Add("LastName", LastName);
+                paramList.Add("Email", Email);
+                paramList.Add("Title", Title == null ? "" : ((int)Title).ToString());
+                paramList.Add("IsActive", IsActive.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}CreateOrModifyContactJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}CreateOrModifyContactJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+
+        }
         private string SaveToCSSPWebToolsCreateOrModifyInfrastructure(int MunicipalityTVItemID, int TVItemID, string TVText, bool IsActive,
             float? Lat, float? Lng, float? LatOutfall, float? LngOutfall, string CommentEN, string CommentFR, InfrastructureTypeEnum? InfrastructureType,
             FacilityTypeEnum? FacilityType, bool? IsMechanicallyAerated, int? NumberOfCells, int? NumberOfAeratedCells, AerationTypeEnum? AerationType,
@@ -11926,6 +12719,40 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
 
         }
+        public string ContactExistInCSSPWebTools(int TVItemID, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("TVItemID", TVItemID.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}ContactExistJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}ContactExistJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+        }
         public string InfrastructureExistInCSSPWebTools(int TVItemID, string AdminEmail)
         {
             try
@@ -11946,6 +12773,74 @@ namespace CSSPPolSourceSiteInputToolHelper
                     if (Language == LanguageEnum.fr)
                     {
                         uri = new Uri($"{baseURLFR}InfrastructureExistJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+        }
+        public string EmailExistInCSSPWebTools(int TVItemID, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("TVItemID", TVItemID.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}EmailExistJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}EmailExistJSON");
+                    }
+
+                    byte[] ret = webClient.UploadValues(uri, "POST", paramList);
+
+                    retStr = System.Text.Encoding.Default.GetString(ret);
+                }
+
+                return retStr;
+            }
+            catch (Exception ex)
+            {
+                return "ERROR: " + ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "");
+            }
+        }
+        public string TelExistInCSSPWebTools(int TVItemID, string AdminEmail)
+        {
+            try
+            {
+                string retStr = "";
+
+                NameValueCollection paramList = new NameValueCollection();
+                paramList.Add("TVItemID", TVItemID.ToString());
+                paramList.Add("AdminEmail", AdminEmail);
+
+                using (WebClient webClient = new WebClient())
+                {
+                    WebProxy webProxy = new WebProxy();
+                    webClient.Proxy = webProxy;
+
+                    webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
+                    Uri uri = new Uri($"{baseURLEN}TelExistJSON");
+                    if (Language == LanguageEnum.fr)
+                    {
+                        uri = new Uri($"{baseURLFR}TelExistJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);

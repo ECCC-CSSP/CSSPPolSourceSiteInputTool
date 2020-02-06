@@ -134,8 +134,78 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
+            }
+        }
+        private void butDeleteContact_Click(object sender, EventArgs e)
+        {
+            int? ContactTVItemIDToDelete = CurrentContact.ContactTVItemID;
+
+            if (ContactTVItemIDToDelete >= 20000000)
+            {
+                municipalityDoc.Municipality.ContactList.Remove(CurrentContact);
+            }
+
+            ContactTVItemID = 0;
+            CurrentContact = null;
+
+            SaveMunicipalityTextFile();
+
+            IsDirty = false;
+            PanelShowInputOptions.BackColor = BackColorDefault;
+            PanelSubsectorOrMunicipality.Enabled = true;
+
+            PanelViewAndEdit.Controls.Clear();
+            DrawPanelContactsAndInfrastructures();
+        }
+
+        private void butDeleteEmail_Click(object sender, EventArgs e)
+        {
+            string Tag = ((Button)sender).Tag.ToString();
+
+            int EmailTVItemIDToDelete = int.Parse(Tag);
+
+            if (EmailTVItemIDToDelete >= 40000000)
+            {
+                Email email = CurrentContact.EmailList.Where(c => c.EmailTVItemID == EmailTVItemIDToDelete).FirstOrDefault();
+                if (email != null)
+                {
+                    CurrentContact.EmailList.Remove(email);
+                }
+
+
+                IsDirty = true;
+                PanelShowInputOptions.BackColor = BackColorEditing;
+
+                ReDrawContactAndInfrastructure();
+            }
+            else
+            {
+                MessageBox.Show("Could not find the email to delete", "Error while trying to delete email", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+        private void butDeleteTel_Click(object sender, EventArgs e)
+        {
+            string Tag = ((Button)sender).Tag.ToString();
+            
+            int TelTVItemIDToDelete = int.Parse(Tag);
+
+            if (TelTVItemIDToDelete >= 30000000)
+            {
+                Telephone tel = CurrentContact.TelephoneList.Where(c => c.TelTVItemID == TelTVItemIDToDelete).FirstOrDefault();
+                if (tel != null)
+                {
+                    CurrentContact.TelephoneList.Remove(tel);
+                }
+
+                IsDirty = true;
+                PanelShowInputOptions.BackColor = BackColorEditing;
+
+                ReDrawContactAndInfrastructure();
+            }
+            else
+            {
+                MessageBox.Show("Could not find the telephone to delete", "Error while trying to delete telephone", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void butChangeToIsPointSource_Click(object sender, EventArgs e)
@@ -530,27 +600,17 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         private void butEmailAdd_Click(object sender, EventArgs e)
         {
-            if (IsDirty)
-            {
-                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
-                return;
-            }
-
             EmailAdd();
-            SaveMunicipalityTextFile();
             ReDrawContactAndInfrastructure();
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
         }
         private void butTelAdd_Click(object sender, EventArgs e)
         {
-            if (IsDirty)
-            {
-                MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
-                return;
-            }
-
             TelAdd();
-            SaveMunicipalityTextFile();
             ReDrawContactAndInfrastructure();
+            IsDirty = true;
+            PanelShowInputOptions.BackColor = BackColorEditing;
         }
         private void SaveAndRedraw(object sender, EventArgs e)
         {

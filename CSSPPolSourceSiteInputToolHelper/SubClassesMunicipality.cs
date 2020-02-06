@@ -38,8 +38,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public string LastNameNew { get; set; } = null;
         public string Email { get; set; } = null;
         public string EmailNew { get; set; } = null;
-        public int? Title { get; set; } = null;
-        public int? TitleNew { get; set; } = null;
+        public int? ContactTitle { get; set; } = null;
+        public int? ContactTitleNew { get; set; } = null;
         public List<Telephone> TelephoneList { get; set; } = new List<Telephone>();
         public List<Email> EmailList { get; set; } = new List<Email>();
         public Address ContactAddress { get; set; } = new Address();
@@ -54,6 +54,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int? TelTypeNew { get; set; } = null;
         public string TelNumber { get; set; } = null;
         public string TelNumberNew { get; set; } = null;
+        public bool ShouldDelete { get; set; } = false;
     }
     public class Email
     {
@@ -62,6 +63,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public int? EmailTypeNew { get; set; } = null;
         public string EmailAddress { get; set; } = null;
         public string EmailAddressNew { get; set; } = null;
+        public bool ShouldDelete { get; set; } = false;
     }
     public class Infrastructure
     {
