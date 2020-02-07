@@ -1305,11 +1305,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Engineer),
                                 "butContactTitleEngineer", "Engineer", fontFamilyName, "Engineer", butContactTitleSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-                           
+
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.FacilitiesManager),
                                 "butContactTitleFacilitiesManager", "Facilities Manager", fontFamilyName, "Facilities Manager", butContactTitleSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-                           
+
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Foreman),
                                 "butContactTitleForeman", "Foreman", fontFamilyName, "Foreman", butContactTitleSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
@@ -1320,15 +1320,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Operator),
                                 "butContactTitleOperator", "Operator", fontFamilyName, "Operator", butContactTitleSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-                          
+
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Superintendent),
                                 "butContactTitleSuperintendent", "Superintendent", fontFamilyName, "Superintendent", butContactTitleSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-                          
+
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Supervisor),
                                 "butContactTitleSupervisor", "Supervisor", fontFamilyName, "Supervisor", butContactTitleSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
-                          
+
                             CreateChoiceButton(x, y, val, valNew, enumType.Name, ((int)ContactTitleEnum.Technician),
                                 "butContactTitleTechnician", "Technician", fontFamilyName, "Technician", butContactTitleSelect_Clicked, 0);
                             x = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
@@ -3706,10 +3706,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 string FirstName = string.IsNullOrWhiteSpace(contact.FirstNameNew) == false ? contact.FirstNameNew : contact.FirstName;
                 string Initial = string.IsNullOrWhiteSpace(contact.InitialNew) == false ? contact.InitialNew : contact.Initial;
-                if (!string.IsNullOrWhiteSpace(Initial))
-                {
-                    Initial = Initial + ", ";
-                }
+                //if (!string.IsNullOrWhiteSpace(Initial))
+                //{
+                //    Initial = Initial + ", ";
+                //}
                 string LastName = string.IsNullOrWhiteSpace(contact.LastNameNew) == false ? contact.LastNameNew : contact.LastName;
                 string FullName = $"{FirstName} {Initial} {LastName}";
                 lblTVText.Text = $"{contact.ContactTVItemID}    {FullName} (Contact)";
@@ -4452,13 +4452,49 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MaxContactTVItemID = Max + 1;
                     }
                 }
+
+                string FirstName = "Jane";
+                string Initial = "A";
+                string LastName = "Doe";
+                string Email = "Jane.A.Doe@gmail.com";
                 contact.ContactTVItemID = MaxContactTVItemID;
                 contact.IsActive = true;
                 contact.IsActiveNew = true;
-                contact.FirstName = "Jane";
-                contact.LastName = "Doe";
+                contact.FirstName = FirstName;
+                contact.Initial = Initial;
+                contact.LastName = LastName;
+                contact.Email = Email;
                 contact.ContactTitle = (int)ContactTitleEnum.Error;
 
+                Contact contactFound = (from c in municipalityDoc.Municipality.ContactList
+                                        where c.FirstName == FirstName
+                                        && c.Initial == Initial
+                                        && c.LastName == LastName
+                                        select c).FirstOrDefault();
+
+                if (contactFound != null)
+                {
+                    int count = 2;
+                    while (contactFound != null)
+                    {
+                        FirstName = "Jane" + count;
+                        Initial = "A";
+                        LastName = "Doe";
+                        Email = "Jane" + count + ".A.Doe@gmail.com";
+                        contact.FirstName = FirstName;
+                        contact.Initial = Initial;
+                        contact.LastName = LastName;
+                        contact.Email = Email;
+
+                        contactFound = (from c in municipalityDoc.Municipality.ContactList
+                                        where c.FirstName == FirstName
+                                        && c.Initial == Initial
+                                        && c.LastName == LastName
+                                        select c).FirstOrDefault();
+
+                        count++;
+                    }
+                }
                 municipalityDoc.Municipality.ContactList.Add(contact);
             }
         }
@@ -5888,6 +5924,22 @@ namespace CSSPPolSourceSiteInputToolHelper
             string LastName = string.IsNullOrEmpty(CurrentContact.LastNameNew) == false ? CurrentContact.LastNameNew : CurrentContact.LastName;
             string FullName = $"{FirstName} {Initial} {LastName}";
 
+            foreach (Contact contact in municipalityDoc.Municipality.ContactList)
+            {
+                if (contact.ContactTVItemID != CurrentContact.ContactTVItemID)
+                {
+                    string FirstName2 = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
+                    string Initial2 = contact.InitialNew != null ? contact.InitialNew : contact.Initial;
+                    string LastName2 = contact.LastNameNew != null ? contact.LastNameNew : contact.LastName;
+
+                    if (FirstName == FirstName2 && Initial == Initial2 && LastName == LastName2)
+                    {
+                        MessageBox.Show("At least 2 contacts have the same First Name, Initial and Last Name\r\nPlease change one of them", "Error: Duplicate Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                }
+            }
+
             EmitRTBMessage(new RTBMessageEventArgs($"Checking if contact [{FullName}] already exist in CSSPWebTools\r\n"));
 
             ret = ContactExistInCSSPWebTools((int)CurrentContact.ContactTVItemID, AdminEmail);
@@ -6162,131 +6214,131 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            foreach (Telephone tel in CurrentContact.TelephoneList)
-            {
-                EmitRTBMessage(new RTBMessageEventArgs($"Checking if telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
+            //foreach (Telephone tel in CurrentContact.TelephoneList)
+            //{
+            //    EmitRTBMessage(new RTBMessageEventArgs($"Checking if telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
 
-                ret = TelExistInCSSPWebTools((int)tel.TelTVItemID, AdminEmail);
-                ret = ret.Replace("\"", "");
+            //    ret = TelExistInCSSPWebTools((int)tel.TelTVItemID, AdminEmail);
+            //    ret = ret.Replace("\"", "");
 
-                if (ret.StartsWith("ERROR:"))
-                {
-                    EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] does not exist in CSSPWebTools\r\n"));
-                }
-                else
-                {
-                    EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
-                }
+            //    if (ret.StartsWith("ERROR:"))
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] does not exist in CSSPWebTools\r\n"));
+            //    }
+            //    else
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
+            //    }
 
-                int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
-                int TelTVItemID = (int)tel.TelTVItemID;
-                int? TelType = tel.TelTypeNew != null ? tel.TelTypeNew : tel.TelType;
-                string TelNumber = tel.TelNumberNew != null ? tel.TelNumberNew : tel.TelNumber;
-                bool ShouldDelete = tel.ShouldDelete;
-
-
-                MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
-                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
-
-                MessageText = $"\t\tTelephone Type\t[{TelType}]\r\n";
-                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
-
-                MessageText = $"\t\tTelephone Number\t[{TelNumber}]\r\n";
-                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
-
-                MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
-                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
-
-                ret = SaveToCSSPWebToolsCreateOrModifyTel(ContactTVItemID, TelTVItemID, TelType, TelNumber, ShouldDelete, AdminEmail);
-                ret = ret.Replace("\"", "");
-                if (ret.StartsWith("ERROR:"))
-                {
-                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-                    if (NeedToSave)
-                    {
-                        SaveMunicipalityTextFile();
-                    }
-                }
-                else
-                {
-                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-
-                    #region reset variables
-                    int NewTVItemID = int.Parse(ret);
-
-                    tel.TelTVItemID = NewTVItemID;
-                    tel.TelType = TelType;
-                    tel.TelTypeNew = null;
-                    tel.TelNumber = TelNumber;
-                    tel.TelNumberNew = null;
-                    #endregion reset variables
-
-                    NeedToSave = true;
-                }
-            }
-
-            foreach (Email email in CurrentContact.EmailList)
-            {
-                EmitRTBMessage(new RTBMessageEventArgs($"Checking if email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
-
-                ret = EmailExistInCSSPWebTools((int)email.EmailTVItemID, AdminEmail);
-                ret = ret.Replace("\"", "");
-
-                if (ret.StartsWith("ERROR:"))
-                {
-                    EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] does not exist in CSSPWebTools\r\n"));
-                }
-                else
-                {
-                    EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
-                }
-
-                int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
-                int EmailTVItemID = (int)email.EmailTVItemID;
-                int? EmailType = email.EmailTypeNew != null ? email.EmailTypeNew : email.EmailType;
-                string EmailAddress = email.EmailAddressNew != null ? email.EmailAddressNew : email.EmailAddress;
-                bool ShouldDelete = email.ShouldDelete;
+            //    int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
+            //    int TelTVItemID = (int)tel.TelTVItemID;
+            //    int? TelType = tel.TelTypeNew != null ? tel.TelTypeNew : tel.TelType;
+            //    string TelNumber = tel.TelNumberNew != null ? tel.TelNumberNew : tel.TelNumber;
+            //    bool ShouldDelete = tel.ShouldDelete;
 
 
-                MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
-                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+            //    MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
+            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-                MessageText = $"\t\tEmail Type\t[{EmailType}]\r\n";
-                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+            //    MessageText = $"\t\tTelephone Type\t[{TelType}]\r\n";
+            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-                MessageText = $"\t\tEmail Address\t[{EmailAddress}]\r\n";
-                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+            //    MessageText = $"\t\tTelephone Number\t[{TelNumber}]\r\n";
+            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-                MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
-                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+            //    MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
+            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-                ret = SaveToCSSPWebToolsCreateOrModifyEmail(ContactTVItemID, EmailTVItemID, EmailType, EmailAddress, ShouldDelete, AdminEmail);
-                ret = ret.Replace("\"", "");
-                if (ret.StartsWith("ERROR:"))
-                {
-                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-                    if (NeedToSave)
-                    {
-                        SaveMunicipalityTextFile();
-                    }
-                }
-                else
-                {
-                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+            //    ret = SaveToCSSPWebToolsCreateOrModifyTel(ContactTVItemID, TelTVItemID, TelType, TelNumber, ShouldDelete, AdminEmail);
+            //    ret = ret.Replace("\"", "");
+            //    if (ret.StartsWith("ERROR:"))
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //        if (NeedToSave)
+            //        {
+            //            SaveMunicipalityTextFile();
+            //        }
+            //    }
+            //    else
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
-                    #region reset variables
-                    int NewTVItemID = int.Parse(ret);
+            //        #region reset variables
+            //        int NewTVItemID = int.Parse(ret);
 
-                    email.EmailTVItemID = NewTVItemID;
-                    email.EmailType = EmailType;
-                    email.EmailTypeNew = null;
-                    email.EmailAddress = EmailAddress;
-                    email.EmailAddressNew = null;
-                    #endregion reset variables
+            //        tel.TelTVItemID = NewTVItemID;
+            //        tel.TelType = TelType;
+            //        tel.TelTypeNew = null;
+            //        tel.TelNumber = TelNumber;
+            //        tel.TelNumberNew = null;
+            //        #endregion reset variables
 
-                    NeedToSave = true;
-                }
-            }
+            //        NeedToSave = true;
+            //    }
+            //}
+
+            //foreach (Email email in CurrentContact.EmailList)
+            //{
+            //    EmitRTBMessage(new RTBMessageEventArgs($"Checking if email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
+
+            //    ret = EmailExistInCSSPWebTools((int)email.EmailTVItemID, AdminEmail);
+            //    ret = ret.Replace("\"", "");
+
+            //    if (ret.StartsWith("ERROR:"))
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] does not exist in CSSPWebTools\r\n"));
+            //    }
+            //    else
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
+            //    }
+
+            //    int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
+            //    int EmailTVItemID = (int)email.EmailTVItemID;
+            //    int? EmailType = email.EmailTypeNew != null ? email.EmailTypeNew : email.EmailType;
+            //    string EmailAddress = email.EmailAddressNew != null ? email.EmailAddressNew : email.EmailAddress;
+            //    bool ShouldDelete = email.ShouldDelete;
+
+
+            //    MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
+            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            //    MessageText = $"\t\tEmail Type\t[{EmailType}]\r\n";
+            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            //    MessageText = $"\t\tEmail Address\t[{EmailAddress}]\r\n";
+            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            //    MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
+            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            //    ret = SaveToCSSPWebToolsCreateOrModifyEmail(ContactTVItemID, EmailTVItemID, EmailType, EmailAddress, ShouldDelete, AdminEmail);
+            //    ret = ret.Replace("\"", "");
+            //    if (ret.StartsWith("ERROR:"))
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+            //        if (NeedToSave)
+            //        {
+            //            SaveMunicipalityTextFile();
+            //        }
+            //    }
+            //    else
+            //    {
+            //        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+            //        #region reset variables
+            //        int NewTVItemID = int.Parse(ret);
+
+            //        email.EmailTVItemID = NewTVItemID;
+            //        email.EmailType = EmailType;
+            //        email.EmailTypeNew = null;
+            //        email.EmailAddress = EmailAddress;
+            //        email.EmailAddressNew = null;
+            //        #endregion reset variables
+
+            //        NeedToSave = true;
+            //    }
+            //}
 
 
             if (NeedToSave)
@@ -6304,6 +6356,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 CurrentContact = contact;
                 ContactSaveToCSSPWebTools();
             }
+
 
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
             {
@@ -7538,9 +7591,23 @@ namespace CSSPPolSourceSiteInputToolHelper
                 #region FirstName
                 X = 10;
                 DrawItemText(X, Y, CurrentContact.FirstName, CurrentContact.FirstNameNew, "First Name", "textBoxFirstName", 300, 0);
+                #endregion FirstName
+
+                if (IsEditing)
+                {
+                    int right = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    Label lblRequired = new Label();
+                    lblRequired.AutoSize = true;
+                    lblRequired.Location = new Point(right, Y);
+                    lblRequired.Font = new Font(new FontFamily(lblRequired.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    lblRequired.ForeColor = CurrentContact.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                    lblRequired.Text = "(required)";
+
+                    PanelViewAndEdit.Controls.Add(lblRequired);
+                }
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                #endregion FirstName
 
                 #region Initial
                 X = 10;
@@ -7552,16 +7619,44 @@ namespace CSSPPolSourceSiteInputToolHelper
                 #region LastName
                 X = 10;
                 DrawItemText(X, Y, CurrentContact.LastName, CurrentContact.LastNameNew, "Last Name", "textBoxLastName", 300, 0);
+                #endregion LastName
+
+                if (IsEditing)
+                {
+                    int right2 = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    Label lblRequired2 = new Label();
+                    lblRequired2.AutoSize = true;
+                    lblRequired2.Location = new Point(right2, Y);
+                    lblRequired2.Font = new Font(new FontFamily(lblRequired2.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    lblRequired2.ForeColor = CurrentContact.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                    lblRequired2.Text = "(required)";
+
+                    PanelViewAndEdit.Controls.Add(lblRequired2);
+                }
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                #endregion LastName
 
                 #region Email
                 X = 10;
                 DrawItemText(X, Y, CurrentContact.Email, CurrentContact.EmailNew, "Email", "textBoxEmail", 300, 0);
+                #endregion Email
+
+                if (IsEditing)
+                {
+                    int right3 = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                    Label lblRequired3 = new Label();
+                    lblRequired3.AutoSize = true;
+                    lblRequired3.Location = new Point(right3, Y);
+                    lblRequired3.Font = new Font(new FontFamily(lblRequired3.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                    lblRequired3.ForeColor = CurrentContact.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                    lblRequired3.Text = "(required)";
+
+                    PanelViewAndEdit.Controls.Add(lblRequired3);
+                }
 
                 Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                #endregion Email
 
                 #region ContactTitle
                 DrawItemEnum(X, Y, CurrentContact.ContactTitle, CurrentContact.ContactTitleNew, "Contact Title", "comboBoxContactTitle", typeof(ContactTitleEnum), 0);
@@ -7625,9 +7720,23 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     #region TelNumber
                     DrawItemText(X, Y, tel.TelNumber, tel.TelNumberNew, "Telephone Number", "textBoxTelNumber", 300, CountTel);
+                    #endregion TelNumber
+
+                    if (IsEditing)
+                    {
+                        int right4 = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                        Label lblRequired4 = new Label();
+                        lblRequired4.AutoSize = true;
+                        lblRequired4.Location = new Point(right4, Y);
+                        lblRequired4.Font = new Font(new FontFamily(lblRequired4.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblRequired4.ForeColor = CurrentContact.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                        lblRequired4.Text = "(required)";
+
+                        PanelViewAndEdit.Controls.Add(lblRequired4);
+                    }
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion TelNumber
 
                     Label lblTelSeparator = new Label();
                     lblTelSeparator.AutoSize = true;
@@ -7705,9 +7814,23 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     #region EmailNumber
                     DrawItemText(X, Y, email.EmailAddress, email.EmailAddressNew, "Email Address", "textBoxEmailAddress", 300, CountEmail);
+                    #endregion EmailNumber
+
+                    if (IsEditing)
+                    {
+                        int right5 = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Right + 10;
+
+                        Label lblRequired5 = new Label();
+                        lblRequired5.AutoSize = true;
+                        lblRequired5.Location = new Point(right5, Y);
+                        lblRequired5.Font = new Font(new FontFamily(lblRequired5.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
+                        lblRequired5.ForeColor = CurrentContact.IsActiveNew != null ? ForeColorChangedOrNew : ForeColorNormal;
+                        lblRequired5.Text = "(required)";
+
+                        PanelViewAndEdit.Controls.Add(lblRequired5);
+                    }
 
                     Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 10;
-                    #endregion EmailNumber
 
                     Label lblEmailSeparator = new Label();
                     lblEmailSeparator.AutoSize = true;
@@ -9967,7 +10090,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if ("" + CurrentContact.FirstName == tb.Text)
+                                if (string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    MessageBox.Show("First name is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                else if ("" + CurrentContact.FirstName == tb.Text)
                                 {
                                     CurrentContact.FirstNameNew = null;
                                 }
@@ -10027,7 +10155,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if ("" + CurrentContact.LastName == tb.Text)
+                                if (string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    MessageBox.Show("Last name is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                else if ("" + CurrentContact.LastName == tb.Text)
                                 {
                                     CurrentContact.LastNameNew = null;
                                 }
@@ -10057,7 +10190,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                             TextBox tb = (TextBox)control;
                             if (tb != null)
                             {
-                                if ("" + CurrentContact.Email == tb.Text)
+                                if (string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    MessageBox.Show("Email is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                else if ("" + CurrentContact.Email == tb.Text)
                                 {
                                     CurrentContact.EmailNew = null;
                                 }
@@ -10090,7 +10228,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 string Tag = tb.Tag.ToString();
                                 int item = int.Parse(Tag);
 
-                                if ("" + CurrentContact.TelephoneList[item].TelNumber == tb.Text)
+                                if (string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    MessageBox.Show("Telephone number is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                else if ("" + CurrentContact.TelephoneList[item].TelNumber == tb.Text)
                                 {
                                     CurrentContact.TelephoneList[item].TelNumberNew = null;
                                 }
@@ -10123,7 +10266,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 string Tag = tb.Tag.ToString();
                                 int item = int.Parse(Tag);
 
-                                if ("" + CurrentContact.EmailList[item].EmailAddress == tb.Text)
+                                if (string.IsNullOrWhiteSpace(tb.Text))
+                                {
+                                    MessageBox.Show("Email address is required", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                                else if ("" + CurrentContact.EmailList[item].EmailAddress == tb.Text)
                                 {
                                     CurrentContact.EmailList[item].EmailAddressNew = null;
                                 }

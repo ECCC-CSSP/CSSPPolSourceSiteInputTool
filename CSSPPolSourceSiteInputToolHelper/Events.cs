@@ -187,7 +187,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         private void butDeleteTel_Click(object sender, EventArgs e)
         {
             string Tag = ((Button)sender).Tag.ToString();
-            
+
             int TelTVItemIDToDelete = int.Parse(Tag);
 
             if (TelTVItemIDToDelete >= 30000000)
@@ -498,8 +498,41 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
 
-            IsDirty = false;
-            PanelShowInputOptions.BackColor = BackColorDefault;
+            bool DuplicateNameExist = false;
+            if (ContactTVItemID > 0)
+            {
+                string FirstName = CurrentContact.FirstNameNew != null ? CurrentContact.FirstNameNew : CurrentContact.FirstName;
+                string Initial = CurrentContact.InitialNew != null ? CurrentContact.InitialNew : CurrentContact.Initial;
+                string LastName = CurrentContact.LastNameNew != null ? CurrentContact.LastNameNew : CurrentContact.LastName;
+
+                foreach (Contact contact in municipalityDoc.Municipality.ContactList)
+                {
+                    if (contact.ContactTVItemID != CurrentContact.ContactTVItemID)
+                    {
+                        string FirstName2 = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
+                        string Initial2 = contact.InitialNew != null ? contact.InitialNew : contact.Initial;
+                        string LastName2 = contact.LastNameNew != null ? contact.LastNameNew : contact.LastName;
+
+                        if (FirstName == FirstName2 && Initial == Initial2 && LastName == LastName2)
+                        {
+                            DuplicateNameExist = true;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (DuplicateNameExist)
+            {
+                IsDirty = true;
+                PanelShowInputOptions.BackColor = BackColorEditing;
+                MessageBox.Show("At least 2 contacts have the same First Name, Initial and Last Name\r\nPlease change one of them", "Error: Duplicate Name", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                IsDirty = false;
+                PanelShowInputOptions.BackColor = BackColorDefault;
+            }
             PanelSubsectorOrMunicipality.Enabled = true;
         }
         private void butCancelPictureInfo_Click(object sender, EventArgs e)
