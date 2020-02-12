@@ -5917,10 +5917,10 @@ namespace CSSPPolSourceSiteInputToolHelper
 
             string FirstName = string.IsNullOrEmpty(CurrentContact.FirstNameNew) == false ? CurrentContact.FirstNameNew : CurrentContact.FirstName;
             string Initial = string.IsNullOrEmpty(CurrentContact.InitialNew) == false ? CurrentContact.InitialNew : CurrentContact.Initial;
-            if (!string.IsNullOrWhiteSpace(Initial))
-            {
-                Initial = Initial + ", ";
-            }
+            //if (!string.IsNullOrWhiteSpace(Initial))
+            //{
+            //    Initial = Initial + ", ";
+            //}
             string LastName = string.IsNullOrEmpty(CurrentContact.LastNameNew) == false ? CurrentContact.LastNameNew : CurrentContact.LastName;
             string FullName = $"{FirstName} {Initial} {LastName}";
 
@@ -6214,131 +6214,131 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            //foreach (Telephone tel in CurrentContact.TelephoneList)
-            //{
-            //    EmitRTBMessage(new RTBMessageEventArgs($"Checking if telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
+            foreach (Telephone tel in CurrentContact.TelephoneList)
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"Checking if telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
 
-            //    ret = TelExistInCSSPWebTools((int)tel.TelTVItemID, AdminEmail);
-            //    ret = ret.Replace("\"", "");
+                ret = TelExistInCSSPWebTools((int)tel.TelTVItemID, AdminEmail);
+                ret = ret.Replace("\"", "");
 
-            //    if (ret.StartsWith("ERROR:"))
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] does not exist in CSSPWebTools\r\n"));
-            //    }
-            //    else
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
-            //    }
+                if (ret.StartsWith("ERROR:"))
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] does not exist in CSSPWebTools\r\n"));
+                }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"Telephone [{tel.TelNumber}] already exist in CSSPWebTools\r\n"));
+                }
 
-            //    int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
-            //    int TelTVItemID = (int)tel.TelTVItemID;
-            //    int? TelType = tel.TelTypeNew != null ? tel.TelTypeNew : tel.TelType;
-            //    string TelNumber = tel.TelNumberNew != null ? tel.TelNumberNew : tel.TelNumber;
-            //    bool ShouldDelete = tel.ShouldDelete;
-
-
-            //    MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
-            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
-
-            //    MessageText = $"\t\tTelephone Type\t[{TelType}]\r\n";
-            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
-
-            //    MessageText = $"\t\tTelephone Number\t[{TelNumber}]\r\n";
-            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
-
-            //    MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
-            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
-
-            //    ret = SaveToCSSPWebToolsCreateOrModifyTel(ContactTVItemID, TelTVItemID, TelType, TelNumber, ShouldDelete, AdminEmail);
-            //    ret = ret.Replace("\"", "");
-            //    if (ret.StartsWith("ERROR:"))
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //        if (NeedToSave)
-            //        {
-            //            SaveMunicipalityTextFile();
-            //        }
-            //    }
-            //    else
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
-
-            //        #region reset variables
-            //        int NewTVItemID = int.Parse(ret);
-
-            //        tel.TelTVItemID = NewTVItemID;
-            //        tel.TelType = TelType;
-            //        tel.TelTypeNew = null;
-            //        tel.TelNumber = TelNumber;
-            //        tel.TelNumberNew = null;
-            //        #endregion reset variables
-
-            //        NeedToSave = true;
-            //    }
-            //}
-
-            //foreach (Email email in CurrentContact.EmailList)
-            //{
-            //    EmitRTBMessage(new RTBMessageEventArgs($"Checking if email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
-
-            //    ret = EmailExistInCSSPWebTools((int)email.EmailTVItemID, AdminEmail);
-            //    ret = ret.Replace("\"", "");
-
-            //    if (ret.StartsWith("ERROR:"))
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] does not exist in CSSPWebTools\r\n"));
-            //    }
-            //    else
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
-            //    }
-
-            //    int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
-            //    int EmailTVItemID = (int)email.EmailTVItemID;
-            //    int? EmailType = email.EmailTypeNew != null ? email.EmailTypeNew : email.EmailType;
-            //    string EmailAddress = email.EmailAddressNew != null ? email.EmailAddressNew : email.EmailAddress;
-            //    bool ShouldDelete = email.ShouldDelete;
+                int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
+                int TelTVItemID = (int)tel.TelTVItemID;
+                int? TelType = tel.TelTypeNew != null ? tel.TelTypeNew : tel.TelType;
+                string TelNumber = tel.TelNumberNew != null ? tel.TelNumberNew : tel.TelNumber;
+                bool ShouldDelete = tel.ShouldDelete;
 
 
-            //    MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
-            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+                MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-            //    MessageText = $"\t\tEmail Type\t[{EmailType}]\r\n";
-            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+                MessageText = $"\t\tTelephone Type\t[{TelType}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-            //    MessageText = $"\t\tEmail Address\t[{EmailAddress}]\r\n";
-            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+                MessageText = $"\t\tTelephone Number\t[{TelNumber}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-            //    MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
-            //    EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+                MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
-            //    ret = SaveToCSSPWebToolsCreateOrModifyEmail(ContactTVItemID, EmailTVItemID, EmailType, EmailAddress, ShouldDelete, AdminEmail);
-            //    ret = ret.Replace("\"", "");
-            //    if (ret.StartsWith("ERROR:"))
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
-            //        if (NeedToSave)
-            //        {
-            //            SaveMunicipalityTextFile();
-            //        }
-            //    }
-            //    else
-            //    {
-            //        EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+                ret = SaveToCSSPWebToolsCreateOrModifyTel(ContactTVItemID, TelTVItemID, TelType, TelNumber, ShouldDelete, AdminEmail);
+                ret = ret.Replace("\"", "");
+                if (ret.StartsWith("ERROR:"))
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                    if (NeedToSave)
+                    {
+                        SaveMunicipalityTextFile();
+                    }
+                }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
 
-            //        #region reset variables
-            //        int NewTVItemID = int.Parse(ret);
+                    #region reset variables
+                    int NewTVItemID = int.Parse(ret);
 
-            //        email.EmailTVItemID = NewTVItemID;
-            //        email.EmailType = EmailType;
-            //        email.EmailTypeNew = null;
-            //        email.EmailAddress = EmailAddress;
-            //        email.EmailAddressNew = null;
-            //        #endregion reset variables
+                    tel.TelTVItemID = NewTVItemID;
+                    tel.TelType = TelType;
+                    tel.TelTypeNew = null;
+                    tel.TelNumber = TelNumber;
+                    tel.TelNumberNew = null;
+                    #endregion reset variables
 
-            //        NeedToSave = true;
-            //    }
-            //}
+                    NeedToSave = true;
+                }
+            }
+
+            foreach (Email email in CurrentContact.EmailList)
+            {
+                EmitRTBMessage(new RTBMessageEventArgs($"Checking if email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
+
+                ret = EmailExistInCSSPWebTools((int)email.EmailTVItemID, AdminEmail);
+                ret = ret.Replace("\"", "");
+
+                if (ret.StartsWith("ERROR:"))
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] does not exist in CSSPWebTools\r\n"));
+                }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"Email [{email.EmailAddress}] already exist in CSSPWebTools\r\n"));
+                }
+
+                int ContactTVItemID = (int)CurrentContact.ContactTVItemID;
+                int EmailTVItemID = (int)email.EmailTVItemID;
+                int? EmailType = email.EmailTypeNew != null ? email.EmailTypeNew : email.EmailType;
+                string EmailAddress = email.EmailAddressNew != null ? email.EmailAddressNew : email.EmailAddress;
+                bool ShouldDelete = email.ShouldDelete;
+
+
+                MessageText = $"\t\tContact TVItemID\t[{(int)CurrentContact.ContactTVItemID}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                MessageText = $"\t\tEmail Type\t[{EmailType}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                MessageText = $"\t\tEmail Address\t[{EmailAddress}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                MessageText = $"\t\tShould Delete\t[{ShouldDelete}]\r\n";
+                EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+                ret = SaveToCSSPWebToolsCreateOrModifyEmail(ContactTVItemID, EmailTVItemID, EmailType, EmailAddress, ShouldDelete, AdminEmail);
+                ret = ret.Replace("\"", "");
+                if (ret.StartsWith("ERROR:"))
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"{ret}\r\n"));
+                    if (NeedToSave)
+                    {
+                        SaveMunicipalityTextFile();
+                    }
+                }
+                else
+                {
+                    EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: {MessageText}"));
+
+                    #region reset variables
+                    int NewTVItemID = int.Parse(ret);
+
+                    email.EmailTVItemID = NewTVItemID;
+                    email.EmailType = EmailType;
+                    email.EmailTypeNew = null;
+                    email.EmailAddress = EmailAddress;
+                    email.EmailAddressNew = null;
+                    #endregion reset variables
+
+                    NeedToSave = true;
+                }
+            }
 
 
             if (NeedToSave)
