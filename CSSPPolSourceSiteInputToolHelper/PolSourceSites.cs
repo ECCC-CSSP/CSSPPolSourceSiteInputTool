@@ -11721,9 +11721,19 @@ namespace CSSPPolSourceSiteInputToolHelper
                                         {
                                             foreach (Infrastructure infrastructure2 in municipalityDoc.Municipality.InfrastructureList)
                                             {
-                                                if (infrastructure2.PumpsToTVItemID == infrastructure.InfrastructureTVItemID)
+                                                if (infrastructure2.PumpsToTVItemIDNew != null)
                                                 {
-                                                    infrastructure.PumpsFromTVItemIDList.Add(infrastructure2.InfrastructureTVItemID);
+                                                    if (infrastructure2.PumpsToTVItemIDNew == infrastructure.InfrastructureTVItemID)
+                                                    {
+                                                        infrastructure.PumpsFromTVItemIDList.Add(infrastructure2.InfrastructureTVItemID);
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (infrastructure2.PumpsToTVItemID == infrastructure.InfrastructureTVItemID)
+                                                    {
+                                                        infrastructure.PumpsFromTVItemIDList.Add(infrastructure2.InfrastructureTVItemID);
+                                                    }
                                                 }
                                             }
                                         }
