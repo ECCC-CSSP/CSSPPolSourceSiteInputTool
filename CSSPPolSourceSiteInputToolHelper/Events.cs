@@ -109,7 +109,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
             }
         }
@@ -458,40 +457,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
-                bool PumpsToChanged = false;
-                foreach (Control control in PanelViewAndEdit.Controls)
-                {
-                    if (control.Name == "textBoxPumpsToTVItemID")
-                    {
-                        TextBox tb = (TextBox)control;
-                        if (int.TryParse(tb.Text, out int TempInt))
-                        {
-                            if (CurrentInfrastructure.PumpsToTVItemIDNew != null)
-                            {
-                                if (TempInt != CurrentInfrastructure.PumpsToTVItemIDNew)
-                                {
-                                    PumpsToChanged = true;
-                                }
-                            }
-                            else
-                            {
-                                if (TempInt != CurrentInfrastructure.PumpsToTVItemID)
-                                {
-                                    PumpsToChanged = true;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                }
-
                 SaveInfrastructureInfo();
-
-                if (PumpsToChanged)
-                {
-                    CurrentInfrastructure = null;
-                    InfrastructureTVItemID = 0;
-                }
                 RedrawContactAndInfrastructureList();
                 ReDrawContactAndInfrastructure();
             }
@@ -651,7 +617,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
             }
         }
@@ -674,7 +639,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
             }
         }

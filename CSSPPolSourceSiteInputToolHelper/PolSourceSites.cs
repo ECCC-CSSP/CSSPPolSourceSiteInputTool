@@ -2087,7 +2087,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
             }
         }
@@ -2122,7 +2121,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
             }
         }
@@ -2159,7 +2157,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2203,7 +2200,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2398,7 +2394,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2457,7 +2452,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2541,7 +2535,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2595,7 +2588,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2633,7 +2625,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2677,7 +2668,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2750,7 +2740,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2805,7 +2794,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -2849,7 +2837,6 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 SaveInfrastructureInfo();
                 DrawPanelContactsAndInfrastructures();
-                //RedrawSinglePanelInfrastructure();
                 ReDrawContactAndInfrastructure();
 
                 PanelViewAndEdit.VerticalScroll.Value = AutoScrollPos;
@@ -10398,7 +10385,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.InfrastructureTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10430,7 +10417,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.FacilityTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10492,7 +10479,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.AerationTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10524,7 +10511,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.PreliminaryTreatmentTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10556,7 +10543,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.PrimaryTreatmentTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10588,7 +10575,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.SecondaryTreatmentTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10620,7 +10607,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.TertiaryTreatmentTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10652,7 +10639,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.DisinfectionTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10684,7 +10671,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.CollectionSystemTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10716,7 +10703,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.AlarmSystemTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10748,7 +10735,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.CanOverflowNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10780,7 +10767,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentInfrastructure.ValveTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10814,7 +10801,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentContact.TelephoneList[item].TelTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -10848,7 +10835,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                 CurrentContact.EmailList[item].EmailTypeNew = i;
                                                 IsDirty = true;
                                             }
-                                            break;
+                                            //break;
                                         }
                                     }
                                 }
@@ -11708,6 +11695,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                             if (infrastructure.InfrastructureTVItemID == TempInt)
                                             {
                                                 Exist = true;
+                                                //break;
                                             }
                                         }
 

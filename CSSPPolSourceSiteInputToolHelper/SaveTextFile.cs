@@ -17,6 +17,27 @@ namespace CSSPPolSourceSiteInputToolHelper
     {
         public void SaveMunicipalityTextFile()
         {
+            if (ContactTVItemID > 0)
+            {
+                for (int i = 0; i < municipalityDoc.Municipality.ContactList.Count; i++)
+                {
+                    if (municipalityDoc.Municipality.ContactList[i].ContactTVItemID == ContactTVItemID)
+                    {
+                        municipalityDoc.Municipality.ContactList[i] = CurrentContact;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < municipalityDoc.Municipality.InfrastructureList.Count; i++)
+                {
+                    if (municipalityDoc.Municipality.InfrastructureList[i].InfrastructureTVItemID == InfrastructureTVItemID)
+                    {
+                        municipalityDoc.Municipality.InfrastructureList[i] = CurrentInfrastructure;
+                    }
+                }
+            }
+
             StringBuilder sb = new StringBuilder();
 
             sb.AppendLine($"VERSION\t{municipalityDoc.Version}\t");
@@ -530,6 +551,31 @@ namespace CSSPPolSourceSiteInputToolHelper
             StreamWriter sw = fi.CreateText();
             sw.Write(sb.ToString());
             sw.Close();
+
+
+            if (ContactTVItemID > 0)
+            {
+                if (CurrentContact != null)
+                {
+                    Contact contact = municipalityDoc.Municipality.ContactList.Where(c => c.ContactTVItemID == CurrentContact.ContactTVItemID).FirstOrDefault();
+                    if (contact != null)
+                    {
+                        CurrentContact = contact;
+                    }
+                }
+            }
+            else
+            {
+                if (CurrentInfrastructure != null)
+                {
+                    Infrastructure infrastucture = municipalityDoc.Municipality.InfrastructureList.Where(c => c.InfrastructureTVItemID == CurrentInfrastructure.InfrastructureTVItemID).FirstOrDefault();
+                    if (infrastucture != null)
+                    {
+                        CurrentInfrastructure = infrastucture;
+                    }
+                }
+            }
+
         }
         public void SaveSubsectorTextFile()
         {
@@ -712,6 +758,16 @@ namespace CSSPPolSourceSiteInputToolHelper
             StreamWriter sw = fi.CreateText();
             sw.Write(sb.ToString());
             sw.Close();
+
+            if (CurrentPSS != null)
+            {
+                PSS pss = subsectorDoc.Subsector.PSSList.Where(c => c.PSSTVItemID == CurrentPSS.PSSTVItemID).FirstOrDefault();
+                if (pss != null)
+                {
+                    CurrentPSS = pss;
+                }
+            }
+
         }
 
         public void FixPath()
