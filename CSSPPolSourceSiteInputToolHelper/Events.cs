@@ -1219,6 +1219,12 @@ namespace CSSPPolSourceSiteInputToolHelper
         // TVText_TextChanged
         private void textBoxTVText_TextChanged(object sender, EventArgs e)
         {
+            TextBox tbTemp = (TextBox)sender;
+            if (tbTemp.Text.Contains("#"))
+            {
+                MessageBox.Show("Illegal character '#'", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             IsDirty = true;
             PanelShowInputOptions.BackColor = BackColorEditing;
             PanelSubsectorOrMunicipality.Enabled = false;

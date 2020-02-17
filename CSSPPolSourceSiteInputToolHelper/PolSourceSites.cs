@@ -4496,6 +4496,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                 }
                 municipalityDoc.Municipality.ContactList.Add(contact);
+
+                InfrastructureTVItemID = 0;
+                ContactTVItemID = 0;
+                PolSourceSiteTVItemID = 0;
+                CurrentPSS = null;
+                CurrentInfrastructure = null;
+                CurrentContact = null;
             }
         }
         public void InfrastructureAdd()
@@ -4554,6 +4561,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                 infrastructure.LastUpdateDate_UTC = DateTime.Now;
 
                 municipalityDoc.Municipality.InfrastructureList.Add(infrastructure);
+
+                InfrastructureTVItemID = 0;
+                ContactTVItemID = 0;
+                PolSourceSiteTVItemID = 0;
+                CurrentPSS = null;
+                CurrentInfrastructure = null;
+                CurrentContact = null;
             }
         }
         public void PSSAdd()
@@ -4604,6 +4618,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                 issue.PolSourceObsInfoIntListNew = new List<int>() { (int)PolSourceObsInfoEnum.SourceHumanLand };
 
                 pss.PSSObs.IssueList.Add(issue);
+
+                PolSourceSiteTVItemID = 0;
+                ContactTVItemID = 0;
+                InfrastructureTVItemID = 0;
+                CurrentPSS = null;
+                CurrentInfrastructure = null;
+                CurrentContact = null;
             }
         }
         public void InfrastructureSaveToCSSPWebTools()
@@ -6755,6 +6776,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                         }
                     }
                 }
+                else
+                {
+                    CurrentPSS.PSSAddressNew.AddressTVItemID = null;
+                }
             }
 
             if (CurrentPSS.PSSObs.ObsDateNew != null || CurrentPSS.PSSObs.ObsID >= 10000000 || IsNewPSS)
@@ -7082,13 +7107,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
             }
 
-            if (NeedToSave)
-            {
-                SaveSubsectorTextFile();
-                DrawPanelPSS();
-                //RedrawSinglePanelPSS();
-                ReDrawPolSourceSite();
-            }
+            SaveSubsectorTextFile();
+            DrawPanelPSS();
+            ReDrawPolSourceSite();
 
             EmitRTBMessage(new RTBMessageEventArgs($"SUCCESS: completed"));
 
@@ -9056,17 +9077,15 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public void ShowContactOrInfrastructure()
         {
-            if (ContactTVItemID > 0 && InfrastructureTVItemID == 0)
+            PanelViewAndEdit.Controls.Clear();
+
+            if (ContactTVItemID > 0)
             {
                 ShowContact();
             }
-            else if (InfrastructureTVItemID > 0)
-            {
-                ShowInfrastructure();
-            }
             else
             {
-                // nothing
+                ShowInfrastructure();
             }
         }
         public void ShowPolSourceSite()

@@ -139,6 +139,7 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.PSSAdd();
             polSourceSiteInputToolHelper.SaveSubsectorTextFile();
             polSourceSiteInputToolHelper.RedrawPolSourceSiteList();
+            polSourceSiteInputToolHelper.ReDrawPolSourceSite();
         }
         private void butInfrastructureAdd_Click(object sender, EventArgs e)
         {
@@ -151,6 +152,7 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.InfrastructureAdd();
             polSourceSiteInputToolHelper.SaveMunicipalityTextFile();
             polSourceSiteInputToolHelper.RedrawContactAndInfrastructureList();
+            polSourceSiteInputToolHelper.ReDrawContactAndInfrastructure();
         }
         private void butContactAdd_Click(object sender, EventArgs e)
         {
@@ -163,6 +165,7 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.ContactAdd();
             polSourceSiteInputToolHelper.SaveMunicipalityTextFile();
             polSourceSiteInputToolHelper.RedrawContactAndInfrastructureList();
+            polSourceSiteInputToolHelper.ReDrawContactAndInfrastructure();
         }
         private void butViewKMLFile_Click(object sender, EventArgs e)
         {
@@ -902,6 +905,13 @@ namespace CSSPPolSourceSiteInputTool
                     {
                         foreach (TVItemModel tvItemModel in polSourceSiteInputToolHelper.tvItemModelMunicipalityList)
                         {
+                            string illegalChar = "<>:\"/\\|?*.";
+
+                            foreach (char c in illegalChar)
+                            {
+                                tvItemModel.TVText = tvItemModel.TVText.Replace(c.ToString(), "_");
+                            }
+
                             comboBoxSubsectorOrMunicipality.Items.Add(tvItemModel);
                         }
                         if (comboBoxSubsectorOrMunicipality.Items.Count > 0)
@@ -1162,6 +1172,13 @@ namespace CSSPPolSourceSiteInputTool
             }
 
             string MunicipalityText = tvItemModelMunicipality.TVText;
+            
+            string illegalChar = "<>:\"/\\|?*.";
+
+            foreach (char c in illegalChar)
+            {
+                MunicipalityText = MunicipalityText.Replace(c.ToString(), "_");
+            }
 
             polSourceSiteInputToolHelper.CurrentSubsectorName = MunicipalityText;
             if (!polSourceSiteInputToolHelper.ReadMunicipalityFile())
@@ -1354,6 +1371,12 @@ namespace CSSPPolSourceSiteInputTool
 
             string MunicipalityText = tvItemModelMunicipality.TVText;
 
+            string illegalChar = "<>:\"/\\|?*.";
+
+            foreach (char c in illegalChar)
+            {
+                MunicipalityText = MunicipalityText.Replace(c.ToString(), "_");
+            }
 
             FileInfo fi = new FileInfo(@"C:\PollutionSourceSites\Infrastructures\" + MunicipalityText + @"\" + MunicipalityText + ".txt");
 
@@ -1992,6 +2015,13 @@ namespace CSSPPolSourceSiteInputTool
             }
 
             string MunicipalityText = tvItemModelMunicipality.TVText;
+
+            string illegalChar = "<>:\"/\\|?*.";
+
+            foreach (char c in illegalChar)
+            {
+                MunicipalityText = MunicipalityText.Replace(c.ToString(), "_");
+            }
 
             DirectoryInfo di = new DirectoryInfo(@"C:\PollutionSourceSites\Infrastructures\" + MunicipalityText + @"\");
 
