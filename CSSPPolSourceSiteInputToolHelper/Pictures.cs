@@ -299,8 +299,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             int Y = 0;
             int X = 0;
 
-            PanelViewAndEdit.Controls.Clear();
-
             if (IsPolSourceSite)
             {
                 if (CurrentPSS == null)
@@ -319,7 +317,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
-                if (CurrentInfrastructure == null)
+                if (CurrentInfrastructure == null && CurrentContact == null)
                 {
                     Label lblMessage = new Label();
                     lblMessage.AutoSize = true;
