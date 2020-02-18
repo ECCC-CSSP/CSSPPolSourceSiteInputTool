@@ -299,12 +299,12 @@ namespace CSSPPolSourceSiteInputToolHelper
             int Y = 0;
             int X = 0;
 
+            PanelViewAndEdit.Controls.Clear();
+
             if (IsPolSourceSite)
             {
                 if (CurrentPSS == null)
                 {
-                    PanelViewAndEdit.Controls.Clear();
-
                     Label lblMessage = new Label();
                     lblMessage.AutoSize = true;
                     lblMessage.Location = new Point(30, 30);
@@ -321,14 +321,26 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 if (CurrentInfrastructure == null)
                 {
-                    PanelViewAndEdit.Controls.Clear();
-
                     Label lblMessage = new Label();
                     lblMessage.AutoSize = true;
                     lblMessage.Location = new Point(30, 30);
                     lblMessage.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
                     lblMessage.Font = new Font(new FontFamily(lblMessage.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
                     lblMessage.Text = $"Please select an infrastructure items for {(IsEditing ? "editing" : "viewing")} {(ShowOnlyIssues ? "issues" : (ShowOnlyPictures ? "pictures" : "infrastructure"))}";
+
+                    PanelViewAndEdit.Controls.Add(lblMessage);
+
+                    return;
+                }
+
+                if (ContactTVItemID > 0)
+                {
+                    Label lblMessage = new Label();
+                    lblMessage.AutoSize = true;
+                    lblMessage.Location = new Point(30, 30);
+                    lblMessage.MaximumSize = new Size(PanelViewAndEdit.Width * 9 / 10, 0);
+                    lblMessage.Font = new Font(new FontFamily(lblMessage.Font.FontFamily.Name).Name, 14f, FontStyle.Bold);
+                    lblMessage.Text = $"Pictures not implemented for contacts";
 
                     PanelViewAndEdit.Controls.Add(lblMessage);
 
@@ -352,7 +364,11 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             else
             {
-                Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                Y = 20;
+                if (PanelViewAndEdit.Controls.Count > 0)
+                {
+                    Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
+                }
             }
 
             X = 10;

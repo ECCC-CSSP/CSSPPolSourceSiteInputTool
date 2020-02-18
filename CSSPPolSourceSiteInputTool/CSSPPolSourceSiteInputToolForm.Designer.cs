@@ -34,7 +34,7 @@
             this.panelShowAdmin = new System.Windows.Forms.Panel();
             this.checkBoxShowAdmin = new System.Windows.Forms.CheckBox();
             this.panelShowInfrastructure = new System.Windows.Forms.Panel();
-            this.checkBoxShowInfrastructure = new System.Windows.Forms.CheckBox();
+            this.checkBoxShowInfrastructureAndContact = new System.Windows.Forms.CheckBox();
             this.panelSubsectorOrMunicipality = new System.Windows.Forms.Panel();
             this.butFixImgDir = new System.Windows.Forms.Button();
             this.butFixPath = new System.Windows.Forms.Button();
@@ -140,7 +140,7 @@
             // 
             this.panel1.Controls.Add(this.butReduceHelp);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel1.Location = new System.Drawing.Point(658, 0);
+            this.panel1.Location = new System.Drawing.Point(596, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(95, 34);
             this.panel1.TabIndex = 21;
@@ -159,7 +159,7 @@
             // 
             this.panelShowAdmin.Controls.Add(this.checkBoxShowAdmin);
             this.panelShowAdmin.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelShowAdmin.Location = new System.Drawing.Point(753, 0);
+            this.panelShowAdmin.Location = new System.Drawing.Point(691, 0);
             this.panelShowAdmin.Name = "panelShowAdmin";
             this.panelShowAdmin.Size = new System.Drawing.Size(73, 34);
             this.panelShowAdmin.TabIndex = 16;
@@ -177,23 +177,23 @@
             // 
             // panelShowInfrastructure
             // 
-            this.panelShowInfrastructure.Controls.Add(this.checkBoxShowInfrastructure);
+            this.panelShowInfrastructure.Controls.Add(this.checkBoxShowInfrastructureAndContact);
             this.panelShowInfrastructure.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panelShowInfrastructure.Location = new System.Drawing.Point(826, 0);
+            this.panelShowInfrastructure.Location = new System.Drawing.Point(764, 0);
             this.panelShowInfrastructure.Name = "panelShowInfrastructure";
-            this.panelShowInfrastructure.Size = new System.Drawing.Size(95, 34);
+            this.panelShowInfrastructure.Size = new System.Drawing.Size(157, 34);
             this.panelShowInfrastructure.TabIndex = 12;
             // 
-            // checkBoxShowInfrastructure
+            // checkBoxShowInfrastructureAndContact
             // 
-            this.checkBoxShowInfrastructure.AutoSize = true;
-            this.checkBoxShowInfrastructure.Location = new System.Drawing.Point(6, 10);
-            this.checkBoxShowInfrastructure.Name = "checkBoxShowInfrastructure";
-            this.checkBoxShowInfrastructure.Size = new System.Drawing.Size(88, 17);
-            this.checkBoxShowInfrastructure.TabIndex = 12;
-            this.checkBoxShowInfrastructure.Text = "Infrastructure";
-            this.checkBoxShowInfrastructure.UseVisualStyleBackColor = true;
-            this.checkBoxShowInfrastructure.CheckedChanged += new System.EventHandler(this.checkBoxInfrastructure_CheckedChanged);
+            this.checkBoxShowInfrastructureAndContact.AutoSize = true;
+            this.checkBoxShowInfrastructureAndContact.Location = new System.Drawing.Point(6, 10);
+            this.checkBoxShowInfrastructureAndContact.Name = "checkBoxShowInfrastructureAndContact";
+            this.checkBoxShowInfrastructureAndContact.Size = new System.Drawing.Size(149, 17);
+            this.checkBoxShowInfrastructureAndContact.TabIndex = 12;
+            this.checkBoxShowInfrastructureAndContact.Text = "Infrastructure and Contact";
+            this.checkBoxShowInfrastructureAndContact.UseVisualStyleBackColor = true;
+            this.checkBoxShowInfrastructureAndContact.CheckedChanged += new System.EventHandler(this.checkBoxInfrastructureAndContact_CheckedChanged);
             // 
             // panelSubsectorOrMunicipality
             // 
@@ -886,7 +886,7 @@
         private System.Windows.Forms.Panel panelAddNewPollutionSourceSite;
         private System.Windows.Forms.Button butPSSAdd;
         private System.Windows.Forms.Panel panelShowInfrastructure;
-        private System.Windows.Forms.CheckBox checkBoxShowInfrastructure;
+        private System.Windows.Forms.CheckBox checkBoxShowInfrastructureAndContact;
         private System.Windows.Forms.CheckBox checkBoxShowAdmin;
         private System.Windows.Forms.Panel panelShowAdmin;
         private System.Windows.Forms.Button butCreateSubsectorDirectory;

@@ -323,24 +323,24 @@ namespace CSSPPolSourceSiteInputTool
                 polSourceSiteInputToolHelper.ReDrawContactAndInfrastructure();
             }
         }
-        private void checkBoxInfrastructure_CheckedChanged(object sender, EventArgs e)
+        private void checkBoxInfrastructureAndContact_CheckedChanged(object sender, EventArgs e)
         {
             if (polSourceSiteInputToolHelper.IsDirty)
             {
                 if (panelAddNewInfrastructure.Visible)
                 {
-                    if (!checkBoxShowInfrastructure.Checked)
+                    if (!checkBoxShowInfrastructureAndContact.Checked)
                     {
                         MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
-                        checkBoxShowInfrastructure.Checked = true;
+                        checkBoxShowInfrastructureAndContact.Checked = true;
                     }
                 }
                 else
                 {
-                    if (checkBoxShowInfrastructure.Checked)
+                    if (checkBoxShowInfrastructureAndContact.Checked)
                     {
                         MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
-                        checkBoxShowInfrastructure.Checked = false;
+                        checkBoxShowInfrastructureAndContact.Checked = false;
                     }
                 }
                 return;
@@ -348,7 +348,7 @@ namespace CSSPPolSourceSiteInputTool
 
             panelPolSourceSite.Controls.Clear();
 
-            if (checkBoxShowInfrastructure.Checked)
+            if (checkBoxShowInfrastructureAndContact.Checked)
             {
                 checkBoxMoreInfo.Visible = false;
                 if (radioButtonIssues.Checked)
@@ -461,18 +461,18 @@ namespace CSSPPolSourceSiteInputTool
             {
                 if (panelAddNewInfrastructure.Visible)
                 {
-                    if (!checkBoxShowInfrastructure.Checked)
+                    if (!checkBoxShowInfrastructureAndContact.Checked)
                     {
                         MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
-                        checkBoxShowInfrastructure.Checked = true;
+                        checkBoxShowInfrastructureAndContact.Checked = true;
                     }
                 }
                 else
                 {
-                    if (checkBoxShowInfrastructure.Checked)
+                    if (checkBoxShowInfrastructureAndContact.Checked)
                     {
                         MessageBox.Show("Please save or cancel before changing page.", "Some changes have not been saved yet", MessageBoxButtons.OK);
-                        checkBoxShowInfrastructure.Checked = false;
+                        checkBoxShowInfrastructureAndContact.Checked = false;
                     }
                 }
                 return;
@@ -480,7 +480,7 @@ namespace CSSPPolSourceSiteInputTool
 
             panelPolSourceSite.Controls.Clear();
 
-            if (checkBoxShowInfrastructure.Checked)
+            if (checkBoxShowInfrastructureAndContact.Checked)
             {
                 checkBoxMoreInfo.Visible = false;
                 if (radioButtonIssues.Checked)

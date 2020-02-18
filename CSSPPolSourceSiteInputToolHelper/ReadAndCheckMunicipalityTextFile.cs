@@ -613,7 +613,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                 int temp = 0;
                                 if (double.TryParse(LineTxt.Substring(pos + 1, pos2 - pos - 1), out tempDouble))
                                 {
-                                    address.AddressTVItemID = (int)temp;
+                                    address.AddressTVItemID = (int)tempDouble;
                                 }
                                 else
                                 {

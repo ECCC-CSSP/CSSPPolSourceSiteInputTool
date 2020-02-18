@@ -5660,7 +5660,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, false, true, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, false, true, false, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -5696,7 +5696,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, false, true, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentInfrastructure.InfrastructureTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, false, true, false, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -6142,7 +6142,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentContact.ContactTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, false, true, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentContact.ContactTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, false, false, true, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -6178,7 +6178,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentContact.ContactTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, false, true, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentContact.ContactTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, false, false, true, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -6359,15 +6359,16 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public void InfrastructureSaveAllToCSSPWebTools()
         {
-            foreach (Contact contact in municipalityDoc.Municipality.ContactList)
+            for (int i = 0; i < municipalityDoc.Municipality.ContactList.Count; i++)
             {
-                CurrentContact = contact;
+                Contact contact = municipalityDoc.Municipality.ContactList[i];
                 ContactSaveToCSSPWebTools();
             }
 
-
-            foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList)
+            for (int i = 0; i < municipalityDoc.Municipality.InfrastructureList.Count; i++)
             {
+                Infrastructure infrastructure = municipalityDoc.Municipality.InfrastructureList[i];
+
                 int PumpToTVItemID = 0;
                 if (infrastructure.PumpsToTVItemIDNew != null)
                 {
@@ -6693,7 +6694,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address and municipality --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, true, false, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, true, true, false, false, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -6730,7 +6731,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         MessageText = $"Trying to create address --- old [{StreetNumberText} {StreetNameText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetType)} {MunicipalityText} {PostalCodeText}] -- - new [{StreetNumberNewText} {StreetNameNewText} {_BaseEnumService.GetEnumText_StreetTypeEnum((StreetTypeEnum)StreetTypeNew)} {MunicipalityNewText} {PostalCodeNewText}]\r\n";
                         EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, true, false, AdminEmail);
+                        ret = SaveToCSSPWebToolsAddress((int)subsectorDoc.ProvinceTVItemID, (int)CurrentPSS.PSSTVItemID, StreetNumberNewText, StreetNameNewText, StreetTypeNew, MunicipalityNewText, PostalCodeNewText, false, true, false, false, AdminEmail);
                         ret = ret.Replace("\"", "");
                         if (ret.StartsWith("ERROR"))
                         {
@@ -12226,7 +12227,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 CurrentInfrastructure.InfrastructureAddressNew.PostalCode = CurrentInfrastructure.InfrastructureAddress.PostalCode;
             }
         }
-        private string SaveToCSSPWebToolsAddress(int ProvinceTVItemID, int TVItemID, string StreetNumber, string StreetName, int StreetType, string Municipality, string PostalCode, bool CreateMunicipality, bool IsPSS, bool IsInfrastructure, string AdminEmail)
+        private string SaveToCSSPWebToolsAddress(int ProvinceTVItemID, int TVItemID, string StreetNumber, string StreetName, int StreetType, string Municipality, string PostalCode, bool CreateMunicipality, bool IsPSS, bool IsInfrastructure, bool IsContact, string AdminEmail)
         {
             try
             {
@@ -12243,6 +12244,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 paramList.Add("CreateMunicipality", CreateMunicipality.ToString());
                 paramList.Add("IsPSS", IsPSS.ToString());
                 paramList.Add("IsInfrastructure", IsInfrastructure.ToString());
+                paramList.Add("IsContact", IsContact.ToString());
                 paramList.Add("AdminEmail", AdminEmail);
 
                 using (WebClient webClient = new WebClient())
@@ -12251,10 +12253,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     webClient.Proxy = webProxy;
 
                     webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    Uri uri = new Uri($"{baseURLEN}SaveAddressJSON");
+                    Uri uri = new Uri($"{baseURLEN}SavePSSorInfrastructureAddressJSON");
                     if (Language == LanguageEnum.fr)
                     {
-                        uri = new Uri($"{baseURLFR}SaveAddressJSON");
+                        uri = new Uri($"{baseURLFR}SavePSSorInfrastructureAddressJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);
