@@ -6364,12 +6364,14 @@ namespace CSSPPolSourceSiteInputToolHelper
             for (int i = 0; i < municipalityDoc.Municipality.ContactList.Count; i++)
             {
                 Contact contact = municipalityDoc.Municipality.ContactList[i];
+                CurrentContact = contact;
                 ContactSaveToCSSPWebTools();
             }
 
             for (int i = 0; i < municipalityDoc.Municipality.InfrastructureList.Count; i++)
             {
                 Infrastructure infrastructure = municipalityDoc.Municipality.InfrastructureList[i];
+                CurrentInfrastructure = infrastructure;
 
                 int PumpToTVItemID = 0;
                 if (infrastructure.PumpsToTVItemIDNew != null)

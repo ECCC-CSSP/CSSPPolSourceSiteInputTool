@@ -477,7 +477,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         string StreetType = infrastructure.InfrastructureAddress.StreetType == null ? "" : ((int)infrastructure.InfrastructureAddress.StreetType).ToString();
                         string PostalCode = infrastructure.InfrastructureAddress.PostalCode == null ? "" : infrastructure.InfrastructureAddress.PostalCode;
 
-                        sb.AppendLine($"ADDRESS\t{infrastructure.InfrastructureAddress.AddressTVItemID}\t{infrastructure.InfrastructureAddress.Municipality}\t{((int)infrastructure.InfrastructureAddress.AddressType).ToString()}\t{infrastructure.InfrastructureAddress.StreetNumber}\t{infrastructure.InfrastructureAddress.StreetName}\t{((int)infrastructure.InfrastructureAddress.StreetType).ToString()}\t{infrastructure.InfrastructureAddress.PostalCode}\t");
+                        sb.AppendLine($"ADDRESS\t{AddressTVItemID}\t{Municipality}\t{AddressType}\t{StreetNumber}\t{StreetName}\t{StreetType}\t{PostalCode}\t");
                     }
                 }
 
