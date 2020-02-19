@@ -6071,6 +6071,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 CurrentContact.LastNameNew = null;
                 CurrentContact.Email = Email;
                 CurrentContact.EmailNew = null;
+                CurrentContact.ContactTitle = (int?)Title;
+                CurrentContact.ContactTitleNew = null;
                 ContactTVItemID = (int)CurrentContact.ContactTVItemID;
                 #endregion reset variables
 
