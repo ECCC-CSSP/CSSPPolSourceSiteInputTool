@@ -134,7 +134,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         string StreetType = contact.ContactAddress.StreetType == null ? "" : ((int)contact.ContactAddress.StreetType).ToString();
                         string PostalCode = contact.ContactAddress.PostalCode == null ? "" : contact.ContactAddress.PostalCode;
 
-                        sb.AppendLine($"CONTACTADDRESS\t{contact.ContactAddress.AddressTVItemID}\t{contact.ContactAddress.Municipality}\t{((int)contact.ContactAddress.AddressType).ToString()}\t{contact.ContactAddress.StreetNumber}\t{contact.ContactAddress.StreetName}\t{((int)contact.ContactAddress.StreetType).ToString()}\t{contact.ContactAddress.PostalCode}\t");
+                        sb.AppendLine($"CONTACTADDRESS\t{AddressTVItemID}\t{Municipality}\t{AddressType}\t{StreetNumber}\t{StreetName}\t{StreetType}\t{PostalCode}\t");
                     }
                 }
 
