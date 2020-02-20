@@ -877,6 +877,10 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void ComboBoxProvinceNamesSelectedIndexChanged()
         {
+            comboBoxProvince.Visible = false;
+            comboBoxProvinceMunicipalities.Visible = false;
+            comboBoxSubsectorOrMunicipality.Visible = false;
+
             comboBoxSubsectorOrMunicipality.Items.Clear();
 
             TVItemModel tvItemModelProv = (TVItemModel)comboBoxProvince.SelectedItem;
@@ -921,6 +925,11 @@ namespace CSSPPolSourceSiteInputTool
                     }
                 }
             }
+
+            comboBoxProvince.Visible = true;
+            comboBoxProvinceMunicipalities.Visible = true;
+            comboBoxSubsectorOrMunicipality.Visible = true;
+
         }
         private void ComboBoxSubsectorOrMunicipalitySelectedIndexChanged()
         {
@@ -1100,67 +1109,67 @@ namespace CSSPPolSourceSiteInputTool
             Application.DoEvents();
 
         }
-        private void FillComboBoxSubsectorOrMunicipality()
-        {
-            comboBoxSubsectorOrMunicipality.ValueMember = "TVItemID";
-            comboBoxSubsectorOrMunicipality.DisplayMember = "TVText";
+        //private void FillComboBoxSubsectorOrMunicipality()
+        //{
+        //    comboBoxSubsectorOrMunicipality.ValueMember = "TVItemID";
+        //    comboBoxSubsectorOrMunicipality.DisplayMember = "TVText";
 
-            comboBoxSubsectorOrMunicipality.Items.Clear();
-            if (polSourceSiteInputToolHelper.IsAdmin)
-            {
-                if (polSourceSiteInputToolHelper.IsPolSourceSite)
-                {
-                    foreach (TVItemModel tvItemModelSS in polSourceSiteInputToolHelper.tvItemModelSubsectorList)
-                    {
-                        comboBoxSubsectorOrMunicipality.Items.Add(tvItemModelSS);
-                    }
-                }
-                else
-                {
-                    foreach (TVItemModel tvItemModelMuni in polSourceSiteInputToolHelper.tvItemModelMunicipalityList)
-                    {
-                        comboBoxSubsectorOrMunicipality.Items.Add(tvItemModelMuni);
-                    }
-                }
-
-
-                if (comboBoxSubsectorOrMunicipality.Items.Count > 0)
-                {
-                    comboBoxSubsectorOrMunicipality.SelectedIndex = 0;
-                }
-                else
-                {
-
-                }
-
-            }
-            else
-            {
-                comboBoxSubsectorOrMunicipality.Items.Clear();
-
-                if (polSourceSiteInputToolHelper.IsPolSourceSite)
-                {
-                    foreach (TVItemModel tvItemModelSS in polSourceSiteInputToolHelper.tvItemModelSubsectorList)
-                    {
-                        comboBoxSubsectorOrMunicipality.Items.Add(tvItemModelSS);
-                    }
-                }
-                else
-                {
-                    foreach (TVItemModel tvItemModelMuni in polSourceSiteInputToolHelper.tvItemModelMunicipalityList)
-                    {
-                        comboBoxSubsectorOrMunicipality.Items.Add(tvItemModelMuni);
-                    }
-                }
+        //    comboBoxSubsectorOrMunicipality.Items.Clear();
+        //    if (polSourceSiteInputToolHelper.IsAdmin)
+        //    {
+        //        if (polSourceSiteInputToolHelper.IsPolSourceSite)
+        //        {
+        //            foreach (TVItemModel tvItemModelSS in polSourceSiteInputToolHelper.tvItemModelSubsectorList)
+        //            {
+        //                comboBoxSubsectorOrMunicipality.Items.Add(tvItemModelSS);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            foreach (TVItemModel tvItemModelMuni in polSourceSiteInputToolHelper.tvItemModelMunicipalityList)
+        //            {
+        //                comboBoxSubsectorOrMunicipality.Items.Add(tvItemModelMuni);
+        //            }
+        //        }
 
 
-                if (comboBoxSubsectorOrMunicipality.Items.Count > 0)
-                {
-                    comboBoxSubsectorOrMunicipality.SelectedIndex = 0;
-                }
+        //        if (comboBoxSubsectorOrMunicipality.Items.Count > 0)
+        //        {
+        //            comboBoxSubsectorOrMunicipality.SelectedIndex = 0;
+        //        }
+        //        else
+        //        {
 
-            }
-        }
+        //        }
+
+        //    }
+        //    else
+        //    {
+        //        comboBoxSubsectorOrMunicipality.Items.Clear();
+
+        //        if (polSourceSiteInputToolHelper.IsPolSourceSite)
+        //        {
+        //            foreach (TVItemModel tvItemModelSS in polSourceSiteInputToolHelper.tvItemModelSubsectorList)
+        //            {
+        //                comboBoxSubsectorOrMunicipality.Items.Add(tvItemModelSS);
+        //            }
+        //        }
+        //        else
+        //        {
+        //            foreach (TVItemModel tvItemModelMuni in polSourceSiteInputToolHelper.tvItemModelMunicipalityList)
+        //            {
+        //                comboBoxSubsectorOrMunicipality.Items.Add(tvItemModelMuni);
+        //            }
+        //        }
+
+
+        //        if (comboBoxSubsectorOrMunicipality.Items.Count > 0)
+        //        {
+        //            comboBoxSubsectorOrMunicipality.SelectedIndex = 0;
+        //        }
+
+        //    }
+        //}
         private bool GetInfrastructurePicturesForInputTool()
         {
             TVItemModel tvItemModelMunicipality = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
@@ -1616,6 +1625,10 @@ namespace CSSPPolSourceSiteInputTool
         {
             panelSubsectorOrMunicipality.Visible = true;
 
+            comboBoxProvince.Visible = false;
+            comboBoxProvinceMunicipalities.Visible = false;
+            comboBoxSubsectorOrMunicipality.Visible = false;
+
             comboBoxSubsectorOrMunicipality.Items.Clear();
             if (polSourceSiteInputToolHelper.IsAdmin)
             {
@@ -1716,10 +1729,18 @@ namespace CSSPPolSourceSiteInputTool
                     }
                 }
             }
+
+            comboBoxProvince.Visible = true;
+            comboBoxProvinceMunicipalities.Visible = true;
+            comboBoxSubsectorOrMunicipality.Visible = true;
         }
         private void ShowAdminParts()
         {
             ClearAllPanelAndComboBoxes();
+
+            comboBoxProvince.Visible = false;
+            comboBoxProvinceMunicipalities.Visible = false;
+            comboBoxSubsectorOrMunicipality.Visible = false;
 
             comboBoxProvince.ValueMember = "TVItemID";
             comboBoxProvince.DisplayMember = "TVText";
@@ -1768,7 +1789,9 @@ namespace CSSPPolSourceSiteInputTool
                 panelCreateMunicipalityDirectory.Visible = true;
             }
 
-
+            comboBoxProvince.Visible = true;
+            comboBoxProvinceMunicipalities.Visible = true;
+            comboBoxSubsectorOrMunicipality.Visible = true;
         }
         private void ShowInputParts()
         {
@@ -1792,6 +1815,10 @@ namespace CSSPPolSourceSiteInputTool
         }
         private void ShowInfrastructureParts()
         {
+            comboBoxProvince.Visible = false;
+            comboBoxProvinceMunicipalities.Visible = false;
+            comboBoxSubsectorOrMunicipality.Visible = false;
+
             panelAddNewPollutionSourceSite.Visible = false;
             panelAddNewInfrastructure.Visible = false;
             panelCreateSubsectorDirectory.Visible = false;
@@ -1868,6 +1895,11 @@ namespace CSSPPolSourceSiteInputTool
 
                 RefreshComboBoxSubsectorOrMunicipality();
             }
+
+            comboBoxProvince.Visible = true;
+            comboBoxProvinceMunicipalities.Visible = true;
+            comboBoxSubsectorOrMunicipality.Visible = true;
+
         }
         private void ShowPollutionSourceSiteParts()
         {

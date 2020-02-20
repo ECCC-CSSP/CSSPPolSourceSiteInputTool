@@ -75,6 +75,9 @@ namespace CSSPPolSourceSiteInputToolHelper
         }
         public bool ReadMunicipalityFile()
         {
+            subsectorDoc = new SubsectorDoc();
+            municipalityDoc = new MunicipalityDoc();
+
             FileInfo fi = new FileInfo($@"{BasePathInfrastructures}{CurrentMunicipalityName}\{CurrentMunicipalityName}.txt");
 
             if (!fi.Exists)
