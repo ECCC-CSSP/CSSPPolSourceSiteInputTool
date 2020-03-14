@@ -168,6 +168,15 @@ namespace CSSPPolSourceSiteInputToolHelper
         public List<int?> PumpsFromTVItemIDNewList { get; set; } = new List<int?>();
         public bool Shown { get; set; } = false;
         public int Ordinal { get; set; } = 0;
+        public LinePath LinePathInf { get; set; } = new LinePath();
+        public LinePath LinePathInfNew { get; set; } = new LinePath();
+        public LinePath LinePathInfOutfall { get; set; } = new LinePath();
+        public LinePath LinePathInfOutfallNew { get; set; } = new LinePath();
+    }
+    public class LinePath
+    {
+        public int MapInfoID { get; set; } = 0;
+        public List<Coord> CoordList { get; set; } = new List<Coord>();
     }
     public class Coord
     {
