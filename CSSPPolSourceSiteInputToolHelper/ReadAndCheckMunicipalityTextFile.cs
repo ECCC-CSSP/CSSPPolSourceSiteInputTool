@@ -891,7 +891,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                             return false;
                                         }
 
-                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[1]), Lng = float.Parse(coordArr[0]) });
+                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[0]), Lng = float.Parse(coordArr[1]) });
                                     }
                                 }
 
@@ -946,7 +946,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                             return false;
                                         }
 
-                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[1]), Lng = float.Parse(coordArr[0]) });
+                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[0]), Lng = float.Parse(coordArr[1]) });
                                     }
                                 }
 
@@ -1001,7 +1001,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                             return false;
                                         }
 
-                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[1]), Lng = float.Parse(coordArr[0]) });
+                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[0]), Lng = float.Parse(coordArr[1]) });
                                     }
                                 }
 
@@ -1056,7 +1056,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                                             return false;
                                         }
 
-                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[1]), Lng = float.Parse(coordArr[0]) });
+                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[0]), Lng = float.Parse(coordArr[1]) });
                                     }
                                 }
 
