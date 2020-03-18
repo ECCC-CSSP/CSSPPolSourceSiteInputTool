@@ -99,25 +99,29 @@ namespace CSSPPolSourceSiteInputToolHelper
             sbKML.AppendLine($@"<kml xmlns=""http://www.opengis.net/kml/2.2"" xmlns:gx=""http://www.google.com/kml/ext/2.2"" xmlns:kml=""http://www.opengis.net/kml/2.2"" xmlns:atom=""http://www.w3.org/2005/Atom"">");
             sbKML.AppendLine($@"<Document>");
             sbKML.AppendLine($@"	<name>{CurrentMunicipalityName} ({municipalityDoc.Municipality.InfrastructureList.Count})</name>");
-            sbKML.AppendLine($@"	<Style id=""s_ylw-pushpin_hl"">");
-            sbKML.AppendLine($@"		<IconStyle>");
-            sbKML.AppendLine($@"			<scale>1.2</scale>");
-            sbKML.AppendLine($@"			<Icon>");
-            sbKML.AppendLine($@"				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square_highlight.png</href>");
-            sbKML.AppendLine($@"			</Icon>");
-            sbKML.AppendLine($@"		</IconStyle>");
-            sbKML.AppendLine($@"		<ListStyle>");
-            sbKML.AppendLine($@"		</ListStyle>");
-            sbKML.AppendLine($@"	</Style>");
             sbKML.AppendLine($@"	<Style id=""s_ylw-pushpin"">");
             sbKML.AppendLine($@"		<IconStyle>");
             sbKML.AppendLine($@"			<scale>1.2</scale>");
             sbKML.AppendLine($@"			<Icon>");
-            sbKML.AppendLine($@"				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_square.png</href>");
+            sbKML.AppendLine($@"				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle.png</href>");
             sbKML.AppendLine($@"			</Icon>");
             sbKML.AppendLine($@"		</IconStyle>");
-            sbKML.AppendLine($@"		<ListStyle>");
-            sbKML.AppendLine($@"		</ListStyle>");
+            sbKML.AppendLine($@"		<LineStyle>");
+            sbKML.AppendLine($@"			<color>ff00ff00</color>");
+            sbKML.AppendLine($@"			<width>2</width>");
+            sbKML.AppendLine($@"		</LineStyle>");
+            sbKML.AppendLine($@"	</Style>");
+            sbKML.AppendLine($@"	<Style id=""s_ylw-pushpin_hl"">");
+            sbKML.AppendLine($@"		<IconStyle>");
+            sbKML.AppendLine($@"			<scale>1.2</scale>");
+            sbKML.AppendLine($@"			<Icon>");
+            sbKML.AppendLine($@"				<href>http://maps.google.com/mapfiles/kml/shapes/placemark_circle_highlight.png</href>");
+            sbKML.AppendLine($@"			</Icon>");
+            sbKML.AppendLine($@"		</IconStyle>");
+            sbKML.AppendLine($@"		<LineStyle>");
+            sbKML.AppendLine($@"			<color>ff00ff00</color>");
+            sbKML.AppendLine($@"			<width>2</width>");
+            sbKML.AppendLine($@"		</LineStyle>");
             sbKML.AppendLine($@"	</Style>");
             sbKML.AppendLine($@"	<StyleMap id=""m_ylw-pushpin"">");
             sbKML.AppendLine($@"		<Pair>");
@@ -128,11 +132,12 @@ namespace CSSPPolSourceSiteInputToolHelper
             sbKML.AppendLine($@"			<key>highlight</key>");
             sbKML.AppendLine($@"			<styleUrl>#s_ylw-pushpin_hl</styleUrl>");
             sbKML.AppendLine($@"		</Pair>");
-            sbKML.AppendLine($@"	</StyleMap>");
+            sbKML.AppendLine($@"    </StyleMap>");
 
-            sbKML.AppendLine($@"		<Placemark>");
-            sbKML.AppendLine($@"			<name>{municipalityDoc.Municipality.MunicipalityName} --- Contact(s)</name>");
-            sbKML.AppendLine($@"            <description><![CDATA[");
+            sbKML.AppendLine($@"		<Folder>");
+            sbKML.AppendLine($@"			<name>{municipalityDoc.Municipality.MunicipalityName}</name>");
+            sbKML.AppendLine($@"		    <Folder>");
+            sbKML.AppendLine($@"		    	<name>Contacts</name>");
             foreach (Contact contact in municipalityDoc.Municipality.ContactList.OrderBy(c => c.LastName).ThenBy(c => c.FirstName))
             {
                 string FirstName = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
@@ -142,10 +147,13 @@ namespace CSSPPolSourceSiteInputToolHelper
                 string IsActive2 = contact.IsActive != null && contact.IsActive == true ? "Active" : "Inactive";
                 string IsActiveNew2 = contact.IsActiveNew == null ? "" : contact.IsActiveNew  == true ? "Active" : "Inactive";
 
-                string IsActiveText = $"({IsActive2})"; ;
+                string IsActiveText = "";
                 if (!string.IsNullOrWhiteSpace(IsActiveNew2))
                 {
                     IsActiveText = $"({IsActive2} -> {IsActiveNew2})";
+                }
+                else {
+                    IsActiveText = $"({IsActive2})";
                 }
 
                 string Title = "empty";
@@ -162,24 +170,31 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
                 }
                
-                string TitleText = $"({Title})"; ;
+                string TitleText = "";
                 if (!string.IsNullOrWhiteSpace(TitleNew))
                 {
                     TitleText = $"({Title} -> {TitleNew})";
                 }
+                else
+                {
+                    TitleText = $"({Title})";
+                }
 
-                sbKML.AppendLine($@"                <h3>{FirstName} {Initial}, {LastName} ({TitleText}) ({IsActiveText})</h3>");
+                sbKML.AppendLine($@"		        <Folder>");
+                sbKML.AppendLine($@"		        	<name>{FirstName} {Initial}, {LastName} ({TitleText}) ({IsActiveText})</name>");
+                sbKML.AppendLine($@"                    <description><![CDATA[");
+                //sbKML.AppendLine($@"                <h3>{FirstName} {Initial}, {LastName} ({TitleText}) ({IsActiveText})</h3>");
 
                 if (contact.FirstNameNew != null || contact.InitialNew != null || contact.LastNameNew != null)
                 {
                     string FirstNameNew = contact.FirstNameNew != null ? contact.FirstNameNew : contact.FirstName;
                     string InitialNew = contact.InitialNew != null ? contact.InitialNew : contact.Initial;
                     string LastNameNew = contact.LastNameNew != null ? contact.LastNameNew : contact.LastName;
-                    sbKML.AppendLine($@"                <b>New name:</b> {FirstNameNew} {InitialNew}, {LastNameNew}<br />");
+                    //sbKML.AppendLine($@"                <b>New name:</b> {FirstNameNew} {InitialNew}, {LastNameNew}<br />");
                 }
 
                 // doing Telephones
-                sbKML.AppendLine($@"                <h4>Telephone(s)</h3>");
+                sbKML.AppendLine($@"                    <h4>Telephone(s)</h3>");
 
                 foreach (Telephone telephone in contact.TelephoneList)
                 {
@@ -201,11 +216,11 @@ namespace CSSPPolSourceSiteInputToolHelper
                         TelTypeText = $"({TelType} -> {TelTypeNew})";
                     }
 
-                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;{TelNumberText} ({TelTypeText})<br />");
+                    sbKML.Append($@"                    &nbsp;&nbsp;&nbsp;{TelNumberText} ({TelTypeText})<br />");
                 }
 
                 // doing Emails
-                sbKML.AppendLine($@"                <h4>Email(s)</h3>");
+                sbKML.AppendLine($@"                    <h4>Email(s)</h3>");
 
                 foreach (Email email in contact.EmailList)
                 {
@@ -227,10 +242,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                         EmailTypeText = $"({EmailType} -> {EmailTypeNew})";
                     }
 
-                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;{EmailAddressText} ({EmailTypeText})<br />");
+                    sbKML.Append($@"                    &nbsp;&nbsp;&nbsp;{EmailAddressText} ({EmailTypeText})<br />");
                 }
 
-                sbKML.AppendLine($@"                <h4>Addresse</h3>");
+                sbKML.AppendLine($@"                    <h4>Address</h3>");
 
                 if (contact.ContactAddress != null)
                 {
@@ -243,7 +258,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string Address = $"{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}".Trim();
                     if (!string.IsNullOrWhiteSpace(Address))
                     {
-                        sbKML.AppendLine($@"                &nbsp;&nbsp;&nbsp;{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}<br />");
+                        sbKML.AppendLine($@"                    &nbsp;&nbsp;&nbsp;{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}<br />");
                     }
                 }
                 if (contact.ContactAddressNew != null)
@@ -257,226 +272,54 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string Address = $"{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}".Trim();
                     if (!string.IsNullOrWhiteSpace(Address))
                     {
-                        sbKML.AppendLine($@"                &nbsp;&nbsp;&nbsp;New Address: {StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}<br />");
+                        sbKML.AppendLine($@"                    &nbsp;&nbsp;&nbsp;New Address: {StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}<br />");
                     }
                 }
 
+                sbKML.AppendLine($@"");
+                sbKML.AppendLine($@"");
+                sbKML.AppendLine($@"");
+                sbKML.AppendLine($@"                    ]]>");
+                sbKML.AppendLine($@"                    </description>");
+                sbKML.AppendLine($@"		        </Folder>");
             }
-            sbKML.AppendLine($@"");
-            sbKML.AppendLine($@"");
-            sbKML.AppendLine($@"");
-            sbKML.AppendLine($@"            ]]>");
-            sbKML.AppendLine($@"            </description>");
-            sbKML.AppendLine($@"			<Point>");
-            sbKML.AppendLine($@"				<coordinates>{municipalityDoc.Municipality.Lng},{municipalityDoc.Municipality.Lat},0</coordinates>");
-            sbKML.AppendLine($@"			</Point>");
-            sbKML.AppendLine($@"		</Placemark>");
+            sbKML.AppendLine($@"		    </Folder>"); // of Contacts
 
+            sbKML.AppendLine($@"		    <Folder>");
+            sbKML.AppendLine($@"		    	<name>Infrastructures</name>");
             foreach (Infrastructure infrastructure in municipalityDoc.Municipality.InfrastructureList.OrderBy(c => c.TVText))
             {
-                sbKML.AppendLine($@"        <Folder>");
-                sbKML.AppendLine($@"        <name>{infrastructure.TVText}</name>");
-                sbKML.AppendLine($@"        <open>1</open>");
-                
-                // doing Line Path Infrastructure
-                if (infrastructure.LinePathInfNew != null && infrastructure.LinePathInfNew.MapInfoID > 0)
-                {
-                    sbKML.AppendLine($@"		<Placemark>");
-                    sbKML.AppendLine($@"			<name>Line Path (Pumping to)</name>");
-                    sbKML.AppendLine($@"            <description><![CDATA[<span style=""display: hidden"">{infrastructure.LinePathInfNew.MapInfoID}</span>]]></description>");
-                    sbKML.AppendLine($@"		    <LineString>");
-                    sbKML.AppendLine($@"		    <coordinates>");
-                    foreach (Coord coord in infrastructure.LinePathInfNew.CoordList)
-                    {
-                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
-                    }
-                    sbKML.AppendLine($@"");
-                    sbKML.AppendLine($@"		    </coordinates>");
-                    sbKML.AppendLine($@"		    </LineString>");
-                    sbKML.AppendLine($@"		</Placemark>");
-                }
-                else if (infrastructure.LinePathInf != null && infrastructure.LinePathInf.MapInfoID > 0)
-                {
-                    sbKML.AppendLine($@"		<Placemark>");
-                    sbKML.AppendLine($@"			<name>Line Path (Pumping to)</name>");
-                    sbKML.AppendLine($@"            <description><![CDATA[<span style=""display: hidden"">{infrastructure.LinePathInf.MapInfoID}</span>]]></description>");
-                    sbKML.AppendLine($@"		    <LineString>");
-                    sbKML.AppendLine($@"		    <coordinates>");
-                    foreach (Coord coord in infrastructure.LinePathInf.CoordList)
-                    {
-                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
-                    }
-                    sbKML.AppendLine($@"");
-                    sbKML.AppendLine($@"		    </coordinates>");
-                    sbKML.AppendLine($@"		    </LineString>");
-                    sbKML.AppendLine($@"		</Placemark>");
-                }
-                else
-                {
-                    sbKML.AppendLine($@"		<Placemark>");
-                    sbKML.AppendLine($@"			<name>Line Path (Pumping to)</name>");
-                    sbKML.AppendLine($@"            <description><![CDATA[<span style=""display: hidden"">0</span>]]></description>");
-                    sbKML.AppendLine($@"		    <LineString>");
-                    sbKML.AppendLine($@"		    <coordinates>");
-                    if (infrastructure.LatNew != null && infrastructure.LngNew != null)
-                    {
-                        int? pumpsToTVItemID = infrastructure.PumpsToTVItemIDNew != null ? infrastructure.PumpsToTVItemIDNew : infrastructure.PumpsToTVItemID != null ? infrastructure.PumpsToTVItemID : null;
-                        if (pumpsToTVItemID != null)
-                        {
-                            Infrastructure infPumpsTo = (from c in municipalityDoc.Municipality.InfrastructureList
-                                                         where c.InfrastructureTVItemID == pumpsToTVItemID
-                                                         select c).FirstOrDefault();
-
-                            if (infPumpsTo != null)
-                            {
-                                if (infPumpsTo.LatNew != null && infPumpsTo.LngNew != null)
-                                {
-                                    sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infPumpsTo.LngNew},{infPumpsTo.LatNew},0 ");
-                                }
-                                else if (infPumpsTo.Lat != null && infPumpsTo.Lng != null)
-                                {
-                                    sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infPumpsTo.Lng},{infPumpsTo.Lat},0 ");
-                                }
-                                else
-                                {
-                                    sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
-                                }
-                            }
-                            else
-                            {
-                                sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
-                            }
-                        }
-                        else if (infrastructure.PumpsToTVItemID != null)
-                        {
-                            sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
-                        }
-                    }
-                    else if (infrastructure.Lat != null && infrastructure.Lng != null)
-                    {
-                        int? pumpsToTVItemID = infrastructure.PumpsToTVItemIDNew != null ? infrastructure.PumpsToTVItemIDNew : infrastructure.PumpsToTVItemID != null ? infrastructure.PumpsToTVItemID : null;
-                        if (pumpsToTVItemID != null)
-                        {
-                            Infrastructure infPumpsTo = (from c in municipalityDoc.Municipality.InfrastructureList
-                                                         where c.InfrastructureTVItemID == pumpsToTVItemID
-                                                         select c).FirstOrDefault();
-
-                            if (infPumpsTo != null)
-                            {
-                                if (infPumpsTo.LatNew != null && infPumpsTo.LngNew != null)
-                                {
-                                    sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infPumpsTo.LngNew},{infPumpsTo.LatNew},0 ");
-                                }
-                                else if (infPumpsTo.Lat != null && infPumpsTo.Lng != null)
-                                {
-                                    sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infPumpsTo.Lng},{infPumpsTo.Lat},0 ");
-                                }
-                                else
-                                {
-                                    sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
-                                }
-                            }
-                            else
-                            {
-                                sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
-                            }
-                        }
-                        else if (infrastructure.PumpsToTVItemID != null)
-                        {
-                            sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
-                        }
-                    }
-                    sbKML.AppendLine($@"");
-                    sbKML.AppendLine($@"		    </coordinates>");
-                    sbKML.AppendLine($@"		    </LineString>");
-                    sbKML.AppendLine($@"		</Placemark>");
-                }
-                
-                // doing Line Path Infrastructure Outfall
-                if (infrastructure.LinePathInfOutfallNew != null && infrastructure.LinePathInfOutfallNew.MapInfoID > 0)
-                {
-                    sbKML.AppendLine($@"		<Placemark>");
-                    sbKML.AppendLine($@"			<name>Line Path (Outfall)</name>");
-                    sbKML.AppendLine($@"            <description><![CDATA[<span style=""display: hidden"">{infrastructure.LinePathInfOutfallNew.MapInfoID}</span>]]></description>");
-                    sbKML.AppendLine($@"		    <LineString>");
-                    sbKML.AppendLine($@"		    <coordinates>");
-                    foreach (Coord coord in infrastructure.LinePathInfOutfallNew.CoordList)
-                    {
-                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
-                    }
-                    sbKML.AppendLine($@"");
-                    sbKML.AppendLine($@"		    </coordinates>");
-                    sbKML.AppendLine($@"		    </LineString>");
-                    sbKML.AppendLine($@"		</Placemark>");
-                }
-                else if (infrastructure.LinePathInfOutfall != null && infrastructure.LinePathInfOutfall.MapInfoID > 0)
-                {
-                    sbKML.AppendLine($@"		<Placemark>");
-                    sbKML.AppendLine($@"			<name>Line Path (Outfall)</name>");
-                    sbKML.AppendLine($@"            <description><![CDATA[<span style=""display: hidden"">{infrastructure.LinePathInfOutfall.MapInfoID}</span>]]></description>");
-                    sbKML.AppendLine($@"		    <LineString>");
-                    sbKML.AppendLine($@"		    <coordinates>");
-                    foreach (Coord coord in infrastructure.LinePathInfOutfall.CoordList)
-                    {
-                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
-                    }
-                    sbKML.AppendLine($@"");
-                    sbKML.AppendLine($@"		    </coordinates>");
-                    sbKML.AppendLine($@"		    </LineString>");
-                    sbKML.AppendLine($@"		</Placemark>");
-                }
-                else
-                {
-                    sbKML.AppendLine($@"		<Placemark>");
-                    sbKML.AppendLine($@"			<name>Line Path (Outfall)</name>");
-                    sbKML.AppendLine($@"            <description><![CDATA[<span style=""display: hidden"">0</span>]]></description>");
-                    sbKML.AppendLine($@"		    <LineString>");
-                    sbKML.AppendLine($@"		    <coordinates>");
-                    if (infrastructure.LatNew != null && infrastructure.LngNew != null)
-                    {
-                        if (infrastructure.LatOutfallNew != null && infrastructure.LngOutfallNew != null)
-                        {
-                            sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngOutfallNew},{infrastructure.LatOutfallNew},0 ");
-                        }
-                        else if (infrastructure.LatOutfall != null && infrastructure.LngOutfall != null)
-                        {
-                            sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngOutfall},{infrastructure.LatOutfall},0 ");
-                        }
-                        else
-                        {
-                            sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
-                        }
-                    }
-                    else if (infrastructure.Lat != null && infrastructure.Lng != null)
-                    {
-                        if (infrastructure.LatOutfallNew != null && infrastructure.LngOutfallNew != null)
-                        {
-                            sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngOutfallNew},{infrastructure.LatOutfallNew},0 ");
-                        }
-                        else if (infrastructure.LatOutfall != null && infrastructure.LngOutfall != null)
-                        {
-                            sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngOutfall},{infrastructure.LatOutfall},0 ");
-                        }
-                        else
-                        {
-                            sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
-                        }
-                    }
-                    sbKML.AppendLine($@"");
-                    sbKML.AppendLine($@"		    </coordinates>");
-                    sbKML.AppendLine($@"		    </LineString>");
-                    sbKML.AppendLine($@"		</Placemark>");
-                }
-                sbKML.AppendLine($@"		<Placemark>");
                 string InfrastructureNameText = string.IsNullOrWhiteSpace(infrastructure.TVTextNew) ? infrastructure.TVText : infrastructure.TVTextNew;
-                sbKML.AppendLine($@"			<name>{InfrastructureNameText} --- ({infrastructure.InfrastructureTVItemID.ToString()})</name>");
-                sbKML.AppendLine($@"            <description><![CDATA[");
+                string InfrastructureTypeText = infrastructure.InfrastructureType != null ? _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)infrastructure.InfrastructureType) : "---";
+                bool IsActiveBool = infrastructure.IsActive != null && infrastructure.IsActive == true ? true : false;
+                if (infrastructure.IsActiveNew != null)
+                {
+                    IsActiveBool = infrastructure.IsActiveNew == true ? true : false;
+                }
+
+                sbKML.AppendLine($@"            <Folder>");
+                if (IsActiveBool)
+                {
+                    sbKML.AppendLine($@"            <name>[{infrastructure.InfrastructureTVItemID.ToString()}] - {InfrastructureNameText}</name>");
+                }
+                else
+                {
+                    sbKML.AppendLine($@"            <name>INACTIVE - [{infrastructure.InfrastructureTVItemID.ToString()}] - {InfrastructureNameText}</name>");
+                }
+                sbKML.AppendLine($@"            <open>1</open>");
+
+                sbKML.AppendLine($@"		    <Placemark>");
+
+                sbKML.AppendLine($@"			    <name>[{InfrastructureTypeText}] - Details</name>");
+                sbKML.AppendLine($@"                <description><![CDATA[");
+                sbKML.AppendLine($@"                <p>&nbsp;</p>");
+                sbKML.AppendLine($@"                <p>&nbsp;</p>");
                 if (!string.IsNullOrWhiteSpace(infrastructure.TVTextNew))
                 {
-                    sbKML.AppendLine($@"            New name: {infrastructure.TVTextNew}<br />");
+                    sbKML.AppendLine($@"                New name: {infrastructure.TVTextNew}<br />");
                 }
 
-                sbKML.AppendLine($@"            <h3>Address</h3>");
+                sbKML.AppendLine($@"                <h3>Address</h3>");
 
                 if (infrastructure.InfrastructureAddress != null)
                 {
@@ -489,7 +332,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string Address = $"{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}".Trim();
                     if (!string.IsNullOrWhiteSpace(Address))
                     {
-                        sbKML.AppendLine($@"                &nbsp;&nbsp;&nbsp;{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}<br />");
+                        sbKML.AppendLine($@"                    &nbsp;&nbsp;&nbsp;{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}<br />");
                     }
                 }
                 if (infrastructure.InfrastructureAddressNew != null)
@@ -503,22 +346,22 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string Address = $"{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}".Trim();
                     if (!string.IsNullOrWhiteSpace(Address))
                     {
-                        sbKML.AppendLine($@"                &nbsp;&nbsp;&nbsp;{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}<br />");
+                        sbKML.AppendLine($@"                    &nbsp;&nbsp;&nbsp;{StreetNumber}{StreetName}{StreetType}{Municipality}{PostalCode}<br />");
                     }
                 }
 
-                sbKML.AppendLine($@"                <h3>Details</h3>");
-                sbKML.AppendLine($@"                <blockquote>");
+                sbKML.AppendLine($@"                    <h3>Details</h3>");
+                sbKML.AppendLine($@"                    <blockquote>");
 
                 // doing IsActive
                 string IsActive = infrastructure.IsActive != null && infrastructure.IsActive == true ? "true" : "false";
-                sbKML.Append($@"                <p><b>IsActive:</b>  {IsActive}</p>");
+                sbKML.Append($@"                    <p><b>IsActive:</b>  {IsActive}</p>");
                 if (infrastructure.IsActiveNew != null)
                 {
                     string IsActiveNew = infrastructure.IsActiveNew == true ? "true" : "false";
-                    sbKML.Append($@"                &nbsp;&nbsp;&nbsp;&nbsp;<b>Is Active New:</b>  {IsActiveNew}");
+                    sbKML.Append($@"                    &nbsp;&nbsp;&nbsp;&nbsp;<b>Is Active New:</b>  {IsActiveNew}");
                 }
-                sbKML.AppendLine($@"</p>");
+                sbKML.AppendLine($@"<p></p>");
 
                 // doing LastUpdateDate_UTC
                 string LastUpdateDate_UTC = infrastructure.LastUpdateDate_UTC != null ? ((DateTime)infrastructure.LastUpdateDate_UTC).ToString("yyyy MMMM dd") : "---";
@@ -620,7 +463,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 //sbKML.AppendLine($@"</p>");
 
                 // doing InfrastructureType
-                string InfrastructureTypeText = infrastructure.InfrastructureType != null ? _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)infrastructure.InfrastructureType) : "---";
+                //string InfrastructureTypeText = infrastructure.InfrastructureType != null ? _BaseEnumService.GetEnumText_InfrastructureTypeEnum((InfrastructureTypeEnum)infrastructure.InfrastructureType) : "---";
                 sbKML.Append($@"                <p><b>Infrastructure Type:</b> {InfrastructureTypeText}");
                 if (infrastructure.InfrastructureTypeNew != null)
                 {
@@ -1021,9 +864,17 @@ namespace CSSPPolSourceSiteInputToolHelper
                 sbKML.AppendLine($@"            </description>");
                 sbKML.AppendLine($@"			<styleUrl>#m_ylw-pushpin</styleUrl>");
                 sbKML.AppendLine($@"			<Point>");
-                if (infrastructure.LatNew != null || infrastructure.LngNew != null)
+                if (infrastructure.LatNew != null && infrastructure.LngNew != null)
                 {
                     sbKML.AppendLine($@"				<coordinates>{infrastructure.LngNew},{infrastructure.LatNew},0</coordinates>");
+                }
+                else if (infrastructure.LatNew != null)
+                {
+                    sbKML.AppendLine($@"				<coordinates>{infrastructure.Lng},{infrastructure.LatNew},0</coordinates>");
+                }
+                else if (infrastructure.LngNew != null)
+                {
+                    sbKML.AppendLine($@"				<coordinates>{infrastructure.LngNew},{infrastructure.Lat},0</coordinates>");
                 }
                 else
                 {
@@ -1032,9 +883,201 @@ namespace CSSPPolSourceSiteInputToolHelper
                 sbKML.AppendLine($@"			</Point>");
                 sbKML.AppendLine($@"		</Placemark>");
 
+                // doing Line Path Infrastructure
+                if (infrastructure.LinePathInfNew != null && infrastructure.LinePathInfNew.MapInfoID > 0)
+                {
+                    sbKML.AppendLine($@"		    <Placemark>");
+                    sbKML.AppendLine($@"		    	<name>[{infrastructure.LinePathInfNew.MapInfoID}] - Line Path (Pumping to)</name>");
+                    sbKML.AppendLine($@"			    <styleUrl>#m_ylw-pushpin</styleUrl>");
+                    sbKML.AppendLine($@"		        <LineString>");
+                    sbKML.AppendLine($@"		        <coordinates>");
+                    foreach (Coord coord in infrastructure.LinePathInfNew.CoordList)
+                    {
+                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
+                    }
+                    sbKML.AppendLine($@"");
+                    sbKML.AppendLine($@"		        </coordinates>");
+                    sbKML.AppendLine($@"		        </LineString>");
+                    sbKML.AppendLine($@"		    </Placemark>");
+                }
+                else if (infrastructure.LinePathInf != null && infrastructure.LinePathInf.MapInfoID > 0)
+                {
+                    sbKML.AppendLine($@"		    <Placemark>");
+                    sbKML.AppendLine($@"		    	<name>[{infrastructure.LinePathInf.MapInfoID}] - Line Path (Pumping to)</name>");
+                    sbKML.AppendLine($@"			    <styleUrl>#m_ylw-pushpin</styleUrl>");
+                    sbKML.AppendLine($@"		        <LineString>");
+                    sbKML.AppendLine($@"		        <coordinates>");
+                    foreach (Coord coord in infrastructure.LinePathInf.CoordList)
+                    {
+                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
+                    }
+                    sbKML.AppendLine($@"");
+                    sbKML.AppendLine($@"		        </coordinates>");
+                    sbKML.AppendLine($@"		        </LineString>");
+                    sbKML.AppendLine($@"		    </Placemark>");
+                }
+                else
+                {
+                    sbKML.AppendLine($@"		    <Placemark>");
+                    sbKML.AppendLine($@"		    	<name>[0] - Line Path (Pumping to)</name>");
+                    sbKML.AppendLine($@"			    <styleUrl>#m_ylw-pushpin</styleUrl>");
+                    sbKML.AppendLine($@"		        <LineString>");
+                    sbKML.AppendLine($@"		        <coordinates>");
+                    if (infrastructure.LatNew != null && infrastructure.LngNew != null)
+                    {
+                        int? pumpsToTVItemID = infrastructure.PumpsToTVItemIDNew != null ? infrastructure.PumpsToTVItemIDNew : infrastructure.PumpsToTVItemID != null ? infrastructure.PumpsToTVItemID : null;
+                        if (pumpsToTVItemID != null)
+                        {
+                            Infrastructure infPumpsTo = (from c in municipalityDoc.Municipality.InfrastructureList
+                                                         where c.InfrastructureTVItemID == pumpsToTVItemID
+                                                         select c).FirstOrDefault();
+
+                            if (infPumpsTo != null)
+                            {
+                                if (infPumpsTo.LatNew != null && infPumpsTo.LngNew != null)
+                                {
+                                    sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infPumpsTo.LngNew},{infPumpsTo.LatNew},0 ");
+                                }
+                                else if (infPumpsTo.Lat != null && infPumpsTo.Lng != null)
+                                {
+                                    sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infPumpsTo.Lng},{infPumpsTo.Lat},0 ");
+                                }
+                                else
+                                {
+                                    sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
+                                }
+                            }
+                            else
+                            {
+                                sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
+                            }
+                        }
+                        else if (infrastructure.PumpsToTVItemID != null)
+                        {
+                            sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
+                        }
+                    }
+                    else if (infrastructure.Lat != null && infrastructure.Lng != null)
+                    {
+                        int? pumpsToTVItemID = infrastructure.PumpsToTVItemIDNew != null ? infrastructure.PumpsToTVItemIDNew : infrastructure.PumpsToTVItemID != null ? infrastructure.PumpsToTVItemID : null;
+                        if (pumpsToTVItemID != null)
+                        {
+                            Infrastructure infPumpsTo = (from c in municipalityDoc.Municipality.InfrastructureList
+                                                         where c.InfrastructureTVItemID == pumpsToTVItemID
+                                                         select c).FirstOrDefault();
+
+                            if (infPumpsTo != null)
+                            {
+                                if (infPumpsTo.LatNew != null && infPumpsTo.LngNew != null)
+                                {
+                                    sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infPumpsTo.LngNew},{infPumpsTo.LatNew},0 ");
+                                }
+                                else if (infPumpsTo.Lat != null && infPumpsTo.Lng != null)
+                                {
+                                    sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infPumpsTo.Lng},{infPumpsTo.Lat},0 ");
+                                }
+                                else
+                                {
+                                    sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
+                                }
+                            }
+                            else
+                            {
+                                sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
+                            }
+                        }
+                        else if (infrastructure.PumpsToTVItemID != null)
+                        {
+                            sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
+                        }
+                    }
+                    sbKML.AppendLine($@"");
+                    sbKML.AppendLine($@"		        </coordinates>");
+                    sbKML.AppendLine($@"		        </LineString>");
+                    sbKML.AppendLine($@"		    </Placemark>");
+                }
+                
+                // doing Line Path Infrastructure Outfall
+                if (infrastructure.LinePathInfOutfallNew != null && infrastructure.LinePathInfOutfallNew.MapInfoID > 0)
+                {
+                    sbKML.AppendLine($@"		    <Placemark>");
+                    sbKML.AppendLine($@"		    	<name>[{infrastructure.LinePathInfOutfallNew.MapInfoID}] - Line Path (Outfall)</name>");
+                    sbKML.AppendLine($@"			    <styleUrl>#m_ylw-pushpin</styleUrl>");
+                    sbKML.AppendLine($@"		        <LineString>");
+                    sbKML.AppendLine($@"		        <coordinates>");
+                    foreach (Coord coord in infrastructure.LinePathInfOutfallNew.CoordList)
+                    {
+                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
+                    }
+                    sbKML.AppendLine($@"");
+                    sbKML.AppendLine($@"		        </coordinates>");
+                    sbKML.AppendLine($@"		        </LineString>");
+                    sbKML.AppendLine($@"		    </Placemark>");
+                }
+                else if (infrastructure.LinePathInfOutfall != null && infrastructure.LinePathInfOutfall.MapInfoID > 0)
+                {
+                    sbKML.AppendLine($@"		    <Placemark>");
+                    sbKML.AppendLine($@"		    	<name>[{infrastructure.LinePathInfOutfall.MapInfoID}] - Line Path (Outfall)</name>");
+                    sbKML.AppendLine($@"			    <styleUrl>#m_ylw-pushpin</styleUrl>");
+                    sbKML.AppendLine($@"		        <LineString>");
+                    sbKML.AppendLine($@"		        <coordinates>");
+                    foreach (Coord coord in infrastructure.LinePathInfOutfall.CoordList)
+                    {
+                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
+                    }
+                    sbKML.AppendLine($@"");
+                    sbKML.AppendLine($@"		        </coordinates>");
+                    sbKML.AppendLine($@"		        </LineString>");
+                    sbKML.AppendLine($@"		    </Placemark>");
+                }
+                else
+                {
+                    sbKML.AppendLine($@"		    <Placemark>");
+                    sbKML.AppendLine($@"		    	<name>[0] - Line Path (Outfall)</name>");
+                    sbKML.AppendLine($@"			    <styleUrl>#m_ylw-pushpin</styleUrl>");
+                    sbKML.AppendLine($@"		        <LineString>");
+                    sbKML.AppendLine($@"		        <coordinates>");
+                    if (infrastructure.LatNew != null && infrastructure.LngNew != null)
+                    {
+                        if (infrastructure.LatOutfallNew != null && infrastructure.LngOutfallNew != null)
+                        {
+                            sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngOutfallNew},{infrastructure.LatOutfallNew},0 ");
+                        }
+                        else if (infrastructure.LatOutfall != null && infrastructure.LngOutfall != null)
+                        {
+                            sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngOutfall},{infrastructure.LatOutfall},0 ");
+                        }
+                        else
+                        {
+                            sbKML.Append($"{infrastructure.LngNew},{infrastructure.LatNew},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
+                        }
+                    }
+                    else if (infrastructure.Lat != null && infrastructure.Lng != null)
+                    {
+                        if (infrastructure.LatOutfallNew != null && infrastructure.LngOutfallNew != null)
+                        {
+                            sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngOutfallNew},{infrastructure.LatOutfallNew},0 ");
+                        }
+                        else if (infrastructure.LatOutfall != null && infrastructure.LngOutfall != null)
+                        {
+                            sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngOutfall},{infrastructure.LatOutfall},0 ");
+                        }
+                        else
+                        {
+                            sbKML.Append($"{infrastructure.Lng},{infrastructure.Lat},0 {infrastructure.LngNew},{infrastructure.LatNew},0 ");
+                        }
+                    }
+                    sbKML.AppendLine($@"");
+                    sbKML.AppendLine($@"		        </coordinates>");
+                    sbKML.AppendLine($@"		        </LineString>");
+                    sbKML.AppendLine($@"		    </Placemark>");
+                }
+
                 sbKML.AppendLine($@"        </Folder>");
             }
+            sbKML.AppendLine($@"		    </Folder>"); // of infrastructure
 
+            sbKML.AppendLine($@"		</Folder>"); // of municipality name
             sbKML.AppendLine($@"</Document>");
             sbKML.AppendLine($@"</kml>");
 
