@@ -5633,6 +5633,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 #endregion reset variables
 
                 NeedToSave = true;
+                CurrentInfrastructure.LinePathChanged = false;
             }
 
             if (CurrentInfrastructure.InfrastructureAddressNew.AddressTVItemID != null)
