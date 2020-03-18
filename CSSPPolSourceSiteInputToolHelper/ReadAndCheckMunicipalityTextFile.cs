@@ -961,108 +961,20 @@ namespace CSSPPolSourceSiteInputToolHelper
                             }
                         }
                         break;
-                    case "LINEPATHINFNEW":
+                    case "LINEPATHCHANGED":
                         {
                             try
                             {
                                 Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
 
-                                LinePath linePathInfNew = new LinePath();
-
                                 if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
                                 {
-                                    linePathInfNew.MapInfoID = 10000000;
+                                    lastInfrastructure.LinePathChanged = false;
                                 }
                                 else
                                 {
-                                    linePathInfNew.MapInfoID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
+                                    lastInfrastructure.LinePathChanged = bool.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
                                 }
-
-                                string CoordText = "";
-                                List<Coord> coordList = new List<Coord>();
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
-                                {
-                                    CoordText = "";
-                                }
-                                else
-                                {
-                                    CoordText = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
-                                }
-
-                                if (!String.IsNullOrWhiteSpace(CoordText))
-                                {
-                                    List<string> allCoordArr = CoordText.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                                    foreach (string coordArrList in allCoordArr)
-                                    {
-                                        List<string> coordArr = coordArrList.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                                        if (coordArr.Count != 2)
-                                        {
-                                            EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
-                                            return false;
-                                        }
-
-                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[0]), Lng = float.Parse(coordArr[1]) });
-                                    }
-                                }
-
-                                linePathInfNew.CoordList = coordList;
-
-                                lastInfrastructure.LinePathInfNew = linePathInfNew;
-                            }
-                            catch (Exception)
-                            {
-                                EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
-                                return false;
-                            }
-                        }
-                        break;
-                    case "LINEPATHINFOUTFALLNEW":
-                        {
-                            try
-                            {
-                                Infrastructure lastInfrastructure = municipalityDoc.Municipality.InfrastructureList[municipalityDoc.Municipality.InfrastructureList.Count - 1];
-
-                                LinePath linePathInfOutNew = new LinePath();
-
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos + 1, pos2 - pos - 1)))
-                                {
-                                    linePathInfOutNew.MapInfoID = 10000000;
-                                }
-                                else
-                                {
-                                    linePathInfOutNew.MapInfoID = int.Parse(LineTxt.Substring(pos + 1, pos2 - pos - 1));
-                                }
-
-                                string CoordText = "";
-                                List<Coord> coordList = new List<Coord>();
-                                if (string.IsNullOrWhiteSpace(LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1)))
-                                {
-                                    CoordText = "";
-                                }
-                                else
-                                {
-                                    CoordText = LineTxt.Substring(pos2 + 1, pos3 - pos2 - 1);
-                                }
-
-                                if (!String.IsNullOrWhiteSpace(CoordText))
-                                {
-                                    List<string> allCoordArr = CoordText.Split("|".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                                    foreach (string coordArrList in allCoordArr)
-                                    {
-                                        List<string> coordArr = coordArrList.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
-                                        if (coordArr.Count != 2)
-                                        {
-                                            EmitStatus(new StatusEventArgs($"Could not read { LineTxt.Substring(0, pos) } line at line { LineNumb }"));
-                                            return false;
-                                        }
-
-                                        coordList.Add(new Coord() { Lat = float.Parse(coordArr[0]), Lng = float.Parse(coordArr[1]) });
-                                    }
-                                }
-
-                                linePathInfOutNew.CoordList = coordList;
-
-                                lastInfrastructure.LinePathInfOutfallNew = linePathInfOutNew;
                             }
                             catch (Exception)
                             {

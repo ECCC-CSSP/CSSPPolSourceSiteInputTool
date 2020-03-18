@@ -2161,6 +2161,7 @@ namespace CSSPPolSourceSiteInputTool
                         if (string.IsNullOrWhiteSpace(retStr))
                         {
                             polSourceSiteInputToolHelper.KMLFileLastWriteTime = fi.LastWriteTime;
+                            polSourceSiteInputToolHelper.SaveMunicipalityTextFile();
                         }
                         else
                         {

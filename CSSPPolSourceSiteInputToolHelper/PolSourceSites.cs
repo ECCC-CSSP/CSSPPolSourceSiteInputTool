@@ -3924,6 +3924,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 bool NeedDetailsUpdate = false;
                 bool NeedPicturesUpdate = false;
                 bool NeedActiveUpdate = false;
+                bool NeedLinePathUpdate = infrastructure.LinePathChanged;
 
                 if (IsAdmin)
                 {
@@ -4010,6 +4011,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                     string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
                     string NeedAcitveUpdateText = NeedActiveUpdate ? "Active" : "";
+                    string NeedLinePathUpdateText = NeedLinePathUpdate ? "Line Path" : "";
 
                     lbInfrastructureStatus.AutoSize = true;
                     lbInfrastructureStatus.Location = new Point(40, lblTVText.Bottom + 4);
@@ -4034,9 +4036,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         lbInfrastructureStatus.Font = new Font(new FontFamily(lbInfrastructureStatus.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
                     }
-                    if (NeedDetailsUpdate || NeedPicturesUpdate || NeedActiveUpdate)
+                    if (NeedDetailsUpdate || NeedPicturesUpdate || NeedActiveUpdate || NeedLinePathUpdate)
                     {
-                        lbInfrastructureStatus.Text = $"Needs update for      {NeedDetailsUpdateText}     {NeedPictuesUpdateText} {NeedAcitveUpdateText}";
+                        lbInfrastructureStatus.Text = $"Needs update for {NeedDetailsUpdateText} {NeedPictuesUpdateText} {NeedAcitveUpdateText} {NeedLinePathUpdateText}";
                     }
                     else
                     {
@@ -4685,6 +4687,8 @@ namespace CSSPPolSourceSiteInputToolHelper
             int? SeeOtherMunicipalityTVItemID = null;
             string SeeOtherMunicipalityText = null;
             int? PumpsToTVItemID = null;
+            string LinePathInf = null;
+            string LinePathInfOutfall = null;
 
             // IsActive
             if (CurrentInfrastructure.IsActiveNew == null)
@@ -5268,6 +5272,36 @@ namespace CSSPPolSourceSiteInputToolHelper
                 PumpsToTVItemID = (int)CurrentInfrastructure.PumpsToTVItemIDNew;
             }
 
+            // LinePathInf
+            StringBuilder sbLinePathInf = new StringBuilder();
+            if (CurrentInfrastructure.LinePathInf != null)
+            {
+                foreach (Coord coord in CurrentInfrastructure.LinePathInf.CoordList)
+                {
+                    if (coord.Lat != null && coord.Lng != null)
+                    {
+                        sbLinePathInf.Append($"|{((float)coord.Lat).ToString("F5")},{((float)coord.Lng).ToString("F5")}");
+                    }
+                }
+
+                LinePathInf = sbLinePathInf.ToString();
+            }
+
+            // LinePathInfOutfall
+            StringBuilder sbLinePathInfOutfall = new StringBuilder();
+            if (CurrentInfrastructure.LinePathInfOutfall != null)
+            {
+                foreach (Coord coord in CurrentInfrastructure.LinePathInfOutfall.CoordList)
+                {
+                    if (coord.Lat != null && coord.Lng != null)
+                    {
+                        sbLinePathInfOutfall.Append($"|{((float)coord.Lat).ToString("F5")},{((float)coord.Lng).ToString("F5")}");
+                    }
+                }
+
+                LinePathInfOutfall = sbLinePathInfOutfall.ToString();
+            }
+
             string MessageText = $"Trying to save all information for Infrastructure [{InfrastructureName}]\r\n";
             EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
@@ -5412,6 +5446,12 @@ namespace CSSPPolSourceSiteInputToolHelper
             MessageText = $"\t\tPumps To TVItemID\t[{PumpsToTVItemID.ToString()}]\r\n";
             EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
 
+            MessageText = $"\t\tLine Path Infrastructure\t[{LinePathInf}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
+            MessageText = $"\t\tLine Path Infrastructure Outfall\t[{LinePathInfOutfall}]\r\n";
+            EmitRTBMessage(new RTBMessageEventArgs($"{MessageText}"));
+
             #endregion Load Variables
 
             ret = SaveToCSSPWebToolsCreateOrModifyInfrastructure((int)municipalityDoc.Municipality.MunicipalityTVItemID,
@@ -5423,7 +5463,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 AverageDepth_m, NumberOfPorts, PortDiameter_m, PortSpacing_m, PortElevation_m, VerticalAngle_deg,
                 HorizontalAngle_deg, DecayRate_per_day, NearFieldVelocity_m_s, FarFieldVelocity_m_s,
                 ReceivingWaterSalinity_PSU, ReceivingWaterTemperature_C, ReceivingWater_MPN_per_100ml, DistanceFromShore_m,
-                SeeOtherMunicipalityTVItemID, SeeOtherMunicipalityText, PumpsToTVItemID, AdminEmail);
+                SeeOtherMunicipalityTVItemID, SeeOtherMunicipalityText, PumpsToTVItemID, LinePathInf, LinePathInfOutfall, AdminEmail);
             ret = ret.Replace("\"", "");
             if (ret.StartsWith("ERROR:"))
             {
@@ -8893,8 +8933,8 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 }
 
-
-                if (false)
+                bool a = false;
+                if (a)
                 {
                     #region SeeOtherMunicipalityTVItemID
                     X = 10;
@@ -8945,6 +8985,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     bool NeedDetailsUpdate = false;
                     bool NeedPicturesUpdate = false;
                     bool NeedActiveUpdate = false;
+                    bool NeedLinePathUpdate = CurrentInfrastructure.LinePathChanged;
 
                     if (CurrentInfrastructure.IsActiveNew != null && CurrentInfrastructure.IsActiveNew != CurrentInfrastructure.IsActive)
                     {
@@ -9029,8 +9070,9 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string NeedDetailsUpdateText = NeedDetailsUpdate ? "Details" : "";
                     string NeedPictuesUpdateText = NeedPicturesUpdate ? "Pictures" : "";
                     string NeedActiveUpdateText = NeedActiveUpdate ? "Active" : "";
+                    string NeedLinePathUpdateText = NeedLinePathUpdate ? "Line Update" : "";
 
-                    if (NeedDetailsUpdate || NeedPicturesUpdate || NeedActiveUpdate)
+                    if (NeedDetailsUpdate || NeedPicturesUpdate || NeedActiveUpdate || NeedLinePathUpdate)
                     {
                         Y = PanelViewAndEdit.Controls[PanelViewAndEdit.Controls.Count - 1].Bottom + 20;
                         X = 20;
@@ -12408,7 +12450,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             float? PortDiameter_m, float? PortSpacing_m, float? PortElevation_m, float? VerticalAngle_deg, float? HorizontalAngle_deg,
             float? DecayRate_per_day, float? NearFieldVelocity_m_s, float? FarFieldVelocity_m_s, float? ReceivingWaterSalinity_PSU,
             float? ReceivingWaterTemperature_C, int? ReceivingWater_MPN_per_100ml, float? DistanceFromShore_m,
-            int? SeeOtherMunicipalityTVItemID, string SeeOtherMunicipalityText, int? PumpsToTVItemID, string AdminEmail)
+            int? SeeOtherMunicipalityTVItemID, string SeeOtherMunicipalityText, int? PumpsToTVItemID, string LinePathInf, string LinePathInfOutfall, string AdminEmail)
         {
             try
             {
@@ -12463,6 +12505,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 paramList.Add("SeeOtherMunicipalityTVItemID", SeeOtherMunicipalityTVItemID.ToString());
                 paramList.Add("SeeOtherMunicipalityText", SeeOtherMunicipalityText.ToString());
                 paramList.Add("PumpsToTVItemID", PumpsToTVItemID.ToString());
+                paramList.Add("LinePathInf", LinePathInf);
+                paramList.Add("LinePathInfOutfall", LinePathInfOutfall);
                 paramList.Add("AdminEmail", AdminEmail);
 
                 using (WebClient webClient = new WebClient())

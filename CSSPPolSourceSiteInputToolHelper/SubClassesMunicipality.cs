@@ -169,9 +169,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public bool Shown { get; set; } = false;
         public int Ordinal { get; set; } = 0;
         public LinePath LinePathInf { get; set; } = new LinePath();
-        public LinePath LinePathInfNew { get; set; } = new LinePath();
         public LinePath LinePathInfOutfall { get; set; } = new LinePath();
-        public LinePath LinePathInfOutfallNew { get; set; } = new LinePath();
+        public bool LinePathChanged { get; set; } = false;
     }
     public class LinePath
     {

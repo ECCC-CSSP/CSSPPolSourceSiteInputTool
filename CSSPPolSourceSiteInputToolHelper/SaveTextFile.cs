@@ -189,49 +189,26 @@ namespace CSSPPolSourceSiteInputToolHelper
                     string LngNewText = infrastructure.LngNew == null ? "" : ((float)infrastructure.LngNew).ToString("F5");
                     sb.AppendLine($"LATLNGNEW\t{LatNewText}\t{LngNewText}\t");
                 }
-                if (infrastructure.LatOutfallNew != null || infrastructure.LngOutfallNew != null)
-                {
-                    string LatOutfallNewText = infrastructure.LatOutfallNew == null ? "" : ((float)infrastructure.LatOutfallNew).ToString("F5");
-                    string LngOutfallNewText = infrastructure.LngOutfallNew == null ? "" : ((float)infrastructure.LngOutfallNew).ToString("F5");
-                    sb.AppendLine($"LATLNGOUTFALLNEW\t{LatOutfallNewText}\t{LngOutfallNewText}\t");
-                }
 
                 string mapInfoIDInf = infrastructure.LinePathInf.MapInfoID.ToString();
                 StringBuilder sbLinePathInf = new StringBuilder();
                 foreach (Coord coord in infrastructure.LinePathInf.CoordList)
                 {
-                    sbLinePathInf.Append($"|{coord.Lng},{coord.Lat}");
+                    sbLinePathInf.Append($"|{coord.Lat},{coord.Lng}");
                 }
                 sb.AppendLine($"LINEPATHINF\t{mapInfoIDInf}\t{sbLinePathInf.ToString()}\t");
-
-                if (infrastructure.LinePathInfNew != null && infrastructure.LinePathInfNew.MapInfoID > 0)
-                {
-                    string mapInfoIDInfNew = infrastructure.LinePathInfNew.MapInfoID.ToString();
-                    StringBuilder sbLinePathInfNew = new StringBuilder();
-                    foreach (Coord coord in infrastructure.LinePathInfNew.CoordList)
-                    {
-                        sbLinePathInfNew.Append($"|{coord.Lng},{coord.Lat}");
-                    }
-                    sb.AppendLine($"LINEPATHINFNEW\t{mapInfoIDInfNew}\t{sbLinePathInfNew.ToString()}\t");
-                }
 
                 string mapInfoIDInfOut = infrastructure.LinePathInfOutfall.MapInfoID.ToString();
                 StringBuilder sbLinePathInfOut = new StringBuilder();
                 foreach (Coord coord in infrastructure.LinePathInfOutfall.CoordList)
                 {
-                    sbLinePathInfOut.Append($"|{coord.Lng},{coord.Lat}");
+                    sbLinePathInfOut.Append($"|{coord.Lat},{coord.Lng}");
                 }
                 sb.AppendLine($"LINEPATHINFOUTFALL\t{mapInfoIDInfOut}\t{sbLinePathInfOut.ToString()}\t");
 
-                if (infrastructure.LinePathInfOutfallNew != null && infrastructure.LinePathInfOutfallNew.MapInfoID > 0)
+                if (infrastructure.LinePathChanged != null)
                 {
-                    string mapInfoIDInfOutNew = infrastructure.LinePathInfOutfallNew.MapInfoID.ToString();
-                    StringBuilder sbLinePathInfOutNew = new StringBuilder();
-                    foreach (Coord coord in infrastructure.LinePathInfOutfallNew.CoordList)
-                    {
-                        sbLinePathInfOutNew.Append($"|{coord.Lng},{coord.Lat}");
-                    }
-                    sb.AppendLine($"LINEPATHINFOUTFALLNew\t{mapInfoIDInfOutNew}\t{sbLinePathInfOutNew.ToString()}\t");
+                    sb.AppendLine($"LINEPATHCHANGED\t{(((bool)infrastructure.LinePathChanged) ? "true" : "false")}\t");
                 }
 
                 if (infrastructure.IsActiveNew != null)

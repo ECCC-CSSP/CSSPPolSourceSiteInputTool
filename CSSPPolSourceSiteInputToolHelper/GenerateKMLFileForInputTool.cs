@@ -346,12 +346,6 @@ namespace CSSPPolSourceSiteInputToolHelper
                 string LatOutfallText = infrastructure.LatOutfall != null ? ((float)infrastructure.LatOutfall).ToString("F5") : "---";
                 string LngOutfallText = infrastructure.LngOutfall != null ? ((float)infrastructure.LngOutfall).ToString("F5") : "---";
                 sbKML.AppendLine($@"                <p><b>Lat Outfall:</b> {LatOutfallText} <b>Lng Outfall:</b> {LngOutfallText}</p>");
-                if (infrastructure.LatOutfallNew != null || infrastructure.LngOutfallNew != null)
-                {
-                    string LatOutfallNewText = infrastructure.LatOutfallNew != null ? ((float)infrastructure.LatOutfallNew).ToString("F5") : "---";
-                    string LngOutfallNewText = infrastructure.LngOutfallNew != null ? ((float)infrastructure.LngOutfallNew).ToString("F5") : "---";
-                    sbKML.AppendLine($@"                <p><b>Lat Outfall New:</b> {LatOutfallNewText} <b>Lng Outfall New:</b> {LngOutfallNewText}</p>");
-                }
 
                 //// doing Prism
                 //string PrismText = infrastructure.PrismID != null ? infrastructure.PrismID.ToString() : "---";
@@ -835,23 +829,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 sbKML.AppendLine($@"		</Placemark>");
 
                 // doing Line Path Infrastructure
-                if (infrastructure.LinePathInfNew != null && infrastructure.LinePathInfNew.MapInfoID > 0)
-                {
-                    sbKML.AppendLine($@"		    <Placemark>");
-                    sbKML.AppendLine($@"		    	<name>[{infrastructure.LinePathInfNew.MapInfoID}] - Line Path (Pumping to)</name>");
-                    sbKML.AppendLine($@"			    <styleUrl>#m_ylw-pushpin</styleUrl>");
-                    sbKML.AppendLine($@"		        <LineString>");
-                    sbKML.AppendLine($@"		        <coordinates>");
-                    foreach (Coord coord in infrastructure.LinePathInfNew.CoordList)
-                    {
-                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
-                    }
-                    sbKML.AppendLine($@"");
-                    sbKML.AppendLine($@"		        </coordinates>");
-                    sbKML.AppendLine($@"		        </LineString>");
-                    sbKML.AppendLine($@"		    </Placemark>");
-                }
-                else if (infrastructure.LinePathInf != null && infrastructure.LinePathInf.MapInfoID > 0)
+                if (infrastructure.LinePathInf != null && infrastructure.LinePathInf.MapInfoID > 0)
                 {
                     sbKML.AppendLine($@"		    <Placemark>");
                     sbKML.AppendLine($@"		    	<name>[{infrastructure.LinePathInf.MapInfoID}] - Line Path (Pumping to)</name>");
@@ -949,23 +927,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
 
                 // doing Line Path Infrastructure Outfall
-                if (infrastructure.LinePathInfOutfallNew != null && infrastructure.LinePathInfOutfallNew.MapInfoID > 0)
-                {
-                    sbKML.AppendLine($@"		    <Placemark>");
-                    sbKML.AppendLine($@"		    	<name>[{infrastructure.LinePathInfOutfallNew.MapInfoID}] - Line Path (Outfall)</name>");
-                    sbKML.AppendLine($@"			    <styleUrl>#m_ylw-pushpin</styleUrl>");
-                    sbKML.AppendLine($@"		        <LineString>");
-                    sbKML.AppendLine($@"		        <coordinates>");
-                    foreach (Coord coord in infrastructure.LinePathInfOutfallNew.CoordList)
-                    {
-                        sbKML.Append($"{coord.Lng},{coord.Lat},0 ");
-                    }
-                    sbKML.AppendLine($@"");
-                    sbKML.AppendLine($@"		        </coordinates>");
-                    sbKML.AppendLine($@"		        </LineString>");
-                    sbKML.AppendLine($@"		    </Placemark>");
-                }
-                else if (infrastructure.LinePathInfOutfall != null && infrastructure.LinePathInfOutfall.MapInfoID > 0)
+                if (infrastructure.LinePathInfOutfall != null && infrastructure.LinePathInfOutfall.MapInfoID > 0)
                 {
                     sbKML.AppendLine($@"		    <Placemark>");
                     sbKML.AppendLine($@"		    	<name>[{infrastructure.LinePathInfOutfall.MapInfoID}] - Line Path (Outfall)</name>");
@@ -1356,7 +1318,6 @@ namespace CSSPPolSourceSiteInputToolHelper
             {
                 int InfTVItemID = 0;
                 int MapInfoID = 0;
-                List<Coord> coordList = new List<Coord>();
                 bool IsOutfallPath = false;
 
                 FileInfo fi = new FileInfo(KMLFileName);
@@ -1459,6 +1420,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                     }
                                                     if (n5.Name == "LineString")
                                                     {
+                                                        List<Coord> coordList = new List<Coord>();
+
                                                         foreach (XmlNode n6 in n5.ChildNodes)
                                                         {
                                                             if (n6.Name == "coordinates")
@@ -1488,42 +1451,22 @@ namespace CSSPPolSourceSiteInputToolHelper
                                                                     {
                                                                         if (IsOutfallPath)
                                                                         {
-                                                                            if (inf.LinePathInfOutfallNew != null && inf.LinePathInfOutfallNew.MapInfoID != 0)
+                                                                            if (inf.LinePathInfOutfall.MapInfoID == MapInfoID)
                                                                             {
-                                                                                if (inf.LinePathInfOutfallNew.MapInfoID == MapInfoID)
-                                                                                {
-                                                                                    inf.LinePathInfOutfallNew.CoordList = coordList;
-                                                                                    break;
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                if (inf.LinePathInfOutfall.MapInfoID == MapInfoID)
-                                                                                {
-                                                                                    inf.LinePathInfOutfallNew.MapInfoID = MapInfoID;
-                                                                                    inf.LinePathInfOutfallNew.CoordList = coordList;
-                                                                                    break;
-                                                                                }
+                                                                                inf.LinePathInfOutfall.MapInfoID = MapInfoID;
+                                                                                inf.LinePathInfOutfall.CoordList = coordList;
+                                                                                inf.LinePathChanged = true;
+                                                                                break;
                                                                             }
                                                                         }
                                                                         else
                                                                         {
-                                                                            if (inf.LinePathInfNew != null && inf.LinePathInfNew.MapInfoID != 0)
+                                                                            if (inf.LinePathInf.MapInfoID == MapInfoID)
                                                                             {
-                                                                                if (inf.LinePathInfNew.MapInfoID == MapInfoID)
-                                                                                {
-                                                                                    inf.LinePathInfNew.CoordList = coordList;
-                                                                                    break;
-                                                                                }
-                                                                            }
-                                                                            else
-                                                                            {
-                                                                                if (inf.LinePathInf.MapInfoID == MapInfoID)
-                                                                                {
-                                                                                    inf.LinePathInfNew.MapInfoID = MapInfoID;
-                                                                                    inf.LinePathInfNew.CoordList = coordList;
-                                                                                    break;
-                                                                                }
+                                                                                inf.LinePathInf.MapInfoID = MapInfoID;
+                                                                                inf.LinePathInf.CoordList = coordList;
+                                                                                inf.LinePathChanged = true;
+                                                                                break;
                                                                             }
                                                                         }
                                                                     }
