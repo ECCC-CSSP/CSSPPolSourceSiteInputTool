@@ -2146,5 +2146,29 @@ namespace CSSPPolSourceSiteInputTool
             butFixImgDir.Text = "Fix Img Dir";
         }
 
+        private void CSSPPolSourceSiteInputToolForm_Activated(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(polSourceSiteInputToolHelper.KMLFileName) && polSourceSiteInputToolHelper.KMLFileLastWriteTime != null)
+            {
+                FileInfo fi = new FileInfo(polSourceSiteInputToolHelper.KMLFileName);
+                DateTime newDate = fi.LastWriteTime;
+                if (newDate != polSourceSiteInputToolHelper.KMLFileLastWriteTime)
+                {
+                    DialogResult dialogResult = MessageBox.Show($"The KML file [{fi.Name}] has changed since it was last created. Do you want to import the line paths to your municipality?", "KML file changed", MessageBoxButtons.YesNo);
+                    if (dialogResult == DialogResult.Yes)
+                    {
+                        string retStr = polSourceSiteInputToolHelper.ReadAndSaveNewKMLLinePaths();
+                        if (string.IsNullOrWhiteSpace(retStr))
+                        {
+                            polSourceSiteInputToolHelper.KMLFileLastWriteTime = fi.LastWriteTime;
+                        }
+                        else
+                        {
+                            MessageBox.Show(retStr, "Error while reading KML file", MessageBoxButtons.OK);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

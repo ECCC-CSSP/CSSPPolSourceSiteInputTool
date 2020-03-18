@@ -8,64 +8,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace CSSPPolSourceSiteInputToolHelper
 {
     public partial class PolSourceSiteInputToolHelper
     {
-        public void ViewKMLFileInGoogleEarth()
-        {
-            if (IsPolSourceSite)
-            {
-                FileInfo fi = new FileInfo($@"{BasePathPollutionSourceSites}\{CurrentSubsectorName}\{CurrentSubsectorName}.kml");
-
-                if (string.IsNullOrWhiteSpace(CurrentSubsectorName))
-                {
-                    EmitStatus(new StatusEventArgs($"Error: CurrentSubsectorName is empty"));
-                    return;
-                }
-
-                EmitStatus(new StatusEventArgs($"Opening file [{fi.FullName}] with Google Earth"));
-
-                FileInfo fiGE = new FileInfo(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe");
-
-                if (fiGE.Exists)
-                {
-                    Process.Start(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe", fi.FullName);
-                }
-                else
-                {
-                    Process.Start(@"IExplore.exe", fi.FullName);
-                }
-                EmitStatus(new StatusEventArgs($""));
-            }
-            else
-            {
-                FileInfo fi = new FileInfo($@"{BasePathInfrastructures}\{CurrentMunicipalityName}\{CurrentMunicipalityName}.kml");
-
-                if (string.IsNullOrWhiteSpace(CurrentMunicipalityName))
-                {
-                    EmitStatus(new StatusEventArgs($"Error: CurrentMunicipalityName is empty"));
-                    return;
-                }
-
-                EmitStatus(new StatusEventArgs($"Opening file [{fi.FullName}] with Google Earth"));
-
-                FileInfo fiGE = new FileInfo(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe");
-
-                if (fiGE.Exists)
-                {
-                    Process.Start(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe", @"""" + fi.FullName + @"""");
-                }
-                else
-                {
-                    Process.Start(@"IExplore.exe", fi.FullName);
-                }
-                EmitStatus(new StatusEventArgs($""));
-            }
-        }
         public void RegenerateMunicipalityKMLFile()
-        {          
+        {
             EmitStatus(new StatusEventArgs($@"Regenerating municipality KML file for subsector [{CurrentMunicipalityName}]"));
 
             if (Language == LanguageEnum.fr)
@@ -145,14 +95,15 @@ namespace CSSPPolSourceSiteInputToolHelper
                 string LastName = contact.LastNameNew != null ? contact.LastNameNew : contact.LastName;
 
                 string IsActive2 = contact.IsActive != null && contact.IsActive == true ? "Active" : "Inactive";
-                string IsActiveNew2 = contact.IsActiveNew == null ? "" : contact.IsActiveNew  == true ? "Active" : "Inactive";
+                string IsActiveNew2 = contact.IsActiveNew == null ? "" : contact.IsActiveNew == true ? "Active" : "Inactive";
 
                 string IsActiveText = "";
                 if (!string.IsNullOrWhiteSpace(IsActiveNew2))
                 {
                     IsActiveText = $"({IsActive2} -> {IsActiveNew2})";
                 }
-                else {
+                else
+                {
                     IsActiveText = $"({IsActive2})";
                 }
 
@@ -169,7 +120,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         TitleNew = _BaseEnumService.GetEnumText_ContactTitleEnum((ContactTitleEnum)contact.ContactTitleNew);
                     }
                 }
-               
+
                 string TitleText = "";
                 if (!string.IsNullOrWhiteSpace(TitleNew))
                 {
@@ -304,7 +255,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
                 else
                 {
-                    sbKML.AppendLine($@"            <name>INACTIVE - [{infrastructure.InfrastructureTVItemID.ToString()}] - {InfrastructureNameText}</name>");
+                    sbKML.AppendLine($@"            <name>[{infrastructure.InfrastructureTVItemID.ToString()}] - INACTIVE - {InfrastructureNameText}</name>");
                 }
                 sbKML.AppendLine($@"            <open>1</open>");
 
@@ -996,7 +947,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                     sbKML.AppendLine($@"		        </LineString>");
                     sbKML.AppendLine($@"		    </Placemark>");
                 }
-                
+
                 // doing Line Path Infrastructure Outfall
                 if (infrastructure.LinePathInfOutfallNew != null && infrastructure.LinePathInfOutfallNew.MapInfoID > 0)
                 {
@@ -1086,6 +1037,9 @@ namespace CSSPPolSourceSiteInputToolHelper
             StreamWriter sw = fi.CreateText();
             sw.Write(sbKML.ToString());
             sw.Close();
+
+            KMLFileName = fi.FullName;
+            KMLFileLastWriteTime = fi.LastWriteTime;
 
             if (!fi.Exists)
             {
@@ -1344,6 +1298,251 @@ namespace CSSPPolSourceSiteInputToolHelper
             EmitStatus(new StatusEventArgs($@"The file [{fi.FullName}] has been regenerated with new changes"));
             EmitStatus(new StatusEventArgs($"Done ... file [{fi.FullName}] has been regenerated"));
             EmitStatus(new StatusEventArgs($""));
+        }
+        public void ViewKMLFileInGoogleEarth()
+        {
+            if (IsPolSourceSite)
+            {
+                FileInfo fi = new FileInfo($@"{BasePathPollutionSourceSites}\{CurrentSubsectorName}\{CurrentSubsectorName}.kml");
+
+                if (string.IsNullOrWhiteSpace(CurrentSubsectorName))
+                {
+                    EmitStatus(new StatusEventArgs($"Error: CurrentSubsectorName is empty"));
+                    return;
+                }
+
+                EmitStatus(new StatusEventArgs($"Opening file [{fi.FullName}] with Google Earth"));
+
+                FileInfo fiGE = new FileInfo(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe");
+
+                if (fiGE.Exists)
+                {
+                    Process.Start(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe", fi.FullName);
+                }
+                else
+                {
+                    Process.Start(@"IExplore.exe", fi.FullName);
+                }
+                EmitStatus(new StatusEventArgs($""));
+            }
+            else
+            {
+                FileInfo fi = new FileInfo($@"{BasePathInfrastructures}\{CurrentMunicipalityName}\{CurrentMunicipalityName}.kml");
+
+                if (string.IsNullOrWhiteSpace(CurrentMunicipalityName))
+                {
+                    EmitStatus(new StatusEventArgs($"Error: CurrentMunicipalityName is empty"));
+                    return;
+                }
+
+                EmitStatus(new StatusEventArgs($"Opening file [{fi.FullName}] with Google Earth"));
+
+                FileInfo fiGE = new FileInfo(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe");
+
+                if (fiGE.Exists)
+                {
+                    Process.Start(@"C:\Program Files\Google\Google Earth Pro\client\googleearth.exe", @"""" + fi.FullName + @"""");
+                }
+                else
+                {
+                    Process.Start(@"IExplore.exe", fi.FullName);
+                }
+                EmitStatus(new StatusEventArgs($""));
+            }
+        }
+        public string ReadAndSaveNewKMLLinePaths()
+        {
+            if (!string.IsNullOrWhiteSpace(KMLFileName) && KMLFileLastWriteTime != null)
+            {
+                int InfTVItemID = 0;
+                int MapInfoID = 0;
+                List<Coord> coordList = new List<Coord>();
+                bool IsOutfallPath = false;
+
+                FileInfo fi = new FileInfo(KMLFileName);
+
+                XmlDocument xmldoc = new XmlDocument();
+                xmldoc.Load(fi.FullName);
+
+                foreach (XmlNode n1 in xmldoc.ChildNodes[1].ChildNodes[0].ChildNodes)
+                {
+                    if (n1.Name == "Folder")
+                    {
+                        foreach (XmlNode n2 in n1.ChildNodes)
+                        {
+                            if (n2.Name == "Folder")
+                            {
+                                bool isInfrastructure = false;
+                                foreach (XmlNode n22 in n2.ChildNodes)
+                                {
+                                    if (n22.Name == "name")
+                                    {
+                                        if (n22.InnerText == "Infrastructures")
+                                        {
+                                            isInfrastructure = true;
+                                        }
+                                    }
+                                    if (n22.Name == "Folder" && isInfrastructure)
+                                    {
+                                        foreach (XmlNode n4 in n22.ChildNodes)
+                                        {
+                                            if (n4.Name == "name")
+                                            {
+                                                string nameText = n4.InnerText;
+                                                if (string.IsNullOrWhiteSpace(nameText))
+                                                {
+                                                    string ErrorMessage = "Infrastructure name should not be empty";
+                                                    EmitRTBMessage(new RTBMessageEventArgs(ErrorMessage));
+                                                    return ErrorMessage;
+                                                }
+                                                if (!nameText.Contains("["))
+                                                {
+                                                    string ErrorMessage = "Infrastructure name does not contain the character '['";
+                                                    EmitRTBMessage(new RTBMessageEventArgs(ErrorMessage));
+                                                    return ErrorMessage;
+                                                }
+                                                if (!nameText.Contains("]"))
+                                                {
+                                                    string ErrorMessage = "Infrastructure name does not contain the character ']'";
+                                                    EmitRTBMessage(new RTBMessageEventArgs(ErrorMessage));
+                                                    return ErrorMessage;
+                                                }
+                                                if (!nameText.StartsWith("["))
+                                                {
+                                                    string ErrorMessage = "Infrastructure name should start with [";
+                                                    EmitRTBMessage(new RTBMessageEventArgs(ErrorMessage));
+                                                    return ErrorMessage;
+                                                }
+                                                string InfTVItemIDText = nameText.Substring(1);
+                                                InfTVItemIDText = InfTVItemIDText.Substring(0, InfTVItemIDText.IndexOf("]"));
+
+                                                InfTVItemID = int.Parse(InfTVItemIDText);
+                                            }
+                                            if (n4.Name == "Placemark")
+                                            {
+                                                foreach (XmlNode n5 in n4.ChildNodes)
+                                                {
+                                                    if (n5.Name == "name")
+                                                    {
+                                                        string linePathText = n5.InnerText;
+
+                                                        if (linePathText.Contains("Line Path"))
+                                                        {
+                                                            if (!linePathText.Contains("["))
+                                                            {
+                                                                string ErrorMessage = "Infrastructure name does not contain the character '['";
+                                                                EmitRTBMessage(new RTBMessageEventArgs(ErrorMessage));
+                                                                return ErrorMessage;
+                                                            }
+                                                            if (!linePathText.Contains("]"))
+                                                            {
+                                                                string ErrorMessage = "Infrastructure name does not contain the character ']'";
+                                                                EmitRTBMessage(new RTBMessageEventArgs(ErrorMessage));
+                                                                return ErrorMessage;
+                                                            }
+                                                            if (!linePathText.StartsWith("["))
+                                                            {
+                                                                string ErrorMessage = "Infrastructure name should start with [";
+                                                                EmitRTBMessage(new RTBMessageEventArgs(ErrorMessage));
+                                                                return ErrorMessage;
+                                                            }
+                                                            string mapInfoIDText = linePathText.Substring(1);
+                                                            mapInfoIDText = mapInfoIDText.Substring(0, mapInfoIDText.IndexOf("]"));
+
+                                                            MapInfoID = int.Parse(mapInfoIDText);
+
+                                                            if (linePathText.Contains("(Outfall)"))
+                                                            {
+                                                                IsOutfallPath = true;
+                                                            }
+                                                        }
+                                                    }
+                                                    if (n5.Name == "LineString")
+                                                    {
+                                                        foreach (XmlNode n6 in n5.ChildNodes)
+                                                        {
+                                                            if (n6.Name == "coordinates")
+                                                            {
+                                                                string innerText = n6.InnerText.Trim();
+                                                                List<string> coordArr = innerText.Split(" ".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+
+                                                                foreach (string coordText in coordArr)
+                                                                {
+                                                                    List<string> valArr = coordText.Split(",".ToCharArray(), StringSplitOptions.RemoveEmptyEntries).ToList();
+
+                                                                    if (valArr.Count != 3)
+                                                                    {
+                                                                        string ErrorMessage = "Coord Reading Error: valArr != 3";
+                                                                        EmitRTBMessage(new RTBMessageEventArgs(ErrorMessage));
+                                                                        return ErrorMessage;
+                                                                    }
+
+                                                                    Coord coord = new Coord() { Lat = float.Parse(valArr[1]), Lng = float.Parse(valArr[0]) };
+
+                                                                    coordList.Add(coord);
+                                                                }
+
+                                                                foreach (Infrastructure inf in municipalityDoc.Municipality.InfrastructureList)
+                                                                {
+                                                                    if (inf.InfrastructureTVItemID == InfTVItemID)
+                                                                    {
+                                                                        if (IsOutfallPath)
+                                                                        {
+                                                                            if (inf.LinePathInfOutfallNew != null && inf.LinePathInfOutfallNew.MapInfoID != 0)
+                                                                            {
+                                                                                if (inf.LinePathInfOutfallNew.MapInfoID == MapInfoID)
+                                                                                {
+                                                                                    inf.LinePathInfOutfallNew.CoordList = coordList;
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                if (inf.LinePathInfOutfall.MapInfoID == MapInfoID)
+                                                                                {
+                                                                                    inf.LinePathInfOutfallNew.MapInfoID = MapInfoID;
+                                                                                    inf.LinePathInfOutfallNew.CoordList = coordList;
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            if (inf.LinePathInfNew != null && inf.LinePathInfNew.MapInfoID != 0)
+                                                                            {
+                                                                                if (inf.LinePathInfNew.MapInfoID == MapInfoID)
+                                                                                {
+                                                                                    inf.LinePathInfNew.CoordList = coordList;
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                if (inf.LinePathInf.MapInfoID == MapInfoID)
+                                                                                {
+                                                                                    inf.LinePathInfNew.MapInfoID = MapInfoID;
+                                                                                    inf.LinePathInfNew.CoordList = coordList;
+                                                                                    break;
+                                                                                }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+         
+            return "";
         }
     }
 }

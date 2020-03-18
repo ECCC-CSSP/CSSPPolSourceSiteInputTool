@@ -824,6 +824,7 @@
             this.Name = "CSSPPolSourceSiteInputToolForm";
             this.Text = "CSSP Pollution Source Site Input Tool";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Activated += new System.EventHandler(this.CSSPPolSourceSiteInputToolForm_Activated);
             this.panelButtonBar.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.panelShowAdmin.ResumeLayout(false);

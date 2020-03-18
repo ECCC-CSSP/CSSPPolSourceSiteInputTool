@@ -70,6 +70,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public bool OnIssuePage = false;
         public bool OnPicturePage = false;
         public bool OnMapPage = false;
+        public string KMLFileName = "";
+        public DateTime? KMLFileLastWriteTime = null;
         #endregion Variables
 
         #region Properties
