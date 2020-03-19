@@ -1322,6 +1322,14 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 FileInfo fi = new FileInfo(KMLFileName);
 
+                if (!fi.Exists)
+                {
+                    KMLFileName = null;
+                    KMLFileLastWriteTime = null;
+                    MessageBox.Show($"[{fi.FullName}]", "Error - could not find file", MessageBoxButtons.OK);
+                    return $"ERROR: Could not find file [{fi.FullName}]";
+                }
+
                 XmlDocument xmldoc = new XmlDocument();
                 xmldoc.Load(fi.FullName);
 

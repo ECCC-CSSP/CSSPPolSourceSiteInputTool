@@ -2166,10 +2166,16 @@ namespace CSSPPolSourceSiteInputTool
                         else
                         {
                             MessageBox.Show(retStr, "Error while reading KML file", MessageBoxButtons.OK);
+                            return;
                         }
+                    }
+                    else
+                    {
+                        polSourceSiteInputToolHelper.KMLFileLastWriteTime = fi.LastWriteTime;
                     }
                 }
             }
+            return;
         }
     }
 }
