@@ -808,7 +808,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         OnDetailPage = false;
                         OnIssuePage = false;
                         OnMapPage = true;
-                        OnPicturePage = false;
+                        OnPicturePage = false; 
                     }
                 }
 

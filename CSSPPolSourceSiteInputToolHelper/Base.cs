@@ -23,7 +23,7 @@ namespace CSSPPolSourceSiteInputToolHelper
         public List<TVItemModel> tvItemModelSubsectorList { get; set; }
         public List<TVItemModel> tvItemModelMunicipalityList { get; set; }
         public int PolSourceSiteTVItemID = 0;
-        public int InfrastructureTVItemID = 0;
+        public int InfrastructureTVItemID = 0; 
         public int ContactTVItemID = 0;
         public int IssueID = 0;
         public bool IsEditing = false;
