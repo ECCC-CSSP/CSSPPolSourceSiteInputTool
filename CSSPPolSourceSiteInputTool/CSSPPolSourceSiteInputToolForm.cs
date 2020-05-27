@@ -255,6 +255,11 @@ namespace CSSPPolSourceSiteInputTool
                             polSourceSiteInputToolHelper.AdminEmail = "Coddy.Bannister2@canada.ca";
                         }
                         break;
+                    case "bannisterc.ec_atlantic":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Coddy.Bannister2@canada.ca";
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -1926,7 +1931,8 @@ namespace CSSPPolSourceSiteInputTool
                 Environment.UserName.ToLower() == "pomeroyj" ||
                 Environment.UserName.ToLower() == "perchardg" ||
                 Environment.UserName.ToLower() == "martellk" ||
-                Environment.UserName.ToLower() == "bannisterc")
+                Environment.UserName.ToLower() == "bannisterc" ||
+                Environment.UserName.ToLower() == "bannisterc.ec_atlantic")
             {
                 panelShowAdmin.Visible = true;
             }
