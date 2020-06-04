@@ -252,12 +252,12 @@ namespace CSSPPolSourceSiteInputTool
                         break;
                     case "bannisterc":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Coddy.Bannister2@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister2@canada.ca";
                         }
                         break;
                     case "bannisterc.ec_atlantic":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Coddy.Bannister2@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister2@canada.ca";
                         }
                         break;
                     default:
