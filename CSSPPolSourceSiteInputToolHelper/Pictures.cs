@@ -144,6 +144,40 @@ namespace CSSPPolSourceSiteInputToolHelper
                 ShowPictures();
             }
         }
+        public void SuggestFileName(int PictureTVItemID)
+        {
+            if (IsPolSourceSite)
+            {
+                Picture pictureToSuggestFileName = CurrentPSS.PSSPictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+                if (pictureToSuggestFileName != null)
+                {
+                    string subsector = subsectorDoc.Subsector.SubsectorName;
+                    if (subsector.Contains(" "))
+                    {
+                        subsector = subsector.Substring(0, subsector.IndexOf(" "));
+                    }
+
+                    string DateText = DateTime.Now.ToString("yyyy-MM-dd");
+                    pictureToSuggestFileName.FileNameNew = $"{ subsector } PSI_{ CurrentPSS.SiteNumberText } { DateText }";
+                }
+
+                SaveSubsectorTextFile();
+                ShowPictures();
+            }
+            else
+            {
+                Picture pictureToSuggestFileName = CurrentInfrastructure.InfrastructurePictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
+                if (pictureToSuggestFileName != null)
+                {
+                    string DateText = DateTime.Now.ToString("yyyy-MM-dd");
+                    pictureToSuggestFileName.FileNameNew = $"{ municipalityDoc.Municipality.MunicipalityName } { CurrentInfrastructure.TVText } { DateText }";
+                }
+
+                SaveMunicipalityTextFile();
+                RedrawContactAndInfrastructureList();
+                ShowPictures();
+            }
+        }
         public void UnRemovePicture(int PictureTVItemID)
         {
             if (IsPolSourceSite)
@@ -475,6 +509,18 @@ namespace CSSPPolSourceSiteInputToolHelper
                         lblDescriptiveFileName.ForeColor = Color.Red;
 
                         panelPicture.Controls.Add(lblDescriptiveFileName);
+
+                        Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
+
+                        Button butSuggestFileName = new Button();
+                        butSuggestFileName.AutoSize = true;
+                        butSuggestFileName.Location = new Point(X, Y);
+                        butSuggestFileName.Text = "Suggest File Name";
+                        butSuggestFileName.Tag = $"{picture.PictureTVItemID}";
+                        butSuggestFileName.Padding = new Padding(5);
+                        butSuggestFileName.Click += butSuggestFileName_Click;
+
+                        panelPicture.Controls.Add(butSuggestFileName);
 
                         Y = panelPicture.Controls[panelPicture.Controls.Count - 1].Bottom + 10;
 

@@ -434,6 +434,11 @@ namespace CSSPPolSourceSiteInputToolHelper
             int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
             RemovePicture(PictureTVItemID);
         }
+        private void butSuggestFileName_Click(object sender, EventArgs e)
+        {
+            int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
+            SuggestFileName(PictureTVItemID);
+        }
         private void butUnRemovePicture_Click(object sender, EventArgs e)
         {
             int PictureTVItemID = int.Parse(((Button)sender).Tag.ToString());
