@@ -169,8 +169,43 @@ namespace CSSPPolSourceSiteInputToolHelper
                 Picture pictureToSuggestFileName = CurrentInfrastructure.InfrastructurePictureList.Where(c => c.PictureTVItemID == PictureTVItemID).FirstOrDefault();
                 if (pictureToSuggestFileName != null)
                 {
+                    string LSWWTP = "";
+                    if (CurrentInfrastructure.InfrastructureTypeNew != null)
+                    {
+                        switch ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureTypeNew)
+                        {
+                            case InfrastructureTypeEnum.WWTP:
+                                LSWWTP = "WWTP";
+                                break;
+                            case InfrastructureTypeEnum.LiftStation:
+                                LSWWTP = "LS";
+                                break;
+                            case InfrastructureTypeEnum.LineOverflow:
+                                LSWWTP = "LO";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        switch ((InfrastructureTypeEnum)CurrentInfrastructure.InfrastructureType)
+                        {
+                            case InfrastructureTypeEnum.WWTP:
+                                LSWWTP = "WWTP";
+                                break;
+                            case InfrastructureTypeEnum.LiftStation:
+                                LSWWTP = "LS";
+                                break;
+                            case InfrastructureTypeEnum.LineOverflow:
+                                LSWWTP = "LO";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     string DateText = DateTime.Now.ToString("yyyy-MM-dd");
-                    pictureToSuggestFileName.FileNameNew = $"{ municipalityDoc.Municipality.MunicipalityName } { CurrentInfrastructure.TVText } { DateText }";
+                    pictureToSuggestFileName.FileNameNew = $"{ municipalityDoc.Municipality.MunicipalityName } { CurrentInfrastructure.TVText } { LSWWTP } { DateText }";
                 }
 
                 SaveMunicipalityTextFile();
@@ -538,7 +573,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         TextBox textBoxFileName = new TextBox();
                         textBoxFileName.Location = new Point(X, Y);
                         textBoxFileName.Font = new Font(new FontFamily(lblFileName.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        textBoxFileName.Width = 300;
+                        textBoxFileName.Width = 400;
                         textBoxFileName.Name = "textBoxFileName";
                         textBoxFileName.Tag = $"{picture.PictureTVItemID}";
                         if (picture.FileNameNew != null)
@@ -639,7 +674,7 @@ namespace CSSPPolSourceSiteInputToolHelper
                         TextBox textBoxDescription = new TextBox();
                         textBoxDescription.Location = new Point(X, Y);
                         textBoxDescription.Font = new Font(new FontFamily(lblDescription.Font.FontFamily.Name).Name, 10f, FontStyle.Regular);
-                        textBoxDescription.Width = 300;
+                        textBoxDescription.Width = 400;
                         textBoxDescription.Height = 100;
                         textBoxDescription.Multiline = true;
                         textBoxDescription.Name = "textBoxDescription";
