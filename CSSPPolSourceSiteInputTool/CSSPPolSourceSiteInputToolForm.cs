@@ -222,42 +222,52 @@ namespace CSSPPolSourceSiteInputTool
                 {
                     case "charl":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc2@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
                         }
                         break;
                     case "charles":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc2@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
                         }
                         break;
                     case "leblancc":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc2@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
                         }
                         break;
                     case "pomeroyj":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Joe.Pomeroy@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Joe.Pomeroy@ec.gc.ca";
                         }
                         break;
                     case "perchardg":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@ec.gc.ca";
                         }
                         break;
                     case "martellk":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Karyne.Martell2@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Karyne.Martell@ec.gc.ca";
+                        }
+                        break;
+                    case "tousignantl":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Louka.Tousignant@ec.gc.ca";
+                        }
+                        break;
+                    case "tousignantl.ec_atlantic":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Louka.Tousignant@ec.gc.ca";
                         }
                         break;
                     case "bannisterc":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister2@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister@ec.gc.ca";
                         }
                         break;
                     case "bannisterc.ec_atlantic":
                         {
-                            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister2@canada.ca";
+                            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister@ec.gc.ca";
                         }
                         break;
                     default:
@@ -1058,7 +1068,7 @@ namespace CSSPPolSourceSiteInputTool
             ret = ret.Replace("\"", "");
             if (ret.StartsWith("ERROR:"))
             {
-                MessageBox.Show("Admin users list [pomeroyj, martellk, perchardg, bannisterc]\r\n\r\nPlease contact Joe Pomeroy or Karyne Martell if you think you should have admin rights", "Invalid user for admin rights");
+                MessageBox.Show("Admin users list [pomeroyj, martellk, tousignantl, perchardg, bannisterc]\r\n\r\nPlease contact Joe Pomeroy, Karyne Martell or Louka Tousignant if you think you should have admin rights", "Invalid user for admin rights");
             }
             else
             {
@@ -1931,6 +1941,8 @@ namespace CSSPPolSourceSiteInputTool
                 Environment.UserName.ToLower() == "pomeroyj" ||
                 Environment.UserName.ToLower() == "perchardg" ||
                 Environment.UserName.ToLower() == "martellk" ||
+                Environment.UserName.ToLower() == "tousignantl" ||
+                Environment.UserName.ToLower() == "tousignantl.ec_atlantic" ||
                 Environment.UserName.ToLower() == "bannisterc" ||
                 Environment.UserName.ToLower() == "bannisterc.ec_atlantic")
             {
@@ -2189,5 +2201,7 @@ namespace CSSPPolSourceSiteInputTool
             }
             return;
         }
+
+      
     }
 }
