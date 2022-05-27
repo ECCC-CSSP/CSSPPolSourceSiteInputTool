@@ -245,6 +245,11 @@ namespace CSSPPolSourceSiteInputTool
                             polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@ec.gc.ca";
                         }
                         break;
+                    case "perchardg.ec_atlantic":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@ec.gc.ca";
+                        }
+                        break;
                     case "martellk":
                         {
                             polSourceSiteInputToolHelper.AdminEmail = "Karyne.Martell@ec.gc.ca";
@@ -1940,6 +1945,7 @@ namespace CSSPPolSourceSiteInputTool
                 Environment.UserName.ToLower() == "leblancc" ||
                 Environment.UserName.ToLower() == "pomeroyj" ||
                 Environment.UserName.ToLower() == "perchardg" ||
+                Environment.UserName.ToLower() == "perchardg.ec_atlantic" ||
                 Environment.UserName.ToLower() == "martellk" ||
                 Environment.UserName.ToLower() == "tousignantl" ||
                 Environment.UserName.ToLower() == "tousignantl.ec_atlantic" ||
