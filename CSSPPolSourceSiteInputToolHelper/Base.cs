@@ -49,8 +49,8 @@ namespace CSSPPolSourceSiteInputToolHelper
         public Color BackColorNormal = Color.White;
         public Color ForeColorChangedOrNew = Color.Green;
         public Color ForeColorNormal = Color.Black;
-        public string baseURLFR = "http://wmon01dtchlebl2/csspwebtools/fr-CA/PolSource/";
-        public string baseURLEN = "http://wmon01dtchlebl2/csspwebtools/en-CA/PolSource/";
+        public string baseURLFR = "http://131.235.1.167/csspwebtools/fr-CA/PolSource/";
+        public string baseURLEN = "http://131.235.1.167/csspwebtools/en-CA/PolSource/";
         //public string baseURLEN = "http://localhost:11562/en-CA/PolSource/";
         //public string baseURLFR = "http://localhost:11562/fr-CA/PolSource/";
         public string BasePathPollutionSourceSites = @"C:\PollutionSourceSites\Subsectors\";
