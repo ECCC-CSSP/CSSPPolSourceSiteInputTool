@@ -250,6 +250,16 @@ namespace CSSPPolSourceSiteInputTool
                             polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@ec.gc.ca";
                         }
                         break;
+                    case "quintonj":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Joshua.Quinton@ec.gc.ca";
+                        }
+                        break;
+                    case "quintonj.ec_atlantic":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Joshua.Quinton@ec.gc.ca";
+                        }
+                        break;
                     case "martellk":
                         {
                             polSourceSiteInputToolHelper.AdminEmail = "Karyne.Martell@ec.gc.ca";
@@ -1073,7 +1083,7 @@ namespace CSSPPolSourceSiteInputTool
             ret = ret.Replace("\"", "");
             if (ret.StartsWith("ERROR:"))
             {
-                MessageBox.Show("Admin users list [pomeroyj, martellk, tousignantl, perchardg, bannisterc]\r\n\r\nPlease contact Joe Pomeroy, Karyne Martell or Louka Tousignant if you think you should have admin rights", "Invalid user for admin rights");
+                MessageBox.Show("Admin users list [pomeroyj, martellk, tousignantl, perchardg, quintonj, bannisterc]\r\n\r\nPlease contact Joe Pomeroy, Karyne Martell or Louka Tousignant if you think you should have admin rights", "Invalid user for admin rights");
             }
             else
             {
@@ -1946,6 +1956,8 @@ namespace CSSPPolSourceSiteInputTool
                 Environment.UserName.ToLower() == "pomeroyj" ||
                 Environment.UserName.ToLower() == "perchardg" ||
                 Environment.UserName.ToLower() == "perchardg.ec_atlantic" ||
+                Environment.UserName.ToLower() == "quintonj" ||
+                Environment.UserName.ToLower() == "quintonj.ec_atlantic" ||
                 Environment.UserName.ToLower() == "martellk" ||
                 Environment.UserName.ToLower() == "tousignantl" ||
                 Environment.UserName.ToLower() == "tousignantl.ec_atlantic" ||
