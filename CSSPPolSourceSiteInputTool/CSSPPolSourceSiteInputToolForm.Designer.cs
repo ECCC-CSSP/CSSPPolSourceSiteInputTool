@@ -169,7 +169,7 @@
             this.checkBoxShowAdmin.AutoSize = true;
             this.checkBoxShowAdmin.Location = new System.Drawing.Point(11, 10);
             this.checkBoxShowAdmin.Name = "checkBoxShowAdmin";
-            this.checkBoxShowAdmin.Size = new System.Drawing.Size(62, 21);
+            this.checkBoxShowAdmin.Size = new System.Drawing.Size(55, 17);
             this.checkBoxShowAdmin.TabIndex = 11;
             this.checkBoxShowAdmin.Text = "Admin";
             this.checkBoxShowAdmin.UseVisualStyleBackColor = true;
@@ -189,7 +189,7 @@
             this.checkBoxShowInfrastructureAndContact.AutoSize = true;
             this.checkBoxShowInfrastructureAndContact.Location = new System.Drawing.Point(6, 10);
             this.checkBoxShowInfrastructureAndContact.Name = "checkBoxShowInfrastructureAndContact";
-            this.checkBoxShowInfrastructureAndContact.Size = new System.Drawing.Size(156, 21);
+            this.checkBoxShowInfrastructureAndContact.Size = new System.Drawing.Size(149, 17);
             this.checkBoxShowInfrastructureAndContact.TabIndex = 12;
             this.checkBoxShowInfrastructureAndContact.Text = "Infrastructure and Contact";
             this.checkBoxShowInfrastructureAndContact.UseVisualStyleBackColor = true;
@@ -317,7 +317,7 @@
             this.checkBoxLanguage.AutoSize = true;
             this.checkBoxLanguage.Location = new System.Drawing.Point(6, 10);
             this.checkBoxLanguage.Name = "checkBoxLanguage";
-            this.checkBoxLanguage.Size = new System.Drawing.Size(73, 21);
+            this.checkBoxLanguage.Size = new System.Drawing.Size(66, 17);
             this.checkBoxLanguage.TabIndex = 3;
             this.checkBoxLanguage.Text = "Français";
             this.checkBoxLanguage.UseVisualStyleBackColor = true;
@@ -683,7 +683,7 @@
             this.checkBoxDeletedIssueAndPicture.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxDeletedIssueAndPicture.Location = new System.Drawing.Point(335, 6);
             this.checkBoxDeletedIssueAndPicture.Name = "checkBoxDeletedIssueAndPicture";
-            this.checkBoxDeletedIssueAndPicture.Size = new System.Drawing.Size(49, 21);
+            this.checkBoxDeletedIssueAndPicture.Size = new System.Drawing.Size(42, 17);
             this.checkBoxDeletedIssueAndPicture.TabIndex = 12;
             this.checkBoxDeletedIssueAndPicture.Text = "Del";
             this.checkBoxDeletedIssueAndPicture.UseVisualStyleBackColor = true;
@@ -696,7 +696,7 @@
             this.checkBoxNewIssue.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxNewIssue.Location = new System.Drawing.Point(290, 6);
             this.checkBoxNewIssue.Name = "checkBoxNewIssue";
-            this.checkBoxNewIssue.Size = new System.Drawing.Size(55, 21);
+            this.checkBoxNewIssue.Size = new System.Drawing.Size(48, 17);
             this.checkBoxNewIssue.TabIndex = 11;
             this.checkBoxNewIssue.Text = "New";
             this.checkBoxNewIssue.UseVisualStyleBackColor = true;
@@ -709,7 +709,7 @@
             this.checkBoxOldIssue.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxOldIssue.Location = new System.Drawing.Point(248, 6);
             this.checkBoxOldIssue.Name = "checkBoxOldIssue";
-            this.checkBoxOldIssue.Size = new System.Drawing.Size(49, 21);
+            this.checkBoxOldIssue.Size = new System.Drawing.Size(42, 17);
             this.checkBoxOldIssue.TabIndex = 10;
             this.checkBoxOldIssue.Text = "Old";
             this.checkBoxOldIssue.UseVisualStyleBackColor = true;
@@ -722,7 +722,7 @@
             this.checkBoxOldIssueText.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxOldIssueText.Location = new System.Drawing.Point(201, 6);
             this.checkBoxOldIssueText.Name = "checkBoxOldIssueText";
-            this.checkBoxOldIssueText.Size = new System.Drawing.Size(54, 21);
+            this.checkBoxOldIssueText.Size = new System.Drawing.Size(47, 17);
             this.checkBoxOldIssueText.TabIndex = 9;
             this.checkBoxOldIssueText.Text = "Text";
             this.checkBoxOldIssueText.UseVisualStyleBackColor = true;
@@ -735,7 +735,7 @@
             this.checkBoxWrittenDescription.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBoxWrittenDescription.Location = new System.Drawing.Point(151, 6);
             this.checkBoxWrittenDescription.Name = "checkBoxWrittenDescription";
-            this.checkBoxWrittenDescription.Size = new System.Drawing.Size(58, 21);
+            this.checkBoxWrittenDescription.Size = new System.Drawing.Size(51, 17);
             this.checkBoxWrittenDescription.TabIndex = 8;
             this.checkBoxWrittenDescription.Text = "Desc";
             this.checkBoxWrittenDescription.UseVisualStyleBackColor = true;
@@ -746,7 +746,7 @@
             this.checkBoxMoreInfo.AutoSize = true;
             this.checkBoxMoreInfo.Location = new System.Drawing.Point(66, 6);
             this.checkBoxMoreInfo.Name = "checkBoxMoreInfo";
-            this.checkBoxMoreInfo.Size = new System.Drawing.Size(78, 21);
+            this.checkBoxMoreInfo.Size = new System.Drawing.Size(71, 17);
             this.checkBoxMoreInfo.TabIndex = 7;
             this.checkBoxMoreInfo.Text = "More Info";
             this.checkBoxMoreInfo.UseVisualStyleBackColor = true;
@@ -757,7 +757,7 @@
             this.radioButtonShowMap.AutoSize = true;
             this.radioButtonShowMap.Location = new System.Drawing.Point(596, 6);
             this.radioButtonShowMap.Name = "radioButtonShowMap";
-            this.radioButtonShowMap.Size = new System.Drawing.Size(53, 20);
+            this.radioButtonShowMap.Size = new System.Drawing.Size(46, 17);
             this.radioButtonShowMap.TabIndex = 6;
             this.radioButtonShowMap.Text = "Map";
             this.radioButtonShowMap.UseVisualStyleBackColor = true;
@@ -768,7 +768,7 @@
             this.radioButtonPictures.AutoSize = true;
             this.radioButtonPictures.Location = new System.Drawing.Point(525, 5);
             this.radioButtonPictures.Name = "radioButtonPictures";
-            this.radioButtonPictures.Size = new System.Drawing.Size(70, 20);
+            this.radioButtonPictures.Size = new System.Drawing.Size(63, 17);
             this.radioButtonPictures.TabIndex = 5;
             this.radioButtonPictures.Text = "Pictures";
             this.radioButtonPictures.UseVisualStyleBackColor = true;
@@ -779,7 +779,7 @@
             this.radioButtonIssues.AutoSize = true;
             this.radioButtonIssues.Location = new System.Drawing.Point(464, 5);
             this.radioButtonIssues.Name = "radioButtonIssues";
-            this.radioButtonIssues.Size = new System.Drawing.Size(62, 20);
+            this.radioButtonIssues.Size = new System.Drawing.Size(55, 17);
             this.radioButtonIssues.TabIndex = 4;
             this.radioButtonIssues.Text = "Issues";
             this.radioButtonIssues.UseVisualStyleBackColor = true;
@@ -791,7 +791,7 @@
             this.radioButtonDetails.Checked = true;
             this.radioButtonDetails.Location = new System.Drawing.Point(401, 5);
             this.radioButtonDetails.Name = "radioButtonDetails";
-            this.radioButtonDetails.Size = new System.Drawing.Size(64, 20);
+            this.radioButtonDetails.Size = new System.Drawing.Size(57, 17);
             this.radioButtonDetails.TabIndex = 3;
             this.radioButtonDetails.TabStop = true;
             this.radioButtonDetails.Text = "Details";
@@ -803,7 +803,7 @@
             this.checkBoxEditing.AutoSize = true;
             this.checkBoxEditing.Location = new System.Drawing.Point(7, 6);
             this.checkBoxEditing.Name = "checkBoxEditing";
-            this.checkBoxEditing.Size = new System.Drawing.Size(65, 21);
+            this.checkBoxEditing.Size = new System.Drawing.Size(58, 17);
             this.checkBoxEditing.TabIndex = 2;
             this.checkBoxEditing.Text = "Editing";
             this.checkBoxEditing.UseVisualStyleBackColor = true;
