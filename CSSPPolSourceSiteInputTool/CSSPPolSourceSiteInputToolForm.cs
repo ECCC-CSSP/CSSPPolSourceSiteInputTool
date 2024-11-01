@@ -285,6 +285,26 @@ namespace CSSPPolSourceSiteInputTool
                             polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister@ec.gc.ca";
                         }
                         break;
+                    case "christins":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Sylvain.Christin@ec.gc.ca";
+                        }
+                        break;
+                    case "christins.ec_atlantic":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Sylvain.Christin@ec.gc.ca";
+                        }
+                        break;
+                    case "mercerk":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Kelsey.Mercer@ec.gc.ca";
+                        }
+                        break;
+                    case "mercerk.ec_atlantic":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Kelsey.Mercer@ec.gc.ca";
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -1962,7 +1982,11 @@ namespace CSSPPolSourceSiteInputTool
                 Environment.UserName.ToLower() == "tousignantl" ||
                 Environment.UserName.ToLower() == "tousignantl.ec_atlantic" ||
                 Environment.UserName.ToLower() == "bannisterc" ||
-                Environment.UserName.ToLower() == "bannisterc.ec_atlantic")
+                Environment.UserName.ToLower() == "bannisterc.ec_atlantic" ||
+                Environment.UserName.ToLower() == "christins" ||
+                Environment.UserName.ToLower() == "christins.ec_atlantic" ||
+                Environment.UserName.ToLower() == "mercerk" ||
+                Environment.UserName.ToLower() == "mercerk.ec_atlantic")
             {
                 panelShowAdmin.Visible = true;
             }
