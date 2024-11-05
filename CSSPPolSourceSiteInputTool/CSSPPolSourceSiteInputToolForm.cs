@@ -305,6 +305,16 @@ namespace CSSPPolSourceSiteInputTool
                             polSourceSiteInputToolHelper.AdminEmail = "Kelsey.Mercer@ec.gc.ca";
                         }
                         break;
+                    case "alexanderr":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Ryan.Alexander@ec.gc.ca";
+                        }
+                        break;
+                    case "alexanderr.ec_atlantic":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "Ryan.Alexander@ec.gc.ca";
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -1986,7 +1996,9 @@ namespace CSSPPolSourceSiteInputTool
                 Environment.UserName.ToLower() == "christins" ||
                 Environment.UserName.ToLower() == "christins.ec_atlantic" ||
                 Environment.UserName.ToLower() == "mercerk" ||
-                Environment.UserName.ToLower() == "mercerk.ec_atlantic")
+                Environment.UserName.ToLower() == "mercerk.ec_atlantic" ||
+                Environment.UserName.ToLower() == "alexanderr" ||
+                Environment.UserName.ToLower() == "alexanderr.ec_atlantic")
             {
                 panelShowAdmin.Visible = true;
             }
