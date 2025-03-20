@@ -220,26 +220,21 @@ namespace CSSPPolSourceSiteInputTool
             {
                 switch (Environment.UserName.ToLower())
                 {
-                    case "charl":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
-                        }
-                        break;
-                    case "charles":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
-                        }
-                        break;
-                    case "leblancc":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
-                        }
-                        break;
-                    case "pomeroyj":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Joe.Pomeroy@ec.gc.ca";
-                        }
-                        break;
+                    //case "charl":
+                    //    {
+                    //        polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
+                    //    }
+                    //    break;
+                    //case "charles":
+                    //    {
+                    //        polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
+                    //    }
+                    //    break;
+                    //case "leblancc":
+                    //    {
+                    //        polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
+                    //    }
+                    //    break;
                     case "perchardg":
                         {
                             polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@ec.gc.ca";
@@ -313,6 +308,16 @@ namespace CSSPPolSourceSiteInputTool
                     case "alexanderr.ec_atlantic":
                         {
                             polSourceSiteInputToolHelper.AdminEmail = "Ryan.Alexander@ec.gc.ca";
+                        }
+                        break;
+                    case "romom":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "mindy-lee.romo@ec.gc.ca";
+                        }
+                        break;
+                    case "romom.ec_atlantic":
+                        {
+                            polSourceSiteInputToolHelper.AdminEmail = "mindy-lee.romo@ec.gc.ca";
                         }
                         break;
                     default:
@@ -1113,7 +1118,7 @@ namespace CSSPPolSourceSiteInputTool
             ret = ret.Replace("\"", "");
             if (ret.StartsWith("ERROR:"))
             {
-                MessageBox.Show("Admin users list [pomeroyj, martellk, tousignantl, perchardg, quintonj, bannisterc]\r\n\r\nPlease contact Joe Pomeroy, Karyne Martell or Louka Tousignant if you think you should have admin rights", "Invalid user for admin rights");
+                MessageBox.Show("Admin users list [martellk, tousignantl, perchardg, quintonj, bannisterc]\r\n\r\nPlease contact Karyne Martell or Louka Tousignant if you think you should have admin rights", "Invalid user for admin rights");
             }
             else
             {
@@ -1998,7 +2003,9 @@ namespace CSSPPolSourceSiteInputTool
                 Environment.UserName.ToLower() == "mercerk" ||
                 Environment.UserName.ToLower() == "mercerk.ec_atlantic" ||
                 Environment.UserName.ToLower() == "alexanderr" ||
-                Environment.UserName.ToLower() == "alexanderr.ec_atlantic")
+                Environment.UserName.ToLower() == "alexanderr.ec_atlantic" ||
+                Environment.UserName.ToLower() == "romom" ||
+                Environment.UserName.ToLower() == "romom.ec_atlantic")
             {
                 panelShowAdmin.Visible = true;
             }
