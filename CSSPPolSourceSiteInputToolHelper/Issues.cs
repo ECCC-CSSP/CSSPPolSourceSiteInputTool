@@ -1220,10 +1220,12 @@ namespace CSSPPolSourceSiteInputToolHelper
                         obsInfoList = issue.PolSourceObsInfoIntList;
                     }
 
-                    List<PolSourceObsInfoEnum> infoList = polSourceSiteUtils.PolSourceObsInfoListFromInt(obsInfoList);
-
-                    TVText = polSourceSiteUtils.replacePolSourceSiteTVText(TVText, infoList, Language);
-
+                    int idx = polSourceSiteUtils.polSourceSiteTVTextReplacementIdx(TVText, Language);
+                    if (idx >= 0)
+                    {
+                        List<PolSourceObsInfoEnum> infoList = polSourceSiteUtils.PolSourceObsInfoListFromInt(obsInfoList);
+                        TVText = polSourceSiteUtils.replacePolSourceSiteTVText(TVText, idx, infoList, Language);
+                    }
                     CurrentPSS.TVTextNew = TVText;
                 }
                 else
