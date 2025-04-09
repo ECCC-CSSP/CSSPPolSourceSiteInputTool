@@ -6829,6 +6829,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                 ret = SaveToCSSPWebToolsCreateNewObsDate((int)CurrentPSS.PSSTVItemID, ObsDate, AdminEmail);
                 ret = ret.Replace("\"", "");
+                // TODO stop on error, restore if changed?
                 if (ret.StartsWith("ERROR"))
                 {
                     EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));
@@ -6837,6 +6838,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                     {
                         SaveSubsectorTextFile();
                     }
+                    EmitRTBMessage(new RTBMessageEventArgs($"Trying to create an observation that already exists. Your working file is probably not synchronized with Webtools database. Please update your files before continuing.\r\n"));
+                    return;
                 }
                 else
                 {
@@ -6911,6 +6914,7 @@ namespace CSSPPolSourceSiteInputToolHelper
 
                     ret = SaveToCSSPWebToolsIssue((int)CurrentPSS.PSSObs.ObsID, (int)issue.IssueID, (int)issue.Ordinal, String.Join(",", issue.PolSourceObsInfoIntListNew) + ",", AdminEmail);
                     ret = ret.Replace("\"", "");
+                   
                     if (ret.StartsWith("ERROR:"))
                     {
                         EmitRTBMessage(new RTBMessageEventArgs($"ERROR: {MessageText}"));

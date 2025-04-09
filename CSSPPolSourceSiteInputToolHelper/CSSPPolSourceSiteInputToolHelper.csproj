@@ -63,5 +63,11 @@
     <Compile Include="SubClassesMunicipality.cs" />
     <Compile Include="SubClassesSubsector.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\CSSPUtils\CSSPUtils.csproj">
+      <Project>{d2215cce-f720-45ff-911f-00b7bcb02bea}</Project>
+      <Name>CSSPUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

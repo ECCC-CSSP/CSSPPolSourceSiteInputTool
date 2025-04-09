@@ -1,6 +1,7 @@
 ﻿using CSSPEnumsDLL.Enums;
 using CSSPEnumsDLL.Services;
 using CSSPModelsDLL.Models;
+using CSSPUtils;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -1206,6 +1207,22 @@ namespace CSSPPolSourceSiteInputToolHelper
                     }
 
                     TVText = "P00000".Substring(0, "P00000".Length - CurrentPSS.SiteNumber.ToString().Length) + CurrentPSS.SiteNumber.ToString() + " - " + TVText;
+
+                    PolSourceSiteUtils polSourceSiteUtils = new PolSourceSiteUtils();
+
+
+                    List<int> obsInfoList;
+                    if (issue.PolSourceObsInfoIntListNew.Count > 0)
+                    { 
+                        obsInfoList = issue.PolSourceObsInfoIntListNew;
+                    } else
+                    {
+                        obsInfoList = issue.PolSourceObsInfoIntList;
+                    }
+
+                    List<PolSourceObsInfoEnum> infoList = polSourceSiteUtils.PolSourceObsInfoListFromInt(obsInfoList);
+
+                    TVText = polSourceSiteUtils.replacePolSourceSiteTVText(TVText, infoList, Language);
 
                     CurrentPSS.TVTextNew = TVText;
                 }

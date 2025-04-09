@@ -1,15 +1,23 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27428.2043
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35728.132
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSPPolSourceSiteInputTool", "CSSPPolSourceSiteInputTool\CSSPPolSourceSiteInputTool.csproj", "{645F29B1-D084-4203-AF71-164697AB0669}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D2215CCE-F720-45FF-911F-00B7BCB02BEA} = {D2215CCE-F720-45FF-911F-00B7BCB02BEA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSPPolSourceSiteInputToolHelper", "CSSPPolSourceSiteInputToolHelper\CSSPPolSourceSiteInputToolHelper.csproj", "{CB88516B-C109-4C5A-B47A-3E03211275EA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{D2215CCE-F720-45FF-911F-00B7BCB02BEA} = {D2215CCE-F720-45FF-911F-00B7BCB02BEA}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSPPolSourceSiteInputTool.Test", "CSSPPolSourceSiteInputTool.Test\CSSPPolSourceSiteInputTool.Test.csproj", "{3F63E7E1-715D-49E8-978E-ED129AA6BCA4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSPPolSourceSiteInputToolHelper.Test", "CSSPPolSourceSiteInputToolHelper.Test\CSSPPolSourceSiteInputToolHelper.Test.csproj", "{AE2FDD8F-E776-44B7-A61C-05076B559E3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSSPUtils", "..\CSSPUtils\CSSPUtils.csproj", "{D2215CCE-F720-45FF-911F-00B7BCB02BEA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +41,10 @@ Global
 		{AE2FDD8F-E776-44B7-A61C-05076B559E3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AE2FDD8F-E776-44B7-A61C-05076B559E3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AE2FDD8F-E776-44B7-A61C-05076B559E3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2215CCE-F720-45FF-911F-00B7BCB02BEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2215CCE-F720-45FF-911F-00B7BCB02BEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2215CCE-F720-45FF-911F-00B7BCB02BEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2215CCE-F720-45FF-911F-00B7BCB02BEA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

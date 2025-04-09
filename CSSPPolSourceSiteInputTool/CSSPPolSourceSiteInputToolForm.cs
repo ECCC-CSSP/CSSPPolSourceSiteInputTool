@@ -14,6 +14,7 @@ using System.Net;
 using System.Text;
 using System.Threading;
 using System.Windows.Forms;
+using System.Configuration;
 
 namespace CSSPPolSourceSiteInputTool
 {
@@ -27,6 +28,8 @@ namespace CSSPPolSourceSiteInputTool
         private CultureInfo currentUICulture { get; set; }
         private BaseEnumService _BaseEnumService { get; set; }
         private PolSourceSiteInputToolHelper polSourceSiteInputToolHelper { get; set; }
+
+        private Dictionary<string, string> adminList {  get; set; }
         #endregion Properties
 
         #region Constructors
@@ -218,111 +221,113 @@ namespace CSSPPolSourceSiteInputTool
 
             if (checkBoxShowAdmin.Checked)
             {
-                switch (Environment.UserName.ToLower())
-                {
-                    //case "charl":
-                    //    {
-                    //        polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
-                    //    }
-                    //    break;
-                    //case "charles":
-                    //    {
-                    //        polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
-                    //    }
-                    //    break;
-                    //case "leblancc":
-                    //    {
-                    //        polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
-                    //    }
-                    //    break;
-                    case "perchardg":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@ec.gc.ca";
-                        }
-                        break;
-                    case "perchardg.ec_atlantic":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@ec.gc.ca";
-                        }
-                        break;
-                    case "quintonj":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Joshua.Quinton@ec.gc.ca";
-                        }
-                        break;
-                    case "quintonj.ec_atlantic":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Joshua.Quinton@ec.gc.ca";
-                        }
-                        break;
-                    case "martellk":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Karyne.Martell@ec.gc.ca";
-                        }
-                        break;
-                    case "tousignantl":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Louka.Tousignant@ec.gc.ca";
-                        }
-                        break;
-                    case "tousignantl.ec_atlantic":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Louka.Tousignant@ec.gc.ca";
-                        }
-                        break;
-                    case "bannisterc":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister@ec.gc.ca";
-                        }
-                        break;
-                    case "bannisterc.ec_atlantic":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister@ec.gc.ca";
-                        }
-                        break;
-                    case "christins":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Sylvain.Christin@ec.gc.ca";
-                        }
-                        break;
-                    case "christins.ec_atlantic":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Sylvain.Christin@ec.gc.ca";
-                        }
-                        break;
-                    case "mercerk":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Kelsey.Mercer@ec.gc.ca";
-                        }
-                        break;
-                    case "mercerk.ec_atlantic":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Kelsey.Mercer@ec.gc.ca";
-                        }
-                        break;
-                    case "alexanderr":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Ryan.Alexander@ec.gc.ca";
-                        }
-                        break;
-                    case "alexanderr.ec_atlantic":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "Ryan.Alexander@ec.gc.ca";
-                        }
-                        break;
-                    case "romom":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "mindy-lee.romo@ec.gc.ca";
-                        }
-                        break;
-                    case "romom.ec_atlantic":
-                        {
-                            polSourceSiteInputToolHelper.AdminEmail = "mindy-lee.romo@ec.gc.ca";
-                        }
-                        break;
-                    default:
-                        break;
-                }
+                string userName = Environment.UserName.ToLower().Replace(".ec_atlantic", "");
+                polSourceSiteInputToolHelper.AdminEmail= adminList[userName];
+                //switch (Environment.UserName.ToLower())
+                //{
+                //    //case "charl":
+                //    //    {
+                //    //        polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
+                //    //    }
+                //    //    break;
+                //    //case "charles":
+                //    //    {
+                //    //        polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
+                //    //    }
+                //    //    break;
+                //    //case "leblancc":
+                //    //    {
+                //    //        polSourceSiteInputToolHelper.AdminEmail = "Charles.LeBlanc@ec.gc.ca";
+                //    //    }
+                //    //    break;
+                //    case "perchardg":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "perchardg.ec_atlantic":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Greg.Perchard@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "quintonj":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Joshua.Quinton@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "quintonj.ec_atlantic":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Joshua.Quinton@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "martellk":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Karyne.Martell@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "tousignantl":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Louka.Tousignant@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "tousignantl.ec_atlantic":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Louka.Tousignant@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "bannisterc":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "bannisterc.ec_atlantic":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Cody.Bannister@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "christins":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Sylvain.Christin@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "christins.ec_atlantic":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Sylvain.Christin@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "mercerk":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Kelsey.Mercer@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "mercerk.ec_atlantic":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Kelsey.Mercer@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "alexanderr":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Ryan.Alexander@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "alexanderr.ec_atlantic":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "Ryan.Alexander@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "romom":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "mindy-lee.romo@ec.gc.ca";
+                //        }
+                //        break;
+                //    case "romom.ec_atlantic":
+                //        {
+                //            polSourceSiteInputToolHelper.AdminEmail = "mindy-lee.romo@ec.gc.ca";
+                //        }
+                //        break;
+                //    default:
+                //        break;
+                //}
                 ClearAllPanelAndComboBoxes();
                 Connect();
             }
@@ -1982,33 +1987,38 @@ namespace CSSPPolSourceSiteInputTool
             panelCreateSubsectorDirectory.Visible = true;
             RefreshComboBoxSubsectorOrMunicipality();
         }
+
+        private void initializeAdminList()
+        {
+            adminList = new Dictionary<string, string> ();
+            adminList.Add("charl", "");
+            adminList.Add("charles", "");
+            adminList.Add("leblancc", "");
+            adminList.Add("pomeroyj", "");
+            adminList.Add("perchardg", "Greg.Perchard@ec.gc.ca");
+            adminList.Add("quintonj", "Joshua.Quinton@ec.gc.ca");
+            adminList.Add("martellk", "Karyne.Martell@ec.gc.ca");
+            adminList.Add("tousignantl", "Louka.Tousignant@ec.gc.ca");
+            adminList.Add("bannisterc", "Cody.Bannister@ec.gc.ca");
+            adminList.Add("christins", "Sylvain.Christin@ec.gc.ca");
+            adminList.Add("mercerk", "Kelsey.Mercer@ec.gc.ca");
+            adminList.Add("alexanderr", "Ryan.Alexander@ec.gc.ca");
+            adminList.Add("romom", "mindy-lee.romo@ec.gc.ca");
+            adminList.Add("balle", "Emily.Ball@ec.gc.ca");
+
+        }
         private void Setup()
         {
             panelShowAdmin.Visible = false;
-            if (Environment.UserName.ToLower() == "charl" ||
-                Environment.UserName.ToLower() == "charles" ||
-                Environment.UserName.ToLower() == "leblancc" ||
-                Environment.UserName.ToLower() == "pomeroyj" ||
-                Environment.UserName.ToLower() == "perchardg" ||
-                Environment.UserName.ToLower() == "perchardg.ec_atlantic" ||
-                Environment.UserName.ToLower() == "quintonj" ||
-                Environment.UserName.ToLower() == "quintonj.ec_atlantic" ||
-                Environment.UserName.ToLower() == "martellk" ||
-                Environment.UserName.ToLower() == "tousignantl" ||
-                Environment.UserName.ToLower() == "tousignantl.ec_atlantic" ||
-                Environment.UserName.ToLower() == "bannisterc" ||
-                Environment.UserName.ToLower() == "bannisterc.ec_atlantic" ||
-                Environment.UserName.ToLower() == "christins" ||
-                Environment.UserName.ToLower() == "christins.ec_atlantic" ||
-                Environment.UserName.ToLower() == "mercerk" ||
-                Environment.UserName.ToLower() == "mercerk.ec_atlantic" ||
-                Environment.UserName.ToLower() == "alexanderr" ||
-                Environment.UserName.ToLower() == "alexanderr.ec_atlantic" ||
-                Environment.UserName.ToLower() == "romom" ||
-                Environment.UserName.ToLower() == "romom.ec_atlantic")
-            {
+
+            initializeAdminList();
+
+            string userName = Environment.UserName.ToLower().Replace(".ec_atlantic", "");
+
+            if (adminList.ContainsKey(userName)) {
                 panelShowAdmin.Visible = true;
             }
+
             splitContainer1.Dock = DockStyle.Fill;
             splitContainer1.BringToFront();
             splitContainer1.SplitterDistance = 400;
@@ -2043,6 +2053,27 @@ namespace CSSPPolSourceSiteInputTool
             polSourceSiteInputToolHelper.UpdateRTBFileName += polSourceSiteInputToolHelper_UpdateRTBFileName;
             polSourceSiteInputToolHelper.subsectorDoc = new SubsectorDoc();
             polSourceSiteInputToolHelper.municipalityDoc = new MunicipalityDoc();
+
+
+            // Initialize from configuration file
+
+
+            string deploymentMode = Properties.Settings.Default.mode;
+
+            ApplicationSettingsBase settings;
+            if (deploymentMode == "debug")
+            {
+                polSourceSiteInputToolHelper.baseURLEN = Properties.Debug.Default.BaseURL_EN;
+                polSourceSiteInputToolHelper.baseURLFR = Properties.Debug.Default.BaseURL_FR;
+            }
+            else
+            {
+                polSourceSiteInputToolHelper.baseURLEN = Properties.Settings.Default.BaseURL_EN;
+                polSourceSiteInputToolHelper.baseURLFR = Properties.Settings.Default.BaseURL_FR;
+            }
+
+            polSourceSiteInputToolHelper.BasePathPollutionSourceSites = Properties.Settings.Default.Base_Path_PSS;
+            polSourceSiteInputToolHelper.BasePathInfrastructures = Properties.Settings.Default.Base_Path_Infrastructure;
 
             polSourceSiteInputToolHelper.tvItemModelProvinceList = new List<TVItemModel>();
             polSourceSiteInputToolHelper.tvItemModelSubsectorList = new List<TVItemModel>();
@@ -2120,6 +2151,8 @@ namespace CSSPPolSourceSiteInputTool
 
             RefreshComboBoxSubsectorOrMunicipality();
         }
+
+
 
         private bool TryToCreateTheInfrastructureDirectory()
         {

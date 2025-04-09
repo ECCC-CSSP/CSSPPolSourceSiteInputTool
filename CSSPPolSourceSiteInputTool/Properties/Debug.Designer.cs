@@ -13,40 +13,13 @@ namespace CSSPPolSourceSiteInputTool.Properties {
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.12.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+    internal sealed partial class Debug : global::System.Configuration.ApplicationSettingsBase {
         
-        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        private static Debug defaultInstance = ((Debug)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Debug())));
         
-        public static Settings Default {
+        public static Debug Default {
             get {
                 return defaultInstance;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("debug")]
-        public string mode {
-            get {
-                return ((string)(this["mode"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\PollutionSourceSites\\Subsectors\\")]
-        public string Base_Path_PSS {
-            get {
-                return ((string)(this["Base_Path_PSS"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("C:\\PollutionSourceSites\\Infrastructures\\")]
-        public string Base_Path_Infrastructure {
-            get {
-                return ((string)(this["Base_Path_Infrastructure"]));
             }
         }
         
