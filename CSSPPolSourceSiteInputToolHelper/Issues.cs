@@ -975,7 +975,8 @@ namespace CSSPPolSourceSiteInputToolHelper
                 }
 
                 lblIssueText2.Tag = $"{((int)((PolSourceObsInfoEnum)polSourceObsInfoEnumTextAndIDSub.ID))}";
-                lblIssueText2.Text = $"{polSourceObsInfoEnumTextAndIDSub.Text.Trim()}";
+                // TODO: remove debug here
+                lblIssueText2.Text = $"{polSourceObsInfoEnumTextAndIDSub.Text.Trim()}" ; // + " " + polSourceObsInfoEnumTextAndIDSub.ID;
 
                 panelOptions.Controls.Add(lblIssueText2);
                 if (lblIssueText2.Right > (PanelViewAndEdit.Width - 20))
