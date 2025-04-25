@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading;
 using System.Windows.Forms;
 using System.Configuration;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace CSSPPolSourceSiteInputTool
 {
@@ -950,7 +952,7 @@ namespace CSSPPolSourceSiteInputTool
                 comboBoxSubsectorOrMunicipality.DisplayMember = null;
             }
         }
-        private void ComboBoxProvinceNamesSelectedIndexChanged()
+        private async void ComboBoxProvinceNamesSelectedIndexChanged()
         {
             comboBoxProvince.Visible = false;
             comboBoxProvinceMunicipalities.Visible = false;
@@ -961,8 +963,9 @@ namespace CSSPPolSourceSiteInputTool
             TVItemModel tvItemModelProv = (TVItemModel)comboBoxProvince.SelectedItem;
             if (tvItemModelProv != null && tvItemModelProv.TVItemID != 0)
             {
-                GetTVItemModelSubsectorList(tvItemModelProv.TVItemID);
-                GetTVItemModelMunicipalityList(tvItemModelProv.TVItemID);
+                bool done;
+                done = await GetTVItemModelSubsectorList(tvItemModelProv.TVItemID);
+                done = await GetTVItemModelMunicipalityList(tvItemModelProv.TVItemID);
 
                 if (polSourceSiteInputToolHelper.IsPolSourceSite)
                 {
@@ -1130,17 +1133,19 @@ namespace CSSPPolSourceSiteInputTool
                 ShowAdminParts();
             }
         }
-        private void CreateMunicipalityDirectoryWithInfo()
+        private async void CreateMunicipalityDirectoryWithInfo()
         {
             if (!TryToCreateTheInfrastructureDirectory())
             {
                 return;
             }
-            if (!GetMunicipalitiesForInputTool())
+            bool getMunicipalitiesForInputTool = await GetMunicipalitiesForInputTool();
+            if (!getMunicipalitiesForInputTool)
             {
                 return;
             }
-            if (!GetInfrastructurePicturesForInputTool())
+            bool getInfrastructurePicturesForInputTool = await GetInfrastructurePicturesForInputTool();
+            if (!getInfrastructurePicturesForInputTool)
             {
                 return;
             }
@@ -1155,17 +1160,21 @@ namespace CSSPPolSourceSiteInputTool
             Application.DoEvents();
 
         }
-        private void CreateSubsectorDirectoryWithInfo()
+        private async void CreateSubsectorDirectoryWithInfo()
         {
+            //bool tryToCreateThePolSourceSiteDirectory = await TryToCreateThePolSourceSiteDirectory();
             if (!TryToCreateThePolSourceSiteDirectory())
             {
                 return;
             }
-            if (!GetPollutionSourceSitesForInputTool())
+            bool getPSSFromWebtools = await GetPollutionSourceSitesForInputTool();
+            if (!getPSSFromWebtools)
             {
                 return;
             }
-            if (!GetPolSourceSitePicturesForInputTool())
+
+            bool getPolSourceSitePicturesForInputTool = await GetPolSourceSitePicturesForInputTool();
+            if (!getPolSourceSitePicturesForInputTool)
             {
                 return;
             }
@@ -1245,7 +1254,7 @@ namespace CSSPPolSourceSiteInputTool
 
         //    }
         //}
-        private bool GetInfrastructurePicturesForInputTool()
+        private async Task<bool> GetInfrastructurePicturesForInputTool()
         {
             TVItemModel tvItemModelMunicipality = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelMunicipality == null || tvItemModelMunicipality.TVItemID == 0)
@@ -1292,43 +1301,41 @@ namespace CSSPPolSourceSiteInputTool
 
             foreach (Infrastructure infrastructure in polSourceSiteInputToolHelper.municipalityDoc.Municipality.InfrastructureList)
             {
-                foreach (Picture picture in infrastructure.InfrastructurePictureList)
+                using (HttpClient httpClient = new HttpClient())
                 {
-                    FileInfo fiTemp = new FileInfo(picture.FileName);
-                    FileInfo fi = new FileInfo($@"{polSourceSiteInputToolHelper.BasePathInfrastructures}\{polSourceSiteInputToolHelper.CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{fiTemp.Extension}");
+                    httpClient.Timeout = TimeSpan.FromSeconds(600);
 
-                    string url = "";
-                    if (checkBoxLanguage.Checked)
+                    foreach (Picture picture in infrastructure.InfrastructurePictureList)
                     {
-                        url = polSourceSiteInputToolHelper.baseURLFR.Replace(@"/PolSource/", @"/File/FileDownload?TVFileTVItemID=") + picture.PictureTVItemID.ToString();
-                    }
-                    else
-                    {
-                        url = polSourceSiteInputToolHelper.baseURLEN.Replace(@"/PolSource/", @"/File/FileDownload?TVFileTVItemID=") + picture.PictureTVItemID.ToString();
-                    }
+                        FileInfo fiTemp = new FileInfo(picture.FileName);
+                        FileInfo fi = new FileInfo($@"{polSourceSiteInputToolHelper.BasePathInfrastructures}\{polSourceSiteInputToolHelper.CurrentMunicipalityName}\Pictures\{infrastructure.InfrastructureTVItemID}_{picture.PictureTVItemID}{fiTemp.Extension}");
 
-                    try
-                    {
-                        lblStatus.Text = $"Working ... downloading Image [{picture.FileName}] under the Pictures directory";
-                        lblStatus.Refresh();
-                        Application.DoEvents();
-
-                        if (!fi.Exists)
+                        string url = "";
+                        if (checkBoxLanguage.Checked)
                         {
+                            url = polSourceSiteInputToolHelper.baseURLFR.Replace(@"/PolSource/", @"/File/FileDownload?TVFileTVItemID=") + picture.PictureTVItemID.ToString();
+                        }
+                        else
+                        {
+                            url = polSourceSiteInputToolHelper.baseURLEN.Replace(@"/PolSource/", @"/File/FileDownload?TVFileTVItemID=") + picture.PictureTVItemID.ToString();
+                        }
 
-                            using (WebClient webClient = new WebClient())
+                        try
+                        {
+                            lblStatus.Text = $"Working ... downloading Image [{picture.FileName}] under the Pictures directory";
+                            lblStatus.Refresh();
+                            Application.DoEvents();
+
+                            if (!fi.Exists)
                             {
-                                WebProxy webProxy = new WebProxy();
-                                webClient.Proxy = webProxy;
-
-
+                                //WebProxy webProxy = new WebProxy();
+                                //webClient.Proxy = webProxy;
                                 var json_data = string.Empty;
-                                byte[] responseBytes = webClient.DownloadData(url);
+                                byte[] responseBytes = await httpClient.GetByteArrayAsync(url);
 
                                 FileStream fs = fi.Create();
                                 fs.Write(responseBytes, 0, responseBytes.Length);
                                 fs.Close();
-                            }
                         }
                     }
                     catch (Exception ex)
@@ -1341,10 +1348,11 @@ namespace CSSPPolSourceSiteInputTool
                     }
                 }
             }
+            }
 
             return true;
         }
-        private bool GetPolSourceSitePicturesForInputTool()
+        private async Task<bool> GetPolSourceSitePicturesForInputTool()
         {
             TVItemModel tvItemModelSS = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelSS == null || tvItemModelSS.TVItemID == 0)
@@ -1415,14 +1423,25 @@ namespace CSSPPolSourceSiteInputTool
                         if (!fi.Exists)
                         {
 
-                            using (WebClient webClient = new WebClient())
-                            {
-                                WebProxy webProxy = new WebProxy();
-                                webClient.Proxy = webProxy;
+                            //using (WebClient webClient = new WebClient())
+                            //{
+                            //    WebProxy webProxy = new WebProxy();
+                            //    webClient.Proxy = webProxy;
 
+
+                            //    var json_data = string.Empty;
+                            //    byte[] responseBytes = webClient.DownloadData(url);
+                            using (HttpClient httpClient = new HttpClient(new HttpClientHandler
+                            {
+                                Proxy = new WebProxy()
+                            }))
+                            {
+                                //WebProxy webProxy = new WebProxy();
+                                //webClient.Proxy = webProxy;
 
                                 var json_data = string.Empty;
-                                byte[] responseBytes = webClient.DownloadData(url);
+                                httpClient.Timeout = TimeSpan.FromSeconds(600);
+                                byte[] responseBytes = await httpClient.GetByteArrayAsync(url);
 
                                 FileStream fs = fi.Create();
                                 fs.Write(responseBytes, 0, responseBytes.Length);
@@ -1443,7 +1462,7 @@ namespace CSSPPolSourceSiteInputTool
 
             return true;
         }
-        private bool GetMunicipalitiesForInputTool()
+        private async Task<bool> GetMunicipalitiesForInputTool()
         {
             TVItemModel tvItemModelMunicipality = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelMunicipality == null || tvItemModelMunicipality.TVItemID == 0)
@@ -1480,14 +1499,22 @@ namespace CSSPPolSourceSiteInputTool
                 lblStatus.Refresh();
                 Application.DoEvents();
 
-                using (WebClient webClient = new WebClient())
+                //using (WebClient webClient = new WebClient())
+                //{
+                //    //WebProxy webProxy = new WebProxy();
+                //    //webClient.Proxy = webProxy;
+
+
+                //    var json_data = string.Empty;
+                //    byte[] responseBytes = webClient.DownloadData(url);
+                using (HttpClient httpClient = new HttpClient())
                 {
                     //WebProxy webProxy = new WebProxy();
                     //webClient.Proxy = webProxy;
 
-
                     var json_data = string.Empty;
-                    byte[] responseBytes = webClient.DownloadData(url);
+                    httpClient.Timeout = TimeSpan.FromSeconds(600);
+                    byte[] responseBytes = await httpClient.GetByteArrayAsync(url);
                     json_data = Encoding.UTF8.GetString(responseBytes);
 
                     StreamWriter sw = fi.CreateText();
@@ -1506,7 +1533,8 @@ namespace CSSPPolSourceSiteInputTool
 
             return true;
         }
-        private bool GetPollutionSourceSitesForInputTool()
+
+        private async Task<bool> GetPollutionSourceSitesForInputTool()
         {
             TVItemModel tvItemModelSS = (TVItemModel)comboBoxSubsectorOrMunicipality.SelectedItem;
             if (tvItemModelSS == null || tvItemModelSS.TVItemID == 0)
@@ -1540,14 +1568,28 @@ namespace CSSPPolSourceSiteInputTool
                 lblStatus.Refresh();
                 Application.DoEvents();
 
-                using (WebClient webClient = new WebClient())
+                //using (WebClient webClient = new WebClient())
+                //{
+                //    //WebProxy webProxy = new WebProxy();
+                //    //webClient.Proxy = webProxy;
+
+                //    var json_data = string.Empty;
+                //    byte[] responseBytes = webClient.DownloadData(url);
+                //    json_data = Encoding.UTF8.GetString(responseBytes);
+
+                //    StreamWriter sw = fi.CreateText();
+                //    sw.Write(json_data);
+                //    sw.Close();
+                //}
+
+                using (HttpClient httpClient = new HttpClient())
                 {
                     //WebProxy webProxy = new WebProxy();
                     //webClient.Proxy = webProxy;
 
-
                     var json_data = string.Empty;
-                    byte[] responseBytes = webClient.DownloadData(url);
+                    httpClient.Timeout = TimeSpan.FromSeconds(600);
+                    byte[] responseBytes = await httpClient.GetByteArrayAsync(url);
                     json_data = Encoding.UTF8.GetString(responseBytes);
 
                     StreamWriter sw = fi.CreateText();
@@ -1566,7 +1608,7 @@ namespace CSSPPolSourceSiteInputTool
 
             return true;
         }
-        private void GetTVItemModelProvinceList()
+        private async Task<bool> GetTVItemModelProvinceList()
         {
             polSourceSiteInputToolHelper.tvItemModelProvinceList = new List<TVItemModel>();
 
@@ -1582,14 +1624,18 @@ namespace CSSPPolSourceSiteInputTool
 
             try
             {
-                using (WebClient webClient = new WebClient())
-                {
-                    WebProxy webProxy = new WebProxy();
-                    webClient.Proxy = webProxy;
 
+                using (HttpClient httpClient = new HttpClient(new HttpClientHandler
+                {
+                    Proxy = new WebProxy()
+                }))
+                {
+                    //WebProxy webProxy = new WebProxy();
+                    //webClient.Proxy = webProxy;
 
                     var json_data = string.Empty;
-                    byte[] responseBytes = webClient.DownloadData(url);
+                    httpClient.Timeout = TimeSpan.FromSeconds(600);
+                    byte[] responseBytes = await httpClient.GetByteArrayAsync(url);
                     json_data = Encoding.UTF8.GetString(responseBytes);
 
                     if (json_data.Length > 0)
@@ -1601,6 +1647,39 @@ namespace CSSPPolSourceSiteInputTool
                     }
                 }
 
+
+                //using (WebClient webClient = new WebClient())
+                //{
+                //    WebProxy webProxy = new WebProxy();
+                //    webClient.Proxy = webProxy;
+
+
+                //    var json_data = string.Empty;
+                //    byte[] responseBytes = webClient.DownloadData(url);
+                //    json_data = Encoding.UTF8.GetString(responseBytes);
+
+                    
+                //}
+
+                //using (WebClient webClient = new WebClient())
+                //{
+                //    WebProxy webProxy = new WebProxy();
+                //    webClient.Proxy = webProxy;
+
+
+                //    var json_data = string.Empty;
+                //    byte[] responseBytes = webClient.DownloadData(url);
+                //    json_data = Encoding.UTF8.GetString(responseBytes);
+
+                //    if (json_data.Length > 0)
+                //    {
+                //        if (!string.IsNullOrEmpty(json_data))
+                //        {
+                //            polSourceSiteInputToolHelper.tvItemModelProvinceList = JsonConvert.DeserializeObject<List<TVItemModel>>(json_data);
+                //        }
+                //    }
+                //}
+
             }
             catch (Exception ex)
             {
@@ -1609,8 +1688,9 @@ namespace CSSPPolSourceSiteInputTool
                 richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                 richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
             }
+            return true;
         }
-        private void GetTVItemModelMunicipalityList(int ProvinceTVItemID)
+        private async Task<bool> GetTVItemModelMunicipalityList(int ProvinceTVItemID)
         {
             polSourceSiteInputToolHelper.tvItemModelMunicipalityList = new List<TVItemModel>();
 
@@ -1626,13 +1706,24 @@ namespace CSSPPolSourceSiteInputTool
 
             try
             {
-                using (WebClient webClient = new WebClient())
+                //using (WebClient webClient = new WebClient())
+                //{
+                //    WebProxy webProxy = new WebProxy();
+                //    webClient.Proxy = webProxy;
+
+                //var json_data = string.Empty;
+                //byte[] responseBytes = webClient.DownloadData(url);
+                using (HttpClient httpClient = new HttpClient(new HttpClientHandler
                 {
-                    WebProxy webProxy = new WebProxy();
-                    webClient.Proxy = webProxy;
+                    Proxy = new WebProxy()
+                }))
+                {
+                    //WebProxy webProxy = new WebProxy();
+                    //webClient.Proxy = webProxy;
 
                     var json_data = string.Empty;
-                    byte[] responseBytes = webClient.DownloadData(url);
+                    httpClient.Timeout = TimeSpan.FromSeconds(600);
+                    byte[] responseBytes = await httpClient.GetByteArrayAsync(url);
                     json_data = Encoding.UTF8.GetString(responseBytes);
 
                     if (json_data.Length > 0)
@@ -1652,8 +1743,9 @@ namespace CSSPPolSourceSiteInputTool
                 richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                 richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
             }
+            return true;
         }
-        private void GetTVItemModelSubsectorList(int ProvinceTVItemID)
+        private async Task<bool> GetTVItemModelSubsectorList(int ProvinceTVItemID)
         {
             polSourceSiteInputToolHelper.tvItemModelSubsectorList = new List<TVItemModel>();
 
@@ -1669,13 +1761,21 @@ namespace CSSPPolSourceSiteInputTool
 
             try
             {
-                using (WebClient webClient = new WebClient())
+                //using (WebClient webClient = new WebClient())
+                //{
+                //    WebProxy webProxy = new WebProxy();
+                //    webClient.Proxy = webProxy;
+
+                //    var json_data = string.Empty;
+                using (HttpClient httpClient = new HttpClient())
                 {
-                    WebProxy webProxy = new WebProxy();
-                    webClient.Proxy = webProxy;
+                    //WebProxy webProxy = new WebProxy();
+                    //webClient.Proxy = webProxy;
 
                     var json_data = string.Empty;
-                    byte[] responseBytes = webClient.DownloadData(url);
+                    httpClient.Timeout = TimeSpan.FromSeconds(600);
+                    byte[] responseBytes = await httpClient.GetByteArrayAsync(url);
+                    //byte[] responseBytes = webClient.DownloadData(url);
                     json_data = Encoding.UTF8.GetString(responseBytes);
 
                     if (json_data.Length > 0)
@@ -1695,6 +1795,7 @@ namespace CSSPPolSourceSiteInputTool
                 richTextBoxStatus.AppendText("Could not load " + url + "\r\n");
                 richTextBoxStatus.AppendText(ex.Message + (ex.InnerException != null ? " InnerException: " + ex.InnerException.Message : "") + "\r\n");
             }
+            return true;
         }
         private void RefreshComboBoxSubsectorOrMunicipality()
         {
@@ -1809,7 +1910,7 @@ namespace CSSPPolSourceSiteInputTool
             comboBoxProvinceMunicipalities.Visible = true;
             comboBoxSubsectorOrMunicipality.Visible = true;
         }
-        private void ShowAdminParts()
+        private async void ShowAdminParts()
         {
             ClearAllPanelAndComboBoxes();
 
@@ -1835,7 +1936,7 @@ namespace CSSPPolSourceSiteInputTool
 
             panelShowInputOptions.Visible = false;
 
-            GetTVItemModelProvinceList();
+            bool done = await GetTVItemModelProvinceList();
             if (polSourceSiteInputToolHelper.tvItemModelProvinceList.Count == 0)
             {
                 richTextBoxStatus.BringToFront();
