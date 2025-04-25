@@ -6939,12 +6939,12 @@ namespace CSSPPolSourceSiteInputToolHelper
             // need to do ExtraComment
             foreach (Issue issue in CurrentPSS.PSSObs.IssueList.OrderBy(c => c.Ordinal))
             {
-                if (issue.PolSourceObsInfoIntListNew.Count > 0 || IsNewPSS)
+                if (!string.IsNullOrEmpty(issue.ExtraCommentNew) || IsNewPSS)
                 {
                     string MessageText = $"Changing Extra Comment of issue # --- [{issue.Ordinal}]\r\n";
                     EmitRTBMessage(new RTBMessageEventArgs(MessageText));
 
-                    string ExtraComment = (string.IsNullOrWhiteSpace(issue.ExtraCommentNew) ? (string.IsNullOrWhiteSpace(issue.ExtraComment) ? "" : issue.ExtraComment) : "");
+                    string ExtraComment = (string.IsNullOrWhiteSpace(issue.ExtraCommentNew) ? (string.IsNullOrWhiteSpace(issue.ExtraComment) ? "" : issue.ExtraComment) : issue.ExtraCommentNew);
 
                     ret = SaveToCSSPWebToolsIssueExtraComment((int)CurrentPSS.PSSObs.ObsID, (int)issue.IssueID, ExtraComment, AdminEmail);
                     ret = ret.Replace("\"", "");
