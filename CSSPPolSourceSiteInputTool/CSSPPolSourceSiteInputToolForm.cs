@@ -231,7 +231,10 @@ namespace CSSPPolSourceSiteInputTool
 //                string email = UserPrincipal.Current.EmailAddress;
 
                 ClearAllPanelAndComboBoxes();
-                Connect();
+                if (IsUserAdmin())
+                {
+                    ShowAdminParts();
+                }
             }
             else
             {
@@ -1020,19 +1023,32 @@ namespace CSSPPolSourceSiteInputTool
                 }
             }
         }
-        public void Connect()
+        //public void Connect()
+        //{
+        //    string ret = polSourceSiteInputToolHelper.UserExistInCSSPWebTools(polSourceSiteInputToolHelper.AdminEmail);
+        //    ret = ret.Replace("\"", "");
+        //    if (ret.StartsWith("ERROR:"))
+        //    {
+        //        MessageBox.Show("Admin users list [martellk, tousignantl, perchardg, quintonj, bannisterc]\r\n\r\nPlease contact Karyne Martell or Louka Tousignant if you think you should have admin rights", "Invalid user for admin rights");
+        //    }
+        //    else
+        //    {
+        //        ShowAdminParts();
+        //    }
+        //}
+
+        public bool IsUserAdmin()
         {
-            string ret = polSourceSiteInputToolHelper.UserExistInCSSPWebTools(polSourceSiteInputToolHelper.AdminEmail);
+            string ret = polSourceSiteInputToolHelper.UserAdminInCSSPWebTools(polSourceSiteInputToolHelper.AdminEmail);
             ret = ret.Replace("\"", "");
             if (ret.StartsWith("ERROR:"))
             {
-                MessageBox.Show("Admin users list [martellk, tousignantl, perchardg, quintonj, bannisterc]\r\n\r\nPlease contact Karyne Martell or Louka Tousignant if you think you should have admin rights", "Invalid user for admin rights");
+                MessageBox.Show("Please contact an administrator if you think you should have admin rights", "Invalid user for admin rights");
+                return false;
             }
-            else
-            {
-                ShowAdminParts();
-            }
+            return true;
         }
+
         private async void CreateMunicipalityDirectoryWithInfo()
         {
             if (!TryToCreateTheInfrastructureDirectory())

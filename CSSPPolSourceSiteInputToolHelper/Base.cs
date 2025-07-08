@@ -287,7 +287,7 @@ namespace CSSPPolSourceSiteInputToolHelper
             }
             UpdatePolSourceSitePanelColor();
         }
-        public string UserExistInCSSPWebTools(string AdminEmail)
+        public string UserAdminInCSSPWebTools(string AdminEmail)
         {
             try
             {
@@ -302,10 +302,10 @@ namespace CSSPPolSourceSiteInputToolHelper
                     webClient.Proxy = webProxy;
 
                     webClient.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
-                    Uri uri = new Uri($"{baseURLEN}UserExistJSON");
+                    Uri uri = new Uri($"{baseURLEN}UserAdminJSON");
                     if (Language == LanguageEnum.fr)
                     {
-                        uri = new Uri($"{baseURLFR}UserExistJSON");
+                        uri = new Uri($"{baseURLFR}UserAdminJSON");
                     }
 
                     byte[] ret = webClient.UploadValues(uri, "POST", paramList);
