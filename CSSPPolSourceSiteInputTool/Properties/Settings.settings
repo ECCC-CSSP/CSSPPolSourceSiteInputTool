@@ -3,7 +3,7 @@
   <Profiles />
   <Settings>
     <Setting Name="mode" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">debug</Value>
+      <Value Profile="(Default)">prod</Value>
     </Setting>
     <Setting Name="Base_Path_PSS" Type="System.String" Scope="Application">
       <Value Profile="(Default)">C:\PollutionSourceSites\Subsectors\</Value>
@@ -12,10 +12,10 @@
       <Value Profile="(Default)">C:\PollutionSourceSites\Infrastructures\</Value>
     </Setting>
     <Setting Name="BaseURL_EN" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://131.235.1.167/csspwebtools/en-CA/PolSource/</Value>
+      <Value Profile="(Default)">https://csspwebtools.eccc.gcloud.ca/csspwebtools/en-CA/PolSource/</Value>
     </Setting>
     <Setting Name="BaseURL_FR" Type="System.String" Scope="Application">
-      <Value Profile="(Default)">http://131.235.1.167/csspwebtools/fr-CA/PolSource/</Value>
+      <Value Profile="(Default)">https://csspwebtools.eccc.gcloud.ca/csspwebtools/fr-CA/PolSource/</Value>
     </Setting>
   </Settings>
 </SettingsFile>

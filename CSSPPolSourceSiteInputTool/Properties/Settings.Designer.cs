@@ -12,7 +12,7 @@ namespace CSSPPolSourceSiteInputTool.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.12.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.14.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -25,7 +25,7 @@ namespace CSSPPolSourceSiteInputTool.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("debug")]
+        [global::System.Configuration.DefaultSettingValueAttribute("prod")]
         public string mode {
             get {
                 return ((string)(this["mode"]));
@@ -52,7 +52,7 @@ namespace CSSPPolSourceSiteInputTool.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://131.235.1.167/csspwebtools/en-CA/PolSource/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://csspwebtools.eccc.gcloud.ca/csspwebtools/en-CA/PolSource/")]
         public string BaseURL_EN {
             get {
                 return ((string)(this["BaseURL_EN"]));
@@ -61,7 +61,7 @@ namespace CSSPPolSourceSiteInputTool.Properties {
         
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("http://131.235.1.167/csspwebtools/fr-CA/PolSource/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("https://csspwebtools.eccc.gcloud.ca/csspwebtools/fr-CA/PolSource/")]
         public string BaseURL_FR {
             get {
                 return ((string)(this["BaseURL_FR"]));
